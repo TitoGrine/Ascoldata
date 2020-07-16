@@ -1,42 +1,46 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import './App.css';
+import { BrowserRouter as Router, Route } from 'react-router-dom'
+
+import Home from './components/Home';
+import Login from './components/Login';
 import TopTracks from './components/TopTracks';
 
-class App extends Component {
+function App() {
 
-  constructor(){
-    super();
-    const params = this.getHashParams();
+  const [authToken, setAuthToken] = useState('');
+  // constructor(){
+  //   super();
+  //   const params = this.getHashParams();
 
-    console.log(params.access_token)
-    this.state = {
-      auth_token: params.access_token,
-    }
-  }
+  //   console.log(params.access_token)
+  //   this.state = {
+  //     auth_token: params.access_token,
+  //   }
+  // }
 
-  getHashParams() {
-    var hashParams = {};
-    var e, r = /([^&;=]+)=?([^&;]*)/g,
-        q = window.location.hash.substring(1);
-    while ( e = r.exec(q)) {
-       hashParams[e[1]] = decodeURIComponent(e[2]);
-    }
-    return hashParams;
-  }
 
-  render(){
-    return (
+  return (
       <div className="App">
-        <h1>Spotify Stats</h1>
-        <div>
-          <form action="http://localhost:8000">
-            <input type="submit" value="Login with Spotify"/>
-          </form>
-          <TopTracks auth_token={this.state.auth_token}/>
-        </div>
+        <Router>
+          <Route
+            exact = { true }
+            path = "/"
+            component = { Home }
+          />
+          <Route
+            exact = { true }
+            path = "/login"
+            component = { Login }
+          />
+          <Route
+            exact = { true }
+            path = "/top_tracks"
+            component = { TopTracks }
+          />
+        </Router>
       </div>
     );
-  }
 }
 
 export default App;

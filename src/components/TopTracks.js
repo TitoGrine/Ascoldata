@@ -1,29 +1,27 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import PropTypes from 'prop-types';
 import Spotify from 'spotify-web-api-js';
 
 const spotifyWebApi = new Spotify();
 
 export class TopTracks extends Component {
-
-    getTopTracks = () => {
+    // getTopTracks = () => {
     
-        if(this.props.auth_token){
-            spotifyWebApi.setAccessToken(this.props.auth_token);
+    //     if(this.props.auth_token){
+    //         spotifyWebApi.setAccessToken(this.props.auth_token);
 
-            spotifyWebApi.getMyTopTracks()
-                .then((response) => {
-                    console.log(response);
-                })
-        }
-    }
+    //         spotifyWebApi.getMyTopTracks()
+    //             .then((response) => {
+    //                 console.log(response);
+    //             })
+    //     }
+    // }
 
     render() {
-        this.getTopTracks();
         return (
-            <div>
-                
-            </div>
+            <p>
+                { useState[0] }
+            </p>
         )
     }
 }
