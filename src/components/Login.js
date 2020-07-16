@@ -26,7 +26,7 @@ class Login extends Component {
             <React.Fragment>
                 <HeaderBar />
                 <div>
-                    <form action="http://localhost:8000">
+                    <form action="http://localhost:8000/login">
                         <input type="submit" value="Login with Spotify"/>
                     </form>
                 </div>
