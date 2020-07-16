@@ -11,6 +11,7 @@ class HeaderBar extends Component {
                     <Nav >
                         <Nav.Link href="/" style={ linkStyle }>Home</Nav.Link>
                         <Nav.Link href="/login" style={ linkStyle }>Login</Nav.Link>
+                        <Nav.Link href="/top_tracks" style={ linkStyle }>Top</Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>

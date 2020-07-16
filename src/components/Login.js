@@ -7,7 +7,8 @@ class Login extends Component {
         super();
         const params = this.getHashParams();
     
-        
+        if(params.access_token)
+            sessionStorage.setItem('authToken', params.access_token);
     }
 
     getHashParams() {
