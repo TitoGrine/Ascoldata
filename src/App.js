@@ -8,18 +8,6 @@ import TopTracks from './components/TopTracks';
 
 function App() {
 
-  const [authToken, setAuthToken] = useState('');
-  // constructor(){
-  //   super();
-  //   const params = this.getHashParams();
-
-  //   console.log(params.access_token)
-  //   this.state = {
-  //     auth_token: params.access_token,
-  //   }
-  // }
-
-
   return (
       <div className="App">
         <Router>

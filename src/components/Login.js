@@ -1,5 +1,9 @@
 import React, { Component, useState, useEffect } from 'react';
+import { Redirect } from 'react-router-dom';
+import { Button } from 'react-bootstrap';
+
 import HeaderBar from './HeaderBar';
+import Home from  './Home';
 
 class Login extends Component {
 
@@ -22,16 +26,23 @@ class Login extends Component {
     }
 
     render() {
-        return (
-            <React.Fragment>
-                <HeaderBar />
-                <div>
-                    <form action="http://localhost:8000/login">
-                        <input type="submit" value="Login with Spotify"/>
-                    </form>
-                </div>
-            </React.Fragment>
-        )
+        if(!sessionStorage.getItem('authToken')){
+            return (
+                <React.Fragment>
+                    <HeaderBar />
+                    <div>
+                        <form action="http://localhost:8000/login">
+                            <Button type="submit" size="lg">
+                                Log in with Spotify
+                            </Button>
+                        </form>
+                    </div>
+                </React.Fragment>
+            )
+        } else {
+            return <Redirect to='/' />
+        }
+        
     }
 }
 
