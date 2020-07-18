@@ -30,10 +30,10 @@ class Login extends Component {
             return (
                 <React.Fragment>
                     <HeaderBar />
-                    <div>
+                    <div className="col d-flex flex-column align-items-center justify-content-center" style = { { height: '60vh' } }>
                         <form action="http://localhost:8000/login">
                             <Button type="submit" size="lg">
-                                Log in with Spotify
+                                <strong>Log in with Spotify</strong>
                             </Button>
                         </form>
                     </div>

@@ -1,7 +1,9 @@
 import React, { Component, useState, useEffect } from 'react';
-import HeaderBar from './HeaderBar';
 import Spotify from 'spotify-web-api-js';
 import { Container, Row, Col, Image } from 'react-bootstrap';
+
+import HeaderBar from './HeaderBar';
+import LoginWarning from './LoginWarning';
 
 const spotifyWebApi = new Spotify();
 
@@ -46,7 +48,7 @@ function Home() {
         return (
             <React.Fragment>
                 <HeaderBar />
-                <h1> Please log in x) </h1>
+                <LoginWarning />
             </React.Fragment>
         )
     }

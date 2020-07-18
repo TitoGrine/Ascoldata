@@ -1,6 +1,15 @@
 body {
   background-color: #191414;
   color: antiquewhite;
+  height: 100vh;
 }
 
+button {
+  padding: 0.5em 1.5em !important;
+  background-color: #1DB954 !important;
+}
 
+button:hover {
+  background-color: antiquewhite !important;
+  color: #1DB954 !important;
+}
