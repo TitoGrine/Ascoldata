@@ -4,7 +4,7 @@ import { Navbar, Nav } from 'react-bootstrap';
 class HeaderBar extends Component {
     render() {
         return (
-            <Navbar expand="lg" style={ navStyle }>
+            <Navbar id='navbar' expand="lg">
                 <Navbar.Brand href="/" style={ linkStyle }><strong>Spotify Stats</strong></Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
@@ -23,8 +23,5 @@ const linkStyle = {
     color: '#191414'
 }
 
-const navStyle = {
-    backgroundColor: '#1DB954'
-}
 
 export default HeaderBar;

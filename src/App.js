@@ -2,9 +2,9 @@ import React, { Component, useState } from 'react';
 import './App.css';
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 
-import Home from './components/Home';
-import Login from './components/Login';
-import TopTracks from './components/TopTracks';
+import Home from './components/Home/Home';
+import Login from './components/Login/Login';
+import TopTracks from './components/Top/TopTracks';
 
 function App() {
 

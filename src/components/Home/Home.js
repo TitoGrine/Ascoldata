@@ -2,8 +2,8 @@ import React, { Component, useState, useEffect } from 'react';
 import Spotify from 'spotify-web-api-js';
 import { Container, Row, Col, Image } from 'react-bootstrap';
 
-import HeaderBar from './HeaderBar';
-import LoginWarning from './LoginWarning';
+import HeaderBar from '../HeaderBar';
+import LoginWarning from '../LoginWarning';
 
 const spotifyWebApi = new Spotify();
 
@@ -32,7 +32,8 @@ function Home() {
         return (
             <React.Fragment>
                 <HeaderBar />
-                <Container>
+                <div id='corporum'>
+                    <section className='content-section'>
                     <Row className="justify-content-md-center">
                         <Col xs={6} md={4}>
                             <Image src={ image } rounded />
@@ -41,14 +42,23 @@ function Home() {
                             <h2> Welcome { user }</h2>
                         </Col>
                     </Row>
-                </Container>
+                    </section>
+                    <section className='sidebar-section'>
+                    </section>
+                </div>
             </React.Fragment>
         )
     } else {
         return (
             <React.Fragment>
                 <HeaderBar />
-                <LoginWarning />
+                <div id='corporum'>
+                    <section className='content-section'>
+                        <LoginWarning/>
+                    </section>
+                    <section className='sidebar-section'>
+                    </section>
+                </div>
             </React.Fragment>
         )
     }

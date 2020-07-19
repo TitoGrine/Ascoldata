@@ -1,15 +1,51 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik&display=swap');
+
 body {
-  background-color: #191414;
+  font-family: 'Rubik', sans-serif;
+  background: rgb(20,130,59);
+  background: radial-gradient(circle, rgba(20,130,59,1) 0%, rgba(29,185,84,1) 100%);
   color: antiquewhite;
   height: 100vh;
 }
 
+#navbar {
+  height: 4em;
+  padding: 1em;
+}
+
+#corporum {
+  display: grid;
+  height: calc(100vh - 4em);
+  grid-template-columns: repeat(10, 1fr);
+  grid-template-rows: repeat(24, 1fr);
+}
+
+section.content-section{
+  z-index: 10;
+  grid-column: 1 / span 7;
+  grid-row: 2 / span 21;
+  background-color: #191414;
+  padding: 1em;
+}
+
+section.sidebar-section {
+  z-index: 5;
+  grid-column: 7 / span 4;
+  grid-row: 4 / span 20;
+  background-color: antiquewhite;
+
+}
+
 button {
-  padding: 0.5em 1.5em !important;
+  text-decoration: none;
+  font-size: 1.4rem !important;
+  font-weight: 400 !important;
+  padding: 0.6em 1.5em !important;
   background-color: #1DB954 !important;
+  color: #191414 !important;
+  border-width: 0 !important;
 }
 
 button:hover {
-  background-color: antiquewhite !important;
-  color: #1DB954 !important;
+  transform: scale(1.05);
 }
