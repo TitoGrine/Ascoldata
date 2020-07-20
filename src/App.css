@@ -1,7 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Rubik&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Barlow:wght@100;200;300;400;500;600;700;800&display=swap');
 
 body {
-  font-family: 'Rubik', sans-serif;
+  font-family: 'Barlow', sans-serif;
   background: rgb(20,130,59);
   background: radial-gradient(circle, rgba(20,130,59,1) 0%, rgba(29,185,84,1) 100%);
   color: antiquewhite;

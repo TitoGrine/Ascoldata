@@ -41,19 +41,19 @@ function GeneralInfo() {
 
     return (
         <div id="profile-info">
-            <div id="image">
-                <Image src={ image } rounded />
-            </div>
+            <h2> · Hello <strong>{ user }</strong> ·</h2>
             <div id="info">
-                <h2> Hello { user }</h2>
+                <div id="image">
+                    <Image src={ image } rounded />
+                </div>
                 <ul>
-                    <li> ID: { id }</li>
-                    <li> Email: { email }</li>
-                    <li> Country: { country }</li>
-                    <li> Subscription: { product }</li>
-                    <li> No. followers: { followers }</li>
-                    <li> Spotify link: { link }</li>
-                    <li> Spotify URI: { uri }</li>
+                    <li> <strong>ID:</strong> { id }</li>
+                    <li> <strong>Email:</strong> { email }</li>
+                    <li> <strong>Country:</strong> { country }</li>
+                    <li> <strong>Subscription:</strong> { product }</li>
+                    <li> <strong>No. followers:</strong> { followers }</li>
+                    <li> <strong>Spotify link:</strong> { link }</li>
+                    <li> <strong>Spotify URI:</strong> { uri }</li>
                 </ul>
             </div>
         </div>
