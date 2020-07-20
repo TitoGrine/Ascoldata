@@ -31,18 +31,17 @@ section.content-section{
 section.sidebar-section {
   z-index: 5;
   grid-column: 7 / span 4;
-  grid-row: 4 / span 20;
+  grid-row: 6 / span 18;
   background-color: antiquewhite;
-
 }
 
 button {
   text-decoration: none;
-  font-size: 1.4rem !important;
-  font-weight: 400 !important;
-  padding: 0.6em 1.5em !important;
-  background-color: #1DB954 !important;
-  color: #191414 !important;
-  border-width: 0 !important;
+  font-size: 1.4rem;
+  font-weight: 400;
+  padding: 0.6em 1.5em;
+  background-color: #1DB954;
+  color: #191414;
+  border-width: 0;
 }
 

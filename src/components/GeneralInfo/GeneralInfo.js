@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './GeneralInfo.css';
+import { Link } from 'react-router-dom';
 import { Image } from 'react-bootstrap';
 import Spotify from 'spotify-web-api-js';
 
@@ -40,22 +41,37 @@ function GeneralInfo() {
     });
 
     return (
-        <div id="profile-info">
-            <h2> · Hello <strong>{ user }</strong> ·</h2>
-            <div id="info">
-                <div id="image">
-                    <Image src={ image } rounded />
+        <div id='corporum'>
+            <section className='content-section'>
+                <div id="profile-info">
+                    <h2> · Hello <strong>{ user }</strong> ·</h2>
+                    <div id="info">
+                        <div id="image">
+                            <Image src={ image } thumbnail />
+                        </div>
+                        <ul>
+                            <li> <strong>ID:</strong> { id }</li>
+                            <li> <strong>Email:</strong> { email }</li>
+                            <li> <strong>Country:</strong> { country }</li>
+                            <li> <strong>Subscription:</strong> { product }</li>
+                            <li> <strong>No. followers:</strong> { followers }</li>
+                            <li> <strong>Spotify link:</strong> { link }</li>
+                            <li> <strong>Spotify URI:</strong> { uri }</li>
+                        </ul>
+                    </div>
                 </div>
-                <ul>
-                    <li> <strong>ID:</strong> { id }</li>
-                    <li> <strong>Email:</strong> { email }</li>
-                    <li> <strong>Country:</strong> { country }</li>
-                    <li> <strong>Subscription:</strong> { product }</li>
-                    <li> <strong>No. followers:</strong> { followers }</li>
-                    <li> <strong>Spotify link:</strong> { link }</li>
-                    <li> <strong>Spotify URI:</strong> { uri }</li>
-                </ul>
-            </div>
+            </section>
+            <section className='sidebar-section'>
+                <div className='side-content'>
+                    <div className='sidebar-tabs'>
+                        <button> Check Out</button>
+                    </div>
+                    <ul className='redirects'>
+                        <li> <Link to="/">Top</Link> </li>
+                        <li> <Link to="/">Playlists</Link> </li>
+                    </ul>
+                </div>
+            </section>
         </div>
     )
 }

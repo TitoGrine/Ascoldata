@@ -3,8 +3,14 @@ import { Link } from 'react-router-dom';
 
 function LoginWarning() {
     return (
-        <div className="col d-flex flex-column align-items-center justify-content-center" style = { { height: '90%' } }>
-            <p style={ warningStyle }>Please <Link to={ '/login' } style={ linkStyle }> log in </Link> with Spotify to import data.</p>
+        <div id='corporum'>
+            <section className='content-section'>
+                <div className="col d-flex flex-column align-items-center justify-content-center" style = { { height: '90%' } }>
+                    <p style={ warningStyle }>Please <Link to={ '/login' } style={ linkStyle }> log in </Link> with Spotify to import data.</p>
+                </div>
+            </section>
+            <section className='sidebar-section'>
+            </section>
         </div>
     )
 }

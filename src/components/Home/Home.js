@@ -10,31 +10,17 @@ function Home() {
         return (
             <React.Fragment>
                 <HeaderBar />
-                <div id='corporum'>
-                    <section className='content-section'>
-                        <GeneralInfo/>
-                    </section>
-                    <section className='sidebar-section'>
-                    </section>
-                </div>
+                <GeneralInfo/>
             </React.Fragment>
         )
     } else {
         return (
             <React.Fragment>
                 <HeaderBar />
-                <div id='corporum'>
-                    <section className='content-section'>
-                        <LoginWarning/>
-                    </section>
-                    <section className='sidebar-section'>
-                    </section>
-                </div>
+                <LoginWarning />
             </React.Fragment>
         )
     }
-
-    
 }
 
 export default Home;
