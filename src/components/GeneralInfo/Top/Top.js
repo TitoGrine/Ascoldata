@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './Top.css';
 import { Link } from 'react-router-dom';
 import Spotify from 'spotify-web-api-js';
+import axios from 'axios';
 
 import HeaderBar from '../../HeaderBar';
 
@@ -24,20 +25,20 @@ function Top() {
 					setTopResults(data.items);
 				},
 				function(err) {
-                    console.log("Oof that's no bueno.");
+					console.log("Oof that's no bueno.");
+
+					const headers = {
+						'refresh_token': sessionStorage.getItem('refreshToken')
+                    };
+
+                    console.log(headers)
                     
-                    const headers = {
-                        'refresh_token': sessionStorage.getItem('refreshToken')
-                      }
-
-                    console.log(headers);
-
-					fetch('http://localhost:8000/refresh_token', { headers }).then(
+                    axios.get('http://localhost:8000/refresh_token', { params: headers })
+                    .then(
 						function(data) {
 							console.log(data);
 						},
 						function(err) {
-							console.log('NANI');
 							console.log(err);
 						}
 					);
