@@ -26,7 +26,6 @@ function GeneralInfo() {
 
             spotifyWebApi.getMe()
                 .then((response) => {
-                    console.log(response);
                     setUser(response.display_name);
                     setImage(response.images[0].url);
                     setId(response.id);
@@ -42,8 +41,8 @@ function GeneralInfo() {
 
     return (
         <div id='corporum'>
-            <section className='content-section'>
-                <div id="profile-info">
+            <section className='content-section slide-in-left'>
+                <div id="profile-info" >
                     <h2> · Hello <strong>{ user }</strong> ·</h2>
                     <div id="info">
                         <div id="image">
@@ -61,13 +60,13 @@ function GeneralInfo() {
                     </div>
                 </div>
             </section>
-            <section className='sidebar-section'>
+            <section className='sidebar-section slide-in-right'>
                 <div className='side-content'>
                     <div className='sidebar-tabs'>
                         <button> Check Out</button>
                     </div>
                     <ul className='redirects'>
-                        <li> <Link to="/">Top</Link> </li>
+                        <li> <Link to="/top">Top</Link> </li>
                         <li> <Link to="/">Playlists</Link> </li>
                     </ul>
                 </div>
