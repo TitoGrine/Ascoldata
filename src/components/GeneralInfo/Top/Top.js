@@ -66,7 +66,7 @@ function Top() {
 				<section className="sidebar-section slide-in-right">
 					<div className="side-content">
 						<div className="sidebar-tabs">
-							<button> Check Out</button>
+							<button>Go to</button>
 						</div>
 						<ul className="redirects">
 							<li>

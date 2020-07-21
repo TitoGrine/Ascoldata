@@ -26,6 +26,8 @@ function GeneralInfo() {
 
 			spotifyWebApi.getMe().then(
 				function(data) {
+                    console.log(data);
+
 					setUser(data.display_name);
 					setImage(data.images[0].url);
 					setId(data.id);
@@ -48,7 +50,9 @@ function GeneralInfo() {
 							console.log(response.data);
 
 							sessionStorage.setItem('authToken', response.data.access_token);
-						}
+                        
+                            window.location.reload();
+                        }
 					);
 				}
 			);
@@ -103,7 +107,7 @@ function GeneralInfo() {
 			<section className="sidebar-section slide-in-right">
 				<div className="side-content">
 					<div className="sidebar-tabs">
-						<button> Check Out</button>
+						<button>Go to</button>
 					</div>
 					<ul className="redirects">
 						<li>
