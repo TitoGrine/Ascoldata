@@ -3,6 +3,7 @@ import './GeneralInfo.css';
 import { Link } from 'react-router-dom';
 import { Image } from 'react-bootstrap';
 import Spotify from 'spotify-web-api-js';
+import axios from 'axios';
 
 const spotifyWebApi = new Spotify();
 
@@ -36,7 +37,19 @@ function GeneralInfo() {
 					setURI(data.uri);
 				},
 				function(err) {
-					console.log("Oof that's no bueno.");
+					console.log(err);
+
+					const headers = {
+						refresh_token: sessionStorage.getItem('refreshToken')
+					};
+
+					axios.get('http://localhost:8000/refresh_token', { params: headers }).then(
+						(response) => {
+							console.log(response.data);
+
+							sessionStorage.setItem('authToken', response.data.access_token);
+						}
+					);
 				}
 			);
 		}

@@ -11,35 +11,35 @@ const spotifyWebApi = new Spotify();
 function Top() {
 	const [ madeCall, setMadeCall ] = useState(false);
 	const [ topResults, setTopResults ] = useState([]);
-	const authToken = sessionStorage.getItem('authToken');
 
 	useEffect(() => {
 		if (madeCall) return;
 
 		setMadeCall(true);
+		const authToken = sessionStorage.getItem('authToken');
 
 		if (authToken) {
-			spotifyWebApi.getMyTopArtists().then(
+            spotifyWebApi.setAccessToken(authToken);
+
+			spotifyWebApi.getMyTopTracks().then(
 				function(data) {
 					console.log(data.items);
 					setTopResults(data.items);
 				},
 				function(err) {
-					console.log("Oof that's no bueno.");
+					console.log(err);
 
 					const headers = {
-						'refresh_token': sessionStorage.getItem('refreshToken')
-                    };
+						refresh_token: sessionStorage.getItem('refreshToken')
+					};
 
-                    console.log(headers)
-                    
-                    axios.get('http://localhost:8000/refresh_token', { params: headers })
-                    .then(
-						function(data) {
-							console.log(data);
-						},
-						function(err) {
-							console.log(err);
+					axios.get('http://localhost:8000/refresh_token', { params: headers }).then(
+						(response) => {
+							console.log(response.data);
+
+                            sessionStorage.setItem('authToken', response.data.access_token);
+                            
+                            window.location.reload();
 						}
 					);
 				}
