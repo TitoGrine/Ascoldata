@@ -1,7 +1,7 @@
 import React from 'react';
 
 import HeaderBar from '../HeaderBar';
-import LoginWarning from '../LoginWarning';
+import LoginWarning from '../Login/LoginWarning';
 import GeneralInfo from '../GeneralInfo/GeneralInfo';
 
 function Home() {

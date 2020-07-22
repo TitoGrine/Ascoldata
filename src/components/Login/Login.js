@@ -33,7 +33,7 @@ class Login extends Component {
                 <React.Fragment>
                 <HeaderBar />
                 <div id='corporum'>
-                    <section className='content-section'>
+                    <section className='content-section slide-in-left'>
                         <div className="col d-flex flex-column align-items-center justify-content-center" style={{ height: '100%'}}>
                             <form action="http://localhost:8000/login">
                                 <Button type="submit" size="lg">
@@ -43,7 +43,7 @@ class Login extends Component {
                             <p style={ textStyle }>In order to access your data, please log in with your Spotify account.</p>
                         </div>
                     </section>
-                    <section className='sidebar-section'>
+                    <section className='sidebar-section slide-in-right'>
                         Sidebar
                     </section>
                 </div>

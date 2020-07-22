@@ -5,45 +5,53 @@ import Spotify from 'spotify-web-api-js';
 import axios from 'axios';
 
 import HeaderBar from '../../HeaderBar';
+import TableRow from './TableRow';
 
 const spotifyWebApi = new Spotify();
 
 function Top() {
 	const [ madeCall, setMadeCall ] = useState(false);
-	const [ topResults, setTopResults ] = useState([]);
+    const [ topResults, setTopResults ] = useState([]);
+
+    const authToken = sessionStorage.getItem('authToken');
+    
+    const getData = () => {
+        spotifyWebApi.setAccessToken(authToken);
+
+        spotifyWebApi.getMyTopArtists({
+            limit: 15
+        }).then(
+            function(data) {
+                console.log(data.items);
+                setTopResults(data.items);
+            },
+            function(err) {
+                console.log(err);
+
+                const headers = {
+                    refresh_token: sessionStorage.getItem('refreshToken')
+                };
+
+                axios.get('http://localhost:8000/refresh_token', { params: headers }).then(
+                    (response) => {
+                        console.log(response.data);
+
+                        sessionStorage.setItem('authToken', response.data.access_token);
+                        
+                        window.location.reload();
+                    }
+                );
+            }
+        );
+    }
 
 	useEffect(() => {
 		if (madeCall) return;
 
 		setMadeCall(true);
-		const authToken = sessionStorage.getItem('authToken');
 
 		if (authToken) {
-            spotifyWebApi.setAccessToken(authToken);
-
-			spotifyWebApi.getMyTopTracks().then(
-				function(data) {
-					console.log(data.items);
-					setTopResults(data.items);
-				},
-				function(err) {
-					console.log(err);
-
-					const headers = {
-						refresh_token: sessionStorage.getItem('refreshToken')
-					};
-
-					axios.get('http://localhost:8000/refresh_token', { params: headers }).then(
-						(response) => {
-							console.log(response.data);
-
-                            sessionStorage.setItem('authToken', response.data.access_token);
-                            
-                            window.location.reload();
-						}
-					);
-				}
-			);
+            getData();
 		}
 	});
 
@@ -53,13 +61,18 @@ function Top() {
 			<div id="corporum">
 				<section className="content-section slide-in-left">
 					<table>
-						<tbody>
-							<tr>
+                        <thead>
+                            <tr>
 								<th>Artist</th>
 								<th>Followers</th>
 								<th>Genre</th>
 								<th>Popularity</th>
 							</tr>
+                        </thead>
+						<tbody>
+                            { topResults.map((result) => {
+                                return <TableRow info={ result }/>
+                            }) }
 						</tbody>
 					</table>
 				</section>
