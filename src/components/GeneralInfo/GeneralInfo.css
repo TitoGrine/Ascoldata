@@ -48,6 +48,10 @@ h2 {
 	padding: 0.5em 0;
 }
 
+#info li a {
+	color: #1DB954;
+}
+
 #info li strong {
 	font-weight: 500;
 }
