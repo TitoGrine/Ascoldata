@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './GeneralInfo.css';
 import { Link } from 'react-router-dom';
 import { Image } from 'react-bootstrap';
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import Spotify from 'spotify-web-api-js';
 import axios from 'axios';
 
@@ -17,6 +18,20 @@ function GeneralInfo() {
 	const [ product, setProduct ] = useState('');
 	const [ link, setLink ] = useState('');
 	const [ uri, setURI ] = useState('');
+
+	const refreshToken = () => {
+		const headers = {
+			refresh_token: sessionStorage.getItem('refreshToken')
+		};
+
+		axios.get('http://localhost:8000/refresh_token', { params: headers }).then((response) => {
+			console.log(response.data);
+
+			sessionStorage.setItem('authToken', response.data.access_token);
+
+			window.location.reload();
+		});
+	};
 
 	useEffect(() => {
 		const authToken = sessionStorage.getItem('authToken');
@@ -41,19 +56,7 @@ function GeneralInfo() {
 				function(err) {
 					console.log(err);
 
-					const headers = {
-						refresh_token: sessionStorage.getItem('refreshToken')
-					};
-
-					axios.get('http://localhost:8000/refresh_token', { params: headers }).then(
-						(response) => {
-							console.log(response.data);
-
-							sessionStorage.setItem('authToken', response.data.access_token);
-                        
-                            window.location.reload();
-                        }
-					);
+					if (err.status == 401) refreshToken();
 				}
 			);
 		}
@@ -105,21 +108,66 @@ function GeneralInfo() {
 				</div>
 			</section>
 			<section className="sidebar-section slide-in-right">
-				<div className="side-content">
-					<div className="sidebar-tabs">
-						<button>Go to</button>
+			<div className="side-content">
+						<Tabs>
+							<TabList>
+								<Tab>Settings</Tab>
+								<Tab>Go to</Tab>
+							</TabList>
+
+							<TabPanel>
+								<div className="settings">
+									<form
+										onChange={(ev) => {
+											console.log(ev.target.value);
+										}}
+									>
+										<p> Select a time range: </p>
+										<div className="time-labels">
+											<label>
+												<input
+													id="short_term"
+													type="radio"
+													name="radios"
+													value="short_term"
+													defaultChecked
+												/>
+												<span className="checkmark" />
+												Short Term
+											</label>
+											<label>
+												<input
+													id="medium_term"
+													type="radio"
+													name="radios"
+													value="medium_term"
+												/>
+												<span className="checkmark" />
+												Medium Term
+											</label>
+											<label>
+												<input id="long_term" type="radio" name="radios" value="long_term" />
+												<span className="checkmark" />
+												Long Term
+											</label>
+										</div>
+									</form>
+								</div>
+							</TabPanel>
+							<TabPanel>
+								<ul className="redirects">
+									<li>
+										{' '}
+										<Link to="/top">Top</Link>{' '}
+									</li>
+									<li>
+										{' '}
+										<Link to="/">Playlists</Link>{' '}
+									</li>
+								</ul>
+							</TabPanel>
+						</Tabs>
 					</div>
-					<ul className="redirects">
-						<li>
-							{' '}
-							<Link to="/top">Top</Link>{' '}
-						</li>
-						<li>
-							{' '}
-							<Link to="/">Playlists</Link>{' '}
-						</li>
-					</ul>
-				</div>
 			</section>
 		</div>
 	);

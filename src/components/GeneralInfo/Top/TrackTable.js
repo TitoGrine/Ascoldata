@@ -1,25 +1,26 @@
 import React from 'react';
 
-import ArtistTableRow from './ArtistTableRow';
+import TrackTableRow from './TrackTableRow';
 
-function ArtistTable(props) {
+function TrackTable(props) {
 	return (
 		<table>
 			<thead>
 				<tr>
+					<th>Title</th>
+					<th>Album</th>
 					<th>Artist</th>
-					<th>Followers</th>
-					<th>Genre</th>
+					<th>Duration</th>
 					<th>Popularity</th>
 				</tr>
 			</thead>
 			<tbody>
 				{props.topResults.map((result) => {
-					return <ArtistTableRow info={result} />;
+					return <TrackTableRow info={result} />;
 				})}
 			</tbody>
 		</table>
 	);
 }
 
-export default ArtistTable;
+export default TrackTable;

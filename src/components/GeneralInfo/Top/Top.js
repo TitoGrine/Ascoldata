@@ -7,12 +7,13 @@ import axios from 'axios';
 
 import HeaderBar from '../../HeaderBar';
 import ArtistTable from './ArtistTable';
+import TrackTable from './TrackTable';
 
 const spotifyWebApi = new Spotify();
 
 function Top() {
 	const [ madeCall, setMadeCall ] = useState(false);
-	const [ topType, setTopType ] = useState('artist');
+	const [ topType, setTopType ] = useState('track');
 	const [ topResults, setTopResults ] = useState([]);
 	const [ timeRange, setTimeRange ] = useState('short_term');
 	const [ offset, setOffset ] = useState(0);
@@ -52,7 +53,7 @@ function Top() {
 						function(err) {
 							console.log(err);
 
-							if (err.status == 400) refreshToken();
+							if (err.status == 401) refreshToken();
 						}
 					);
 				break;
@@ -60,7 +61,7 @@ function Top() {
 			case 'track':
 				spotifyWebApi
 					.getMyTopTracks({
-						limit: 12,
+						limit: 10,
 						offset: offset,
 						time_range: timeRange
 					})
@@ -72,12 +73,25 @@ function Top() {
 						function(err) {
 							console.log(err);
 
-							if (err.status == 400) refreshToken();
+							if (err.status == 401) refreshToken();
 						}
 					);
 				break;
 			default:
 				break;
+		}
+	};
+
+	const renderTable = () => {
+		
+		if(topResults.length == 0)
+			return;
+
+		switch (topType) {
+			case 'artist':
+				return <ArtistTable topResults={topResults} />;
+			case 'track':
+				return <TrackTable topResults={topResults} />;
 		}
 	};
 
@@ -87,26 +101,16 @@ function Top() {
 				getData();
 			}
 		},
-		[ timeRange ]
+		[ timeRange, topType ]
 	);
 
-	useEffect(() => {
-		if (madeCall) return;
-
-		setMadeCall(true);
-
-		if (authToken) {
-			getData();
-		}
-	});
+	
 
 	return (
 		<React.Fragment>
 			<HeaderBar />
 			<div id="corporum">
-				<section className="content-section slide-in-left">
-					<ArtistTable topResults={ topResults } />
-				</section>
+				<section className="content-section slide-in-left">{renderTable()}</section>
 				<section className="sidebar-section slide-in-right">
 					<div className="side-content">
 						<Tabs>
@@ -117,6 +121,37 @@ function Top() {
 
 							<TabPanel>
 								<div className="settings">
+								<form
+										onChange={(ev) => {
+											setTopResults([]);
+											setTopType(ev.target.value);
+										}}
+									>
+										<p> View top: </p>
+										<div className="time-labels">
+											<label>
+												<input
+													id="track"
+													type="radio"
+													name="radios"
+													value="track"
+													defaultChecked
+												/>
+												<span className="checkmark" />
+												Tracks
+											</label>
+											<label>
+												<input
+													id="artist"
+													type="radio"
+													name="radios"
+													value="artist"
+												/>
+												<span className="checkmark" />
+												Artists
+											</label>
+										</div>
+									</form>
 									<form
 										onChange={(ev) => {
 											setTimeRange(ev.target.value);

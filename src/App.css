@@ -121,7 +121,9 @@ div.side-content ul.redirects li a:hover:before{
 /* React Tabs */
 
 .react-tabs {
-  width: 100%;
+	display:flex;
+	flex-direction: column;
+	width: 100%;
 }
 
 .react-tabs__tab-list {
@@ -131,7 +133,7 @@ div.side-content ul.redirects li a:hover:before{
   list-style-type: none;
   padding: 0;
 
-  font-size: 1.2em;
+  font-size: 1.3em;
   font-weight: 600;
 }
 
@@ -147,8 +149,7 @@ div.side-content ul.redirects li a:hover:before{
 }
 
 .react-tabs__tab-panel--selected {
-  width: 100%;
-  height: 100%;
+	flex-basis: 100%;
 }
 
 /* Animations */

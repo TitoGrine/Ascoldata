@@ -18,6 +18,8 @@ h2 {
 	display: flex;
 	flex-wrap: nowrap;
 	justify-content: space-between;
+	font-size: 1.2em;
+	font-weight: 300;
 }
 
 #info #image {

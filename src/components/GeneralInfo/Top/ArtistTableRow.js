@@ -1,6 +1,6 @@
 import React from 'react';
 
-function TableRow(props) {
+function ArtistTableRow(props) {
 	return (
 		<tr>
 			<td>{props.info.name}</td>
@@ -21,4 +21,4 @@ function TableRow(props) {
 	);
 }
 
-export default TableRow;
+export default ArtistTableRow;

@@ -1,8 +1,13 @@
 /* Main content styling */
 
+.content-section {
+	overflow-x: auto;
+}
+
 table {
 	margin: auto;
 	width: 100%;
+	box-sizing: border-box;
 	font-size: 1.1em;
 }
 
@@ -21,10 +26,24 @@ table tbody > tr:nth-child(even) {
 	background-color: rgb(250, 235, 215, 0.07);
 }
 
+.explicit {
+	opacity: 0.6;
+	font-size: 0.8em;
+	width: auto;
+}
+
 /* Sidebar styling */
 
 .settings {
-    padding: 1em 0.5em;
+	display: flex;
+	width: 100%;
+	height: 90%;
+	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+	-moz-box-sizing: border-box; /* Firefox, other Gecko */
+	box-sizing: border-box; /* Opera/IE 8+ */
+	flex-direction: column;
+	justify-content: space-around;
+	padding: 1em 0.5em;
 }
 
 form {
@@ -33,28 +52,28 @@ form {
 }
 
 form > p {
-    font-size: 1.1em;
-    font-weight: 500;
+	font-size: 1.2em;
+	font-weight: 500;
 }
 
 .time-labels {
-    width: 100%;
-    padding-left: 5%;
+	width: 100%;
+	padding-left: 5%;
 }
 
 form label {
 	flex-basis: 100%;
-    display: block;
-    position: relative;
-    cursor: pointer;
-    padding-left: 32px;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
+	display: block;
+	position: relative;
+	cursor: pointer;
+	padding-left: 32px;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
 
-    font-size: 1em;
-    font-weight: 500;
+	font-size: 1em;
+	font-weight: 500;
 }
 
 label > input {
@@ -62,18 +81,18 @@ label > input {
 	opacity: 0;
 	cursor: pointer;
 	height: 0;
-    width: 0;
+	width: 0;
 }
 
 /* Create a custom checkbox */
 .checkmark {
-    position: absolute;
-    top: 5px;
-    left: 0;
+	position: absolute;
+	top: 5px;
+	left: 0;
 	height: 18px;
 	width: 18px;
 	background-color: #191414;
-    border-radius: 50%;
+	border-radius: 50%;
 }
 
 /* When the checkbox is checked, add a blue background */
@@ -99,6 +118,6 @@ label .checkmark:after {
 	top: 5px;
 	height: 8px;
 	width: 8px;
-	background-color: #1DB954;
+	background-color: #1db954;
 	border-radius: 50%;
 }
