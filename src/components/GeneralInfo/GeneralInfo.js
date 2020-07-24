@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import './GeneralInfo.css';
-import { Link } from 'react-router-dom';
 import { Image } from 'react-bootstrap';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import Spotify from 'spotify-web-api-js';
 import axios from 'axios';
+
+import Redirects from '../Redirects';
 
 const spotifyWebApi = new Spotify();
 
@@ -18,18 +19,51 @@ function GeneralInfo() {
 	const [ product, setProduct ] = useState('');
 	const [ link, setLink ] = useState('');
 	const [ uri, setURI ] = useState('');
-	const [ calcStats, setCalcStats ] = useState(true);
+	const [ calcStats, setCalcStats ] = useState(false);
 
 	const calcUserStats = (results) => {
 		spotifyWebApi.getAudioFeaturesForTracks(results).then(
 			function(data) {
-				console.log(data);
+				console.log(data.audio_features);
+
+				const avgStats = {
+					acousticness: 0,
+					danceability: 0,
+					duration_ms: 0,
+					energy: 0,
+					instrumentalness: 0,
+					liveness: 0,
+					loudness: 0,
+					mode: 0,
+					speechiness: 0,
+					tempo: 0,
+					valence: 0
+				}
+
+				data.audio_features.forEach((track_info) => {
+					avgStats.acousticness += 2 * track_info.acousticness ;
+					avgStats.danceability += 2 * track_info.danceability ;
+					avgStats.duration_ms += 2 * track_info.duration_ms ;
+					avgStats.energy += 2 * track_info.energy ;
+					avgStats.instrumentalness += 2 * track_info.instrumentalness ;
+					avgStats.liveness += 2 * track_info.liveness ;
+					avgStats.loudness += 2 * track_info.loudness ;
+					avgStats.mode += track_info.mode;
+					avgStats.speechiness += 2 * track_info.speechiness ;
+					avgStats.tempo += 2 * track_info.tempo ;
+					avgStats.valence += 2 * track_info.valence ;
+				})
+
+				setCalcStats(true);
+
+				sessionStorage.setItem('userStats', JSON.stringify(avgStats));
+
+				//console.log(avgStats);
 			},
 			function(err) {
 				console.log(err);
 			}
 		);
-		console.log(results);
 	};
 
 	const getUserStats = () => {
@@ -49,9 +83,8 @@ function GeneralInfo() {
 				},
 				function(err) {
 					console.log(err);
-					setCalcStats(false);
 
-					if (err.status == 401) refreshToken();
+					if (err.status === 401) refreshToken();
 
 					return;
 				}
@@ -78,11 +111,12 @@ function GeneralInfo() {
 		if (authToken && user === '') {
 			spotifyWebApi.setAccessToken(authToken);
 
-			getUserStats();
+			if(!calcStats)
+				getUserStats();
 
 			spotifyWebApi.getMe().then(
 				function(data) {
-					console.log(data);
+					//console.log(data);
 
 					setUser(data.display_name);
 					setImage(data.images[0].url);
@@ -97,7 +131,7 @@ function GeneralInfo() {
 				function(err) {
 					console.log(err);
 
-					if (err.status == 401) refreshToken();
+					if (err.status === 401) refreshToken();
 				}
 			);
 		}
@@ -152,55 +186,11 @@ function GeneralInfo() {
 				<div className="side-content">
 					<Tabs>
 						<TabList>
-							<Tab>Settings</Tab>
 							<Tab>Go to</Tab>
 						</TabList>
 
 						<TabPanel>
-							<div className="settings">
-								<form
-									onChange={(ev) => {
-										console.log(ev.target.value);
-									}}
-								>
-									<p> Select a time range: </p>
-									<div className="time-labels">
-										<label>
-											<input
-												id="short_term"
-												type="radio"
-												name="radios"
-												value="short_term"
-												defaultChecked
-											/>
-											<span className="checkmark" />
-											Short Term
-										</label>
-										<label>
-											<input id="medium_term" type="radio" name="radios" value="medium_term" />
-											<span className="checkmark" />
-											Medium Term
-										</label>
-										<label>
-											<input id="long_term" type="radio" name="radios" value="long_term" />
-											<span className="checkmark" />
-											Long Term
-										</label>
-									</div>
-								</form>
-							</div>
-						</TabPanel>
-						<TabPanel>
-							<ul className="redirects">
-								<li>
-									{' '}
-									<Link to="/top">Top</Link>{' '}
-								</li>
-								<li>
-									{' '}
-									<Link to="/">Playlists</Link>{' '}
-								</li>
-							</ul>
+							<Redirects exclude='user' />
 						</TabPanel>
 					</Tabs>
 				</div>

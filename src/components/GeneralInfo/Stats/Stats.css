@@ -1,0 +1,24 @@
+.content-section h3 {
+    text-align: center;
+}
+
+#graphs {
+    display: grid;
+    height: 80%;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: 1fr 1fr;
+}
+
+.bar {
+    margin: auto;
+    flex-basis: 25%;
+    width: 70%;
+    height: 0.8em;
+    background: antiquewhite;
+    border-radius: 1em;
+}
+
+.bar .filled {
+    height: 100%;
+    border-radius: 1em 0 0 1em
+}

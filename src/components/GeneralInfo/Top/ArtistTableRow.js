@@ -6,7 +6,7 @@ function ArtistTableRow(props) {
 			<td>{props.info.name}</td>
 			<td>{props.info.followers.total}</td>
 			<td>
-				{props.info.genres.length == 0 ? (
+				{props.info.genres.length === 0 ? (
 					'undefined'
 				) : (
 					props.info.genres

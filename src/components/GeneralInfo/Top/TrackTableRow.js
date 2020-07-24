@@ -15,7 +15,7 @@ function TrackTableRow(props) {
 			<td>{props.info.name}</td>
 			<td>{props.info.album.name}</td>
 			<td>
-				{props.info.artists.length == 0 ? (
+				{props.info.artists.length === 0 ? (
 					'undefined'
 				) : (
 					props.info.artists

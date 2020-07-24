@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import './Top.css';
-import { Link } from 'react-router-dom';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import Spotify from 'spotify-web-api-js';
 import axios from 'axios';
@@ -8,11 +7,11 @@ import axios from 'axios';
 import HeaderBar from '../../HeaderBar';
 import ArtistTable from './ArtistTable';
 import TrackTable from './TrackTable';
+import Redirects from '../../Redirects';
 
 const spotifyWebApi = new Spotify();
 
 function Top() {
-	const [ madeCall, setMadeCall ] = useState(false);
 	const [ topType, setTopType ] = useState('track');
 	const [ topResults, setTopResults ] = useState([]);
 	const [ timeRange, setTimeRange ] = useState('short_term');
@@ -53,7 +52,7 @@ function Top() {
 						function(err) {
 							console.log(err);
 
-							if (err.status == 401) refreshToken();
+							if (err.status === 401) refreshToken();
 						}
 					);
 				break;
@@ -73,7 +72,7 @@ function Top() {
 						function(err) {
 							console.log(err);
 
-							if (err.status == 401) refreshToken();
+							if (err.status === 401) refreshToken();
 						}
 					);
 				break;
@@ -83,15 +82,15 @@ function Top() {
 	};
 
 	const renderTable = () => {
-		
-		if(topResults.length == 0)
-			return;
+		if (topResults.length === 0) return;
 
 		switch (topType) {
 			case 'artist':
 				return <ArtistTable topResults={topResults} />;
 			case 'track':
 				return <TrackTable topResults={topResults} />;
+			default:
+				return;
 		}
 	};
 
@@ -103,8 +102,6 @@ function Top() {
 		},
 		[ timeRange, topType ]
 	);
-
-	
 
 	return (
 		<React.Fragment>
@@ -121,7 +118,7 @@ function Top() {
 
 							<TabPanel>
 								<div className="settings">
-								<form
+									<form
 										onChange={(ev) => {
 											setTopResults([]);
 											setTopType(ev.target.value);
@@ -141,12 +138,7 @@ function Top() {
 												Tracks
 											</label>
 											<label>
-												<input
-													id="artist"
-													type="radio"
-													name="radios"
-													value="artist"
-												/>
+												<input id="artist" type="radio" name="radios" value="artist" />
 												<span className="checkmark" />
 												Artists
 											</label>
@@ -190,16 +182,7 @@ function Top() {
 								</div>
 							</TabPanel>
 							<TabPanel>
-								<ul className="redirects">
-									<li>
-										{' '}
-										<Link to="/top">Top</Link>{' '}
-									</li>
-									<li>
-										{' '}
-										<Link to="/">Playlists</Link>{' '}
-									</li>
-								</ul>
+								<Redirects exclude='top' />
 							</TabPanel>
 						</Tabs>
 					</div>

@@ -1,10 +1,11 @@
-import React, { Component, useState } from 'react';
+import React from 'react';
 import './App.css';
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 
 import Home from './components/Home/Home';
 import Login from './components/Login/Login';
 import Top from './components/GeneralInfo/Top/Top';
+import Stats from './components/GeneralInfo/Stats/Stats';
 
 function App() {
 
@@ -25,6 +26,11 @@ function App() {
             exact = { true }
             path = "/top"
             component = { Top }
+          />
+          <Route
+            exact = { true }
+            path = "/stats"
+            component = { Stats }
           />
         </Router>
       </div>

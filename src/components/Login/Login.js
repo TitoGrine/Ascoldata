@@ -1,9 +1,8 @@
-import React, { Component, useState, useEffect } from 'react';
+import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 
 import HeaderBar from '../HeaderBar';
-import Home from  '../Home/Home';
 
 class Login extends Component {
 
@@ -22,7 +21,7 @@ class Login extends Component {
         var e, r = /([^&;=]+)=?([^&;]*)/g,
             q = window.location.hash.substring(1);
         while ( e = r.exec(q)) {
-        hashParams[e[1]] = decodeURIComponent(e[2]);
+            hashParams[e[1]] = decodeURIComponent(e[2]);
         }
         return hashParams;
     }
