@@ -118,6 +118,18 @@ div.side-content ul.redirects li a:hover:before{
     font-weight: 800;
 }
 
+/* Tooltips */
+
+.tooltip.top > .tooltip-arrow, .tooltip > .tooltip-inner{
+	background-color: rgba(250,235,215,1.0);
+	color: #191414;
+	background: 1.0;
+}
+
+.tooltip.show {
+	opacity: 1;
+  }
+
 /* React Tabs */
 
 .react-tabs {

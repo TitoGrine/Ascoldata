@@ -10,7 +10,6 @@ function PercentBar(props) {
     return (
         <div className="bar">
             <div className="filled" style={ fillPercentage }>
-            { props.percentage }
             </div>
         </div>
     )
