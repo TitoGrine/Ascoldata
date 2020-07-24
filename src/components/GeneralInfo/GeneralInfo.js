@@ -43,11 +43,11 @@ function GeneralInfo() {
 				data.audio_features.forEach((track_info) => {
 					avgStats.acousticness += 2 * track_info.acousticness ;
 					avgStats.danceability += 2 * track_info.danceability ;
-					avgStats.duration_ms += 2 * track_info.duration_ms ;
+					avgStats.duration_ms += track_info.duration_ms / 50 ;
 					avgStats.energy += 2 * track_info.energy ;
 					avgStats.instrumentalness += 2 * track_info.instrumentalness ;
 					avgStats.liveness += 2 * track_info.liveness ;
-					avgStats.loudness += 2 * track_info.loudness ;
+					avgStats.loudness += track_info.loudness / 50 ;
 					avgStats.mode += track_info.mode;
 					avgStats.speechiness += 2 * track_info.speechiness ;
 					avgStats.tempo += 2 * track_info.tempo ;

@@ -5,19 +5,19 @@ function Redirects(props) {
 	const getRedirects = () => {
 		return (
 			<React.Fragment>
-				{props.exclude != 'user' && (
+				{props.exclude !== 'user' && (
 					<li>
 						{' '}
 						<Link to="/">User</Link>{' '}
 					</li>
 				)}
-                {props.exclude != 'top' && (
+                {props.exclude !== 'top' && (
 					<li>
 						{' '}
 						<Link to="/top">Top</Link>{' '}
 					</li>
 				)}
-                {props.exclude != 'statistics' && (
+                {props.exclude !== 'statistics' && (
 					<li>
 						{' '}
 						<Link to="/stats">Statistics</Link>{' '}

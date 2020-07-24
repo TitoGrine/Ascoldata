@@ -124,6 +124,7 @@ div.side-content ul.redirects li a:hover:before{
 	background-color: rgba(250,235,215,1.0);
 	color: #191414;
 	background: 1.0;
+	padding: 1em;
 }
 
 .tooltip.show {
