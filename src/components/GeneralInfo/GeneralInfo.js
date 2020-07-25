@@ -144,40 +144,32 @@ function GeneralInfo() {
 			<section className="content-section slide-in-left">
 				<div id="profile-info">
 					<h2>
-						{' '}
-						· Hello <strong>{user}</strong> ·
+						· Hello<strong> {user} </strong> ·
 					</h2>
 					<div id="info">
 						<div id="image">
 							<Image src={image} thumbnail />
 						</div>
-						<ul>
+						<ul id="user-info">
 							<li>
-								{' '}
 								<strong>ID:</strong> {id}
 							</li>
 							<li>
-								{' '}
 								<strong>Email:</strong> {email}
 							</li>
 							<li>
-								{' '}
 								<strong>Country:</strong> {country}
 							</li>
 							<li>
-								{' '}
 								<strong>Subscription:</strong> {product}
 							</li>
 							<li>
-								{' '}
 								<strong>No. followers:</strong> {followers}
 							</li>
 							<li>
-								{' '}
 								<strong>Spotify link:</strong> <a href={link}>{link}</a>
 							</li>
 							<li>
-								{' '}
 								<strong>Spotify URI:</strong> {uri}
 							</li>
 						</ul>

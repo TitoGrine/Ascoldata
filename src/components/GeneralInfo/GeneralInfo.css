@@ -8,8 +8,15 @@
 }
 
 #profile-info h2 {
-	text-align: center;
 	flex-basis: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin: 0;
+}
+
+#profile-info h2 strong {
+	margin: 0 0.4em;
 }
 
 #info {
@@ -19,15 +26,18 @@
 	justify-content: space-between;
 	font-size: 1.2em;
 	font-weight: 300;
+	width: 100%;
+	box-sizing: border-box;
 }
 
 #info #image {
 	text-align: center;
+	padding: 1em;
+	width: 30%;
 }
 
 #info #image img {
 	margin: auto;
-	width: 60%;
 	min-width: 8em;
 }
 
@@ -39,6 +49,7 @@
 #info ul {
 	padding: 0;
 	padding-left: 0.5em;
+	flex: 1 1 auto;
 }
 
 #info li {
