@@ -10,6 +10,7 @@ import Redirects from '../Redirects';
 const spotifyWebApi = new Spotify();
 
 function GeneralInfo() {
+	const [ authToken, setAuthToken ] = useState(sessionStorage.getItem('authToken'));
 	const [ user, setUser ] = useState('');
 	const [ id, setId ] = useState('');
 	const [ image, setImage ] = useState('');
@@ -50,7 +51,7 @@ function GeneralInfo() {
 					avgStats.loudness += track_info.loudness / 50 ;
 					avgStats.mode += track_info.mode;
 					avgStats.speechiness += 2 * track_info.speechiness ;
-					avgStats.tempo += 2 * track_info.tempo ;
+					avgStats.tempo += track_info.tempo / 50 ;
 					avgStats.valence += 2 * track_info.valence ;
 				})
 
@@ -101,14 +102,13 @@ function GeneralInfo() {
 
 			sessionStorage.setItem('authToken', response.data.access_token);
 
-			window.location.reload();
+			setAuthToken(response.data.access_token);
 		});
 	};
 
 	useEffect(() => {
-		const authToken = sessionStorage.getItem('authToken');
 
-		if (authToken && user === '') {
+		if (authToken) {
 			spotifyWebApi.setAccessToken(authToken);
 
 			if(!calcStats)
@@ -127,6 +127,8 @@ function GeneralInfo() {
 					setProduct(data.product);
 					setLink(data.external_urls.spotify);
 					setURI(data.uri);
+
+					sessionStorage.setItem('country', data.country);
 				},
 				function(err) {
 					console.log(err);
@@ -135,7 +137,7 @@ function GeneralInfo() {
 				}
 			);
 		}
-	});
+	}, [ authToken ]);
 
 	return (
 		<div id="corporum">

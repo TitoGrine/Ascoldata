@@ -5,7 +5,7 @@
 }
 
 table {
-	margin: auto;
+	margin: 0 auto;
 	width: 100%;
 	box-sizing: border-box;
 	font-size: 1.1em;
@@ -56,7 +56,7 @@ form > p {
 	font-weight: 500;
 }
 
-.time-labels {
+.time-labels, .type-labels {
 	width: 100%;
 	padding-left: 5%;
 }

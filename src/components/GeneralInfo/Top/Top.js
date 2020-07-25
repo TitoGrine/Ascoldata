@@ -12,7 +12,7 @@ import Redirects from '../../Redirects';
 const spotifyWebApi = new Spotify();
 
 function Top() {
-	const [ topType, setTopType ] = useState('track');
+	const [ topType, setTopType ] = useState('artist');
 	const [ topResults, setTopResults ] = useState([]);
 	const [ timeRange, setTimeRange ] = useState('short_term');
 	const [ offset, setOffset ] = useState(0);
@@ -40,7 +40,7 @@ function Top() {
 			case 'artist':
 				spotifyWebApi
 					.getMyTopArtists({
-						limit: 12,
+						limit: 10,
 						offset: offset,
 						time_range: timeRange
 					})
@@ -125,20 +125,20 @@ function Top() {
 										}}
 									>
 										<p> View top: </p>
-										<div className="time-labels">
+										<div className="type-labels">
 											<label>
-												<input
-													id="track"
-													type="radio"
-													name="radios"
-													value="track"
-													defaultChecked
-												/>
+												<input id="track" type="radio" name="radios" value="track" />
 												<span className="checkmark" />
 												Tracks
 											</label>
 											<label>
-												<input id="artist" type="radio" name="radios" value="artist" />
+												<input
+													id="artist"
+													type="radio"
+													name="radios"
+													value="artist"
+													defaultChecked
+												/>
 												<span className="checkmark" />
 												Artists
 											</label>
@@ -182,7 +182,7 @@ function Top() {
 								</div>
 							</TabPanel>
 							<TabPanel>
-								<Redirects exclude='top' />
+								<Redirects exclude="top" />
 							</TabPanel>
 						</Tabs>
 					</div>

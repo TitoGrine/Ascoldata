@@ -35,7 +35,7 @@ class Login extends Component {
                     <section className='content-section slide-in-left'>
                         <div className="col d-flex flex-column align-items-center justify-content-center" style={{ height: '100%'}}>
                             <form action="http://localhost:8000/login">
-                                <Button type="submit" size="lg">
+                                <Button type="submit" size="lg" style={ buttonStyle }>
                                     <strong>Log in with Spotify</strong>
                                 </Button>
                             </form>
@@ -58,6 +58,15 @@ class Login extends Component {
 const textStyle = {
     padding: '1.2em 0.5em',
     fontWeight: '300'
+}
+
+const buttonStyle = {
+    padding: '0.6em 1.4em',
+    fontSize: '1.3rem',
+    fontWeight: '400',
+    backgroundColor: '#1db954',
+    color: '#191414',
+    borderWidth: '0',
 }
 
 export default Login;

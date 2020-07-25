@@ -1,9 +1,10 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 function ArtistTableRow(props) {
 	return (
 		<tr>
-			<td>{props.info.name}</td>
+			<td><Link to={ '/artist?id=' + props.info.id } style={ linkStyle }>{props.info.name}</Link></td>
 			<td>{props.info.followers.total}</td>
 			<td>
 				{props.info.genres.length === 0 ? (
@@ -19,6 +20,10 @@ function ArtistTableRow(props) {
 			<td>{props.info.popularity}</td>
 		</tr>
 	);
+}
+
+const linkStyle = {
+	color: '#1db954'
 }
 
 export default ArtistTableRow;

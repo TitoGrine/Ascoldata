@@ -1,0 +1,35 @@
+
+.stat-card {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    place-content: center;
+    font-size: 1.2em;
+    font-weight: 400;
+}
+
+p > svg {
+    margin-left: 0.4em;
+    font-size: 0.9em;
+    cursor: help;
+}
+
+strong.stat-value {
+    font-size: 1.2em;
+    font-weight: 500;
+}
+
+.bar {
+    margin: auto;
+    flex-basis: 25%;
+    width: 70%;
+    max-height: 0.7em;
+    background: antiquewhite;
+    border-radius: 2em;
+    margin: 0.6em auto 0 auto;
+}
+
+.bar .filled {
+    height: 100%;
+    border-radius: 2em 0 0 2em;
+}

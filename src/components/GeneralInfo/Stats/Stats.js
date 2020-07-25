@@ -9,8 +9,6 @@ import StatCard from './StatCard';
 function Stats() {
 	const [ stats, setStats ] = useState(JSON.parse(sessionStorage.getItem('userStats')));
 
-    console.log(stats);
-
     const formatDuration = (duration_ms) => {
 
         let seconds = Math.round(duration_ms / 1000);
@@ -18,17 +16,6 @@ function Stats() {
 
        return ('00' + minutes).slice(-2) + ':' + ('00' + seconds % 60).slice(-2);
    }
-
-	const acoustExplanation = 'Acousticness measures how acoustic your favourite songs are.';
-	const danceExplanation =
-		'Danceability describes how suitable your favourite songs are for dancing based on a combination of musical elements including tempo, rhythm stability, beat strength, and overall regularity.';
-	const energyExplanation =
-		'Energy represents a perceptual measure of intensity and activity. Typically, energetic songs feel fast, loud, and noisy. Perceptual features contributing to this attribute include dynamic range, perceived loudness, timbre, onset rate, and general entropy.';
-	const instrumExplanation = 'Instrumentalness measures how likely your favourite songs are to not contain vocals.';
-	const liveExplanation =
-		'Liveness predicts the likelyhood your favourite songs are played live, that is, in the presence of an audience.';
-	const valExplanation =
-		'Valence measures how positive your favourite songs are. High valence means positive songs, while low valence represents more negative songs.';
 
 	return (
 		<React.Fragment>
@@ -47,7 +34,7 @@ function Stats() {
 							barStat={ false }
                             title="Average loudness"
 							value={ Math.round(stats.loudness) }
-                            units='db'
+                            units='dB'
 						/>
                     </section>
 					<section id="graphs">
@@ -55,42 +42,42 @@ function Stats() {
 							barStat={ true }
                             title="Acousticness"
 							percentage={stats.acousticness}
-							explanation={acoustExplanation}
+							explanation= 'acoustExplanation'
 							color="seagreen"
 						/>
 						<StatCard
 							barStat={ true }
                             title="Danceability"
 							percentage={stats.danceability}
-							explanation={danceExplanation}
+							explanation='danceExplanation'
 							color="violet"
 						/>
 						<StatCard
 							barStat={ true }
                             title="Energy"
 							percentage={stats.energy}
-							explanation={energyExplanation}
+							explanation='energyExplanation'
 							color="orangered"
 						/>
 						<StatCard
 							barStat={ true }
                             title="Instrumentalness"
 							percentage={stats.instrumentalness}
-							explanation={instrumExplanation}
+							explanation='instrumExplanation'
 							color="limegreen"
 						/>
 						<StatCard
 							barStat={ true }
                             title="Liveness"
 							percentage={stats.liveness}
-							explanation={liveExplanation}
+							explanation='liveExplanation'
 							color="deepskyblue"
 						/>
 						<StatCard
 							barStat={ true }
                             title="Valence"
 							percentage={stats.valence}
-							explanation={valExplanation}
+							explanation='valExplanation'
 							color="orange"
 						/>
 					</section>
@@ -103,7 +90,7 @@ function Stats() {
 							</TabList>
 
 							<TabPanel>
-								<Redirects exclude="top" />
+								<Redirects exclude="statistics" />
 							</TabPanel>
 						</Tabs>
 					</div>

@@ -7,8 +7,7 @@
 	height: 100%;
 }
 
-h2 {
-	align-self: center;
+#profile-info h2 {
 	text-align: center;
 	flex-basis: 100%;
 }
