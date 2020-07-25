@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 function TrackTableRow(props) {
 
@@ -12,7 +13,7 @@ function TrackTableRow(props) {
 
 	return (
 		<tr>
-			<td>{props.info.name}</td>
+			<td><Link to={ '/track?id=' + props.info.id } style={ linkStyle }>{props.info.name}</Link></td>
 			<td>{props.info.album.name}</td>
 			<td>
 				{props.info.artists.length === 0 ? (
@@ -30,5 +31,10 @@ function TrackTableRow(props) {
 		</tr>
 	);
 }
+
+const linkStyle = {
+	color: '#1db954'
+}
+
 
 export default TrackTableRow;

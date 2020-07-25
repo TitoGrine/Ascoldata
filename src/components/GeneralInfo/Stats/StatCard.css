@@ -4,8 +4,12 @@
     display: flex;
     flex-direction: column;
     place-content: center;
-    font-size: 1.2em;
+    font-size: 1.3em;
     font-weight: 400;
+}
+
+.stat-card p {
+    margin-bottom: 0.4em;
 }
 
 p > svg {

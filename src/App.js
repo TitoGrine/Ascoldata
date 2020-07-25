@@ -7,6 +7,7 @@ import Login from './components/Login/Login';
 import Top from './components/GeneralInfo/Top/Top';
 import Stats from './components/GeneralInfo/Stats/Stats';
 import Artist from './components/GeneralInfo/Artist/Artist';
+import Track from './components/GeneralInfo/Track/Track';
 
 function App() {
 
@@ -37,6 +38,11 @@ function App() {
             exact = { true }
             path = "/artist"
             component = { Artist }
+          />
+          <Route
+            exact = { true }
+            path = "/track"
+            component = { Track }
           />
         </Router>
       </div>

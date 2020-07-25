@@ -17,6 +17,12 @@ function Artist() {
 
 	const [ authToken, setAuthToken ] = useState(sessionStorage.getItem('authToken'));
 	const [ artist, setArtist ] = useState(query.get('id'));
+	const [ artistName, setArtistName ] = useState('');
+	const [ artistImage, setArtistImage ] = useState('');
+	const [ artistFollowers, setArtistFollowers ] = useState('');
+	const [ artistGenres, setArtistGenres ] = useState('');
+    const [ artistPopularity, setArtistPopularity ] = useState('');
+    
 	const [ artistStats, setArtistStats ] = useState({});
 
 	const refreshToken = () => {
@@ -33,14 +39,14 @@ function Artist() {
 		});
 	};
 
-	const getArtistMetaData = async (info) => {
+	const getArtistMetaData = async () => {
 		spotifyWebApi.getArtist(artist).then(
 			function(data) {
-				info.name = data.name;
-				info.image = data.images.length === 0 ? '' : data.images[0].url;
-				info.followers = data.followers.total;
-				info.genres = data.genres;
-				info.popularity = data.popularity;
+				setArtistName(data.name);
+				setArtistImage(data.images.length === 0 ? '' : data.images[0].url);
+				setArtistFollowers(data.followers.total);
+				setArtistGenres(data.genres);
+				setArtistPopularity(data.popularity);
 			},
 			function(err) {
 				console.log(err);
@@ -50,14 +56,14 @@ function Artist() {
 		);
 	};
 
-	const getArtistTopTracks = async (info) => {
+	const getArtistTopTracks = async () => {
 		spotifyWebApi.getArtistTopTracks(artist, sessionStorage.getItem('country')).then(
 			function(data) {
-				info.tracks = data.tracks.map((track) => {
+				let tracks = data.tracks.map((track) => {
 					return track.id;
 				});
 
-				getArtistStats(info);
+				getArtistStats(tracks);
 			},
 			function(err) {
 				console.log(err);
@@ -67,8 +73,8 @@ function Artist() {
 		);
 	};
 
-	const getArtistStats = async (info) => {
-		spotifyWebApi.getAudioFeaturesForTracks(info.tracks).then(
+	const getArtistStats = async (tracks) => {
+		spotifyWebApi.getAudioFeaturesForTracks(tracks).then(
 			function(data) {
 				const avgStats = {
 					acousticness: 0,
@@ -98,10 +104,7 @@ function Artist() {
 					avgStats.valence += 10 * track_info.valence;
 				});
 
-				info.stats = avgStats;
-
-				setArtistStats(info);
-				console.log(info);
+				setArtistStats(avgStats);
 			},
 			function(err) {
 				console.log(err);
@@ -112,11 +115,8 @@ function Artist() {
 	};
 
 	const getData = async () => {
-		const info = {};
-
-		getArtistMetaData(info).then(function(data) {
-			getArtistTopTracks(info);
-		});
+		getArtistMetaData();
+		getArtistTopTracks();
 	};
 
 	useEffect(
@@ -134,70 +134,59 @@ function Artist() {
 			<HeaderBar />
 			<div id="corporum">
 				<section className="content-section slide-in-left">
-					<h2> · {artistStats.name} · </h2>
+					<h2> · {artistName} · </h2>
 					<div id="artist-info">
 						<div id="image">
-							<Image src={artistStats.image} thumbnail />
+							<Image src={artistImage} thumbnail />
 						</div>
-						<div className="info-cards">
-							Followers
-							<strong>{artistStats.followers}</strong>
-						</div>
-						<div className="info-cards">
-							Genre
-							<strong>{typeof artistStats.genres === 'undefined' ? '' : artistStats.genres[0]}</strong>
-						</div>
-						<div className="info-cards">
-							Popularity
-							<strong>{artistStats.popularity}</strong>
-						</div>
+						<StatCard barStat={false} title="Followers" value={artistFollowers} units="" />
+                        <StatCard barStat={false} title="Genre" value={artistGenres[0]} units="" />
+						<StatCard barStat={false} title="Popularity" value={artistPopularity} units="" />
 					</div>
-					{typeof artistStats.stats !== 'undefined' && (
 						<div id="artist-stats">
 							<StatCard
 								barStat={true}
 								title="Acousticness"
-								percentage={artistStats.stats.acousticness}
+								percentage={artistStats.acousticness}
 								explanation="acoustExplanation"
 								color="seagreen"
 							/>
 							<StatCard
 								barStat={true}
 								title="Danceability"
-								percentage={artistStats.stats.danceability}
+								percentage={artistStats.danceability}
 								explanation="danceExplanation"
 								color="violet"
 							/>
 							<StatCard
 								barStat={true}
 								title="Energy"
-								percentage={artistStats.stats.energy}
+								percentage={artistStats.energy}
 								explanation="energyExplanation"
 								color="orangered"
 							/>
 							<StatCard
 								barStat={true}
 								title="Instrumentalness"
-								percentage={artistStats.stats.instrumentalness}
+								percentage={artistStats.instrumentalness}
 								explanation="instrumExplanation"
 								color="limegreen"
 							/>
 							<StatCard
 								barStat={true}
 								title="Liveness"
-								percentage={artistStats.stats.liveness}
+								percentage={artistStats.liveness}
 								explanation="liveExplanation"
 								color="deepskyblue"
 							/>
 							<StatCard
 								barStat={true}
 								title="Valence"
-								percentage={artistStats.stats.valence}
+								percentage={artistStats.valence}
 								explanation="valExplanation"
 								color="orange"
 							/>
 						</div>
-					)}
 				</section>
 				<section className="sidebar-section slide-in-right">
 					<div className="side-content">
