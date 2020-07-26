@@ -22,7 +22,7 @@ function Stats() {
 			<HeaderBar />
 			<div id="corporum">
 				<section className="content-section slide-in-left">
-					<h3> · Statistics ·</h3>
+					<h3> · Your Statistics ·</h3>
                     <section id="numbered-data">
                         <StatCard
 							barStat={ false }

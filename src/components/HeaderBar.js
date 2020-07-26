@@ -5,21 +5,18 @@ class HeaderBar extends Component {
     render() {
         return (
             <Navbar id='navbar' expand="lg">
-                <Navbar.Brand href="/" style={ linkStyle }><strong>Spotify Stats</strong></Navbar.Brand>
+                <Navbar.Brand href="/" >Ascoldata</Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
                     <Nav >
-                        <Nav.Link href="/" style={ linkStyle }>Home</Nav.Link>
-                        <Nav.Link href="/login" style={ linkStyle }>Login</Nav.Link>
+                        <Nav.Link href="/" >Home</Nav.Link>
+                        <Nav.Link href="/about" >About</Nav.Link>
+                        <Nav.Link href="/login" >Login</Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>
         )
     }
-}
-
-const linkStyle = {
-    color: '#191414'
 }
 
 

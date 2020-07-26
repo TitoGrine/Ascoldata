@@ -13,6 +13,22 @@ body {
 	padding: 1em;
 }
 
+#navbar .navbar-nav {
+	display: flex;
+	justify-content: space-between;
+	width: 25%;
+}
+
+#navbar .nav-link {
+	font-size: 1.2em;
+	font-weight: 400;
+	color: #191414;
+}
+
+#navbar .nav-link:hover {
+	font-weight: 600;
+}
+
 #corporum {
 	display: grid;
 	height: calc(100vh - 4em);

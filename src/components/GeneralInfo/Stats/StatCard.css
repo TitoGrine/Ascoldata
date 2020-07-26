@@ -36,4 +36,29 @@ strong.stat-value {
 .bar .filled {
     height: 100%;
     border-radius: 2em 0 0 2em;
+    clip-path: inset(0 100% 0 0);
+    -webkit-animation: load 1s linear 0.5s;
+    animation: load 1s linear 0.5s;
+    animation-fill-mode: forwards;
+}
+
+.bar .filled::before {
+    clip-path: inset(0 100% 0 0);
+}
+
+@-webkit-keyframes load {
+    0% {
+        clip-path: inset(0 100% 0 0);
+    }
+    100% {
+        clip-path: inset(0 0 0 0);
+    }
+}
+@keyframes load {
+    0% {
+        clip-path: inset(0 100% 0 0);
+    }
+    100% {
+        clip-path: inset(0 0 0 0);
+    }
 }

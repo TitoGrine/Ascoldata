@@ -91,17 +91,17 @@ function Artist() {
 				};
 
 				data.audio_features.forEach((track_info) => {
-					avgStats.acousticness += 10 * track_info.acousticness;
-					avgStats.danceability += 10 * track_info.danceability;
-					avgStats.duration_ms += track_info.duration_ms / 10;
-					avgStats.energy += 10 * track_info.energy;
-					avgStats.instrumentalness += 10 * track_info.instrumentalness;
-					avgStats.liveness += 10 * track_info.liveness;
-					avgStats.loudness += track_info.loudness / 10;
+					avgStats.acousticness += 100 * track_info.acousticness / data.audio_features.length;
+					avgStats.danceability += 100 * track_info.danceability / data.audio_features.length;
+					avgStats.duration_ms += track_info.duration_ms / data.audio_features.length;
+					avgStats.energy += 100 * track_info.energy / data.audio_features.length;
+					avgStats.instrumentalness += 100 * track_info.instrumentalness / data.audio_features.length;
+					avgStats.liveness += 100 * track_info.liveness / data.audio_features.length;
+					avgStats.loudness += track_info.loudness / data.audio_features.length;
 					avgStats.mode += track_info.mode;
-					avgStats.speechiness += 10 * track_info.speechiness;
-					avgStats.tempo += track_info.tempo / 10;
-					avgStats.valence += 10 * track_info.valence;
+					avgStats.speechiness += 100 * track_info.speechiness / data.audio_features.length;
+					avgStats.tempo += track_info.tempo / data.audio_features.length;
+					avgStats.valence += 100 * track_info.valence / data.audio_features.length;
 				});
 
 				setArtistStats(avgStats);
