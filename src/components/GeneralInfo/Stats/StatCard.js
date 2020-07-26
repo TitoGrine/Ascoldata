@@ -47,7 +47,7 @@ function StatCard(props) {
 					<p>
 						{props.title}
 					</p>
-					<Textfit className="stat-value" mode="multi" max='30'>{props.value + ' ' + props.units}</Textfit>
+					<strong className="stat-value">{props.value + ' ' + props.units}</strong>
 				</div>
             )
         }

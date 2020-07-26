@@ -120,6 +120,7 @@ function Track() {
 							units=""
 						/>
 						<StatCard barStat={false} title="Duration" value={formatDuration(trackDuration)} units="" />
+						<StatCard barStat={false} title="Key" value={keyBinds[trackStats.pitchKey + 1]} units="" />
 						<StatCard barStat={false} title="Popularity" value={trackPopularity} units="" />
 					</div>
 					<div id="track-stats">
@@ -184,5 +185,7 @@ function Track() {
 		</React.Fragment>
 	);
 }
+
+const keyBinds = ['Unknown', 'C', 'C♯, D♭', 'D', 'D♯, E♭', 'E', 'F', 'F♯, G♭', 'G','G♯, A♭', 'A', 'A♯, B♭', 'B']
 
 export default Track;
