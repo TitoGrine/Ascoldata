@@ -3,10 +3,10 @@
     flex-direction: column;
 }
 
-.content-section h3 {
+.content-section .title {
     text-align: center;
     place-items: center;
-    margin-bottom: 0.8em;
+    margin: 0.3em 0;
 }
 
 #numbered-data {

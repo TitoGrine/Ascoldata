@@ -3,6 +3,7 @@ import './StatCard.css';
 import PercentBar from './PercentBar';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { MdInfo } from 'react-icons/md';
+import { Textfit } from 'react-textfit';
 
 function StatCard(props) {
 
@@ -26,8 +27,6 @@ function StatCard(props) {
 		}
 	}
 
-	
-
 	const getCard = () => {
 		if (props.barStat) {
 			return (
@@ -48,7 +47,7 @@ function StatCard(props) {
 					<p>
 						{props.title}
 					</p>
-					<strong className="stat-value"> {props.value + ' ' + props.units}</strong>
+					<Textfit className="stat-value" mode="multi" max='30'>{props.value + ' ' + props.units}</Textfit>
 				</div>
             )
         }

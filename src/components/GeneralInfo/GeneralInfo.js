@@ -6,6 +6,7 @@ import Spotify from 'spotify-web-api-js';
 import axios from 'axios';
 
 import Redirects from '../Redirects';
+import { Textfit } from 'react-textfit';
 
 const spotifyWebApi = new Spotify();
 
@@ -143,9 +144,9 @@ function GeneralInfo() {
 		<div id="corporum">
 			<section className="content-section slide-in-left">
 				<div id="profile-info">
-					<h2>
+					<Textfit className="username" mode="single" max='40'>
 						· Hello<strong> {user} </strong> ·
-					</h2>
+					</Textfit>
 					<div id="info">
 						<div id="image">
 							<Image src={image} thumbnail />

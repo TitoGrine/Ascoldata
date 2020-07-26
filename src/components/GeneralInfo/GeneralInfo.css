@@ -7,7 +7,7 @@
 	height: 100%;
 }
 
-#profile-info h2 {
+#profile-info .username {
 	flex-basis: 100%;
 	display: flex;
 	justify-content: center;

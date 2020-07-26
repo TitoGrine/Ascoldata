@@ -3,8 +3,9 @@
     flex-direction: column;
 }
 
-h2 {
-	text-align: center;
+.track-title {
+    text-align: center;
+    margin-bottom: 0.8em;
 }
 
 #track-info {

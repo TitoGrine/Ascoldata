@@ -5,6 +5,7 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import HeaderBar from '../../HeaderBar';
 import Redirects from '../../Redirects';
 import StatCard from './StatCard';
+import { Textfit } from 'react-textfit';
 
 function Stats() {
 	const [ stats, setStats ] = useState(JSON.parse(sessionStorage.getItem('userStats')));
@@ -22,7 +23,7 @@ function Stats() {
 			<HeaderBar />
 			<div id="corporum">
 				<section className="content-section slide-in-left">
-					<h3> · Your Statistics ·</h3>
+					<Textfit className="title" mode="single" max='35'> · Your Statistics ·</Textfit>
                     <section id="numbered-data">
                         <StatCard
 							barStat={ false }

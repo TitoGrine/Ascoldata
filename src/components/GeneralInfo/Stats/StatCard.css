@@ -37,8 +37,8 @@ strong.stat-value {
     height: 100%;
     border-radius: 2em 0 0 2em;
     clip-path: inset(0 100% 0 0);
-    -webkit-animation: load 1s linear 0.5s;
-    animation: load 1s linear 0.5s;
+    -webkit-animation: load 1.2s linear 0.5s;
+    animation: load 1.2s linear 0.5s;
     animation-fill-mode: forwards;
 }
 

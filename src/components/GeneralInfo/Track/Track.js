@@ -3,7 +3,7 @@ import './Track.css';
 import Spotify from 'spotify-web-api-js';
 import axios from 'axios';
 import { useLocation } from 'react-router-dom';
-import { Image } from 'react-bootstrap';
+import { Textfit } from 'react-textfit';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 
 import HeaderBar from '../../HeaderBar';
@@ -21,17 +21,16 @@ function Track() {
 	const [ trackAlbum, setTrackAlbum ] = useState('');
 	const [ trackArtists, setTrackArtists ] = useState('');
 	const [ trackDuration, setTrackDuration ] = useState('');
-    const [ trackPopularity, setTrackPopularity ] = useState('');
-    
-    const [ trackStats, setTrackStats ] = useState({});
-    
-    const formatDuration = (duration_ms) => {
+	const [ trackPopularity, setTrackPopularity ] = useState('');
 
-        let seconds = Math.round(duration_ms / 1000);
-        let minutes = Math.floor(seconds / 60);
+	const [ trackStats, setTrackStats ] = useState({});
 
-       return ('00' + minutes).slice(-2) + ':' + ('00' + seconds % 60).slice(-2);
-   }
+	const formatDuration = (duration_ms) => {
+		let seconds = Math.round(duration_ms / 1000);
+		let minutes = Math.floor(seconds / 60);
+
+		return ('00' + minutes).slice(-2) + ':' + ('00' + seconds % 60).slice(-2);
+	};
 
 	const refreshToken = () => {
 		const headers = {
@@ -77,10 +76,10 @@ function Track() {
 					mode: data.mode,
 					speechiness: 100 * data.speechiness,
 					tempo: data.tempo,
-                    valence: 100 * data.valence,
-                    pitchKey: data.key
-                };
-                
+					valence: 100 * data.valence,
+					pitchKey: data.key
+				};
+
 				setTrackStats(avgStats);
 			},
 			function(err) {
@@ -111,57 +110,62 @@ function Track() {
 			<HeaderBar />
 			<div id="corporum">
 				<section className="content-section slide-in-left">
-					<h2> · {trackName} · </h2>
+					<Textfit className="track-title" mode="single" max='40'>· {trackName} ·</Textfit>
 					<div id="track-info">
 						<StatCard barStat={false} title="Album" value={trackAlbum} units="" />
-                        <StatCard barStat={false} title="Artist" value={trackArtists === '' ? '' : trackArtists[0].name} units="" />
+						<StatCard
+							barStat={false}
+							title="Artist"
+							value={trackArtists === '' ? '' : trackArtists[0].name}
+							units=""
+						/>
 						<StatCard barStat={false} title="Duration" value={formatDuration(trackDuration)} units="" />
 						<StatCard barStat={false} title="Popularity" value={trackPopularity} units="" />
 					</div>
-						<div id="track-stats">
-							<StatCard
-								barStat={true}
-								title="Acousticness"
-								percentage={trackStats.acousticness}
-								explanation="acoustExplanation"
-								color="seagreen"
-							/>
-							<StatCard
-								barStat={true}
-								title="Danceability"
-								percentage={trackStats.danceability}
-								explanation="danceExplanation"
-								color="violet"
-							/>
-							<StatCard
-								barStat={true}
-								title="Energy"
-								percentage={trackStats.energy}
-								explanation="energyExplanation"
-								color="orangered"
-							/>
-							<StatCard
-								barStat={true}
-								title="Instrumentalness"
-								percentage={trackStats.instrumentalness}
-								explanation="instrumExplanation"
-								color="limegreen"
-							/>
-							<StatCard
-								barStat={true}
-								title="Liveness"
-								percentage={trackStats.liveness}
-								explanation="liveExplanation"
-								color="deepskyblue"
-							/>
-							<StatCard
-								barStat={true}
-								title="Valence"
-								percentage={trackStats.valence}
-								explanation="valExplanation"
-								color="orange"
-							/>
-						</div>
+					<div id="track-stats">
+						<StatCard
+							barStat={true}
+							title="Acousticness"
+							percentage={trackStats.acousticness}
+							explanation="acoustExplanation"
+							color="seagreen"
+						/>
+						<StatCard
+							barStat={true}
+							title="Danceability"
+							percentage={trackStats.danceability}
+							explanation="danceExplanation"
+							color="violet"
+						/>
+						<StatCard
+							barStat={true}
+							title="Energy"
+							percentage={trackStats.energy}
+							explanation="energyExplanation"
+							color="orangered"
+						/>
+						<StatCard
+							barStat={true}
+							title="Instrumentalness"
+							percentage={trackStats.instrumentalness}
+							explanation="instrumExplanation"
+							color="limegreen"
+						/>
+						<StatCard
+							barStat={true}
+							title="Liveness"
+							percentage={trackStats.liveness}
+							explanation="liveExplanation"
+							color="deepskyblue"
+						/>
+						<StatCard
+							barStat={true}
+							title="Valence"
+							percentage={trackStats.valence}
+							explanation="valExplanation"
+							color="orange"
+						/>
+					</div>
 				</section>
 				<section className="sidebar-section slide-in-right">
 					<div className="side-content">

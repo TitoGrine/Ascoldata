@@ -9,6 +9,7 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import HeaderBar from '../../HeaderBar';
 import Redirects from '../../Redirects';
 import StatCard from '../Stats/StatCard';
+import { Textfit } from 'react-textfit';
 
 const spotifyWebApi = new Spotify();
 
@@ -134,7 +135,7 @@ function Artist() {
 			<HeaderBar />
 			<div id="corporum">
 				<section className="content-section slide-in-left">
-					<h2> · {artistName} · </h2>
+					<Textfit className="artist-title" mode="single" max='40'> · {artistName} · </Textfit>
 					<div id="artist-info">
 						<div id="image">
 							<Image src={artistImage} thumbnail />
