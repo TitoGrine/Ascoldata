@@ -15,7 +15,7 @@ function ArtistTable(props) {
 			</thead>
 			<tbody>
 				{props.topResults.map((result) => {
-					return <ArtistTableRow info={result} />;
+					return <ArtistTableRow key={result.id} info={result} />;
 				})}
 			</tbody>
 		</table>

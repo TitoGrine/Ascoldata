@@ -8,6 +8,7 @@ import Top from './components/GeneralInfo/Top/Top';
 import Stats from './components/GeneralInfo/Stats/Stats';
 import Artist from './components/GeneralInfo/Artist/Artist';
 import Track from './components/GeneralInfo/Track/Track';
+import Album from './components/GeneralInfo/Album/Album';
 
 function App() {
 
@@ -43,6 +44,11 @@ function App() {
             exact = { true }
             path = "/track"
             component = { Track }
+          />
+          <Route
+            exact = { true }
+            path = "/album"
+            component = { Album }
           />
         </Router>
       </div>

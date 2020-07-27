@@ -14,9 +14,9 @@ const spotifyWebApi = new Spotify();
 
 function Track() {
 	const query = new URLSearchParams(useLocation().search);
+	const track = query.get('id');
 
 	const [ authToken, setAuthToken ] = useState(sessionStorage.getItem('authToken'));
-	const [ track, setTrack ] = useState(query.get('id'));
 	const [ trackName, setTrackName ] = useState('');
 	const [ trackAlbum, setTrackAlbum ] = useState('');
 	const [ trackArtists, setTrackArtists ] = useState('');
@@ -110,7 +110,7 @@ function Track() {
 			<HeaderBar />
 			<div id="corporum">
 				<section className="content-section slide-in-left">
-					<Textfit className="track-title" mode="single" max='40'>· {trackName} ·</Textfit>
+					<Textfit className="track-title" mode="single" max={40}>· {trackName} ·</Textfit>
 					<div id="track-info">
 						<StatCard barStat={false} title="Album" value={trackAlbum} units="" />
 						<StatCard

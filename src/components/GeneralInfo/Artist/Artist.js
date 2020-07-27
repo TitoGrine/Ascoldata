@@ -15,9 +15,9 @@ const spotifyWebApi = new Spotify();
 
 function Artist() {
 	const query = new URLSearchParams(useLocation().search);
+	const artist = query.get('id');
 
 	const [ authToken, setAuthToken ] = useState(sessionStorage.getItem('authToken'));
-	const [ artist, setArtist ] = useState(query.get('id'));
 	const [ artistName, setArtistName ] = useState('');
 	const [ artistImage, setArtistImage ] = useState('');
 	const [ artistFollowers, setArtistFollowers ] = useState('');
@@ -135,7 +135,7 @@ function Artist() {
 			<HeaderBar />
 			<div id="corporum">
 				<section className="content-section slide-in-left">
-					<Textfit className="artist-title" mode="single" max='40'> · {artistName} · </Textfit>
+					<Textfit className="artist-title" mode="single" max={40}> · {artistName} · </Textfit>
 					<div id="artist-info">
 						<div id="image">
 							<Image src={artistImage} thumbnail />

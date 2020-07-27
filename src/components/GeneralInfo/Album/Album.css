@@ -3,12 +3,12 @@
     flex-direction: column;
 }
 
-.track-title {
+.album-title {
     text-align: center;
     margin-bottom: 0.8em;
 }
 
-#track-info {
+#album-info {
     flex: 0 1 auto;
     display: flex;
     flex-wrap: nowrap;
@@ -17,7 +17,13 @@
     padding: 0.5em;
 }
 
-#track-stats {
+#image > img {
+    width: 150px;
+    height: 150px;
+    object-fit:cover;
+}
+
+#album-stats {
     flex-basis: 1 1 auto;
     margin: auto;
     display: grid;

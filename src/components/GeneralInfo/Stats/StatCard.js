@@ -3,7 +3,6 @@ import './StatCard.css';
 import PercentBar from './PercentBar';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { MdInfo } from 'react-icons/md';
-import { Textfit } from 'react-textfit';
 
 function StatCard(props) {
 

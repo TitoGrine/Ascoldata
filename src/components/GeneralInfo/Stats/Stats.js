@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import './Stats.css';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 
@@ -8,7 +8,7 @@ import StatCard from './StatCard';
 import { Textfit } from 'react-textfit';
 
 function Stats() {
-	const [ stats, setStats ] = useState(JSON.parse(sessionStorage.getItem('userStats')));
+	const stats = JSON.parse(sessionStorage.getItem('userStats'));
 
     const formatDuration = (duration_ms) => {
 
