@@ -98,6 +98,18 @@ function Top() {
 		}
 	};
 
+	const updateTopType = (ev) => {
+		setTopResults([]);
+		history.push('/top?type=' + ev.target.value + '&time_range=' + timeRange);
+		setTopType(ev.target.value);
+	};
+
+	const updateTimeRange = (ev) => {
+		setTopResults([]);
+		history.push('/top?type=' + topType + '&time_range=' + ev.target.value);
+		setTimeRange(ev.target.value);
+	};
+
 	useEffect(
 		() => {
 			if (authToken) {
@@ -122,13 +134,7 @@ function Top() {
 
 							<TabPanel>
 								<div className="settings">
-									<form
-										onChange={(ev) => {
-											setTopResults([]);
-											history.push('/top?type=' + ev.target.value + '&time_range='+ timeRange)
-											setTopType(ev.target.value);
-										}}
-									>
+									<form>
 										<p> View top: </p>
 										<div className="type-labels">
 											<label>
@@ -137,24 +143,27 @@ function Top() {
 													type="radio"
 													name="radios"
 													value="track"
+													checked={topType.localeCompare('track') === 0}
+													onChange={updateTopType}
 												/>
 												<span className="checkmark" />
 												Tracks
 											</label>
 											<label>
-												<input id="artist" type="radio" name="radios" value="artist" 
+												<input
+													id="artist"
+													type="radio"
+													name="radios"
+													value="artist"
+													checked={topType.localeCompare('artist') === 0}
+													onChange={updateTopType}
 												/>
 												<span className="checkmark" />
 												Artists
 											</label>
 										</div>
 									</form>
-									<form
-										onChange={(ev) => {
-											history.push('/top?type=' + topType + '&time_range='+ ev.target.value)
-											setTimeRange(ev.target.value);
-										}}
-									>
+									<form>
 										<p> Select a time range: </p>
 										<div className="time-labels">
 											<label>
@@ -163,7 +172,8 @@ function Top() {
 													type="radio"
 													name="radios"
 													value="short_term"
-													defaultChecked
+													checked={timeRange.localeCompare('short_term') === 0}
+													onChange={updateTimeRange}
 												/>
 												<span className="checkmark" />
 												Short Term
@@ -174,12 +184,21 @@ function Top() {
 													type="radio"
 													name="radios"
 													value="medium_term"
+													checked={timeRange.localeCompare('medium_term') === 0}
+													onChange={updateTimeRange}
 												/>
 												<span className="checkmark" />
 												Medium Term
 											</label>
 											<label>
-												<input id="long_term" type="radio" name="radios" value="long_term" />
+												<input
+													id="long_term"
+													type="radio"
+													name="radios"
+													value="long_term"
+													checked={timeRange.localeCompare('long_term') === 0}
+													onChange={updateTimeRange}
+												/>
 												<span className="checkmark" />
 												Long Term
 											</label>
