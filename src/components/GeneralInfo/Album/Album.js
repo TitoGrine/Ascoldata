@@ -2,13 +2,14 @@ import React, { useState, useEffect } from 'react';
 import './Album.css';
 import Spotify from 'spotify-web-api-js';
 import axios from 'axios';
-import { useLocation } from 'react-router-dom';
+import { useLocation, Link } from 'react-router-dom';
 import { Textfit } from 'react-textfit';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 
 import HeaderBar from '../../HeaderBar';
 import Redirects from '../../Redirects';
 import StatCard from '../Stats/StatCard';
+import { Image } from 'react-bootstrap';
 
 const spotifyWebApi = new Spotify();
 
@@ -17,24 +18,26 @@ function Track() {
 	const album = query.get('id');
 
 	const [ authToken, setAuthToken ] = useState(sessionStorage.getItem('authToken'));
-    const [ albumName, setAlbumName ] = useState('');
-    const [ albumImage, setAlbumImage ] = useState('');
-    const [ albumLabel, setAlbumLabel ] = useState('');
-    const [ albumArtists, setAlbumArtists ] = useState('');
-    const [ albumNrSongs, setAlbumNrSongs ] = useState('');
+	const [ albumName, setAlbumName ] = useState('');
+	const [ albumImage, setAlbumImage ] = useState('');
+	const [ albumLabel, setAlbumLabel ] = useState('');
+	const [ albumArtists, setAlbumArtists ] = useState('');
+	const [ albumNrSongs, setAlbumNrSongs ] = useState('');
 	const [ albumGenres, setAlbumGenres ] = useState('');
-    const [ albumDuration, setAlbumDuration ] = useState('');
-    const [ albumRelDate, setAlbumRelDate ] = useState('');
+	const [ albumDuration, setAlbumDuration ] = useState('');
+	const [ albumRelDate, setAlbumRelDate ] = useState('');
 	const [ albumPopularity, setAlbumPopularity ] = useState('');
 
 	const [ albumStats, setAlbumStats ] = useState({});
 
 	const formatDuration = (duration_ms) => {
 		let seconds = Math.round(duration_ms / 1000);
-        let minutes = Math.floor(seconds / 60);
-        let hours = Math.floor(minutes / 60);
+		let minutes = Math.floor(seconds / 60);
+		let hours = Math.floor(minutes / 60);
 
-		return hours === 0 ? ('00' + minutes).slice(-2) + ':' + ('00' + seconds % 60).slice(-2) : hours + 'h ' + ('00' + minutes % 60).slice(-2) + 'min';
+		return hours === 0
+			? ('00' + minutes).slice(-2) + ':' + ('00' + seconds % 60).slice(-2)
+			: hours + 'h ' + ('00' + minutes % 60).slice(-2) + 'min';
 	};
 
 	const refreshToken = () => {
@@ -54,18 +57,22 @@ function Track() {
 	const getAlbumMetaData = async () => {
 		spotifyWebApi.getAlbum(album).then(
 			function(data) {
-                console.log(data);
+				//console.log(data);
 
-                setAlbumName(data.name);
-                setAlbumImage(data.images.length === 0 ? '' : data.images[0].url);
-                setAlbumLabel(data.label);
-                setAlbumArtists(data.artists);
-                setAlbumNrSongs(data.tracks.items.length);
-                setAlbumGenres(data.genres);
-                setAlbumRelDate(data.release_date);
-                setAlbumPopularity(data.popularity);
+				setAlbumName(data.name);
+				setAlbumImage(data.images.length === 0 ? '' : data.images[0].url);
+				setAlbumLabel(data.label);
+				setAlbumArtists(data.artists);
+				setAlbumNrSongs(data.tracks.items.length);
+				setAlbumGenres(data.genres);
+				setAlbumRelDate(data.release_date);
+				setAlbumPopularity(data.popularity);
 
-                getAlbumFeatures(data.tracks.items.map((track) => {return track.id;}))
+				getAlbumFeatures(
+					data.tracks.items.map((track) => {
+						return track.id;
+					})
+				);
 			},
 			function(err) {
 				console.log(err);
@@ -106,7 +113,7 @@ function Track() {
 					avgStats.valence += 100 * track_info.valence / data.audio_features.length;
 				});
 
-                setAlbumDuration(avgStats.duration_ms);
+				setAlbumDuration(avgStats.duration_ms);
 				setAlbumStats(avgStats);
 			},
 			function(err) {
@@ -119,6 +126,23 @@ function Track() {
 
 	const getData = async () => {
 		getAlbumMetaData();
+	};
+
+	const getArtist = () => {
+		if (albumArtists !== '' && albumArtists.length > 0) {
+			return (
+				<StatCard
+					barStat={false}
+					title="Artist"
+					value={
+						albumArtists.map((artist) => {
+							return <Link key={artist.id} to={ '/artist?id=' + artist.id } style={ {color:'#1db954'} }>{artist.name}</Link>;
+						})
+					}
+					units=""
+				/>
+			);
+		}
 	};
 
 	useEffect(
@@ -136,19 +160,21 @@ function Track() {
 			<HeaderBar />
 			<div id="corporum">
 				<section className="content-section slide-in-left">
-					<Textfit className="album-title" mode="single" max={40}>· {albumName} ·</Textfit>
+					<Textfit className="album-title" mode="single" max={36}>
+						· {albumName} ·
+					</Textfit>
 					<div id="album-info">
-						<StatCard
-							barStat={false}
-							title="Artist"
-							value={albumArtists === '' ? '' : albumArtists[0].name}
-							units=""
-						/>
-                        <StatCard barStat={false} title="Label" value={albumLabel} units="" />
-                        <StatCard barStat={false} title="Release Date" value={albumRelDate} units="" />
-						<StatCard barStat={false} title="Duration" value={formatDuration(albumDuration)} units="" />
-                        <StatCard barStat={false} title="Nr. Songs" value={albumNrSongs} units="" />
-                        <StatCard barStat={false} title="Popularity" value={albumPopularity} units="" />
+						<div id="image">
+							<Image src={albumImage} thumbnail />
+						</div>
+						<div id="misc-data">
+							{getArtist()}
+							<StatCard barStat={false} title="Label" value={albumLabel} units="" />
+							<StatCard barStat={false} title="Release Date" value={albumRelDate} units="" />
+							<StatCard barStat={false} title="Duration" value={formatDuration(albumDuration)} units="" />
+                            <StatCard barStat={false} title="Nr. Songs" value={albumNrSongs} units="" />
+							<StatCard barStat={false} title="Popularity" value={albumPopularity} units="" />
+						</div>
 					</div>
 					<div id="album-stats">
 						<StatCard
@@ -162,7 +188,7 @@ function Track() {
 							barStat={true}
 							title="Danceability"
 							percentage={albumStats.danceability}
-                            explanation="danceExplanation"
+							explanation="danceExplanation"
 							color="violet"
 						/>
 						<StatCard

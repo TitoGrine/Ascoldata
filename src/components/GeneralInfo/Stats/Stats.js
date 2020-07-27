@@ -37,6 +37,12 @@ function Stats() {
 							value={ Math.round(stats.loudness) }
                             units='dB'
 						/>
+						<StatCard
+							barStat={ false }
+                            title="Average tempo"
+							value={ Math.round(stats.tempo) }
+                            units='bpm'
+						/>
                     </section>
 					<section id="graphs">
 						<StatCard

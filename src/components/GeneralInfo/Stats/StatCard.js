@@ -46,7 +46,7 @@ function StatCard(props) {
 					<p>
 						{props.title}
 					</p>
-					<strong className="stat-value">{props.value + ' ' + props.units}</strong>
+					<strong className="stat-value">{props.value}<p>{' ' + props.units}</p></strong>
 				</div>
             )
         }

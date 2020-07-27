@@ -110,7 +110,7 @@ function Track() {
 			<HeaderBar />
 			<div id="corporum">
 				<section className="content-section slide-in-left">
-					<Textfit className="track-title" mode="single" max={40}>· {trackName} ·</Textfit>
+					<Textfit className="track-title" mode="single" max={36}>· {trackName} ·</Textfit>
 					<div id="track-info">
 						<StatCard barStat={false} title="Album" value={trackAlbum} units="" />
 						<StatCard

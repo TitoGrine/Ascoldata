@@ -4,7 +4,8 @@
 }
 
 .artist-title {
-	text-align: center;
+    text-align: center;
+    margin-bottom: 0.4em;
 }
 
 #artist-info {
@@ -16,10 +17,11 @@
     padding: 0.5em;
 }
 
-#image > img {
+#artist-info #image > img {
     width: 150px;
     height: 150px;
     object-fit:cover;
+    margin: 0 0.5em;
 }
 
 #artist-stats {

@@ -1,8 +1,8 @@
 import React from 'react';
 
 import HeaderBar from '../HeaderBar';
-import LoginWarning from '../Login/LoginWarning';
 import GeneralInfo from '../GeneralInfo/GeneralInfo';
+import Login from '../Login/Login';
 
 function Home() {
 
@@ -17,7 +17,7 @@ function Home() {
         return (
             <React.Fragment>
                 <HeaderBar />
-                <LoginWarning />
+                <Login />
             </React.Fragment>
         )
     }

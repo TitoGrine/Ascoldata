@@ -120,7 +120,7 @@ function GeneralInfo() {
 					//console.log(data);
 
 					setUser(data.display_name);
-					setImage(data.images[0].url);
+					setImage(data.images.length === 0 ? '' : data.images[0].url);
 					setId(data.id);
 					setEmail(data.email);
 					setCountry(data.country);
@@ -130,6 +130,7 @@ function GeneralInfo() {
 					setURI(data.uri);
 
 					sessionStorage.setItem('country', data.country);
+					sessionStorage.setItem('profile-picture', data.images.length === 0 ? '' : data.images[0].url);
 				},
 				function(err) {
 					console.log(err);
@@ -144,7 +145,7 @@ function GeneralInfo() {
 		<div id="corporum">
 			<section className="content-section slide-in-left">
 				<div id="profile-info">
-					<Textfit className="username" mode="single" max='40'>
+					<Textfit className="username" mode="single" max={36}>
 						· Hello<strong> {user} </strong> ·
 					</Textfit>
 					<div id="info">

@@ -5,7 +5,7 @@
 
 .album-title {
     text-align: center;
-    margin-bottom: 0.8em;
+    margin-bottom: 0.4em;
 }
 
 #album-info {
@@ -17,9 +17,27 @@
     padding: 0.5em;
 }
 
-#image > img {
+#misc-data {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+    width: 80%;
+}
+
+#misc-data div {
+    flex: 1 0 30%;
+}
+
+#misc-data > div:nth-child(n + 4) {
+    padding-top: 1em;
+    flex: 1 0 21%;
+}
+
+#album-info #image > img {
     width: 150px;
     height: 150px;
+    margin: 0 0.5em;
     object-fit:cover;
 }
 

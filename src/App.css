@@ -15,8 +15,15 @@ body {
 
 #navbar .navbar-nav {
 	display: flex;
-	justify-content: space-between;
-	width: 20%;
+	align-items: center;
+}
+
+#navbar .navbar-nav a{
+	margin: 0 0.5em;
+}
+
+#navbar .navbar-nav a:last-child {
+	margin: 0;
 }
 
 #navbar .nav-link {

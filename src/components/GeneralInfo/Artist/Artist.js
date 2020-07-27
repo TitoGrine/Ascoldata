@@ -135,13 +135,13 @@ function Artist() {
 			<HeaderBar />
 			<div id="corporum">
 				<section className="content-section slide-in-left">
-					<Textfit className="artist-title" mode="single" max={40}> · {artistName} · </Textfit>
+					<Textfit className="artist-title" mode="single" max={36}> · {artistName} · </Textfit>
 					<div id="artist-info">
 						<div id="image">
 							<Image src={artistImage} thumbnail />
 						</div>
 						<StatCard barStat={false} title="Followers" value={artistFollowers} units="" />
-                        <StatCard barStat={false} title="Genre" value={artistGenres[0]} units="" />
+                        <StatCard barStat={false} title="Genre" value={artistGenres.length === 0 ? 'undefined' : artistGenres[0]} units="" />
 						<StatCard barStat={false} title="Popularity" value={artistPopularity} units="" />
 					</div>
 						<div id="artist-stats">

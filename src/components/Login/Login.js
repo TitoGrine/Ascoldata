@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 
-import HeaderBar from '../HeaderBar';
-
 class Login extends Component {
 
     constructor(){
@@ -30,7 +28,6 @@ class Login extends Component {
         if(!sessionStorage.getItem('authToken')){
             return (
                 <React.Fragment>
-                <HeaderBar />
                 <div id='corporum'>
                     <section className='content-section slide-in-left'>
                         <div className="col d-flex flex-column align-items-center justify-content-center" style={{ height: '100%'}}>
