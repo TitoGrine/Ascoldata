@@ -14,7 +14,7 @@ function Redirects(props) {
                 {props.exclude !== 'top' && (
 					<li>
 						{' '}
-						<Link to="/top">Top</Link>{' '}
+						<Link to="/top?type=track&time_range=short_term">Top</Link>{' '}
 					</li>
 				)}
                 {props.exclude !== 'statistics' && (

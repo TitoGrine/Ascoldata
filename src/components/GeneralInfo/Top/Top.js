@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './Top.css';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+import { useLocation, useHistory } from 'react-router-dom';
 import Spotify from 'spotify-web-api-js';
 import axios from 'axios';
 
@@ -12,9 +13,12 @@ import Redirects from '../../Redirects';
 const spotifyWebApi = new Spotify();
 
 function Top() {
-	const [ topType, setTopType ] = useState('track');
+	const query = new URLSearchParams(useLocation().search);
+	const history = useHistory();
+
+	const [ topType, setTopType ] = useState(query.get('type'));
 	const [ topResults, setTopResults ] = useState([]);
-	const [ timeRange, setTimeRange ] = useState('short_term');
+	const [ timeRange, setTimeRange ] = useState(query.get('time_range'));
 	const [ offset, setOffset ] = useState(0);
 
 	const authToken = sessionStorage.getItem('authToken');
@@ -66,7 +70,7 @@ function Top() {
 					})
 					.then(
 						function(data) {
-							console.log(data.items);
+							//console.log(data.items);
 							setTopResults(data.items);
 						},
 						function(err) {
@@ -100,7 +104,7 @@ function Top() {
 				getData();
 			}
 		},
-		[ timeRange, topType ]
+		[ authToken, timeRange, topType ]
 	);
 
 	return (
@@ -121,6 +125,7 @@ function Top() {
 									<form
 										onChange={(ev) => {
 											setTopResults([]);
+											history.push('/top?type=' + ev.target.value + '&time_range='+ timeRange)
 											setTopType(ev.target.value);
 										}}
 									>
@@ -132,13 +137,13 @@ function Top() {
 													type="radio"
 													name="radios"
 													value="track"
-													defaultChecked
 												/>
 												<span className="checkmark" />
 												Tracks
 											</label>
 											<label>
-												<input id="artist" type="radio" name="radios" value="artist" />
+												<input id="artist" type="radio" name="radios" value="artist" 
+												/>
 												<span className="checkmark" />
 												Artists
 											</label>
@@ -146,6 +151,7 @@ function Top() {
 									</form>
 									<form
 										onChange={(ev) => {
+											history.push('/top?type=' + topType + '&time_range='+ ev.target.value)
 											setTimeRange(ev.target.value);
 										}}
 									>
