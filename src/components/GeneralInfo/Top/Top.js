@@ -17,6 +17,7 @@ const spotifyWebApi = new Spotify();
 function Top() {
 	const query = new URLSearchParams(useLocation().search);
 	const history = useHistory();
+	const limit = 10;
 
 	const [ topType, setTopType ] = useState(query.get('type'));
 	const [ topResults, setTopResults ] = useState([]);
@@ -33,13 +34,13 @@ function Top() {
 			case 'artist':
 				spotifyWebApi
 					.getMyTopArtists({
-						limit: 10,
+						limit: limit,
 						offset: offset,
 						time_range: timeRange
 					})
 					.then(
 						function(data) {
-							//console.log(data.items);
+							setTotalItems(data.total);
 							setTopResults(data.items);
 						},
 						function(err) {
@@ -53,7 +54,7 @@ function Top() {
 			case 'track':
 				spotifyWebApi
 					.getMyTopTracks({
-						limit: 10,
+						limit: limit,
 						offset: offset,
 						time_range: timeRange
 					})
@@ -89,19 +90,21 @@ function Top() {
 
 	const updateTopType = (ev) => {
 		setTopResults([]);
+		setOffset(0);
 		history.push('/top?type=' + ev.target.value + '&time_range=' + timeRange);
 		setTopType(ev.target.value);
 	};
 
 	const updateTimeRange = (ev) => {
 		setTopResults([]);
+		setOffset(0);
 		history.push('/top?type=' + topType + '&time_range=' + ev.target.value);
 		setTimeRange(ev.target.value);
 	};
 
 	const switchPage = (ev) => {
 		if(Number.isInteger(ev))
-			setOffset(ev);
+			setOffset(10 * (ev - 1));
 	};
 
 	useEffect(
@@ -120,8 +123,8 @@ function Top() {
 				<section className="content-section slide-in-left">
 					{renderTable()}
 					<Pagination
-						activePage={offset}
-						itemsCountPerPage={10}
+						activePage={offset / 10 + 1}
+						itemsCountPerPage={limit}
 						totalItemsCount={totalItems}
 						pageRangeDisplayed={5}
 						onChange={switchPage}

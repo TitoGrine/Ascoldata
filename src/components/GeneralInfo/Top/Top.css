@@ -2,6 +2,9 @@
 
 .content-section {
 	overflow-x: auto;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
 }
 
 table {
@@ -122,15 +125,53 @@ label .checkmark:after {
 
 .pagination {
 	align-self: center;
-	padding: 0.5em;
-	margin: 0;
+	justify-self: end;
+	margin: 0.5em;
 }
 
 .pagination > li {
-	margin: 0 0.5em;
 	text-decoration: none;
 }
 
 .pagination > li a {
+	color: antiquewhite;
+	padding: 0.4em 0.8em;
+	border: 1px solid antiquewhite;
+	box-sizing: border-box;
+	font-size: 1.1em;
+}
+
+.pagination > li:first-child a{
+	border-radius: 5px 0 0 5px;
+}
+
+.pagination > li:last-child a{
+	border-radius: 0 5px 5px 0;
+}
+
+.pagination > li.active a {
+	font-weight: 600;
 	color: #1db954;
+}
+
+.pagination > li.disabled a {
+	color: slategray;
+}
+
+.pagination > li a:hover {
+	text-decoration: none;
+	background-color: antiquewhite;
+	color: #191414;
+}
+
+.pagination > li.disabled a:hover {
+	background-color: #191414;
+	color: slategray;
+	cursor: default;
+}
+
+.pagination > li.active a:hover {
+	background-color: #191414;
+	color: #1db954;
+	cursor: default;
 }
