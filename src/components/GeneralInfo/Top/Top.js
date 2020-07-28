@@ -3,6 +3,7 @@ import './Top.css';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { useLocation, useHistory } from 'react-router-dom';
 import Spotify from 'spotify-web-api-js';
+import Pagination from 'react-js-pagination';
 
 import { refreshToken } from '../../Auth/TokenFunc';
 
@@ -21,6 +22,7 @@ function Top() {
 	const [ topResults, setTopResults ] = useState([]);
 	const [ timeRange, setTimeRange ] = useState(query.get('time_range'));
 	const [ offset, setOffset ] = useState(0);
+	const [ totalItems, setTotalItems ] = useState(0);;
 
 	const authToken = sessionStorage.getItem('authToken');
 
@@ -57,7 +59,7 @@ function Top() {
 					})
 					.then(
 						function(data) {
-							//console.log(data.items);
+							setTotalItems(data.total);
 							setTopResults(data.items);
 						},
 						function(err) {
@@ -97,20 +99,34 @@ function Top() {
 		setTimeRange(ev.target.value);
 	};
 
+	const switchPage = (ev) => {
+		if(Number.isInteger(ev))
+			setOffset(ev);
+	};
+
 	useEffect(
 		() => {
 			if (authToken) {
 				getData();
 			}
 		},
-		[ authToken, timeRange, topType ]
+		[ authToken, timeRange, topType, offset ]
 	);
 
 	return (
 		<React.Fragment>
 			<HeaderBar />
 			<div id="corporum">
-				<section className="content-section slide-in-left">{renderTable()}</section>
+				<section className="content-section slide-in-left">
+					{renderTable()}
+					<Pagination
+						activePage={offset}
+						itemsCountPerPage={10}
+						totalItemsCount={totalItems}
+						pageRangeDisplayed={5}
+						onChange={switchPage}
+					/>
+				</section>
 				<section className="sidebar-section slide-in-right">
 					<div className="side-content">
 						<Tabs>
@@ -201,7 +217,7 @@ function Top() {
 				</section>
 			</div>
 		</React.Fragment>
-	)
+	);
 }
 
 export default Top;

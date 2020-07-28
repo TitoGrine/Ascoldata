@@ -22,7 +22,7 @@ function UserPlaylists() {
 
 		spotifyWebApi
 			.getUserPlaylists({
-				limit: 20,
+				limit: 10,
 				offset: offset
 			})
 			.then(

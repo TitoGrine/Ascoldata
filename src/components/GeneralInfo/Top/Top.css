@@ -119,3 +119,18 @@ label .checkmark:after {
 	background-color: #1db954;
 	border-radius: 50%;
 }
+
+.pagination {
+	align-self: center;
+	padding: 0.5em;
+	margin: 0;
+}
+
+.pagination > li {
+	margin: 0 0.5em;
+	text-decoration: none;
+}
+
+.pagination > li a {
+	color: #1db954;
+}
