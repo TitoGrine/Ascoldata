@@ -6,6 +6,8 @@ import { useLocation, Link } from 'react-router-dom';
 import { Textfit } from 'react-textfit';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 
+import { refreshToken } from '../../Auth/TokenFunc';
+
 import HeaderBar from '../../HeaderBar';
 import Redirects from '../../Redirects';
 import StatCard from '../Stats/StatCard';
@@ -38,20 +40,6 @@ function Track() {
 		return hours === 0
 			? ('00' + minutes).slice(-2) + ':' + ('00' + seconds % 60).slice(-2)
 			: hours + 'h ' + ('00' + minutes % 60).slice(-2) + 'min';
-	};
-
-	const refreshToken = () => {
-		const headers = {
-			refresh_token: sessionStorage.getItem('refreshToken')
-		};
-
-		axios.get('http://localhost:8000/refresh_token', { params: headers }).then((response) => {
-			console.log(response.data);
-
-			sessionStorage.setItem('authToken', response.data.access_token);
-
-			setAuthToken(response.data.access_token);
-		});
 	};
 
 	const getAlbumMetaData = async () => {

@@ -5,6 +5,8 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import Spotify from 'spotify-web-api-js';
 import axios from 'axios';
 
+import { refreshToken } from '../Auth/TokenFunc';
+
 import Redirects from '../Redirects';
 import { Textfit } from 'react-textfit';
 
@@ -91,20 +93,6 @@ function GeneralInfo() {
 					return;
 				}
 			);
-	};
-
-	const refreshToken = async () => {
-		const headers = {
-			refresh_token: sessionStorage.getItem('refreshToken')
-		};
-
-		axios.get('http://localhost:8000/refresh_token', { params: headers }).then((response) => {
-			console.log(response.data);
-
-			sessionStorage.setItem('authToken', response.data.access_token);
-
-			setAuthToken(response.data.access_token);
-		});
 	};
 
 	useEffect(() => {

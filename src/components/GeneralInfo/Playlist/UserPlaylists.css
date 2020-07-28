@@ -1,0 +1,31 @@
+/* Main content styling */
+
+.content-section {
+	overflow-x: auto;
+}
+
+table {
+	margin: 0 auto;
+	width: 100%;
+	box-sizing: border-box;
+	font-size: 1.1em;
+}
+
+table th {
+	border-bottom: 1px solid antiquewhite;
+	padding: 0 0.5rem 0.3em 0.5rem;
+}
+
+table td {
+	padding: 0.5rem 1rem 0.5rem 0.5rem;
+	text-align: start;
+	vertical-align: baseline;
+}
+
+table tbody > tr:nth-child(even) {
+	background-color: rgb(250, 235, 215, 0.07);
+}
+
+.track-artists a ~ a:before {
+	content: ', '
+}

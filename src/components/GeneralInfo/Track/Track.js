@@ -6,6 +6,8 @@ import { useLocation } from 'react-router-dom';
 import { Textfit } from 'react-textfit';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 
+import { refreshToken } from '../../Auth/TokenFunc';
+
 import HeaderBar from '../../HeaderBar';
 import Redirects from '../../Redirects';
 import StatCard from '../Stats/StatCard';
@@ -30,20 +32,6 @@ function Track() {
 		let minutes = Math.floor(seconds / 60);
 
 		return ('00' + minutes).slice(-2) + ':' + ('00' + seconds % 60).slice(-2);
-	};
-
-	const refreshToken = () => {
-		const headers = {
-			refresh_token: sessionStorage.getItem('refreshToken')
-		};
-
-		axios.get('http://localhost:8000/refresh_token', { params: headers }).then((response) => {
-			console.log(response.data);
-
-			sessionStorage.setItem('authToken', response.data.access_token);
-
-			setAuthToken(response.data.access_token);
-		});
 	};
 
 	const getTrackMetaData = async () => {

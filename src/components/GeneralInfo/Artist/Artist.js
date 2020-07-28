@@ -6,6 +6,8 @@ import { useLocation } from 'react-router-dom';
 import { Image } from 'react-bootstrap';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 
+import { refreshToken } from '../../Auth/TokenFunc';
+
 import HeaderBar from '../../HeaderBar';
 import Redirects from '../../Redirects';
 import StatCard from '../Stats/StatCard';
@@ -25,20 +27,6 @@ function Artist() {
     const [ artistPopularity, setArtistPopularity ] = useState('');
     
 	const [ artistStats, setArtistStats ] = useState({});
-
-	const refreshToken = () => {
-		const headers = {
-			refresh_token: sessionStorage.getItem('refreshToken')
-		};
-
-		axios.get('http://localhost:8000/refresh_token', { params: headers }).then((response) => {
-			console.log(response.data);
-
-			sessionStorage.setItem('authToken', response.data.access_token);
-
-			setAuthToken(response.data.access_token);
-		});
-	};
 
 	const getArtistMetaData = async () => {
 		spotifyWebApi.getArtist(artist).then(

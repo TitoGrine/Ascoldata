@@ -30,12 +30,6 @@ table tbody > tr:nth-child(even) {
 	content: ', '
 }
 
-.explicit {
-	opacity: 0.6;
-	font-size: 0.8em;
-	width: auto;
-}
-
 /* Sidebar styling */
 
 .settings {

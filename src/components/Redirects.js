@@ -23,6 +23,12 @@ function Redirects(props) {
 						<Link to="/stats">Statistics</Link>{' '}
 					</li>
 				)}
+				{props.exclude !== 'playlists' && (
+					<li>
+						{' '}
+						<Link to="/playlists">Playlists</Link>{' '}
+					</li>
+				)}
 			</React.Fragment>
 		);
 	};

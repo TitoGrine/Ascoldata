@@ -3,7 +3,8 @@ import './Top.css';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { useLocation, useHistory } from 'react-router-dom';
 import Spotify from 'spotify-web-api-js';
-import axios from 'axios';
+
+import { refreshToken } from '../../Auth/TokenFunc';
 
 import HeaderBar from '../../HeaderBar';
 import ArtistTable from './ArtistTable';
@@ -22,20 +23,6 @@ function Top() {
 	const [ offset, setOffset ] = useState(0);
 
 	const authToken = sessionStorage.getItem('authToken');
-
-	const refreshToken = () => {
-		const headers = {
-			refresh_token: sessionStorage.getItem('refreshToken')
-		};
-
-		axios.get('http://localhost:8000/refresh_token', { params: headers }).then((response) => {
-			console.log(response.data);
-
-			sessionStorage.setItem('authToken', response.data.access_token);
-
-			window.location.reload();
-		});
-	};
 
 	const getData = () => {
 		spotifyWebApi.setAccessToken(authToken);
@@ -214,7 +201,7 @@ function Top() {
 				</section>
 			</div>
 		</React.Fragment>
-	);
+	)
 }
 
 export default Top;
