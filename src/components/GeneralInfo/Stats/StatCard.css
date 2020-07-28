@@ -21,6 +21,12 @@ p > svg {
 strong.stat-value {
     font-size: 1.2em;
     font-weight: 500;
+    display: flex;
+    justify-content: center;
+}
+
+strong.stat-value p {
+    padding-left: 0.1em;
 }
 
 .bar {

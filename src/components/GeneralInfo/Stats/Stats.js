@@ -2,6 +2,8 @@ import React from 'react';
 import './Stats.css';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 
+import { formatDuration } from '../../HelperFunc';
+
 import HeaderBar from '../../HeaderBar';
 import Redirects from '../../Redirects';
 import StatCard from './StatCard';
@@ -10,20 +12,12 @@ import { Textfit } from 'react-textfit';
 function Stats() {
 	const stats = JSON.parse(sessionStorage.getItem('userStats'));
 
-    const formatDuration = (duration_ms) => {
-
-        let seconds = Math.round(duration_ms / 1000);
-        let minutes = Math.floor(seconds / 60);
-
-       return ('00' + minutes).slice(-2) + ':' + ('00' + seconds % 60).slice(-2);
-   }
-
 	return (
 		<React.Fragment>
 			<HeaderBar />
 			<div id="corporum">
 				<section className="content-section slide-in-left">
-					<Textfit className="title" mode="single" max='35'> · Your Statistics ·</Textfit>
+					<Textfit className="title" mode="single" max={35}> · Your Statistics ·</Textfit>
                     <section id="numbered-data">
                         <StatCard
 							barStat={ false }

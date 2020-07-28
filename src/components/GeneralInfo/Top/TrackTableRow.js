@@ -1,15 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+import { formatDuration } from '../../HelperFunc';
+
 function TrackTableRow(props) {
-
-    const formatDuration = (duration_ms) => {
-
-         let seconds = Math.round(duration_ms / 1000);
-         let minutes = Math.floor(seconds / 60);
-
-        return ('00' + minutes).slice(-2) + ':' + ('00' + seconds % 60).slice(-2);
-    }
 
 	return (
 		<tr>

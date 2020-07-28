@@ -24,8 +24,8 @@ function Artist() {
 	const [ artistImage, setArtistImage ] = useState('');
 	const [ artistFollowers, setArtistFollowers ] = useState('');
 	const [ artistGenres, setArtistGenres ] = useState('');
-    const [ artistPopularity, setArtistPopularity ] = useState('');
-    
+	const [ artistPopularity, setArtistPopularity ] = useState('');
+
 	const [ artistStats, setArtistStats ] = useState({});
 
 	const getArtistMetaData = async () => {
@@ -48,11 +48,11 @@ function Artist() {
 	const getArtistTopTracks = async () => {
 		spotifyWebApi.getArtistTopTracks(artist, sessionStorage.getItem('country')).then(
 			function(data) {
-				let tracks = data.tracks.map((track) => {
-					return track.id;
-				});
-
-				getArtistStats(tracks);
+				getArtistStats(
+					data.tracks.map((track) => {
+						return track.id;
+					})
+				);
 			},
 			function(err) {
 				console.log(err);
@@ -123,59 +123,67 @@ function Artist() {
 			<HeaderBar />
 			<div id="corporum">
 				<section className="content-section slide-in-left">
-					<Textfit className="artist-title" mode="single" max={36}> · {artistName} · </Textfit>
+					<Textfit className="artist-title" mode="single" max={36}>
+						{' '}
+						· {artistName} ·{' '}
+					</Textfit>
 					<div id="artist-info">
 						<div id="image">
 							<Image src={artistImage} thumbnail />
 						</div>
 						<StatCard barStat={false} title="Followers" value={artistFollowers} units="" />
-                        <StatCard barStat={false} title="Genre" value={artistGenres.length === 0 ? 'undefined' : artistGenres[0]} units="" />
+						<StatCard
+							barStat={false}
+							title="Genre"
+							value={artistGenres.length === 0 ? 'undefined' : artistGenres[0]}
+							units=""
+						/>
 						<StatCard barStat={false} title="Popularity" value={artistPopularity} units="" />
 					</div>
-						<div id="artist-stats">
-							<StatCard
-								barStat={true}
-								title="Acousticness"
-								percentage={artistStats.acousticness}
-								explanation="acoustExplanation"
-								color="seagreen"
-							/>
-							<StatCard
-								barStat={true}
-								title="Danceability"
-								percentage={artistStats.danceability}
-								explanation="danceExplanation"
-								color="violet"
-							/>
-							<StatCard
-								barStat={true}
-								title="Energy"
-								percentage={artistStats.energy}
-								explanation="energyExplanation"
-								color="orangered"
-							/>
-							<StatCard
-								barStat={true}
-								title="Instrumentalness"
-								percentage={artistStats.instrumentalness}
-								explanation="instrumExplanation"
-								color="limegreen"
-							/>
-							<StatCard
-								barStat={true}
-								title="Liveness"
-								percentage={artistStats.liveness}
-								explanation="liveExplanation"
-								color="deepskyblue"
-							/>
-							<StatCard
-								barStat={true}
-								title="Valence"
-								percentage={artistStats.valence}
-								explanation="valExplanation"
-								color="orange"
-							/>
-						</div>
+					<div id="artist-stats">
+						<StatCard
+							barStat={true}
+							title="Acousticness"
+							percentage={artistStats.acousticness}
+							explanation="acoustExplanation"
+							color="seagreen"
+						/>
+						<StatCard
+							barStat={true}
+							title="Danceability"
+							percentage={artistStats.danceability}
+							explanation="danceExplanation"
+							color="violet"
+						/>
+						<StatCard
+							barStat={true}
+							title="Energy"
+							percentage={artistStats.energy}
+							explanation="energyExplanation"
+							color="orangered"
+						/>
+						<StatCard
+							barStat={true}
+							title="Instrumentalness"
+							percentage={artistStats.instrumentalness}
+							explanation="instrumExplanation"
+							color="limegreen"
+						/>
+						<StatCard
+							barStat={true}
+							title="Liveness"
+							percentage={artistStats.liveness}
+							explanation="liveExplanation"
+							color="deepskyblue"
+						/>
+						<StatCard
+							barStat={true}
+							title="Valence"
+							percentage={artistStats.valence}
+							explanation="valExplanation"
+							color="orange"
+						/>
+					</div>
 				</section>
 				<section className="sidebar-section slide-in-right">
 					<div className="side-content">

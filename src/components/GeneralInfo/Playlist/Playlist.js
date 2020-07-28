@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import './Album.css';
+import './Playlist.css';
 import Spotify from 'spotify-web-api-js';
 import axios from 'axios';
-import { useLocation, Link } from 'react-router-dom';
-import { Textfit } from 'react-textfit';
+import { useLocation } from 'react-router-dom';
+import { Image } from 'react-bootstrap';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 
 import { refreshToken } from '../../Auth/TokenFunc';
@@ -12,44 +12,46 @@ import { formatDuration } from '../../HelperFunc';
 import HeaderBar from '../../HeaderBar';
 import Redirects from '../../Redirects';
 import StatCard from '../Stats/StatCard';
-import { Image } from 'react-bootstrap';
+import { Textfit } from 'react-textfit';
 
 const spotifyWebApi = new Spotify();
 
-function Track() {
+function Playlist() {
 	const query = new URLSearchParams(useLocation().search);
-	const album = query.get('id');
+	const playlist = query.get('id');
 
 	const [ authToken, setAuthToken ] = useState(sessionStorage.getItem('authToken'));
-	const [ albumName, setAlbumName ] = useState('');
-	const [ albumImage, setAlbumImage ] = useState('');
-	const [ albumLabel, setAlbumLabel ] = useState('');
-	const [ albumArtists, setAlbumArtists ] = useState('');
-	const [ albumNrSongs, setAlbumNrSongs ] = useState('');
-	const [ albumGenres, setAlbumGenres ] = useState('');
-	const [ albumDuration, setAlbumDuration ] = useState('');
-	const [ albumRelDate, setAlbumRelDate ] = useState('');
-	const [ albumPopularity, setAlbumPopularity ] = useState('');
+	const [ playlistName, setPlaylistName ] = useState('');
+	const [ playlistImage, setPlaylistImage ] = useState('');
+	const [ playlistDescription, setPlaylistDescription ] = useState('');
+	const [ playlistFollowers, setPlaylistFollowers ] = useState('');
+	const [ playlistOwner, setPlaylistOwner ] = useState('');
+	const [ playlistTracks, setPlaylistTracks ] = useState('');
+	const [ playlistDuration, setPlaylistDuration ] = useState('');
 
-	const [ albumStats, setAlbumStats ] = useState({});
+	const [ playlistStats, setPlaylistStats ] = useState({});
 
-	const getAlbumMetaData = async () => {
-		spotifyWebApi.getAlbum(album).then(
+	const getPlaylistMetaData = async () => {
+		spotifyWebApi.getPlaylist(playlist).then(
 			function(data) {
-				//console.log(data);
+				setPlaylistName(data.name);
+				setPlaylistImage(data.images.length === 0 ? '' : data.images[0].url);
+				setPlaylistDescription(data.description);
+				setPlaylistFollowers(data.followers.total);
+				setPlaylistOwner(data.owner);
+				setPlaylistTracks(data.tracks.total);
 
-				setAlbumName(data.name);
-				setAlbumImage(data.images.length === 0 ? '' : data.images[0].url);
-				setAlbumLabel(data.label);
-				setAlbumArtists(data.artists);
-				setAlbumNrSongs(data.tracks.items.length);
-				setAlbumGenres(data.genres);
-				setAlbumRelDate(data.release_date);
-				setAlbumPopularity(data.popularity);
+				setPlaylistDuration(
+					data.tracks.items.reduce((total, track) => {
+						return total + track.track.duration_ms;
+					}, 0)
+				);
 
-				getAlbumFeatures(
+				console.log(data.tracks);
+
+				getPlaylistStats(
 					data.tracks.items.map((track) => {
-						return track.id;
+						return track.track.id;
 					})
 				);
 			},
@@ -61,13 +63,12 @@ function Track() {
 		);
 	};
 
-	const getAlbumFeatures = async (tracks) => {
+	const getPlaylistStats = async (tracks) => {
 		spotifyWebApi.getAudioFeaturesForTracks(tracks).then(
 			function(data) {
 				const avgStats = {
 					acousticness: 0,
 					danceability: 0,
-					duration_ms: 0,
 					energy: 0,
 					instrumentalness: 0,
 					liveness: 0,
@@ -81,7 +82,6 @@ function Track() {
 				data.audio_features.forEach((track_info) => {
 					avgStats.acousticness += 100 * track_info.acousticness / data.audio_features.length;
 					avgStats.danceability += 100 * track_info.danceability / data.audio_features.length;
-					avgStats.duration_ms += track_info.duration_ms;
 					avgStats.energy += 100 * track_info.energy / data.audio_features.length;
 					avgStats.instrumentalness += 100 * track_info.instrumentalness / data.audio_features.length;
 					avgStats.liveness += 100 * track_info.liveness / data.audio_features.length;
@@ -92,8 +92,7 @@ function Track() {
 					avgStats.valence += 100 * track_info.valence / data.audio_features.length;
 				});
 
-				setAlbumDuration(avgStats.duration_ms);
-				setAlbumStats(avgStats);
+				setPlaylistStats(avgStats);
 			},
 			function(err) {
 				console.log(err);
@@ -104,24 +103,7 @@ function Track() {
 	};
 
 	const getData = async () => {
-		getAlbumMetaData();
-	};
-
-	const getArtist = () => {
-		if (albumArtists !== '' && albumArtists.length > 0) {
-			return (
-				<StatCard
-					barStat={false}
-					title="Artist"
-					value={
-						albumArtists.map((artist) => {
-							return <Link key={artist.id} to={ '/artist?id=' + artist.id } style={ {color:'#1db954'} }>{artist.name}</Link>;
-						})
-					}
-					units=""
-				/>
-			);
-		}
+		getPlaylistMetaData();
 	};
 
 	useEffect(
@@ -139,62 +121,70 @@ function Track() {
 			<HeaderBar />
 			<div id="corporum">
 				<section className="content-section slide-in-left">
-					<Textfit className="album-title" mode="single" max={36}>
-						· {albumName} ·
+					<Textfit className="playlist-title" mode="single" max={36}>
+						· {playlistName} ·
 					</Textfit>
-					<div id="album-info">
+					<div id="playlist-info">
 						<div id="image">
-							<Image src={albumImage} thumbnail />
+							<Image src={playlistImage} thumbnail />
 						</div>
 						<div id="misc-data">
-							{getArtist()}
-							<StatCard barStat={false} title="Label" value={albumLabel} units="" />
-							<StatCard barStat={false} title="Release Date" value={albumRelDate} units="" />
-							<StatCard barStat={false} title="Duration" value={formatDuration(albumDuration)} units="" />
-                            <StatCard barStat={false} title="Nr. Songs" value={albumNrSongs} units="" />
-							<StatCard barStat={false} title="Popularity" value={albumPopularity} units="" />
-						</div>
+                            
+							<StatCard barStat={false} title="Creator" value={playlistOwner.display_name} units="" />
+							<StatCard barStat={false} title="Followers" value={playlistFollowers} units="" />
+							<StatCard
+								barStat={false}
+								title="Duration"
+								value={formatDuration(playlistDuration)}
+								units=""
+							/>
+							<StatCard barStat={false} title="Nr. Songs" value={playlistTracks} units="" />
+                            <Textfit id="playlist-description" mode="multi" max={20}>
+                                <div className="divider"></div>
+                                {playlistDescription}
+                            </Textfit>
+                        </div>
 					</div>
-					<div id="album-stats">
+					<div id="playlist-stats">
 						<StatCard
 							barStat={true}
 							title="Acousticness"
-							percentage={albumStats.acousticness}
+							percentage={playlistStats.acousticness}
 							explanation="acoustExplanation"
 							color="seagreen"
 						/>
 						<StatCard
 							barStat={true}
 							title="Danceability"
-							percentage={albumStats.danceability}
+							percentage={playlistStats.danceability}
 							explanation="danceExplanation"
 							color="violet"
 						/>
 						<StatCard
 							barStat={true}
 							title="Energy"
-							percentage={albumStats.energy}
+							percentage={playlistStats.energy}
 							explanation="energyExplanation"
 							color="orangered"
 						/>
 						<StatCard
 							barStat={true}
 							title="Instrumentalness"
-							percentage={albumStats.instrumentalness}
+							percentage={playlistStats.instrumentalness}
 							explanation="instrumExplanation"
 							color="limegreen"
 						/>
 						<StatCard
 							barStat={true}
 							title="Liveness"
-							percentage={albumStats.liveness}
+							percentage={playlistStats.liveness}
 							explanation="liveExplanation"
 							color="deepskyblue"
 						/>
 						<StatCard
 							barStat={true}
 							title="Valence"
-							percentage={albumStats.valence}
+							percentage={playlistStats.valence}
 							explanation="valExplanation"
 							color="orange"
 						/>
@@ -218,4 +208,4 @@ function Track() {
 	);
 }
 
-export default Track;
+export default Playlist;
