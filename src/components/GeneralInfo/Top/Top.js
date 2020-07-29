@@ -20,11 +20,12 @@ function Top() {
 	const query = new URLSearchParams(useLocation().search);
 	const history = useHistory();
 	const limit = 10;
-
+	
+	const [ page, setPage ] = useState(parseInt(query.get('page')));
 	const [ topType, setTopType ] = useState(query.get('type'));
 	const [ topResults, setTopResults ] = useState([]);
 	const [ timeRange, setTimeRange ] = useState(query.get('time_range'));
-	const [ offset, setOffset ] = useState(0);
+	const [ offset, setOffset ] = useState(10 * (page - 1));
 	const [ totalItems, setTotalItems ] = useState(0);
 
 	const getData = () => {
@@ -91,20 +92,22 @@ function Top() {
 	const updateTopType = (ev) => {
 		setTopResults([]);
 		setOffset(0);
-		history.push('/top?type=' + ev.target.value + '&time_range=' + timeRange);
+		history.push(`/top?type=${ev.target.value}&time_range=${timeRange}&page=${page}`);
 		setTopType(ev.target.value);
 	};
 
 	const updateTimeRange = (ev) => {
 		setTopResults([]);
 		setOffset(0);
-		history.push('/top?type=' + topType + '&time_range=' + ev.target.value);
+		history.push(`/top?type=${topType}&time_range=${ev.target.value}&page=${page}`);
 		setTimeRange(ev.target.value);
 	};
 
 	const switchPage = (ev) => {
-		if(Number.isInteger(ev))
+		if(Number.isInteger(ev)){
+			setPage(ev);
 			setOffset(10 * (ev - 1));
+		}
 	};
 
 	useEffect(
@@ -116,6 +119,13 @@ function Top() {
 		[ authToken, timeRange, topType, offset ]
 	);
 
+	useEffect(
+		() => {
+			history.push(`/top?type=${topType}&time_range=${timeRange}&page=${page}`);
+		}, 
+		[ page ]
+	)
+
 	return (
 		<React.Fragment>
 			<HeaderBar />
@@ -124,7 +134,7 @@ function Top() {
 					{renderTable()}
 					<div className="pagination-divider"></div>
 					<Pagination
-						activePage={offset / 10 + 1}
+						activePage={page}
 						itemsCountPerPage={limit}
 						totalItemsCount={totalItems}
 						pageRangeDisplayed={5}

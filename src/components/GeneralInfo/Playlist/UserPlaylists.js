@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './UserPlaylists.css';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+import { useLocation, useHistory } from 'react-router-dom';
 import Spotify from 'spotify-web-api-js';
 import axios from 'axios';
 
@@ -15,10 +16,13 @@ const spotifyWebApi = new Spotify();
 
 function UserPlaylists() {
 	const authToken = sessionStorage.getItem('authToken');
+	const query = new URLSearchParams(useLocation().search);
+	const history = useHistory();
 	const limit = 10;
-
+	
+	const [ page, setPage ] = useState(parseInt(query.get('page')));
 	const [ userPlaylists, setUserPlaylists ] = useState([]);
-	const [ offset, setOffset ] = useState(0);
+	const [ offset, setOffset ] = useState(10 * (page - 1));
 	const [ totalItems, setTotalItems ] = useState(0);
 
 	const getData = () => {
@@ -44,8 +48,10 @@ function UserPlaylists() {
 	};
 
 	const switchPage = (ev) => {
-		if(Number.isInteger(ev))
+		if(Number.isInteger(ev)){
+			setPage(ev);
 			setOffset(10 * (ev - 1));
+		}
 	};
 
 	useEffect(
@@ -65,6 +71,13 @@ function UserPlaylists() {
 		},
 		[ offset ]
 	);
+
+	useEffect(
+		() => {
+			history.push(`/playlists?page=${page}`);
+		}, 
+		[ page ]
+	)
 
 	return (
 		<React.Fragment>
@@ -88,7 +101,7 @@ function UserPlaylists() {
 					</table>
 					<div className="pagination-divider"></div>
 					<Pagination
-						activePage={offset / 10 + 1}
+						activePage={page}
 						itemsCountPerPage={limit}
 						totalItemsCount={totalItems}
 						pageRangeDisplayed={5}

@@ -14,7 +14,7 @@ function Redirects(props) {
                 {props.exclude !== 'top' && (
 					<li>
 						{' '}
-						<Link to="/top?type=track&time_range=short_term">Top</Link>{' '}
+						<Link to="/top?type=track&time_range=short_term&page=1">Top</Link>{' '}
 					</li>
 				)}
                 {props.exclude !== 'statistics' && (
@@ -26,7 +26,7 @@ function Redirects(props) {
 				{props.exclude !== 'playlists' && (
 					<li>
 						{' '}
-						<Link to="/playlists">Playlists</Link>{' '}
+						<Link to="/playlists?page=1">Playlists</Link>{' '}
 					</li>
 				)}
 			</React.Fragment>
