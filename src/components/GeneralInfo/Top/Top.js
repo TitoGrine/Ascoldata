@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './Top.css';
+import '../Pagination.css';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { useLocation, useHistory } from 'react-router-dom';
 import Spotify from 'spotify-web-api-js';
@@ -15,6 +16,7 @@ import Redirects from '../../Redirects';
 const spotifyWebApi = new Spotify();
 
 function Top() {
+	const authToken = sessionStorage.getItem('authToken');
 	const query = new URLSearchParams(useLocation().search);
 	const history = useHistory();
 	const limit = 10;
@@ -23,9 +25,7 @@ function Top() {
 	const [ topResults, setTopResults ] = useState([]);
 	const [ timeRange, setTimeRange ] = useState(query.get('time_range'));
 	const [ offset, setOffset ] = useState(0);
-	const [ totalItems, setTotalItems ] = useState(0);;
-
-	const authToken = sessionStorage.getItem('authToken');
+	const [ totalItems, setTotalItems ] = useState(0);
 
 	const getData = () => {
 		spotifyWebApi.setAccessToken(authToken);
@@ -119,9 +119,10 @@ function Top() {
 	return (
 		<React.Fragment>
 			<HeaderBar />
-			<div id="corporum">
-				<section className="content-section slide-in-left">
+			<div id="corporum" className="top-content">
+				<section className="content-section content-section-top slide-in-left">
 					{renderTable()}
+					<div className="pagination-divider"></div>
 					<Pagination
 						activePage={offset / 10 + 1}
 						itemsCountPerPage={limit}

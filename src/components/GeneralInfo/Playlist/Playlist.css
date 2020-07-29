@@ -1,6 +1,5 @@
-.content-section {
-    display: flex;
-    flex-direction: column;
+.playlists-content .content-section {
+    justify-content: space-between;
 }
 
 .playlist-title {

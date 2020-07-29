@@ -9,26 +9,31 @@ import { refreshToken } from '../../Auth/TokenFunc';
 import HeaderBar from '../../HeaderBar';
 import Redirects from '../../Redirects';
 import PlaylistTableRow from './PlaylistTableRow';
+import Pagination from 'react-js-pagination';
 
 const spotifyWebApi = new Spotify();
 
 function UserPlaylists() {
 	const authToken = sessionStorage.getItem('authToken');
+	const limit = 10;
+
 	const [ userPlaylists, setUserPlaylists ] = useState([]);
 	const [ offset, setOffset ] = useState(0);
+	const [ totalItems, setTotalItems ] = useState(0);
 
 	const getData = () => {
 		spotifyWebApi.setAccessToken(authToken);
 
 		spotifyWebApi
 			.getUserPlaylists({
-				limit: 10,
+				limit: limit,
 				offset: offset
 			})
 			.then(
 				function(data) {
 					console.log(data);
 					setUserPlaylists(data.items);
+					setTotalItems(data.total);
 				},
 				function(err) {
 					console.log(err);
@@ -36,6 +41,11 @@ function UserPlaylists() {
 					if (err.status === 401) refreshToken();
 				}
 			);
+	};
+
+	const switchPage = (ev) => {
+		if(Number.isInteger(ev))
+			setOffset(10 * (ev - 1));
 	};
 
 	useEffect(
@@ -47,10 +57,19 @@ function UserPlaylists() {
 		[ authToken ]
 	);
 
+	useEffect(
+		() => {
+			if (authToken) {
+				getData();
+			}
+		},
+		[ offset ]
+	);
+
 	return (
 		<React.Fragment>
 			<HeaderBar />
-			<div id="corporum">
+			<div id="corporum" className="playlists-content">
 				<section className="content-section slide-in-left">
 					<table>
 						<thead>
@@ -67,6 +86,14 @@ function UserPlaylists() {
 							})}
 						</tbody>
 					</table>
+					<div className="pagination-divider"></div>
+					<Pagination
+						activePage={offset / 10 + 1}
+						itemsCountPerPage={limit}
+						totalItemsCount={totalItems}
+						pageRangeDisplayed={5}
+						onChange={switchPage}
+					/>
 				</section>
 				<section className="sidebar-section slide-in-right">
 					<div className="side-content">
