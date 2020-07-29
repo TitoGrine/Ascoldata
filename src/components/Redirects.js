@@ -23,6 +23,12 @@ function Redirects(props) {
 						<Link to="/stats">Statistics</Link>{' '}
 					</li>
 				)}
+				{props.exclude !== 'liked' && (
+					<li>
+						{' '}
+						<Link to="/liked?page=1">Liked</Link>{' '}
+					</li>
+				)}
 				{props.exclude !== 'playlists' && (
 					<li>
 						{' '}

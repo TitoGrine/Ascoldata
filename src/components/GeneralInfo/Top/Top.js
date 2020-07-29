@@ -9,8 +9,8 @@ import Pagination from 'react-js-pagination';
 import { refreshToken } from '../../Auth/TokenFunc';
 
 import HeaderBar from '../../HeaderBar';
-import ArtistTable from './ArtistTable';
-import TrackTable from './TrackTable';
+import ArtistTable from '../Artist/ArtistTable';
+import TrackTable from '../Track/TrackTable';
 import Redirects from '../../Redirects';
 
 const spotifyWebApi = new Spotify();
@@ -19,13 +19,13 @@ function Top() {
 	const authToken = sessionStorage.getItem('authToken');
 	const query = new URLSearchParams(useLocation().search);
 	const history = useHistory();
-	const limit = 10;
+	const limit = 12;
 	
 	const [ page, setPage ] = useState(parseInt(query.get('page')));
 	const [ topType, setTopType ] = useState(query.get('type'));
 	const [ topResults, setTopResults ] = useState([]);
 	const [ timeRange, setTimeRange ] = useState(query.get('time_range'));
-	const [ offset, setOffset ] = useState(10 * (page - 1));
+	const [ offset, setOffset ] = useState(limit * (page - 1));
 	const [ totalItems, setTotalItems ] = useState(0);
 
 	const getData = () => {
@@ -105,8 +105,7 @@ function Top() {
 
 	const switchPage = (ev) => {
 		if(Number.isInteger(ev)){
-			setPage(ev);
-			setOffset(10 * (ev - 1));
+			setOffset(limit * (ev - 1))
 		}
 	};
 
@@ -114,6 +113,7 @@ function Top() {
 		() => {
 			if (authToken) {
 				getData();
+				setPage(1 + (offset / limit));
 			}
 		},
 		[ authToken, timeRange, topType, offset ]
@@ -137,7 +137,7 @@ function Top() {
 						activePage={page}
 						itemsCountPerPage={limit}
 						totalItemsCount={totalItems}
-						pageRangeDisplayed={5}
+						pageRangeDisplayed={(totalItems / limit > 15) ? 10 : 5}
 						onChange={switchPage}
 					/>
 				</section>

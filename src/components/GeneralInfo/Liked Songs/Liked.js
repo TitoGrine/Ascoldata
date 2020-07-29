@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import './UserPlaylists.css';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { useLocation, useHistory } from 'react-router-dom';
 import Spotify from 'spotify-web-api-js';
@@ -8,19 +7,19 @@ import { refreshToken } from '../../Auth/TokenFunc';
 
 import HeaderBar from '../../HeaderBar';
 import Redirects from '../../Redirects';
-import PlaylistTableRow from './PlaylistTableRow';
+import TrackTable from '../Track/TrackTable'
 import Pagination from 'react-js-pagination';
 
 const spotifyWebApi = new Spotify();
 
-function UserPlaylists() {
+function Liked() {
 	const authToken = sessionStorage.getItem('authToken');
 	const query = new URLSearchParams(useLocation().search);
 	const history = useHistory();
 	const limit = 12;
 	
 	const [ page, setPage ] = useState(parseInt(query.get('page')));
-	const [ userPlaylists, setUserPlaylists ] = useState([]);
+	const [ userLiked, setUserLiked ] = useState([]);
 	const [ offset, setOffset ] = useState(limit * (page - 1));
 	const [ totalItems, setTotalItems ] = useState(0);
 
@@ -28,14 +27,14 @@ function UserPlaylists() {
 		spotifyWebApi.setAccessToken(authToken);
 
 		spotifyWebApi
-			.getUserPlaylists({
+			.getMySavedTracks({
 				limit: limit,
 				offset: offset
 			})
 			.then(
 				function(data) {
 					//console.log(data);
-					setUserPlaylists(data.items);
+					setUserLiked(data.items);
 					setTotalItems(data.total);
 				},
 				function(err) {
@@ -55,8 +54,8 @@ function UserPlaylists() {
 	useEffect(
 		() => {
 			if (authToken) {
-				getData();
-				setPage(1 + (offset / limit));
+                getData();
+                setPage(1 + (offset / limit));
 			}
 		},
 		[ offset ]
@@ -64,7 +63,7 @@ function UserPlaylists() {
 
 	useEffect(
 		() => {
-			history.push(`/playlists?page=${page}`);
+			history.push(`/liked?page=${page}`);
 		}, 
 		[ page ]
 	)
@@ -73,22 +72,8 @@ function UserPlaylists() {
 		<React.Fragment>
 			<HeaderBar />
 			<div id="corporum" className="playlists-content">
-				<section className="content-section slide-in-left">
-					<table>
-						<thead>
-							<tr>
-								<th>Playlist</th>
-								<th>Public</th>
-								<th>Collaborative</th>
-								<th>Nr. Songs</th>
-							</tr>
-						</thead>
-						<tbody>
-							{userPlaylists.map((result) => {
-								return <PlaylistTableRow key={result.id} info={result} />;
-							})}
-						</tbody>
-					</table>
+				<section className="content-section slide-in-left">					
+                    { userLiked.length > 0 && <TrackTable topResults={userLiked} /> }
 					<div className="pagination-divider"></div>
 					<Pagination
 						activePage={page}
@@ -106,7 +91,7 @@ function UserPlaylists() {
 							</TabList>
 
 							<TabPanel>
-								<Redirects exclude="playlists" />
+								<Redirects exclude="liked" />
 							</TabPanel>
 						</Tabs>
 					</div>
@@ -116,4 +101,4 @@ function UserPlaylists() {
 	);
 }
 
-export default UserPlaylists;
+export default Liked;

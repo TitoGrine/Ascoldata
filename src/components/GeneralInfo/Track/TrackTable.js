@@ -16,7 +16,10 @@ function TrackTable(props) {
 			</thead>
 			<tbody>
 				{props.topResults.map((result) => {
-					return <TrackTableRow key={result.id} info={result} />;
+					if(result.added_at)
+						return <TrackTableRow key={result.track.id} info={result.track} />;
+					else 
+						return <TrackTableRow key={result.id} info={result} />;
 				})}
 			</tbody>
 		</table>

@@ -10,6 +10,7 @@ import Track from './components/GeneralInfo/Track/Track';
 import Album from './components/GeneralInfo/Album/Album';
 import UserPlaylists from './components/GeneralInfo/Playlist/UserPlaylists';
 import Playlist from './components/GeneralInfo/Playlist/Playlist';
+import Liked from './components/GeneralInfo/Liked Songs/Liked'
 
 function App() {
 
@@ -55,6 +56,11 @@ function App() {
             exact = { true }
             path = "/playlists"
             component = { UserPlaylists }
+          />
+          <Route
+            exact = { true }
+            path = "/liked"
+            component = { Liked }
           />
         </Router>
       </div>
