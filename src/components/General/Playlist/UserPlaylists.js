@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import './UserPlaylists.css';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { useLocation, useHistory } from 'react-router-dom';
 import Spotify from 'spotify-web-api-js';
@@ -7,19 +8,21 @@ import { refreshToken } from '../../Auth/TokenFunc';
 
 import HeaderBar from '../../HeaderBar';
 import Redirects from '../../Redirects';
-import TrackTable from '../Track/TrackTable'
+import PlaylistTableRow from './PlaylistTableRow';
 import Pagination from 'react-js-pagination';
+import PlaylistTable from './PlaylistTable';
+import Search from '../Search/Search';
 
 const spotifyWebApi = new Spotify();
 
-function Liked() {
+function UserPlaylists() {
 	const authToken = sessionStorage.getItem('authToken');
 	const query = new URLSearchParams(useLocation().search);
 	const history = useHistory();
 	const limit = 12;
-	
+
 	const [ page, setPage ] = useState(parseInt(query.get('page')));
-	const [ userLiked, setUserLiked ] = useState([]);
+	const [ userPlaylists, setUserPlaylists ] = useState([]);
 	const [ offset, setOffset ] = useState(limit * (page - 1));
 	const [ totalItems, setTotalItems ] = useState(0);
 
@@ -27,14 +30,14 @@ function Liked() {
 		spotifyWebApi.setAccessToken(authToken);
 
 		spotifyWebApi
-			.getMySavedTracks({
+			.getUserPlaylists({
 				limit: limit,
 				offset: offset
 			})
 			.then(
 				function(data) {
 					//console.log(data);
-					setUserLiked(data.items);
+					setUserPlaylists(data.items);
 					setTotalItems(data.total);
 				},
 				function(err) {
@@ -46,16 +49,16 @@ function Liked() {
 	};
 
 	const switchPage = (ev) => {
-		if(Number.isInteger(ev)){
-			setOffset(limit * (ev - 1))
+		if (Number.isInteger(ev)) {
+			setOffset(limit * (ev - 1));
 		}
 	};
 
 	useEffect(
 		() => {
 			if (authToken) {
-                getData();
-                setPage(1 + (offset / limit));
+				getData();
+				setPage(1 + offset / limit);
 			}
 		},
 		[ offset ]
@@ -63,23 +66,23 @@ function Liked() {
 
 	useEffect(
 		() => {
-			history.push(`/liked?page=${page}`);
-		}, 
+			history.push(`/playlists?page=${page}`);
+		},
 		[ page ]
-	)
+	);
 
 	return (
 		<React.Fragment>
 			<HeaderBar />
 			<div id="corporum" className="playlists-content">
-				<section className="content-section slide-in-left">					
-                    { userLiked.length > 0 && <TrackTable topResults={userLiked} /> }
-					<div className="pagination-divider"></div>
+				<section className="content-section slide-in-left">
+					<PlaylistTable results={userPlaylists} />
+					<div className="pagination-divider" />
 					<Pagination
 						activePage={page}
 						itemsCountPerPage={limit}
 						totalItemsCount={totalItems}
-						pageRangeDisplayed={(totalItems / limit > 15) ? 10 : 5}
+						pageRangeDisplayed={8}
 						onChange={switchPage}
 					/>
 				</section>
@@ -87,11 +90,15 @@ function Liked() {
 					<div className="side-content">
 						<Tabs>
 							<TabList>
+								<Tab>Search</Tab>
 								<Tab>Go to</Tab>
 							</TabList>
 
 							<TabPanel>
-								<Redirects exclude="liked" />
+								<Search />
+							</TabPanel>
+							<TabPanel>
+								<Redirects exclude="playlists" />
 							</TabPanel>
 						</Tabs>
 					</div>
@@ -101,4 +108,4 @@ function Liked() {
 	);
 }
 
-export default Liked;
+export default UserPlaylists;

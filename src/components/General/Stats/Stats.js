@@ -8,6 +8,7 @@ import HeaderBar from '../../HeaderBar';
 import Redirects from '../../Redirects';
 import StatCard from './StatCard';
 import { Textfit } from 'react-textfit';
+import Search from '../Search/Search';
 
 function Stats() {
 	const stats = JSON.parse(sessionStorage.getItem('userStats'));
@@ -17,68 +18,66 @@ function Stats() {
 			<HeaderBar />
 			<div id="corporum">
 				<section className="content-section slide-in-left">
-					<Textfit className="title" mode="single" max={35}> · Your Statistics ·</Textfit>
-                    <section id="numbered-data">
-                        <StatCard
-							barStat={ false }
-                            title="Average song duration"
-							value={ formatDuration(stats.duration_ms) }
-                            units=''
-						/>
-                        <StatCard
-							barStat={ false }
-                            title="Average loudness"
-							value={ Math.round(stats.loudness) }
-                            units='dB'
+					<Textfit className="title" mode="single" max={35}>
+						{' '}
+						· Your Statistics ·
+					</Textfit>
+					<section id="numbered-data">
+						<StatCard
+							barStat={false}
+							title="Average song duration"
+							value={formatDuration(stats.duration_ms)}
+							units=""
 						/>
 						<StatCard
-							barStat={ false }
-                            title="Average tempo"
-							value={ Math.round(stats.tempo) }
-                            units='bpm'
+							barStat={false}
+							title="Average loudness"
+							value={Math.round(stats.loudness)}
+							units="dB"
 						/>
-                    </section>
+						<StatCard barStat={false} title="Average tempo" value={Math.round(stats.tempo)} units="bpm" />
+					</section>
 					<section id="graphs">
 						<StatCard
-							barStat={ true }
-                            title="Acousticness"
+							barStat={true}
+							title="Acousticness"
 							percentage={stats.acousticness}
-							explanation= 'acoustExplanation'
+							explanation="acoustExplanation"
 							color="seagreen"
 						/>
 						<StatCard
-							barStat={ true }
-                            title="Danceability"
+							barStat={true}
+							title="Danceability"
 							percentage={stats.danceability}
-							explanation='danceExplanation'
+							explanation="danceExplanation"
 							color="violet"
 						/>
 						<StatCard
-							barStat={ true }
-                            title="Energy"
+							barStat={true}
+							title="Energy"
 							percentage={stats.energy}
-							explanation='energyExplanation'
+							explanation="energyExplanation"
 							color="orangered"
 						/>
 						<StatCard
-							barStat={ true }
-                            title="Instrumentalness"
+							barStat={true}
+							title="Instrumentalness"
 							percentage={stats.instrumentalness}
-							explanation='instrumExplanation'
+							explanation="instrumExplanation"
 							color="limegreen"
 						/>
 						<StatCard
-							barStat={ true }
-                            title="Liveness"
+							barStat={true}
+							title="Liveness"
 							percentage={stats.liveness}
-							explanation='liveExplanation'
+							explanation="liveExplanation"
 							color="deepskyblue"
 						/>
 						<StatCard
-							barStat={ true }
-                            title="Valence"
+							barStat={true}
+							title="Valence"
 							percentage={stats.valence}
-							explanation='valExplanation'
+							explanation="valExplanation"
 							color="orange"
 						/>
 					</section>
@@ -87,9 +86,13 @@ function Stats() {
 					<div className="side-content">
 						<Tabs>
 							<TabList>
+								<Tab>Search</Tab>
 								<Tab>Go to</Tab>
 							</TabList>
 
+							<TabPanel>
+								<Search />
+							</TabPanel>
 							<TabPanel>
 								<Redirects exclude="statistics" />
 							</TabPanel>

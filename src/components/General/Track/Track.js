@@ -10,6 +10,7 @@ import { refreshToken } from '../../Auth/TokenFunc';
 import HeaderBar from '../../HeaderBar';
 import Redirects from '../../Redirects';
 import StatCard from '../Stats/StatCard';
+import Search from '../Search/Search';
 
 const spotifyWebApi = new Spotify();
 
@@ -97,7 +98,9 @@ function Track() {
 			<HeaderBar />
 			<div id="corporum">
 				<section className="content-section slide-in-left">
-					<Textfit className="track-title" mode="single" max={36}>· {trackName} ·</Textfit>
+					<Textfit className="track-title" mode="single" max={36}>
+						· {trackName} ·
+					</Textfit>
 					<div id="track-info">
 						<StatCard barStat={false} title="Album" value={trackAlbum} units="" />
 						<StatCard
@@ -159,9 +162,13 @@ function Track() {
 					<div className="side-content">
 						<Tabs>
 							<TabList>
+								<Tab>Search</Tab>
 								<Tab>Go to</Tab>
 							</TabList>
 
+							<TabPanel>
+								<Search />
+							</TabPanel>
 							<TabPanel>
 								<Redirects exclude="" />
 							</TabPanel>
@@ -173,6 +180,6 @@ function Track() {
 	);
 }
 
-const keyBinds = ['Unknown', 'C', 'C♯, D♭', 'D', 'D♯, E♭', 'E', 'F', 'F♯, G♭', 'G','G♯, A♭', 'A', 'A♯, B♭', 'B']
+const keyBinds = [ 'Unknown', 'C', 'C♯, D♭', 'D', 'D♯, E♭', 'E', 'F', 'F♯, G♭', 'G', 'G♯, A♭', 'A', 'A♯, B♭', 'B' ];
 
 export default Track;

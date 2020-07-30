@@ -12,6 +12,7 @@ import HeaderBar from '../../HeaderBar';
 import ArtistTable from '../Artist/ArtistTable';
 import TrackTable from '../Track/TrackTable';
 import Redirects from '../../Redirects';
+import Search from '../Search/Search';
 
 const spotifyWebApi = new Spotify();
 
@@ -28,7 +29,7 @@ function Top() {
 	const [ offset, setOffset ] = useState(limit * (page - 1));
 	const [ totalItems, setTotalItems ] = useState(0);
 
-	const getData = () => {
+	const getData = async () => {
 		spotifyWebApi.setAccessToken(authToken);
 
 		switch (topType) {
@@ -81,9 +82,9 @@ function Top() {
 
 		switch (topType) {
 			case 'artist':
-				return <ArtistTable topResults={topResults} />;
+				return <ArtistTable results={topResults} />;
 			case 'track':
-				return <TrackTable topResults={topResults} />;
+				return <TrackTable results={topResults} />;
 			default:
 				return;
 		}
@@ -137,7 +138,7 @@ function Top() {
 						activePage={page}
 						itemsCountPerPage={limit}
 						totalItemsCount={totalItems}
-						pageRangeDisplayed={(totalItems / limit > 15) ? 10 : 5}
+						pageRangeDisplayed={8}
 						onChange={switchPage}
 					/>
 				</section>
@@ -146,6 +147,7 @@ function Top() {
 						<Tabs>
 							<TabList>
 								<Tab>Settings</Tab>
+								<Tab>Search</Tab>
 								<Tab>Go to</Tab>
 							</TabList>
 
@@ -222,6 +224,9 @@ function Top() {
 										</div>
 									</form>
 								</div>
+							</TabPanel>
+							<TabPanel>
+								<Search />
 							</TabPanel>
 							<TabPanel>
 								<Redirects exclude="top" />

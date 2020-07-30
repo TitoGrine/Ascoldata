@@ -1,8 +1,8 @@
 import React from 'react';
 
-import HeaderBar from '../HeaderBar';
-import GeneralInfo from '../GeneralInfo/GeneralInfo';
-import Login from '../Login/Login';
+import HeaderBar from './HeaderBar';
+import GeneralInfo from './General/GeneralInfo';
+import Login from './Login/Login';
 
 function Home() {
 

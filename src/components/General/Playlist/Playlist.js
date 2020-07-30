@@ -13,6 +13,7 @@ import HeaderBar from '../../HeaderBar';
 import Redirects from '../../Redirects';
 import StatCard from '../Stats/StatCard';
 import { Textfit } from 'react-textfit';
+import Search from '../Search/Search';
 
 const spotifyWebApi = new Spotify();
 
@@ -129,7 +130,6 @@ function Playlist() {
 							<Image src={playlistImage} thumbnail />
 						</div>
 						<div id="misc-data">
-                            
 							<StatCard barStat={false} title="Creator" value={playlistOwner.display_name} units="" />
 							<StatCard barStat={false} title="Followers" value={playlistFollowers} units="" />
 							<StatCard
@@ -139,11 +139,11 @@ function Playlist() {
 								units=""
 							/>
 							<StatCard barStat={false} title="Nr. Songs" value={playlistTracks} units="" />
-                            <Textfit id="playlist-description" mode="multi" max={20}>
-                                <div className="divider"></div>
-                                {playlistDescription}
-                            </Textfit>
-                        </div>
+							<Textfit id="playlist-description" mode="multi" max={20}>
+								<div className="divider" />
+								{playlistDescription}
+							</Textfit>
+						</div>
 					</div>
 					<div id="playlist-stats">
 						<StatCard
@@ -194,9 +194,13 @@ function Playlist() {
 					<div className="side-content">
 						<Tabs>
 							<TabList>
+								<Tab>Search</Tab>
 								<Tab>Go to</Tab>
 							</TabList>
 
+							<TabPanel>
+								<Search />
+							</TabPanel>
 							<TabPanel>
 								<Redirects exclude="" />
 							</TabPanel>

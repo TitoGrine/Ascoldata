@@ -12,6 +12,7 @@ import HeaderBar from '../../HeaderBar';
 import Redirects from '../../Redirects';
 import StatCard from '../Stats/StatCard';
 import { Textfit } from 'react-textfit';
+import Search from '../Search/Search';
 
 const spotifyWebApi = new Spotify();
 
@@ -189,9 +190,13 @@ function Artist() {
 					<div className="side-content">
 						<Tabs>
 							<TabList>
+								<Tab>Search</Tab>
 								<Tab>Go to</Tab>
 							</TabList>
 
+							<TabPanel>
+								<Search />
+							</TabPanel>
 							<TabPanel>
 								<Redirects exclude="" />
 							</TabPanel>

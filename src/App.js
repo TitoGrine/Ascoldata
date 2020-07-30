@@ -2,15 +2,16 @@ import React from 'react';
 import './App.css';
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 
-import Home from './components/Home/Home';
-import Top from './components/GeneralInfo/Top/Top';
-import Stats from './components/GeneralInfo/Stats/Stats';
-import Artist from './components/GeneralInfo/Artist/Artist';
-import Track from './components/GeneralInfo/Track/Track';
-import Album from './components/GeneralInfo/Album/Album';
-import UserPlaylists from './components/GeneralInfo/Playlist/UserPlaylists';
-import Playlist from './components/GeneralInfo/Playlist/Playlist';
-import Liked from './components/GeneralInfo/Liked Songs/Liked'
+import Home from './components/Home';
+import Top from './components/General/Top/Top';
+import Stats from './components/General/Stats/Stats';
+import Artist from './components/General/Artist/Artist';
+import Track from './components/General/Track/Track';
+import Album from './components/General/Album/Album';
+import UserPlaylists from './components/General/Playlist/UserPlaylists';
+import Playlist from './components/General/Playlist/Playlist';
+import Liked from './components/General/Liked Songs/Liked'
+import SearchResults from './components/General/Search/SearchResults';
 
 function App() {
 
@@ -61,6 +62,11 @@ function App() {
             exact = { true }
             path = "/liked"
             component = { Liked }
+          />
+          <Route
+            exact = { true }
+            path = "/search"
+            component = { SearchResults }
           />
         </Router>
       </div>

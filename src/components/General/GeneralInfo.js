@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import './GeneralInfo.css';
+import './RadioInput.css';
+import './Pagination.css';
 import { Image } from 'react-bootstrap';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import Spotify from 'spotify-web-api-js';
-import axios from 'axios';
 
 import { refreshToken } from '../Auth/TokenFunc';
 
 import Redirects from '../Redirects';
 import { Textfit } from 'react-textfit';
+import Search from './Search/Search';
 
 const spotifyWebApi = new Spotify();
 
@@ -28,7 +30,7 @@ function GeneralInfo() {
 	const calcUserStats = (results) => {
 		spotifyWebApi.getAudioFeaturesForTracks(results).then(
 			function(data) {
-				console.log(data.audio_features);
+				//console.log(data.audio_features);
 
 				const avgStats = {
 					acousticness: 0,
@@ -42,21 +44,21 @@ function GeneralInfo() {
 					speechiness: 0,
 					tempo: 0,
 					valence: 0
-				}
+				};
 
 				data.audio_features.forEach((track_info) => {
-					avgStats.acousticness += 2 * track_info.acousticness ;
-					avgStats.danceability += 2 * track_info.danceability ;
-					avgStats.duration_ms += track_info.duration_ms / 50 ;
-					avgStats.energy += 2 * track_info.energy ;
-					avgStats.instrumentalness += 2 * track_info.instrumentalness ;
-					avgStats.liveness += 2 * track_info.liveness ;
-					avgStats.loudness += track_info.loudness / 50 ;
+					avgStats.acousticness += 2 * track_info.acousticness;
+					avgStats.danceability += 2 * track_info.danceability;
+					avgStats.duration_ms += track_info.duration_ms / 50;
+					avgStats.energy += 2 * track_info.energy;
+					avgStats.instrumentalness += 2 * track_info.instrumentalness;
+					avgStats.liveness += 2 * track_info.liveness;
+					avgStats.loudness += track_info.loudness / 50;
 					avgStats.mode += track_info.mode;
-					avgStats.speechiness += 2 * track_info.speechiness ;
-					avgStats.tempo += track_info.tempo / 50 ;
-					avgStats.valence += 2 * track_info.valence ;
-				})
+					avgStats.speechiness += 2 * track_info.speechiness;
+					avgStats.tempo += track_info.tempo / 50;
+					avgStats.valence += 2 * track_info.valence;
+				});
 
 				setCalcStats(true);
 
@@ -95,39 +97,40 @@ function GeneralInfo() {
 			);
 	};
 
-	useEffect(() => {
+	useEffect(
+		() => {
+			if (authToken) {
+				spotifyWebApi.setAccessToken(authToken);
 
-		if (authToken) {
-			spotifyWebApi.setAccessToken(authToken);
+				if (!calcStats) getUserStats();
 
-			if(!calcStats)
-				getUserStats();
+				spotifyWebApi.getMe().then(
+					function(data) {
+						//console.log(data);
 
-			spotifyWebApi.getMe().then(
-				function(data) {
-					//console.log(data);
+						setUser(data.display_name);
+						setImage(data.images.length === 0 ? '' : data.images[0].url);
+						setId(data.id);
+						setEmail(data.email);
+						setCountry(data.country);
+						setFollowers(data.followers.total);
+						setProduct(data.product);
+						setLink(data.external_urls.spotify);
+						setURI(data.uri);
 
-					setUser(data.display_name);
-					setImage(data.images.length === 0 ? '' : data.images[0].url);
-					setId(data.id);
-					setEmail(data.email);
-					setCountry(data.country);
-					setFollowers(data.followers.total);
-					setProduct(data.product);
-					setLink(data.external_urls.spotify);
-					setURI(data.uri);
+						sessionStorage.setItem('country', data.country);
+						sessionStorage.setItem('profile-picture', data.images.length === 0 ? '' : data.images[0].url);
+					},
+					function(err) {
+						console.log(err);
 
-					sessionStorage.setItem('country', data.country);
-					sessionStorage.setItem('profile-picture', data.images.length === 0 ? '' : data.images[0].url);
-				},
-				function(err) {
-					console.log(err);
-
-					if (err.status === 401) refreshToken();
-				}
-			);
-		}
-	}, [ authToken ]);
+						if (err.status === 401) refreshToken();
+					}
+				);
+			}
+		},
+		[ authToken ]
+	);
 
 	return (
 		<div id="corporum">
@@ -170,11 +173,15 @@ function GeneralInfo() {
 				<div className="side-content">
 					<Tabs>
 						<TabList>
+							<Tab>Search</Tab>
 							<Tab>Go to</Tab>
 						</TabList>
 
 						<TabPanel>
-							<Redirects exclude='user' />
+							<Search />
+						</TabPanel>
+						<TabPanel>
+							<Redirects exclude="user" />
 						</TabPanel>
 					</Tabs>
 				</div>

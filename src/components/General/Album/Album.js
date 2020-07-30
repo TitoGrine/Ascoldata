@@ -13,6 +13,7 @@ import HeaderBar from '../../HeaderBar';
 import Redirects from '../../Redirects';
 import StatCard from '../Stats/StatCard';
 import { Image } from 'react-bootstrap';
+import Search from '../Search/Search';
 
 const spotifyWebApi = new Spotify();
 
@@ -113,11 +114,13 @@ function Track() {
 				<StatCard
 					barStat={false}
 					title="Artist"
-					value={
-						albumArtists.map((artist) => {
-							return <Link key={artist.id} to={ '/artist?id=' + artist.id } style={ {color:'#1db954'} }>{artist.name}</Link>;
-						})
-					}
+					value={albumArtists.map((artist) => {
+						return (
+							<Link key={artist.id} to={'/artist?id=' + artist.id} style={{ color: '#1db954' }}>
+								{artist.name}
+							</Link>
+						);
+					})}
 					units=""
 				/>
 			);
@@ -151,7 +154,7 @@ function Track() {
 							<StatCard barStat={false} title="Label" value={albumLabel} units="" />
 							<StatCard barStat={false} title="Release Date" value={albumRelDate} units="" />
 							<StatCard barStat={false} title="Duration" value={formatDuration(albumDuration)} units="" />
-                            <StatCard barStat={false} title="Nr. Songs" value={albumNrSongs} units="" />
+							<StatCard barStat={false} title="Nr. Songs" value={albumNrSongs} units="" />
 							<StatCard barStat={false} title="Popularity" value={albumPopularity} units="" />
 						</div>
 					</div>
@@ -204,9 +207,13 @@ function Track() {
 					<div className="side-content">
 						<Tabs>
 							<TabList>
+								<Tab>Search</Tab>
 								<Tab>Go to</Tab>
 							</TabList>
 
+							<TabPanel>
+								<Search />
+							</TabPanel>
 							<TabPanel>
 								<Redirects exclude="" />
 							</TabPanel>
