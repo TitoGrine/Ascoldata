@@ -3,27 +3,24 @@ import './AttributeSlider.css';
 
 function AttributeSlider(props) {
 	const ignoredStyle = {
-		opacity: 1.2 + props.value
+		opacity: 1.3 + props.value
 	};
 
 	return (
 		<div className="slider">
-			<div>
-				<label className="slider-name">{props.name}</label>
-                <label className="checkbox-label">
-                    <input
-                        type="checkbox"
-                        id="scales"
-                        name="scales"
-                        checked={props.value !== -1}
-                        onChange={() => {
-                            props.toggle(props.name);
-                        }}
-                    />
-                    <span className="checkmark"></span>
-                </label>
-				
-			</div>
+			<label className="toggle-label">
+				<input
+					type="checkbox"
+					id="scales"
+					name="scales"
+					checked={props.value !== -1}
+					onChange={() => {
+						props.toggle(props.name);
+					}}
+				/>
+				<span className="toggle" />
+			</label>
+			<label className="slider-name">{props.name}</label>
 			<label className="slider-value" style={ignoredStyle}>
 				{props.value === -1 ? 'Any' : props.value}
 			</label>
