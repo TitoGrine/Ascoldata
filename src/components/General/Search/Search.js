@@ -5,7 +5,7 @@ function Search() {
 	const [ searchType, setSearchType ] = useState('album');
 
 	const updateSearch = (ev) => {
-		console.log(ev.target.value);
+		//console.log(ev.target.value);
 		setSearchType(ev.target.value);
 	};
 

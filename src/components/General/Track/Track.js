@@ -6,6 +6,7 @@ import { Textfit } from 'react-textfit';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 
 import { refreshToken } from '../../Auth/TokenFunc';
+import { keyBinds } from '../../HelperFunc';
 
 import HeaderBar from '../../HeaderBar';
 import Redirects from '../../Redirects';
@@ -179,7 +180,5 @@ function Track() {
 		</React.Fragment>
 	);
 }
-
-const keyBinds = [ 'Unknown', 'C', 'C♯, D♭', 'D', 'D♯, E♭', 'E', 'F', 'F♯, G♭', 'G', 'G♯, A♭', 'A', 'A♯, B♭', 'B' ];
 
 export default Track;

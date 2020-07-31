@@ -12,6 +12,7 @@ import UserPlaylists from './components/General/Playlist/UserPlaylists';
 import Playlist from './components/General/Playlist/Playlist';
 import Liked from './components/General/Liked Songs/Liked'
 import SearchResults from './components/General/Search/SearchResults';
+import Find from './components/General/Find/Find';
 
 function App() {
 
@@ -67,6 +68,11 @@ function App() {
             exact = { true }
             path = "/search"
             component = { SearchResults }
+          />
+          <Route
+            exact = { true }
+            path = "/find"
+            component = { Find }
           />
         </Router>
       </div>

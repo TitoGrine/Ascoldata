@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './Album.css';
 import Spotify from 'spotify-web-api-js';
-import axios from 'axios';
 import { useLocation, Link } from 'react-router-dom';
 import { Textfit } from 'react-textfit';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';

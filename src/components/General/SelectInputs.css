@@ -1,9 +1,9 @@
-.time-labels, .type-labels, .query-type-labels {
+.time-labels, .type-labels, .query-type-labels, .mode-labels {
 	width: 100%;
 	padding-left: 5%;
 }
 
-form label {
+.time-labels label, .type-labels label, .query-type-labels label, .mode-labels label, label.checkbox-label {
 	flex-basis: 100%;
 	display: block;
 	position: relative;
@@ -18,7 +18,7 @@ form label {
 	font-weight: 500;
 }
 
-label > input {
+label > input, label.checkbox-label > input {
 	position: absolute;
 	opacity: 0;
 	cursor: pointer;
@@ -26,7 +26,6 @@ label > input {
 	width: 0;
 }
 
-/* Create a custom checkbox */
 .checkmark {
 	position: absolute;
 	top: 5px;
@@ -35,11 +34,6 @@ label > input {
 	width: 18px;
 	background-color: #191414;
 	border-radius: 50%;
-}
-
-/* When the checkbox is checked, add a blue background */
-label input:checked ~ .checkmark {
-	background-color: #191414;
 }
 
 /* Create the checkmark/indicator (hidden when not checked) */
