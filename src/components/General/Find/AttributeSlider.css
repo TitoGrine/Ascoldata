@@ -2,12 +2,12 @@
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
-	align-items: center;
+    align-items: center;
 }
 
 .slider .toggle-label {
     align-self: flex-end;
-    margin: 0.5em 0.5em 0 0;
+    margin: 2% 4% 0 0;
 }
 
 label.slider-name {
@@ -20,6 +20,26 @@ label.slider-value {
 	font-size: 1.3em;
 	font-weight: 400;
 	margin: 0;
+}
+
+input.slider-value {
+	font-size: 1.3em;
+	font-weight: 400;
+	background-color: #191414;
+	color: antiquewhite;
+	border: 0;
+	width: 4rem;
+	text-align: center;
+}
+
+input.slider-value:focus{
+	outline: none;
+	border-bottom: 1px solid antiquewhite;
+}
+
+input.slider-value::-webkit-outer-spin-button, input.slider-value::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+  	margin: 0;
 }
 
 input.slider-input[type=range] {

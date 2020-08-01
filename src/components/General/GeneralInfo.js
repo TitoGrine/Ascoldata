@@ -77,15 +77,17 @@ function GeneralInfo() {
 			.getMyTopTracks({
 				limit: 50,
 				offset: 0,
-				time_range: 'long_term'
+				time_range: 'short_term'
 			})
 			.then(
 				function(data) {
-					calcUserStats(
-						data.items.map((track) => {
-							return track.id;
-						})
-					);
+					let tracks = data.items.map((track) => {
+						return track.id;
+					});
+
+					calcUserStats(tracks);
+
+					sessionStorage.setItem('track_seeds', tracks.slice(0, 5));
 				},
 				function(err) {
 					console.log(err);

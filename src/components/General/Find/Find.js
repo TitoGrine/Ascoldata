@@ -9,37 +9,62 @@ import Redirects from '../../Redirects';
 import Search from '../Search/Search';
 import AttributeSlider from './AttributeSlider';
 
+import Spotify from 'spotify-web-api-js';
+const spotifyWebApi = new Spotify();
+
+
+const trimLimit = (number, min=0, max=1) => {
+	if(isNaN(number))
+		return 0;
+
+	return Math.max(min, Math.min(parseFloat(number), max))
+}
+
 function Find() {
-	const [ acousticness, setAcousticness ] = useState(0.5);
-	const [ danceability, setDanceability ] = useState(0.5);
-	const [ energy, setEnergy ] = useState(0.5);
-	const [ instrumentalness, setInstrumentalness ] = useState(0.5);
-	const [ liveness, setLiveness ] = useState(0.5);
+	const [ seeds ] = useState(sessionStorage.getItem('track_seeds'));
+
+	const [ acousticness, setAcousticness ] = useState(-1);
+	const [ danceability, setDanceability ] = useState(-1);
+	const [ energy, setEnergy ] = useState(-1);
+	const [ instrumentalness, setInstrumentalness ] = useState(-1);
+	const [ liveness, setLiveness ] = useState(-1);
 	const [ loudness, setLoudness ] = useState(-1);
-	const [ popularity, setPopularity ] = useState(0.5);
-	const [ speechiness, setSpeechiness ] = useState(0.5);
-	const [ valence, setValence ] = useState(0.5);
+	const [ popularity, setPopularity ] = useState(-1);
+	const [ speechiness, setSpeechiness ] = useState(-1);
+	const [ valence, setValence ] = useState(-1);
 
 	const [ key, setKey ] = useState(0);
 	const [ mode, setMode ] = useState(-1);
 
-	const submitForm = (ev) => {
-		let query = {};
+	const submitForm = async (ev) => {
+		let query = {
+			seed_tracks: seeds
+		};
 
-		if (key !== 0) query.key = key;
-		if (mode !== -1) query.mode = mode;
+		if (key !== 0) query.target_key = key;
+		if (mode !== -1) query.target_mode = mode;
 
-		if (acousticness !== -1) query.acousticness = acousticness;
-		if (danceability !== -1) query.danceability = danceability;
-		if (energy !== -1) query.energy = energy;
-		if (instrumentalness !== -1) query.instrumentalness = instrumentalness;
-		if (liveness !== -1) query.liveness = liveness;
-		if (loudness !== -1) query.loudness = loudness;
-		if (popularity !== -1) query.popularity = popularity;
-		if (speechiness !== -1) query.speechiness = speechiness;
-		if (valence !== -1) query.valence = valence;
+		if (acousticness !== -1) query.target_acousticness = acousticness;
+		if (danceability !== -1) query.target_danceability = danceability;
+		if (energy !== -1) query.target_energy = energy;
+		if (instrumentalness !== -1) query.target_instrumentalness = instrumentalness;
+		if (liveness !== -1) query.target_liveness = liveness;
+		if (loudness !== -1) query.target_loudness = loudness;
+		if (popularity !== -1) query.target_popularity = popularity;
+		if (speechiness !== -1) query.target_speechiness = speechiness;
+		if (valence !== -1) query.target_valence = valence;
 
+		spotifyWebApi.setAccessToken(sessionStorage.getItem('authToken'));
 		console.log(query);
+
+		spotifyWebApi.getRecommendations(query).then(
+			function(data){
+				console.log(data);
+			},
+			function(err){
+				console.log(err);
+			}
+		)
 	};
 
 	const radioChange = (ev) => {
@@ -67,7 +92,7 @@ function Find() {
 				setLoudness(loudness === -1 ? 0.5 : -1);
 				break;
 			case 'popularity':
-				setPopularity(popularity === -1 ? 0.5 : -1);
+				setPopularity(popularity === -1 ? 50 : -1);
 				break;
 			case 'speechiness':
 				setSpeechiness(speechiness === -1 ? 0.5 : -1);
@@ -102,7 +127,7 @@ function Find() {
 						</div>
 
 						<div className="mode-value-input">
-							<label htmlFor="mode">Mode:</label>
+							<label htmlFor="mode">Scale:</label>
 							<div className="mode-labels">
 								<label>
 									<input
@@ -145,73 +170,100 @@ function Find() {
 						<AttributeSlider
 							name={'Acousticness'}
 							value={acousticness}
+							min_value={0}
+							max_value={1}
+							step={0.01}
 							toggle={attributeToggle}
 							handler={(ev) => {
-								setAcousticness(parseFloat(ev.target.value));
+								setAcousticness(trimLimit(ev.target.value));
 							}}
 						/>
 						<AttributeSlider
 							name={'Danceability'}
 							value={danceability}
+							min_value={0}
+							max_value={1}
+							step={0.01}
 							toggle={attributeToggle}
 							handler={(ev) => {
-								setDanceability(parseFloat(ev.target.value));
+								setDanceability(trimLimit(ev.target.value));
 							}}
 						/>
 						<AttributeSlider
 							name={'Energy'}
 							value={energy}
+							min_value={0}
+							max_value={1}
+							step={0.01}
 							toggle={attributeToggle}
 							handler={(ev) => {
-								setEnergy(parseFloat(ev.target.value));
+								setEnergy(trimLimit(ev.target.value));
 							}}
 						/>
 						<AttributeSlider
 							name={'Instrumentalness'}
 							value={instrumentalness}
+							min_value={0}
+							max_value={1}
+							step={0.01}
 							toggle={attributeToggle}
 							handler={(ev) => {
-								setInstrumentalness(parseFloat(ev.target.value));
+								setInstrumentalness(trimLimit(ev.target.value));
 							}}
 						/>
 						<AttributeSlider
 							name={'Liveness'}
 							value={liveness}
+							min_value={0}
+							max_value={1}
+							step={0.01}
 							toggle={attributeToggle}
 							handler={(ev) => {
-								setLiveness(parseFloat(ev.target.value));
+								setLiveness(trimLimit(ev.target.value));
 							}}
 						/>
 						<AttributeSlider
 							name={'Loudness'}
 							value={loudness}
+							min_value={0}
+							max_value={1}
+							step={0.01}
 							toggle={attributeToggle}
 							handler={(ev) => {
-								setLoudness(parseFloat(ev.target.value));
+								setLoudness(trimLimit(ev.target.value));
 							}}
 						/>
 						<AttributeSlider
 							name={'Popularity'}
 							value={popularity}
+							min_value={0}
+							max_value={100}
+							step={1}
 							toggle={attributeToggle}
 							handler={(ev) => {
-								setPopularity(parseFloat(ev.target.value));
+								setPopularity(trimLimit(ev.target.value, 0, 100));
 							}}
 						/>
 						<AttributeSlider
 							name={'Speechiness'}
 							value={speechiness}
+							min_value={0}
+							max_value={1}
+							step={0.01}
 							toggle={attributeToggle}
 							handler={(ev) => {
-								setSpeechiness(parseFloat(ev.target.value));
+								setSpeechiness(trimLimit(ev.target.value));
 							}}
 						/>
 						<AttributeSlider
 							name={'Valence'}
 							value={valence}
+							min_value={0}
+							max_value={1}
+							step={0.01}
 							toggle={attributeToggle}
 							handler={(ev) => {
-								setValence(parseFloat(ev.target.value));
+								setValence(trimLimit(ev.target.value));
 							}}
 						/>
 					</div>
