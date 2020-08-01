@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './Track.css';
 import Spotify from 'spotify-web-api-js';
-import { useLocation } from 'react-router-dom';
+import { useLocation, Link } from 'react-router-dom';
 import { Textfit } from 'react-textfit';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 
@@ -107,7 +107,9 @@ function Track() {
 						<StatCard
 							barStat={false}
 							title="Artist"
-							value={trackArtists === '' ? '' : trackArtists[0].name}
+							value={trackArtists === '' ? '' : trackArtists.map((artist) => {
+								return <Link key={artist.id} to={ '/artist?id=' + artist.id } className="inner-link">{artist.name}</Link>;
+							}).slice(0, 2)}
 							units=""
 						/>
 						<StatCard barStat={false} title="Duration" value={formatDuration(trackDuration)} units="" />

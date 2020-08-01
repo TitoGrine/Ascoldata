@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import './Find.css';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+import { useHistory } from 'react-router-dom';
 
-import { keyBinds } from '../../HelperFunc';
+import { keyBinds, trimLimit } from '../../HelperFunc';
 
 import HeaderBar from '../../HeaderBar';
 import Redirects from '../../Redirects';
@@ -12,17 +13,7 @@ import AttributeSlider from './AttributeSlider';
 import Spotify from 'spotify-web-api-js';
 const spotifyWebApi = new Spotify();
 
-
-const trimLimit = (number, min=0, max=1) => {
-	if(isNaN(number))
-		return 0;
-
-	return Math.max(min, Math.min(parseFloat(number), max))
-}
-
 function Find() {
-	const [ seeds ] = useState(sessionStorage.getItem('track_seeds'));
-
 	const [ acousticness, setAcousticness ] = useState(-1);
 	const [ danceability, setDanceability ] = useState(-1);
 	const [ energy, setEnergy ] = useState(-1);
@@ -36,35 +27,25 @@ function Find() {
 	const [ key, setKey ] = useState(0);
 	const [ mode, setMode ] = useState(-1);
 
+	const history = useHistory();
+
 	const submitForm = async (ev) => {
-		let query = {
-			seed_tracks: seeds
-		};
+		let link = `/recommendations?page=${1}`
 
-		if (key !== 0) query.target_key = key;
-		if (mode !== -1) query.target_mode = mode;
+		if (key !== 0) link += `&key=${key}`;
+		if (mode !== -1) link += `&mode=${mode}`;
 
-		if (acousticness !== -1) query.target_acousticness = acousticness;
-		if (danceability !== -1) query.target_danceability = danceability;
-		if (energy !== -1) query.target_energy = energy;
-		if (instrumentalness !== -1) query.target_instrumentalness = instrumentalness;
-		if (liveness !== -1) query.target_liveness = liveness;
-		if (loudness !== -1) query.target_loudness = loudness;
-		if (popularity !== -1) query.target_popularity = popularity;
-		if (speechiness !== -1) query.target_speechiness = speechiness;
-		if (valence !== -1) query.target_valence = valence;
-
-		spotifyWebApi.setAccessToken(sessionStorage.getItem('authToken'));
-		console.log(query);
-
-		spotifyWebApi.getRecommendations(query).then(
-			function(data){
-				console.log(data);
-			},
-			function(err){
-				console.log(err);
-			}
-		)
+		if (acousticness !== -1) link += `&acousticness=${acousticness}`;
+		if (danceability !== -1) link += `&danceability=${danceability}`;
+		if (energy !== -1) link += `&energy=${energy}`;
+		if (instrumentalness !== -1) link += `&instrumentalness=${instrumentalness}`;
+		if (liveness !== -1) link += `&liveness=${liveness}`;
+		if (loudness !== -1) link += `&loudness=${loudness}`;
+		if (popularity !== -1) link += `&popularity=${popularity}`;
+		if (speechiness !== -1) link += `&speechiness=${speechiness}`;
+		if (valence !== -1) link += `&valence=${valence}`;
+		
+		history.push(link);
 	};
 
 	const radioChange = (ev) => {

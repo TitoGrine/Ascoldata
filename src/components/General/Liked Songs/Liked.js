@@ -72,7 +72,7 @@ function Liked() {
 	return (
 		<React.Fragment>
 			<HeaderBar />
-			<div id="corporum" className="playlists-content">
+			<div id="corporum">
 				<section className="content-section slide-in-left">
 					{userLiked.length > 0 && <TrackTable results={userLiked} />}
 					<div className="pagination-divider" />

@@ -4,14 +4,14 @@ import { Link } from 'react-router-dom';
 function AlbumTableRow(props) {
     return (
         <tr>
-			<td><Link to={ '/album?id=' + props.info.id } style={ linkStyle }>{props.info.name}</Link></td>
+			<td><Link to={ '/album?id=' + props.info.id } className="inner-link">{props.info.name}</Link></td>
 			<td className="track-artists">
 				{props.info.artists.length === 0 ? (
 					'undefined'
 				) : (
 					props.info.artists
 						.map((artist) => {
-							return <Link key={artist.id} to={ '/artist?id=' + artist.id } style={ linkStyle }>{artist.name}</Link>;
+							return <Link key={artist.id} to={ '/artist?id=' + artist.id } className="inner-link">{artist.name}</Link>;
 						})
 						.slice(0, 2)
 				)}
@@ -20,10 +20,6 @@ function AlbumTableRow(props) {
 			<td>{props.info.total_tracks}</td>
 		</tr>
     )
-}
-
-const linkStyle = {
-	color: '#1db954'
 }
 
 export default AlbumTableRow

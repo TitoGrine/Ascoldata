@@ -131,6 +131,12 @@ div.side-content ul.redirects li a:hover:before {
 	font-weight: 800;
 }
 
+/* MISC */
+
+a.inner-link {
+	color: #1db954
+}
+
 /* Tooltips */
 
 .tooltip.top > .tooltip-arrow,
