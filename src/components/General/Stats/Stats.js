@@ -19,7 +19,6 @@ function Stats() {
 			<div id="corporum">
 				<section className="content-section slide-in-left">
 					<Textfit className="title" mode="single" max={35}>
-						{' '}
 						· Your Statistics ·
 					</Textfit>
 					<section id="numbered-data">
@@ -36,6 +35,7 @@ function Stats() {
 							units="dB"
 						/>
 						<StatCard barStat={false} title="Average tempo" value={Math.round(stats.tempo)} units="bpm" />
+						<StatCard barStat={false} title="Popularity" value={Math.round(stats.popularity)} units="" />
 					</section>
 					<section id="graphs">
 						<StatCard

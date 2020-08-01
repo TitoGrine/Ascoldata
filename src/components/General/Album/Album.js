@@ -4,6 +4,7 @@ import Spotify from 'spotify-web-api-js';
 import { useLocation, Link } from 'react-router-dom';
 import { Textfit } from 'react-textfit';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+import { FaSpotify } from 'react-icons/fa';
 
 import { refreshToken } from '../../Auth/TokenFunc';
 import { formatDuration } from '../../HelperFunc';
@@ -20,8 +21,9 @@ function Track() {
 	const query = new URLSearchParams(useLocation().search);
 	const album = query.get('id');
 
-	const [ authToken, setAuthToken ] = useState(sessionStorage.getItem('authToken'));
+	const [ authToken ] = useState(sessionStorage.getItem('authToken'));
 	const [ albumName, setAlbumName ] = useState('');
+	const [ albumLink, setAlbumLink ] = useState('');
 	const [ albumImage, setAlbumImage ] = useState('');
 	const [ albumLabel, setAlbumLabel ] = useState('');
 	const [ albumArtists, setAlbumArtists ] = useState('');
@@ -39,6 +41,7 @@ function Track() {
 				//console.log(data);
 
 				setAlbumName(data.name);
+				setAlbumLink(data.external_urls.spotify);
 				setAlbumImage(data.images.length === 0 ? '' : data.images[0].url);
 				setAlbumLabel(data.label);
 				setAlbumArtists(data.artists);
@@ -144,6 +147,7 @@ function Track() {
 					<Textfit className="album-title" mode="single" max={36}>
 						· {albumName} ·
 					</Textfit>
+					<a href={albumLink} target="_blank"><FaSpotify className="title-icon-link heartbeat" /></a> 
 					<div id="album-info">
 						<div id="image">
 							<Image src={albumImage} thumbnail />

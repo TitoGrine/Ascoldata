@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import './Artist.css';
 import Spotify from 'spotify-web-api-js';
-import axios from 'axios';
 import { useLocation } from 'react-router-dom';
 import { Image } from 'react-bootstrap';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+import { FaSpotify } from 'react-icons/fa';
 
 import { refreshToken } from '../../Auth/TokenFunc';
 
@@ -20,8 +20,9 @@ function Artist() {
 	const query = new URLSearchParams(useLocation().search);
 	const artist = query.get('id');
 
-	const [ authToken, setAuthToken ] = useState(sessionStorage.getItem('authToken'));
+	const [ authToken ] = useState(sessionStorage.getItem('authToken'));
 	const [ artistName, setArtistName ] = useState('');
+	const [ artistLink, setArtistLink ] = useState('');
 	const [ artistImage, setArtistImage ] = useState('');
 	const [ artistFollowers, setArtistFollowers ] = useState('');
 	const [ artistGenres, setArtistGenres ] = useState('');
@@ -33,6 +34,7 @@ function Artist() {
 		spotifyWebApi.getArtist(artist).then(
 			function(data) {
 				setArtistName(data.name);
+				setArtistLink(data.external_urls.spotify);
 				setArtistImage(data.images.length === 0 ? '' : data.images[0].url);
 				setArtistFollowers(data.followers.total);
 				setArtistGenres(data.genres);
@@ -128,6 +130,8 @@ function Artist() {
 						{' '}
 						· {artistName} ·{' '}
 					</Textfit>
+					<a href={artistLink} target="_blank"><FaSpotify className="title-icon-link heartbeat" /></a> 
+					
 					<div id="artist-info">
 						<div id="image">
 							<Image src={artistImage} thumbnail />

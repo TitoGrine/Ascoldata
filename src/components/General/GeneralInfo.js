@@ -27,7 +27,7 @@ function GeneralInfo() {
 	const [ uri, setURI ] = useState('');
 	const [ calcStats, setCalcStats ] = useState(false);
 
-	const calcUserStats = (results) => {
+	const calcUserStats = (results, avgPopularity) => {
 		spotifyWebApi.getAudioFeaturesForTracks(results).then(
 			function(data) {
 				//console.log(data.audio_features);
@@ -43,7 +43,8 @@ function GeneralInfo() {
 					mode: 0,
 					speechiness: 0,
 					tempo: 0,
-					valence: 0
+					valence: 0,
+					popularity: avgPopularity
 				};
 
 				data.audio_features.forEach((track_info) => {
@@ -85,7 +86,11 @@ function GeneralInfo() {
 						return track.id;
 					});
 
-					calcUserStats(tracks);
+					let avgPopularity = data.items.reduce((total, track) => {
+						return total + track.popularity;
+					}, 0) / data.items.length;
+
+					calcUserStats(tracks, avgPopularity);
 
 					sessionStorage.setItem('track_seeds', tracks.slice(0, 5));
 				},

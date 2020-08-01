@@ -13,8 +13,8 @@ function Search() {
 		<div id="search-settings">
 			<form action="/search">
 				<div id="search-bar">
-					<input type="text" name="q" placeholder={`Search for ${searchType}..`} />
-					<button className="search-button"> Search </button>
+					<input type="text" name="q" placeholder={`Search for ${searchType}..`} required/>
+					<button className="search-button" value="submit"> Search </button>
 				</div>
 				<p> Looking for: </p>
 				<div className="query-type-labels">

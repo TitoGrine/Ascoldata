@@ -3,6 +3,12 @@
     flex-direction: column;
 }
 
+div.title-with-ref {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
 .track-title {
     text-align: center;
     margin-bottom: 0.4em;

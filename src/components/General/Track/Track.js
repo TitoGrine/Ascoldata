@@ -4,6 +4,7 @@ import Spotify from 'spotify-web-api-js';
 import { useLocation, Link } from 'react-router-dom';
 import { Textfit } from 'react-textfit';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+import { FaSpotify } from 'react-icons/fa';
 
 import { refreshToken } from '../../Auth/TokenFunc';
 import { keyBinds } from '../../HelperFunc';
@@ -19,7 +20,8 @@ function Track() {
 	const query = new URLSearchParams(useLocation().search);
 	const track = query.get('id');
 
-	const [ authToken, setAuthToken ] = useState(sessionStorage.getItem('authToken'));
+	const [ authToken ] = useState(sessionStorage.getItem('authToken'));
+	const [ trackLink, setTrackLink ] = useState('');
 	const [ trackName, setTrackName ] = useState('');
 	const [ trackAlbum, setTrackAlbum ] = useState('');
 	const [ trackArtists, setTrackArtists ] = useState('');
@@ -39,7 +41,8 @@ function Track() {
 		spotifyWebApi.getTrack(track).then(
 			function(data) {
 				setTrackName(data.name);
-				setTrackAlbum(data.album.name);
+				setTrackLink(data.external_urls.spotify)
+				setTrackAlbum(data.album);
 				setTrackArtists(data.artists);
 				setTrackDuration(data.duration_ms);
 				setTrackPopularity(data.popularity);
@@ -102,14 +105,38 @@ function Track() {
 					<Textfit className="track-title" mode="single" max={36}>
 						· {trackName} ·
 					</Textfit>
+					<a href={trackLink} target="_blank"><FaSpotify className="title-icon-link heartbeat" /></a> 
+
 					<div id="track-info">
-						<StatCard barStat={false} title="Album" value={trackAlbum} units="" />
+						<StatCard barStat={false} title="Album" value={<Link
+													key={trackAlbum.id}
+													to={'/album?id=' + trackAlbum.id}
+													className="inner-link"
+												>
+													{trackAlbum.name}
+												</Link>} units="" />
 						<StatCard
 							barStat={false}
 							title="Artist"
-							value={trackArtists === '' ? '' : trackArtists.map((artist) => {
-								return <Link key={artist.id} to={ '/artist?id=' + artist.id } className="inner-link">{artist.name}</Link>;
-							}).slice(0, 2)}
+							value={
+								trackArtists === '' ? (
+									''
+								) : (
+									trackArtists
+										.map((artist) => {
+											return (
+												<Link
+													key={artist.id}
+													to={'/artist?id=' + artist.id}
+													className="inner-link"
+												>
+													{artist.name}
+												</Link>
+											);
+										})
+										.slice(0, 2)
+								)
+							}
 							units=""
 						/>
 						<StatCard barStat={false} title="Duration" value={formatDuration(trackDuration)} units="" />
