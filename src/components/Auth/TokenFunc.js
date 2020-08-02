@@ -6,7 +6,7 @@ export const refreshToken = () => {
     };
 
     axios.get('http://localhost:8000/refresh_token', { params: headers }).then((response) => {
-        console.log(response.data);
+        //console.log(response.data);
 
         sessionStorage.setItem('authToken', response.data.access_token);
 
