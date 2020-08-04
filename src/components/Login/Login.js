@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 
-import { firebase_authenticate } from '../Auth/Firebase';
-
 class Login extends Component {
 	constructor() {
 		super();
