@@ -1,6 +1,7 @@
 import * as firebase from 'firebase/app';
 import 'firebase/firestore';
 import 'firebase/functions';
+import axios from 'axios';
 
 var config = {
 	apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -14,9 +15,3 @@ let fb = firebase.initializeApp(config);
 let firestore = firebase.firestore();
 
 let functions = firebase.functions();
-
-export const firebase_authenticate = () => {
-	functions.httpsCallable('redirect')({}).then((data) => {
-		console.log(data);
-	});
-};
