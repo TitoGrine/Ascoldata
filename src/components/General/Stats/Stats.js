@@ -84,23 +84,22 @@ function Stats() {
 						/>
 					</section>
 				</section>
-				<section className={`sidebar-section slide-in-right sidebar-${toggled}`}>
-					<div className="side-content">
-						<Tabs>
-							<TabList>
-								<Tab>Search</Tab>
-								<Tab>Go to</Tab>
-							</TabList>
+				<section className={`sidebar-section slide-in-right sidebar-${toggled}`} />
+				<div className={`side-content slide-in-right sidebar-${toggled}`}>
+					<Tabs>
+						<TabList>
+							<Tab>Search</Tab>
+							<Tab>Go to</Tab>
+						</TabList>
 
-							<TabPanel>
-								<Search />
-							</TabPanel>
-							<TabPanel>
-								<Redirects exclude="statistics" />
-							</TabPanel>
-						</Tabs>
-					</div>
-				</section>
+						<TabPanel>
+							<Search />
+						</TabPanel>
+						<TabPanel>
+							<Redirects exclude="statistics" />
+						</TabPanel>
+					</Tabs>
+				</div>
 				<SideToggle
 					toggleFunc={(state) => {
 						setToggled(state);

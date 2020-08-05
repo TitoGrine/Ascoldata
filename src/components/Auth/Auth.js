@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export const refreshToken = () => {
+export const refreshToken = async () => {
 	let headers = {
 		refresh_token: sessionStorage.getItem('refreshToken')
 	};

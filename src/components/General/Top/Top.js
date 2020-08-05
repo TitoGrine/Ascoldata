@@ -21,7 +21,7 @@ function Top() {
 	const query = new URLSearchParams(useLocation().search);
 	const history = useHistory();
 	const limit = 12;
-	
+
 	const [ page, setPage ] = useState(parseInt(query.get('page')));
 	const [ topType, setTopType ] = useState(query.get('type'));
 	const [ topResults, setTopResults ] = useState([]);
@@ -105,8 +105,8 @@ function Top() {
 	};
 
 	const switchPage = (ev) => {
-		if(Number.isInteger(ev)){
-			setOffset(limit * (ev - 1))
+		if (Number.isInteger(ev)) {
+			setOffset(limit * (ev - 1));
 		}
 	};
 
@@ -114,7 +114,7 @@ function Top() {
 		() => {
 			if (authToken) {
 				getData();
-				setPage(1 + (offset / limit));
+				setPage(1 + offset / limit);
 			}
 		},
 		[ authToken, timeRange, topType, offset ]
@@ -123,9 +123,9 @@ function Top() {
 	useEffect(
 		() => {
 			history.push(`/top?type=${topType}&time_range=${timeRange}&page=${page}`);
-		}, 
+		},
 		[ page ]
-	)
+	);
 
 	return (
 		<React.Fragment>
@@ -133,7 +133,7 @@ function Top() {
 			<div id="corporum" className="top-content">
 				<section className="content-section content-section-top slide-in-left">
 					{renderTable()}
-					<div className="pagination-divider"></div>
+					<div className="pagination-divider" />
 					<Pagination
 						activePage={page}
 						itemsCountPerPage={limit}
@@ -142,98 +142,97 @@ function Top() {
 						onChange={switchPage}
 					/>
 				</section>
-				<section className="sidebar-section slide-in-right">
-					<div className="side-content">
-						<Tabs>
-							<TabList>
-								<Tab>Settings</Tab>
-								<Tab>Search</Tab>
-								<Tab>Go to</Tab>
-							</TabList>
+				<section className="sidebar-section slide-in-right" />
+				<div className="side-content slide-in-right">
+					<Tabs>
+						<TabList>
+							<Tab>Settings</Tab>
+							<Tab>Search</Tab>
+							<Tab>Go to</Tab>
+						</TabList>
 
-							<TabPanel>
-								<div className="settings">
-									<form>
-										<p> View top: </p>
-										<div className="type-labels">
-											<label>
-												<input
-													id="track"
-													type="radio"
-													name="radios"
-													value="track"
-													checked={topType.localeCompare('track') === 0}
-													onChange={updateTopType}
-												/>
-												<span className="checkmark" />
-												Tracks
-											</label>
-											<label>
-												<input
-													id="artist"
-													type="radio"
-													name="radios"
-													value="artist"
-													checked={topType.localeCompare('artist') === 0}
-													onChange={updateTopType}
-												/>
-												<span className="checkmark" />
-												Artists
-											</label>
-										</div>
-									</form>
-									<form>
-										<p> Select a time range: </p>
-										<div className="time-labels">
-											<label>
-												<input
-													id="short_term"
-													type="radio"
-													name="radios"
-													value="short_term"
-													checked={timeRange.localeCompare('short_term') === 0}
-													onChange={updateTimeRange}
-												/>
-												<span className="checkmark" />
-												Short Term
-											</label>
-											<label>
-												<input
-													id="medium_term"
-													type="radio"
-													name="radios"
-													value="medium_term"
-													checked={timeRange.localeCompare('medium_term') === 0}
-													onChange={updateTimeRange}
-												/>
-												<span className="checkmark" />
-												Medium Term
-											</label>
-											<label>
-												<input
-													id="long_term"
-													type="radio"
-													name="radios"
-													value="long_term"
-													checked={timeRange.localeCompare('long_term') === 0}
-													onChange={updateTimeRange}
-												/>
-												<span className="checkmark" />
-												Long Term
-											</label>
-										</div>
-									</form>
-								</div>
-							</TabPanel>
-							<TabPanel>
-								<Search />
-							</TabPanel>
-							<TabPanel>
-								<Redirects exclude="top" />
-							</TabPanel>
-						</Tabs>
-					</div>
-				</section>
+						<TabPanel>
+							<div className="settings">
+								<form>
+									<p> View top: </p>
+									<div className="type-labels">
+										<label>
+											<input
+												id="track"
+												type="radio"
+												name="radios"
+												value="track"
+												checked={topType.localeCompare('track') === 0}
+												onChange={updateTopType}
+											/>
+											<span className="checkmark" />
+											Tracks
+										</label>
+										<label>
+											<input
+												id="artist"
+												type="radio"
+												name="radios"
+												value="artist"
+												checked={topType.localeCompare('artist') === 0}
+												onChange={updateTopType}
+											/>
+											<span className="checkmark" />
+											Artists
+										</label>
+									</div>
+								</form>
+								<form>
+									<p> Select a time range: </p>
+									<div className="time-labels">
+										<label>
+											<input
+												id="short_term"
+												type="radio"
+												name="radios"
+												value="short_term"
+												checked={timeRange.localeCompare('short_term') === 0}
+												onChange={updateTimeRange}
+											/>
+											<span className="checkmark" />
+											Short Term
+										</label>
+										<label>
+											<input
+												id="medium_term"
+												type="radio"
+												name="radios"
+												value="medium_term"
+												checked={timeRange.localeCompare('medium_term') === 0}
+												onChange={updateTimeRange}
+											/>
+											<span className="checkmark" />
+											Medium Term
+										</label>
+										<label>
+											<input
+												id="long_term"
+												type="radio"
+												name="radios"
+												value="long_term"
+												checked={timeRange.localeCompare('long_term') === 0}
+												onChange={updateTimeRange}
+											/>
+											<span className="checkmark" />
+											Long Term
+										</label>
+									</div>
+								</form>
+							</div>
+						</TabPanel>
+						<TabPanel>
+							<Search />
+						</TabPanel>
+						<TabPanel>
+							<Redirects exclude="top" />
+						</TabPanel>
+					</Tabs>
+				</div>
 			</div>
 		</React.Fragment>
 	);
