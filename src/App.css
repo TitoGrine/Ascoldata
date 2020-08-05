@@ -163,13 +163,25 @@ a.inner-link {
 .side-toggle {
 	z-index: 50;
 	position: fixed;
-	bottom: 70px;
-	right: 70px;
+	bottom: 30px;
+	right: 30px;
 	background-size: contain;
 	cursor: pointer;
+	padding: 0;
+	box-shadow: 0px 0px 0px transparent;
+	border: 3px solid transparent;
+	text-shadow: 0px 0px 0px transparent;
+	background-color: transparent;
+	border-radius: 3em;
+}
+
+.side-toggle:focus {
+	outline: none;
+	border: 3px solid #1db954;
 }
 
 .side-toggle svg {
+	display: block;
 	padding: 10px;
 	border-radius: 1em;
 	-webkit-box-shadow: 8px 8px 20px -5px rgba(25, 20, 20, 0.8);

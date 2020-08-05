@@ -14,21 +14,19 @@ function SideToggle(props) {
 	};
 
 	return (
-		<div className="side-toggle" onClick={toggleButton}>
+		<button className="side-toggle" onClick={toggleButton}>
 			{renderIcon()}
-		</div>
+		</button>
 	);
 }
 
 const optionsStyle = {
-	position: 'fixed',
 	fontSize: '50px',
 	color: '#191414',
 	backgroundColor: 'antiquewhite'
 };
 
 const closeStyle = {
-	position: 'fixed',
 	fontSize: '50px',
 	color: 'antiquewhite',
 	backgroundColor: '#191414'

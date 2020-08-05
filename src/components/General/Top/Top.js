@@ -13,6 +13,7 @@ import ArtistTable from '../Artist/ArtistTable';
 import TrackTable from '../Track/TrackTable';
 import Redirects from '../../Redirects';
 import Search from '../Search/Search';
+import SideToggle from '../../SideToggle';
 
 const spotifyWebApi = new Spotify();
 
@@ -22,6 +23,7 @@ function Top() {
 	const history = useHistory();
 	const limit = 12;
 
+	const [ toggled, setToggled ] = useState('closed');
 	const [ page, setPage ] = useState(parseInt(query.get('page')));
 	const [ topType, setTopType ] = useState(query.get('type'));
 	const [ topResults, setTopResults ] = useState([]);
@@ -142,8 +144,8 @@ function Top() {
 						onChange={switchPage}
 					/>
 				</section>
-				<section className="sidebar-section slide-in-right" />
-				<div className="side-content slide-in-right">
+				<section className={`sidebar-section slide-in-right sidebar-${toggled}`} />
+				<div className={`side-content slide-in-right sidebar-${toggled}`}>
 					<Tabs>
 						<TabList>
 							<Tab>Settings</Tab>
@@ -233,6 +235,11 @@ function Top() {
 						</TabPanel>
 					</Tabs>
 				</div>
+				<SideToggle
+					toggleFunc={(state) => {
+						setToggled(state);
+					}}
+				/>
 			</div>
 		</React.Fragment>
 	);
