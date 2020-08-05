@@ -82,28 +82,6 @@ div.side-content {
 	flex-wrap: wrap;
 }
 
-div.side-content div.sidebar-tabs {
-	flex-basis: 100%;
-	text-align: center;
-	height: 10%;
-}
-
-div.side-content div.sidebar-tabs button {
-	text-decoration: none;
-	font-size: 1.2rem;
-	font-weight: 600;
-	padding: 0.4em 1em;
-	background-color: antiquewhite;
-	color: #191414;
-	border-width: 0;
-	border-bottom: solid 2px #191414;
-	outline: none;
-}
-
-div.side-content div.sidebar-tabs button:active {
-	border-width: 0;
-}
-
 div.side-content ul.redirects {
 	align-self: flex-start;
 	height: 90%;
@@ -145,6 +123,23 @@ a.inner-link {
 	color: #1db954;
 }
 
+.side-toggle {
+	z-index: 50;
+	position: fixed;
+	bottom: 70px;
+	right: 70px;
+	background-size: contain;
+	cursor: pointer;
+}
+
+.side-toggle svg {
+	padding: 10px;
+	border-radius: 1em;
+	-webkit-box-shadow: 8px 8px 20px -5px rgba(25, 20, 20, 0.8);
+	-moz-box-shadow: 8px 8px 20px -5px rgba(25, 20, 20, 0.8);
+	box-shadow: 8px 8px 20px -5px rgba(25, 20, 20, 0.8);
+}
+
 /* Tooltips */
 
 .tooltip.top > .tooltip-arrow,
@@ -170,7 +165,7 @@ a.inner-link {
 .react-tabs__tab-list {
 	display: flex;
 	width: 100%;
-	justify-content: space-around;
+	justify-content: center;
 	list-style-type: none;
 	padding: 0;
 

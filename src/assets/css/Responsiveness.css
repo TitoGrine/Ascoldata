@@ -1,0 +1,22 @@
+/* Responsiveness */
+
+@media screen and (max-width: 1000px) {
+	section.content-section {
+		grid-column: 1 / span 10;
+		grid-row: 1 / span 24;
+	}
+
+	section.sidebar-section {
+		z-index: 30;
+		grid-column: 10;
+		grid-row: 4 / span 24;
+	}
+
+	section.sidebar-closed {
+		display: none;
+	}
+
+	section.sidebar-toggled {
+		display: flex;
+	}
+}

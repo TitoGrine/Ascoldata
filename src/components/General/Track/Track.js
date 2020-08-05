@@ -6,7 +6,7 @@ import { Textfit } from 'react-textfit';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { FaSpotify } from 'react-icons/fa';
 
-import { refreshToken } from '../../Auth/TokenFunc';
+import { refreshToken } from '../../Auth/Auth';
 import { keyBinds } from '../../HelperFunc';
 
 import HeaderBar from '../../HeaderBar';

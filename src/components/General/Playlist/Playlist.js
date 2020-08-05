@@ -6,7 +6,7 @@ import { useLocation } from 'react-router-dom';
 import { Image } from 'react-bootstrap';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 
-import { refreshToken } from '../../Auth/TokenFunc';
+import { refreshToken } from '../../Auth/Auth';
 import { formatDuration } from '../../HelperFunc';
 
 import HeaderBar from '../../HeaderBar';

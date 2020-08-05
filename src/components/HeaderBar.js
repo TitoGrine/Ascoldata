@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import { Navbar, Nav, Image } from 'react-bootstrap';
 
 function HeaderBar() {
-
-    const [ profilePicture ] = useState(sessionStorage.getItem('profile-picture'))
+	const [ profilePicture ] = useState(sessionStorage.getItem('profile-picture'));
 
 	const getLoginState = () => {
 		if (sessionStorage.getItem('refreshToken') !== null) {

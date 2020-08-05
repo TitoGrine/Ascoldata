@@ -3,7 +3,7 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { useLocation, useHistory } from 'react-router-dom';
 import Spotify from 'spotify-web-api-js';
 
-import { refreshToken } from '../../Auth/TokenFunc';
+import { refreshToken } from '../../Auth/Auth';
 import { trimLimit } from '../../HelperFunc';
 
 import HeaderBar from '../../HeaderBar';

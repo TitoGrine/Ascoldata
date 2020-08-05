@@ -6,7 +6,7 @@ import { Image } from 'react-bootstrap';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import Spotify from 'spotify-web-api-js';
 
-import { refreshToken } from '../Auth/TokenFunc';
+import { refreshToken } from '../Auth/Auth';
 
 import Redirects from '../Redirects';
 import { Textfit } from 'react-textfit';

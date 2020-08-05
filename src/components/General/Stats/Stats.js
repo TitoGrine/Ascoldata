@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './Stats.css';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 
@@ -9,9 +9,11 @@ import Redirects from '../../Redirects';
 import StatCard from './StatCard';
 import { Textfit } from 'react-textfit';
 import Search from '../Search/Search';
+import SideToggle from '../../SideToggle';
 
 function Stats() {
 	const stats = JSON.parse(sessionStorage.getItem('userStats'));
+	const [ toggled, setToggled ] = useState('closed');
 
 	return (
 		<React.Fragment>
@@ -82,7 +84,7 @@ function Stats() {
 						/>
 					</section>
 				</section>
-				<section className="sidebar-section slide-in-right">
+				<section className={`sidebar-section slide-in-right sidebar-${toggled}`}>
 					<div className="side-content">
 						<Tabs>
 							<TabList>
@@ -99,6 +101,11 @@ function Stats() {
 						</Tabs>
 					</div>
 				</section>
+				<SideToggle
+					toggleFunc={(state) => {
+						setToggled(state);
+					}}
+				/>
 			</div>
 		</React.Fragment>
 	);

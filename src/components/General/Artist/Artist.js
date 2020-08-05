@@ -6,7 +6,7 @@ import { Image } from 'react-bootstrap';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { FaSpotify } from 'react-icons/fa';
 
-import { refreshToken } from '../../Auth/TokenFunc';
+import { refreshToken } from '../../Auth/Auth';
 
 import HeaderBar from '../../HeaderBar';
 import Redirects from '../../Redirects';

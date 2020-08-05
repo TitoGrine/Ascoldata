@@ -6,7 +6,7 @@ import { useLocation, useHistory } from 'react-router-dom';
 import Spotify from 'spotify-web-api-js';
 import Pagination from 'react-js-pagination';
 
-import { refreshToken } from '../../Auth/TokenFunc';
+import { refreshToken } from '../../Auth/Auth';
 
 import HeaderBar from '../../HeaderBar';
 import ArtistTable from '../Artist/ArtistTable';

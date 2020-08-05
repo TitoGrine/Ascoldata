@@ -34,7 +34,7 @@ class Login extends Component {
 								className="col d-flex flex-column align-items-center justify-content-center"
 								style={{ height: '100%' }}
 							>
-								<form action={`${process.env.REACT_APP_FIREBASE_FUNCTIONS_APP}login`}>
+								<form action={process.env.REACT_APP_FIREBASE_LOGIN_FUNC}>
 									<Button type="submit" size="lg" style={buttonStyle}>
 										<strong>Log in with Spotify {process.env.REACT_APP_TEST}</strong>
 									</Button>
