@@ -55,6 +55,32 @@
 	#info #image img {
 		max-width: 150px;
 	}
+
+	/* Track */
+
+	#track-info {
+		flex-wrap: wrap;
+	}
+
+	#track-stats {
+		grid-template-columns: repeat(2, 1fr);
+		grid-template-rows: repeat(3, 1fr);
+	}
+}
+
+@media screen and (max-width: 420px) {
+	/* Track */
+
+	#track-stats {
+		grid-template-columns: repeat(1, 1fr);
+		grid-template-rows: repeat(6, 1fr);
+		gap: 4em;
+	}
+
+	#track-info,
+	#track-stats > div.stat-card:last-child {
+		margin-bottom: 4em;
+	}
 }
 
 @media screen and (min-width: 961px) {

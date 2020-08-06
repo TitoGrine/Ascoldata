@@ -1,72 +1,75 @@
-
 .stat-card {
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    place-content: center;
-    font-size: 1.3em;
-    font-weight: 400;
+	text-align: center;
+	display: flex;
+	flex-direction: column;
+	place-content: center;
+	font-size: 1.3em;
+	font-weight: 400;
 }
 
 .stat-card p {
-    margin-bottom: 0.2em;
+	margin-bottom: 0.2em;
 }
 
 p > svg {
-    margin-left: 0.4em;
-    font-size: 0.9em;
-    cursor: help;
+	margin-left: 0.4em;
+	font-size: 0.9em;
+	cursor: help;
 }
 
 strong.stat-value {
-    font-size: 1.2em;
-    font-weight: 500;
-    display: flex;
-    justify-content: center;
+	font-size: 1.2em;
+	font-weight: 500;
+	display: flex;
+	justify-content: center;
+}
+
+strong.stat-value .inner-link:nth-child(n + 2):before {
+	content: ', ';
 }
 
 strong.stat-value p {
-    padding-left: 0.1em;
+	padding-left: 0.1em;
 }
 
 .bar {
-    margin: auto;
-    flex-basis: 25%;
-    width: 70%;
-    min-height: 0.7em;
-    max-height: 0.7em;
-    background: antiquewhite;
-    border-radius: 2em;
-    margin: 0.6em auto 0 auto;
+	margin: auto;
+	flex-basis: 25%;
+	width: 70%;
+	min-height: 0.7em;
+	max-height: 0.7em;
+	background: antiquewhite;
+	border-radius: 2em;
+	margin: 0.6em auto 0 auto;
 }
 
 .bar .filled {
-    min-height: 0.7em;
-    max-height: 0.7em;
-    border-radius: 2em 0 0 2em;
-    clip-path: inset(0 100% 0 0);
-    -webkit-animation: load 1.2s linear 0.5s;
-    animation: load 1.2s linear 0.5s;
-    animation-fill-mode: forwards;
+	min-height: 0.7em;
+	max-height: 0.7em;
+	border-radius: 2em 0 0 2em;
+	clip-path: inset(0 100% 0 0);
+	-webkit-animation: load 1.2s linear 0.5s;
+	animation: load 1.2s linear 0.5s;
+	animation-fill-mode: forwards;
 }
 
 .bar .filled::before {
-    clip-path: inset(0 100% 0 0);
+	clip-path: inset(0 100% 0 0);
 }
 
 @-webkit-keyframes load {
-    0% {
-        clip-path: inset(0 100% 0 0);
-    }
-    100% {
-        clip-path: inset(0 0 0 0);
-    }
+	0% {
+		clip-path: inset(0 100% 0 0);
+	}
+	100% {
+		clip-path: inset(0 0 0 0);
+	}
 }
 @keyframes load {
-    0% {
-        clip-path: inset(0 100% 0 0);
-    }
-    100% {
-        clip-path: inset(0 0 0 0);
-    }
+	0% {
+		clip-path: inset(0 100% 0 0);
+	}
+	100% {
+		clip-path: inset(0 0 0 0);
+	}
 }
