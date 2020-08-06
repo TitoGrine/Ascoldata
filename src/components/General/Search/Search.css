@@ -44,11 +44,13 @@
 }
 
 .search-button:hover {
-	color: antiquewhite;
+	animation: fadeIn 0.15s linear;
+	animation-fill-mode: forwards;
 }
 
 #search-settings > form > p {
 	flex-basis: 100%;
 	box-sizing: border-box;
 	margin-top: 1.5em;
+	font-size: 1.3em;
 }

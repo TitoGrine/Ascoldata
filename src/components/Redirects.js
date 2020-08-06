@@ -7,32 +7,32 @@ function Redirects(props) {
 			<React.Fragment>
 				{props.exclude !== 'user' && (
 					<li>
-						<Link to="/">User</Link>{' '}
+						<Link to="/">User</Link>
 					</li>
 				)}
 				{props.exclude !== 'top' && (
 					<li>
-						<Link to={`/top?type=track&time_range=short_term&page=${1}`}>Top</Link>{' '}
+						<Link to={`/top?type=track&time_range=short_term&page=${1}`}>Top</Link>
 					</li>
 				)}
 				{props.exclude !== 'statistics' && (
 					<li>
-						<Link to="/stats">Statistics</Link>{' '}
+						<Link to="/stats">Statistics</Link>
 					</li>
 				)}
 				{props.exclude !== 'liked' && (
 					<li>
-						<Link to={`/liked?page=${1}`}>Liked</Link>{' '}
+						<Link to={`/liked?page=${1}`}>Liked</Link>
 					</li>
 				)}
 				{props.exclude !== 'playlists' && (
 					<li>
-						<Link to={`/playlists?page=${1}`}>Playlists</Link>{' '}
+						<Link to={`/playlists?page=${1}`}>Playlists</Link>
 					</li>
 				)}
 				{props.exclude !== 'find' && (
 					<li>
-						<Link to={`/find`}>Find</Link>{' '}
+						<Link to={`/find`}>Find</Link>
 					</li>
 				)}
 			</React.Fragment>
