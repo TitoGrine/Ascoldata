@@ -1,20 +1,21 @@
-import React from 'react'
+import React from 'react';
 
 function PercentBar(props) {
+	const borders = props.percentage < 99 ? '2em 0 0 2em' : '2em';
+	const height = (0.6 + 0.4 * (props.percentage > 2)) * 0.7;
 
-    const borders = props.percentage < 99 ? '2em 0 0 2em' : '2em' 
+	const fillPercentage = {
+		width: props.percentage + '%',
+		backgroundColor: props.color,
+		borderRadius: borders,
+		minHeight: height + 'em'
+	};
 
-    const fillPercentage = {
-        width: props.percentage + '%',
-        backgroundColor: props.color,
-        borderRadius: borders
-    }
-
-    return (
-        <div className="bar">
-            <div className="filled" style={ fillPercentage }></div>
-        </div>
-    )
+	return (
+		<div className="bar">
+			<div className="filled" style={fillPercentage} />
+		</div>
+	);
 }
 
-export default PercentBar
+export default PercentBar;

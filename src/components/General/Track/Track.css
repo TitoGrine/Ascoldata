@@ -24,7 +24,6 @@ div.title-with-ref {
 }
 
 #track-stats {
-	/* flex-basis: 1 1 auto; */
 	margin: auto;
 	display: grid;
 	width: 100%;

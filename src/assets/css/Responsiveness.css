@@ -56,29 +56,46 @@
 		max-width: 150px;
 	}
 
-	/* Track */
+	/* Track & Album */
 
-	#track-info {
+	#track-info,
+	#album-info {
 		flex-wrap: wrap;
 	}
 
-	#track-stats {
+	#track-info,
+	#album-info #misc-data {
+		align-items: flex-start;
+	}
+
+	#album-info #misc-data > .stat-card {
+		padding-top: 0;
+	}
+
+	#track-info > .stat-card {
+		flex: 1 1 30%;
+	}
+
+	#track-stats,
+	#album-stats {
 		grid-template-columns: repeat(2, 1fr);
 		grid-template-rows: repeat(3, 1fr);
+		margin: 3em 0;
 	}
 }
 
 @media screen and (max-width: 420px) {
-	/* Track */
+	/* Track & Album */
 
-	#track-stats {
+	#track-stats,
+	#album-stats {
 		grid-template-columns: repeat(1, 1fr);
 		grid-template-rows: repeat(6, 1fr);
 		gap: 4em;
 	}
 
-	#track-info,
-	#track-stats > div.stat-card:last-child {
+	#track-stats > div.stat-card:last-child,
+	#album-stats > div.stat-card:last-child {
 		margin-bottom: 4em;
 	}
 }

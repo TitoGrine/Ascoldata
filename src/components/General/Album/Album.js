@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import './Album.css';
 import Spotify from 'spotify-web-api-js';
 import { useLocation, Link } from 'react-router-dom';
 import { Textfit } from 'react-textfit';
@@ -22,7 +21,7 @@ function Track() {
 	const query = new URLSearchParams(useLocation().search);
 	const album = query.get('id');
 
-	const [ toggled, setToggled ] = useState('closed');
+	const [ toggled, setToggled ] = useState('nothing');
 	const [ authToken ] = useState(sessionStorage.getItem('authToken'));
 	const [ albumName, setAlbumName ] = useState('');
 	const [ albumLink, setAlbumLink ] = useState('');

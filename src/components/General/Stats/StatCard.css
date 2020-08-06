@@ -21,6 +21,7 @@ strong.stat-value {
 	font-size: 1.2em;
 	font-weight: 500;
 	display: flex;
+	flex-wrap: wrap;
 	justify-content: center;
 }
 
@@ -33,7 +34,6 @@ strong.stat-value p {
 }
 
 .bar {
-	margin: auto;
 	flex-basis: 25%;
 	width: 70%;
 	min-height: 0.7em;
@@ -41,10 +41,12 @@ strong.stat-value p {
 	background: antiquewhite;
 	border-radius: 2em;
 	margin: 0.6em auto 0 auto;
+	vertical-align: middle;
+	display: flex;
+	align-items: center;
 }
 
 .bar .filled {
-	min-height: 0.7em;
 	max-height: 0.7em;
 	border-radius: 2em 0 0 2em;
 	clip-path: inset(0 100% 0 0);
