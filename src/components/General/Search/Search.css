@@ -11,39 +11,44 @@
 
 #search-bar {
 	width: 100%;
+	max-width: 500px;
 	display: flex;
 	box-sizing: border-box;
 }
 
 #search-bar > input {
-	flex-grow: 1;
+	flex: 1 2 80%;
+	flex-shrink: 5;
 	color: #191414;
-	border: 2px solid #191414;
+	border: 1px solid #191414;
 	border-right: 0;
 	border-radius: 5px 0 0 5px;
 	padding-left: 0.6em;
 	font-size: 1.1em;
+	overflow-x: scroll;
 }
 
 .search-button {
+	flex: 1 1 20%;
 	text-decoration: none;
-	font-size: 1.2rem;
+	font-size: 1.3rem;
 	font-weight: 600;
-	padding: 0.4em 1em;
+	padding: 0.2em 1em 0.4em 1em;
 	color: #191414;
 	background-color: #1db954;
+	max-width: 80px;
 
-	border: 2px solid #191414;
+	border: 1px solid #191414;
 	border-radius: 0 5px 5px 0;
 	outline: none;
 }
 
 .search-button:hover {
-	background-color: #191414;
-	color: #1db954;
+	color: antiquewhite;
 }
 
 #search-settings > form > p {
+	flex-basis: 100%;
 	box-sizing: border-box;
 	margin-top: 1.5em;
 }

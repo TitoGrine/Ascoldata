@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './Search.css';
+import { GrSearch } from 'react-icons/gr';
 
 function Search() {
 	const [ searchType, setSearchType ] = useState('album');
@@ -13,8 +14,10 @@ function Search() {
 		<div id="search-settings">
 			<form action="/search">
 				<div id="search-bar">
-					<input type="text" name="q" placeholder={`Search for ${searchType}..`} required/>
-					<button className="search-button" value="submit"> Search </button>
+					<input type="text" name="q" placeholder={`Search for ${searchType}s..`} required />
+					<button className="search-button" value="submit">
+						<GrSearch />
+					</button>
 				</div>
 				<p> Looking for: </p>
 				<div className="query-type-labels">
@@ -67,8 +70,8 @@ function Search() {
 						Songs
 					</label>
 				</div>
-                <input type="number" name="page" value={1} style={{display:"none"}} readOnly/>
-            </form>
+				<input type="number" name="page" value={1} style={{ display: 'none' }} readOnly />
+			</form>
 		</div>
 	);
 }

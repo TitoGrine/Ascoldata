@@ -13,6 +13,7 @@ import ArtistTable from '../Artist/ArtistTable';
 import PlaylistTable from '../Playlist/PlaylistTable';
 import Search from './Search';
 import AlbumTable from '../Album/AlbumTable';
+import SideToggle from '../../SideToggle';
 
 const spotifyWebApi = new Spotify();
 
@@ -25,6 +26,7 @@ function SearchResults() {
 	const q = query.get('q');
 	const type = query.get('type');
 
+	const [ toggled, setToggled ] = useState('closed');
 	const [ page, setPage ] = useState(parseInt(query.get('page')));
 	const [ results, setResults ] = useState([]);
 	const [ offset, setOffset ] = useState(limit * (page - 1));
@@ -40,7 +42,7 @@ function SearchResults() {
 			})
 			.then(
 				function(data) {
-					console.log(data);
+					// console.log(data);
 					setResults(data[`${type}s`].items);
 					setTotalItems(data[`${type}s`].total);
 				},
@@ -76,10 +78,7 @@ function SearchResults() {
 	);
 
 	const renderTable = () => {
-		console.log('Mamma mia');
-
-		if (results.length === 0)
-			return;
+		if (results.length === 0) return;
 
 		switch (type) {
 			case 'artist':
@@ -110,23 +109,27 @@ function SearchResults() {
 						onChange={switchPage}
 					/>
 				</section>
-				<section className="sidebar-section slide-in-right">
-					<div className="side-content">
-						<Tabs>
-							<TabList>
-								<Tab>Search</Tab>
-								<Tab>Go to</Tab>
-							</TabList>
+				<section className={`sidebar-section slide-in-right sidebar-${toggled}`} />
+				<div className={`side-content slide-in-right sidebar-${toggled}`}>
+					<Tabs>
+						<TabList>
+							<Tab>Search</Tab>
+							<Tab>Go to</Tab>
+						</TabList>
 
-							<TabPanel>
-								<Search />
-							</TabPanel>
-							<TabPanel>
-								<Redirects exclude="" />
-							</TabPanel>
-						</Tabs>
-					</div>
-				</section>
+						<TabPanel>
+							<Search />
+						</TabPanel>
+						<TabPanel>
+							<Redirects exclude="" />
+						</TabPanel>
+					</Tabs>
+				</div>
+				<SideToggle
+					toggleFunc={(state) => {
+						setToggled(state);
+					}}
+				/>
 			</div>
 		</React.Fragment>
 	);

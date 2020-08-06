@@ -14,6 +14,7 @@ import Redirects from '../../Redirects';
 import StatCard from '../Stats/StatCard';
 import { Textfit } from 'react-textfit';
 import Search from '../Search/Search';
+import SideToggle from '../../SideToggle';
 
 const spotifyWebApi = new Spotify();
 
@@ -21,6 +22,7 @@ function Playlist() {
 	const query = new URLSearchParams(useLocation().search);
 	const playlist = query.get('id');
 
+	const [ toggled, setToggled ] = useState('closed');
 	const [ authToken, setAuthToken ] = useState(sessionStorage.getItem('authToken'));
 	const [ playlistName, setPlaylistName ] = useState('');
 	const [ playlistImage, setPlaylistImage ] = useState('');
@@ -47,8 +49,6 @@ function Playlist() {
 						return total + track.track.duration_ms;
 					}, 0)
 				);
-
-				console.log(data.tracks);
 
 				getPlaylistStats(
 					data.tracks.items.map((track) => {
@@ -190,23 +190,27 @@ function Playlist() {
 						/>
 					</div>
 				</section>
-				<section className="sidebar-section slide-in-right">
-					<div className="side-content">
-						<Tabs>
-							<TabList>
-								<Tab>Search</Tab>
-								<Tab>Go to</Tab>
-							</TabList>
+				<section className={`sidebar-section slide-in-right sidebar-${toggled}`} />
+				<div className={`side-content slide-in-right sidebar-${toggled}`}>
+					<Tabs>
+						<TabList>
+							<Tab>Search</Tab>
+							<Tab>Go to</Tab>
+						</TabList>
 
-							<TabPanel>
-								<Search />
-							</TabPanel>
-							<TabPanel>
-								<Redirects exclude="" />
-							</TabPanel>
-						</Tabs>
-					</div>
-				</section>
+						<TabPanel>
+							<Search />
+						</TabPanel>
+						<TabPanel>
+							<Redirects exclude="" />
+						</TabPanel>
+					</Tabs>
+				</div>
+				<SideToggle
+					toggleFunc={(state) => {
+						setToggled(state);
+					}}
+				/>
 			</div>
 		</React.Fragment>
 	);

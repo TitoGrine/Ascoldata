@@ -13,6 +13,7 @@ import Redirects from '../../Redirects';
 import StatCard from '../Stats/StatCard';
 import { Textfit } from 'react-textfit';
 import Search from '../Search/Search';
+import SideToggle from '../../SideToggle';
 
 const spotifyWebApi = new Spotify();
 
@@ -20,6 +21,7 @@ function Artist() {
 	const query = new URLSearchParams(useLocation().search);
 	const artist = query.get('id');
 
+	const [ toggled, setToggled ] = useState('closed');
 	const [ authToken ] = useState(sessionStorage.getItem('authToken'));
 	const [ artistName, setArtistName ] = useState('');
 	const [ artistLink, setArtistLink ] = useState('');
@@ -130,8 +132,10 @@ function Artist() {
 						{' '}
 						· {artistName} ·{' '}
 					</Textfit>
-					<a href={artistLink} target="_blank"><FaSpotify className="title-icon-link heartbeat" /></a> 
-					
+					<a href={artistLink} target="_blank">
+						<FaSpotify className="title-icon-link heartbeat" />
+					</a>
+
 					<div id="artist-info">
 						<div id="image">
 							<Image src={artistImage} thumbnail />
@@ -190,23 +194,27 @@ function Artist() {
 						/>
 					</div>
 				</section>
-				<section className="sidebar-section slide-in-right">
-					<div className="side-content">
-						<Tabs>
-							<TabList>
-								<Tab>Search</Tab>
-								<Tab>Go to</Tab>
-							</TabList>
+				<section className={`sidebar-section slide-in-right sidebar-${toggled}`} />
+				<div className={`side-content slide-in-right sidebar-${toggled}`}>
+					<Tabs>
+						<TabList>
+							<Tab>Search</Tab>
+							<Tab>Go to</Tab>
+						</TabList>
 
-							<TabPanel>
-								<Search />
-							</TabPanel>
-							<TabPanel>
-								<Redirects exclude="" />
-							</TabPanel>
-						</Tabs>
-					</div>
-				</section>
+						<TabPanel>
+							<Search />
+						</TabPanel>
+						<TabPanel>
+							<Redirects exclude="" />
+						</TabPanel>
+					</Tabs>
+				</div>
+				<SideToggle
+					toggleFunc={(state) => {
+						setToggled(state);
+					}}
+				/>
 			</div>
 		</React.Fragment>
 	);

@@ -155,8 +155,8 @@ a.inner-link {
 .title-icon-link {
 	position: absolute;
 	font-size: 30px;
-	right: 16px;
-	top: 16px;
+	right: 18px;
+	top: 18px;
 	color: #1db954;
 }
 
@@ -216,8 +216,8 @@ a.inner-link {
 }
 
 .heartbeat {
-	-webkit-animation: heartbeat 1.5s cubic-bezier(0.550, 0.085, 0.680, 0.530) infinite both;
-	animation: heartbeat 1.5s cubic-bezier(0.550, 0.085, 0.680, 0.530) infinite both;
+	-webkit-animation: heartbeat 2s cubic-bezier(0.550, 0.085, 0.680, 0.530) infinite both;
+	animation: heartbeat 2s cubic-bezier(0.550, 0.085, 0.680, 0.530) infinite both;
 }
 
 /* ----------------------------------------------
@@ -326,20 +326,20 @@ a.inner-link {
 		animation-timing-function: ease-out;
 	}
 	10% {
-		-webkit-transform: scale(0.91);
-		transform: scale(0.91);
+		-webkit-transform: scale(1.14);
+		transform: scale(1.14);
 		-webkit-animation-timing-function: ease-in;
 		animation-timing-function: ease-in;
 	}
 	17% {
-		-webkit-transform: scale(0.98);
-		transform: scale(0.98);
+		-webkit-transform: scale(1.04);
+		transform: scale(1.04);
 		-webkit-animation-timing-function: ease-out;
 		animation-timing-function: ease-out;
 	}
 	33% {
-		-webkit-transform: scale(0.87);
-		transform: scale(0.87);
+		-webkit-transform: scale(1.14);
+		transform: scale(1.14);
 		-webkit-animation-timing-function: ease-in;
 		animation-timing-function: ease-in;
 	}

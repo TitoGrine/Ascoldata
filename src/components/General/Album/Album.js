@@ -14,6 +14,7 @@ import Redirects from '../../Redirects';
 import StatCard from '../Stats/StatCard';
 import { Image } from 'react-bootstrap';
 import Search from '../Search/Search';
+import SideToggle from '../../SideToggle';
 
 const spotifyWebApi = new Spotify();
 
@@ -21,6 +22,7 @@ function Track() {
 	const query = new URLSearchParams(useLocation().search);
 	const album = query.get('id');
 
+	const [ toggled, setToggled ] = useState('closed');
 	const [ authToken ] = useState(sessionStorage.getItem('authToken'));
 	const [ albumName, setAlbumName ] = useState('');
 	const [ albumLink, setAlbumLink ] = useState('');
@@ -147,7 +149,9 @@ function Track() {
 					<Textfit className="album-title" mode="single" max={36}>
 						· {albumName} ·
 					</Textfit>
-					<a href={albumLink} target="_blank"><FaSpotify className="title-icon-link heartbeat" /></a> 
+					<a href={albumLink} target="_blank">
+						<FaSpotify className="title-icon-link heartbeat" />
+					</a>
 					<div id="album-info">
 						<div id="image">
 							<Image src={albumImage} thumbnail />
@@ -206,23 +210,27 @@ function Track() {
 						/>
 					</div>
 				</section>
-				<section className="sidebar-section slide-in-right">
-					<div className="side-content">
-						<Tabs>
-							<TabList>
-								<Tab>Search</Tab>
-								<Tab>Go to</Tab>
-							</TabList>
+				<section className={`sidebar-section slide-in-right sidebar-${toggled}`} />
+				<div className={`side-content slide-in-right sidebar-${toggled}`}>
+					<Tabs>
+						<TabList>
+							<Tab>Search</Tab>
+							<Tab>Go to</Tab>
+						</TabList>
 
-							<TabPanel>
-								<Search />
-							</TabPanel>
-							<TabPanel>
-								<Redirects exclude="" />
-							</TabPanel>
-						</Tabs>
-					</div>
-				</section>
+						<TabPanel>
+							<Search />
+						</TabPanel>
+						<TabPanel>
+							<Redirects exclude="" />
+						</TabPanel>
+					</Tabs>
+				</div>
+				<SideToggle
+					toggleFunc={(state) => {
+						setToggled(state);
+					}}
+				/>
 			</div>
 		</React.Fragment>
 	);

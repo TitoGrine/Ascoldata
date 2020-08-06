@@ -10,6 +10,7 @@ import Redirects from '../../Redirects';
 import TrackTable from '../Track/TrackTable';
 import Pagination from 'react-js-pagination';
 import Search from '../Search/Search';
+import SideToggle from '../../SideToggle';
 
 const spotifyWebApi = new Spotify();
 
@@ -19,6 +20,7 @@ function Liked() {
 	const history = useHistory();
 	const limit = 12;
 
+	const [ toggled, setToggled ] = useState('closed');
 	const [ page, setPage ] = useState(parseInt(query.get('page')));
 	const [ userLiked, setUserLiked ] = useState([]);
 	const [ offset, setOffset ] = useState(limit * (page - 1));
@@ -84,23 +86,27 @@ function Liked() {
 						onChange={switchPage}
 					/>
 				</section>
-				<section className="sidebar-section slide-in-right">
-					<div className="side-content">
-						<Tabs>
-							<TabList>
-								<Tab>Search</Tab>
-								<Tab>Go to</Tab>
-							</TabList>
+				<section className={`sidebar-section slide-in-right sidebar-${toggled}`} />
+				<div className={`side-content slide-in-right sidebar-${toggled}`}>
+					<Tabs>
+						<TabList>
+							<Tab>Search</Tab>
+							<Tab>Go to</Tab>
+						</TabList>
 
-							<TabPanel>
-								<Search />
-							</TabPanel>
-							<TabPanel>
-								<Redirects exclude="liked" />
-							</TabPanel>
-						</Tabs>
-					</div>
-				</section>
+						<TabPanel>
+							<Search />
+						</TabPanel>
+						<TabPanel>
+							<Redirects exclude="liked" />
+						</TabPanel>
+					</Tabs>
+				</div>
+				<SideToggle
+					toggleFunc={(state) => {
+						setToggled(state);
+					}}
+				/>
 			</div>
 		</React.Fragment>
 	);

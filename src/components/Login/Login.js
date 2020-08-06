@@ -44,7 +44,7 @@ class Login extends Component {
 								</p>
 							</div>
 						</section>
-						<section className="sidebar-section slide-in-right" />
+						<section className="sidebar-section slide-in-right sidebar-closed" />
 					</div>
 				</React.Fragment>
 			);

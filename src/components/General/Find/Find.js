@@ -11,9 +11,11 @@ import Search from '../Search/Search';
 import AttributeSlider from './AttributeSlider';
 
 import Spotify from 'spotify-web-api-js';
+import SideToggle from '../../SideToggle';
 const spotifyWebApi = new Spotify();
 
 function Find() {
+	const [ toggled, setToggled ] = useState('closed');
 	const [ acousticness, setAcousticness ] = useState(-1);
 	const [ danceability, setDanceability ] = useState(-1);
 	const [ energy, setEnergy ] = useState(-1);
@@ -30,7 +32,7 @@ function Find() {
 	const history = useHistory();
 
 	const submitForm = async (ev) => {
-		let link = `/recommendations?page=${1}`
+		let link = `/recommendations?page=${1}`;
 
 		if (key !== 0) link += `&key=${key}`;
 		if (mode !== -1) link += `&mode=${mode}`;
@@ -44,7 +46,7 @@ function Find() {
 		if (popularity !== -1) link += `&popularity=${popularity}`;
 		if (speechiness !== -1) link += `&speechiness=${speechiness}`;
 		if (valence !== -1) link += `&valence=${valence}`;
-		
+
 		history.push(link);
 	};
 
@@ -253,23 +255,27 @@ function Find() {
 						Find Songs
 					</button>
 				</section>
-				<section className="sidebar-section slide-in-right">
-					<div className="side-content">
-						<Tabs>
-							<TabList>
-								<Tab>Search</Tab>
-								<Tab>Go to</Tab>
-							</TabList>
+				<section className={`sidebar-section slide-in-right sidebar-${toggled}`} />
+				<div className={`side-content slide-in-right sidebar-${toggled}`}>
+					<Tabs>
+						<TabList>
+							<Tab>Search</Tab>
+							<Tab>Go to</Tab>
+						</TabList>
 
-							<TabPanel>
-								<Search />
-							</TabPanel>
-							<TabPanel>
-								<Redirects exclude="find" />
-							</TabPanel>
-						</Tabs>
-					</div>
-				</section>
+						<TabPanel>
+							<Search />
+						</TabPanel>
+						<TabPanel>
+							<Redirects exclude="find" />
+						</TabPanel>
+					</Tabs>
+				</div>
+				<SideToggle
+					toggleFunc={(state) => {
+						setToggled(state);
+					}}
+				/>
 			</div>
 		</React.Fragment>
 	);

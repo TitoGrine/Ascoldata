@@ -11,10 +11,12 @@ import { refreshToken } from '../Auth/Auth';
 import Redirects from '../Redirects';
 import { Textfit } from 'react-textfit';
 import Search from './Search/Search';
+import SideToggle from '../SideToggle';
 
 const spotifyWebApi = new Spotify();
 
 function GeneralInfo() {
+	const [ toggled, setToggled ] = useState('nothing');
 	const [ authToken, setAuthToken ] = useState(sessionStorage.getItem('authToken'));
 	const [ user, setUser ] = useState('');
 	const [ id, setId ] = useState('');
@@ -86,9 +88,10 @@ function GeneralInfo() {
 						return track.id;
 					});
 
-					let avgPopularity = data.items.reduce((total, track) => {
-						return total + track.popularity;
-					}, 0) / data.items.length;
+					let avgPopularity =
+						data.items.reduce((total, track) => {
+							return total + track.popularity;
+						}, 0) / data.items.length;
 
 					calcUserStats(tracks, avgPopularity);
 
@@ -176,23 +179,27 @@ function GeneralInfo() {
 					</div>
 				</div>
 			</section>
-			<section className="sidebar-section slide-in-right">
-				<div className="side-content">
-					<Tabs>
-						<TabList>
-							<Tab>Search</Tab>
-							<Tab>Go to</Tab>
-						</TabList>
+			<section className={`sidebar-section slide-in-right sidebar-${toggled}`} />
+			<div className={`side-content slide-in-right sidebar-${toggled}`}>
+				<Tabs>
+					<TabList>
+						<Tab>Search</Tab>
+						<Tab>Go to</Tab>
+					</TabList>
 
-						<TabPanel>
-							<Search />
-						</TabPanel>
-						<TabPanel>
-							<Redirects exclude="user" />
-						</TabPanel>
-					</Tabs>
-				</div>
-			</section>
+					<TabPanel>
+						<Search />
+					</TabPanel>
+					<TabPanel>
+						<Redirects exclude="user" />
+					</TabPanel>
+				</Tabs>
+			</div>
+			<SideToggle
+				toggleFunc={(state) => {
+					setToggled(state);
+				}}
+			/>
 		</div>
 	);
 }

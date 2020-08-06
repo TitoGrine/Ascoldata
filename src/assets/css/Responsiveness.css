@@ -1,6 +1,6 @@
 /* Responsiveness */
 
-@media screen and (max-width: 1000px) {
+@media screen and (max-width: 960px) {
 	section.content-section {
 		grid-column: 1 / span 10;
 		grid-row: 1 / span 24;
@@ -9,24 +9,39 @@
 	section.sidebar-section,
 	div.side-content {
 		z-index: 30;
-		grid-column: 10;
+		grid-column: 5 / span 10;
 		grid-row: 4 / span 24;
 	}
 
-	.sidebar-closed {
-		-webkit-animation: slide-out-right 1s cubic-bezier(0.455, 0.030, 0.515, 0.955) both;
-		animation: slide-out-right 1s cubic-bezier(0.455, 0.030, 0.515, 0.955) both;
+	section.sidebar-nothing,
+	div.sidebar-nothing {
+		display: none;
+	}
+
+	section.sidebar-closed,
+	div.sidebar-closed {
+		display: flex;
+		-webkit-animation: slide-out-right 0.8s cubic-bezier(0.455, 0.030, 0.515, 0.955) both;
+		animation: slide-out-right 0.8s cubic-bezier(0.455, 0.030, 0.515, 0.955) both;
 		animation-fill-mode: forwards;
 	}
 
-	.sidebar-toggled {
+	section.sidebar-toggled,
+	div.sidebar-toggled {
 		display: flex;
-		-webkit-animation: short-slide-in-right 1s cubic-bezier(0.455, 0.030, 0.515, 0.955) both;
-		animation: short-slide-in-right 1s cubic-bezier(0.455, 0.030, 0.515, 0.955) both;
+		-webkit-animation: short-slide-in-right 0.8s cubic-bezier(0.455, 0.030, 0.515, 0.955) both;
+		animation: short-slide-in-right 0.8s cubic-bezier(0.455, 0.030, 0.515, 0.955) both;
 	}
 }
 
-@media screen and (min-width: 1001px) {
+@media screen and (max-width: 700px) {
+	section.sidebar-section,
+	div.side-content {
+		grid-column: 3 / span 10;
+	}
+}
+
+@media screen and (min-width: 961px) {
 	.side-toggle {
 		display: none;
 	}

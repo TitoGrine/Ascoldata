@@ -12,6 +12,7 @@ import PlaylistTableRow from './PlaylistTableRow';
 import Pagination from 'react-js-pagination';
 import PlaylistTable from './PlaylistTable';
 import Search from '../Search/Search';
+import SideToggle from '../../SideToggle';
 
 const spotifyWebApi = new Spotify();
 
@@ -21,6 +22,7 @@ function UserPlaylists() {
 	const history = useHistory();
 	const limit = 12;
 
+	const [ toggled, setToggled ] = useState('closed');
 	const [ page, setPage ] = useState(parseInt(query.get('page')));
 	const [ userPlaylists, setUserPlaylists ] = useState([]);
 	const [ offset, setOffset ] = useState(limit * (page - 1));
@@ -86,23 +88,27 @@ function UserPlaylists() {
 						onChange={switchPage}
 					/>
 				</section>
-				<section className="sidebar-section slide-in-right">
-					<div className="side-content">
-						<Tabs>
-							<TabList>
-								<Tab>Search</Tab>
-								<Tab>Go to</Tab>
-							</TabList>
+				<section className={`sidebar-section slide-in-right sidebar-${toggled}`} />
+				<div className={`side-content slide-in-right sidebar-${toggled}`}>
+					<Tabs>
+						<TabList>
+							<Tab>Search</Tab>
+							<Tab>Go to</Tab>
+						</TabList>
 
-							<TabPanel>
-								<Search />
-							</TabPanel>
-							<TabPanel>
-								<Redirects exclude="playlists" />
-							</TabPanel>
-						</Tabs>
-					</div>
-				</section>
+						<TabPanel>
+							<Search />
+						</TabPanel>
+						<TabPanel>
+							<Redirects exclude="playlists" />
+						</TabPanel>
+					</Tabs>
+				</div>
+				<SideToggle
+					toggleFunc={(state) => {
+						setToggled(state);
+					}}
+				/>
 			</div>
 		</React.Fragment>
 	);
