@@ -39,6 +39,22 @@
 	div.side-content {
 		grid-column: 3 / span 10;
 	}
+
+	/* GeneralInfo */
+
+	#info {
+		/* flex-direction: column; */
+		align-items: center;
+		flex-wrap: wrap;
+	}
+
+	#info #image {
+		flex-basis: 100%;
+	}
+
+	#info #image img {
+		max-width: 150px;
+	}
 }
 
 @media screen and (min-width: 961px) {

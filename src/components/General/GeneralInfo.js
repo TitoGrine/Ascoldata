@@ -1,7 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import './GeneralInfo.css';
-import './SelectInputs.css';
-import './Pagination.css';
 import { Image } from 'react-bootstrap';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import Spotify from 'spotify-web-api-js';
