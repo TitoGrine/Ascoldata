@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import './Artist.css';
 import Spotify from 'spotify-web-api-js';
 import { useLocation } from 'react-router-dom';
 import { Image } from 'react-bootstrap';
@@ -21,7 +20,7 @@ function Artist() {
 	const query = new URLSearchParams(useLocation().search);
 	const artist = query.get('id');
 
-	const [ toggled, setToggled ] = useState('closed');
+	const [ toggled, setToggled ] = useState('nothing');
 	const [ authToken ] = useState(sessionStorage.getItem('authToken'));
 	const [ artistName, setArtistName ] = useState('');
 	const [ artistLink, setArtistLink ] = useState('');
