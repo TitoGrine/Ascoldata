@@ -5,6 +5,8 @@ import './components/General/SelectInputs.css';
 import './components/General/Pagination.css';
 import './components/General/Album/Album.css';
 import './components/General/Artist/Artist.css';
+import './components/General/Find/AttributeSlider.css';
+import './components/General/Find/Find.css';
 import './components/General/Playlist/Playlist.css';
 import './components/General/Stats/Stats.css';
 import './components/General/Track/Track.css';

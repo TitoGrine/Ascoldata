@@ -32,6 +32,19 @@
 		-webkit-animation: short-slide-in-right 0.8s cubic-bezier(0.455, 0.030, 0.515, 0.955) both;
 		animation: short-slide-in-right 0.8s cubic-bezier(0.455, 0.030, 0.515, 0.955) both;
 	}
+
+	/* Find */
+
+	#attribute-sliders {
+		grid-template-columns: repeat(2, 1fr);
+		grid-template-rows: repeat(5, 1fr);
+	}
+
+	#attribute-sliders > .slider:last-child {
+		min-width: 50%;
+		margin: auto;
+		grid-column: 1 / span 2;
+	}
 }
 
 @media screen and (max-width: 700px) {
@@ -62,7 +75,7 @@
 	#playlist-info,
 	#track-info,
 	#album-info,
-	#user-info {
+	#misc-info {
 		flex-wrap: wrap;
 	}
 
@@ -97,6 +110,33 @@
 	}
 }
 
+@media screen and (max-width: 600px) {
+	/* Find */
+
+	#attribute-inputs {
+		flex-wrap: wrap;
+	}
+
+	#attribute-sliders {
+		grid-template-columns: 1fr;
+		grid-template-rows: repeat(9, 1fr);
+	}
+
+	#attribute-sliders > .slider {
+		min-width: 75%;
+		margin: auto;
+	}
+
+	#attribute-sliders > .slider:last-child {
+		min-width: 75%;
+		grid-column: 1;
+	}
+
+	button.find-button {
+		margin: 1em 0;
+	}
+}
+
 @media screen and (max-width: 450px) {
 	/* Track & Album */
 
@@ -112,6 +152,27 @@
 
 	#stats > div.stat-card:last-child {
 		margin-bottom: 4em;
+	}
+
+	/* Find */
+
+	.mode-value-input,
+	.mode-labels {
+		flex-wrap: wrap;
+	}
+
+	#attribute-sliders {
+		padding-right: 2em;
+	}
+
+	#attribute-sliders > .slider {
+		min-width: 100%;
+		margin: auto;
+	}
+
+	#attribute-sliders > .slider:last-child {
+		min-width: 100%;
+		grid-column: 1;
 	}
 }
 

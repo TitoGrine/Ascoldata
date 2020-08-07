@@ -22,7 +22,7 @@ function Stats() {
 					<Textfit className="title" mode="single" max={35}>
 						· Your Statistics ·
 					</Textfit>
-					<div id="user-info">
+					<div id="misc-info">
 						<StatCard
 							barStat={false}
 							title="Average song duration"

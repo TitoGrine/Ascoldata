@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import './Find.css';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { useHistory } from 'react-router-dom';
 
@@ -15,7 +14,7 @@ import SideToggle from '../../SideToggle';
 const spotifyWebApi = new Spotify();
 
 function Find() {
-	const [ toggled, setToggled ] = useState('closed');
+	const [ toggled, setToggled ] = useState('nothing');
 	const [ acousticness, setAcousticness ] = useState(-1);
 	const [ danceability, setDanceability ] = useState(-1);
 	const [ energy, setEnergy ] = useState(-1);
@@ -50,7 +49,11 @@ function Find() {
 		history.push(link);
 	};
 
-	const radioChange = (ev) => {
+	const keyChange = (ev) => {
+		setKey(parseInt(ev.target.value));
+	};
+
+	const modeChange = (ev) => {
 		setMode(parseInt(ev.target.value));
 	};
 
@@ -86,17 +89,13 @@ function Find() {
 		}
 	};
 
-	const dropdownChange = (ev) => {
-		setKey(parseInt(ev.target.value));
-	};
-
 	return (
 		<React.Fragment>
 			<HeaderBar />
 			<div id="corporum" className="find-content">
 				<section className="content-section slide-in-left">
 					<div id="attribute-inputs">
-						<div className="dropdown-value-input" onChange={dropdownChange}>
+						<div className="dropdown-value-input" onChange={keyChange}>
 							<label htmlFor="key">Key:</label>
 							<select name="key">
 								{keyBinds.map((key, index) => {
@@ -109,43 +108,13 @@ function Find() {
 							</select>
 						</div>
 
-						<div className="mode-value-input">
+						<div className="dropdown-value-input" onChange={modeChange}>
 							<label htmlFor="mode">Scale:</label>
-							<div className="mode-labels">
-								<label>
-									<input
-										type="radio"
-										name="mode"
-										value={-1}
-										checked={mode === -1}
-										onChange={radioChange}
-									/>
-									<span className="checkmark" />
-									Any
-								</label>
-								<label>
-									<input
-										type="radio"
-										name="mode"
-										value={0}
-										checked={mode === 0}
-										onChange={radioChange}
-									/>
-									<span className="checkmark" />
-									Minor
-								</label>
-								<label>
-									<input
-										type="radio"
-										name="mode"
-										value={1}
-										checked={mode === 1}
-										onChange={radioChange}
-									/>
-									<span className="checkmark" />
-									Major
-								</label>
-							</div>
+							<select name="mode">
+								<option value={-1}>Any</option>
+								<option value={0}>Minor</option>
+								<option value={1}>Major</option>
+							</select>
 						</div>
 					</div>
 

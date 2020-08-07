@@ -19,7 +19,11 @@
 	-moz-user-select: none;
 	-ms-user-select: none;
 	user-select: none;
+}
 
+.time-labels label,
+.type-labels label,
+.query-type-labels label {
 	font-size: 1.2em;
 	font-weight: 500;
 }
@@ -69,7 +73,6 @@ label .checkmark:after {
 .toggle-label {
 	position: relative;
 	display: inline-block;
-	right: 40px;
 }
 
 .toggle {
@@ -77,7 +80,6 @@ label .checkmark:after {
 	cursor: pointer;
 	width: 40px;
 	height: 20px;
-	top: 8px;
 	left: 0;
 	right: 0;
 	bottom: 0;

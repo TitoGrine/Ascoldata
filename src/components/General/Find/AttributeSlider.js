@@ -1,22 +1,21 @@
 import React from 'react';
-import './AttributeSlider.css';
 
 function AttributeSlider(props) {
-
-	let value = isNaN(props.value) ? '' : props.value;
-
-	const ignoredStyle = {
-		opacity: 1.3 + value
-	};
+	const value = isNaN(props.value) ? '' : props.value;
 
 	const renderInput = () => {
-		if (props.value === -1)
+		if (props.value === -1) return <label className="slider-value attribute-disabled">Any</label>;
+		else
 			return (
-				<label className="slider-value" style={ignoredStyle}>
-					Any
-				</label>
+				<input
+					className="slider-value attribute-enabled"
+					type="number"
+					min={props.min_value}
+					max={props.max_value}
+					value={value}
+					onChange={props.handler}
+				/>
 			);
-		else return <input className="slider-value" type="number" min={props.min_value} max={props.max_value} value={value} onChange={props.handler}/>;
 	};
 
 	return (
@@ -34,9 +33,9 @@ function AttributeSlider(props) {
 				<span className="toggle" />
 			</label>
 			<label className="slider-name">{props.name}</label>
-			{ renderInput() }
+			{renderInput()}
 			<input
-				className="slider-input"
+				className={`slider-input attribute-${props.value === -1 ? 'disabled' : 'enabled'}`}
 				name={props.name}
 				type="range"
 				min={props.min_value}
@@ -44,7 +43,6 @@ function AttributeSlider(props) {
 				value={value}
 				onChange={props.handler}
 				step={props.step}
-				style={ignoredStyle}
 			/>
 		</div>
 	);

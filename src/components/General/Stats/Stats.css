@@ -9,7 +9,7 @@
 	place-items: center;
 }
 
-#user-info {
+#misc-info {
 	flex: 0 1 auto;
 	display: flex;
 	justify-content: space-evenly;
