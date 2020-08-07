@@ -5,6 +5,7 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { useLocation, useHistory } from 'react-router-dom';
 import Spotify from 'spotify-web-api-js';
 import Pagination from 'react-js-pagination';
+import { useMediaQuery } from 'react-responsive';
 
 import { refreshToken } from '../../Auth/Auth';
 
@@ -14,6 +15,7 @@ import TrackTable from '../Track/TrackTable';
 import Redirects from '../../Redirects';
 import Search from '../Search/Search';
 import SideToggle from '../../SideToggle';
+import TrackCards from '../Track/TrackCards';
 
 const spotifyWebApi = new Spotify();
 
@@ -23,13 +25,17 @@ function Top() {
 	const history = useHistory();
 	const limit = 12;
 
-	const [ toggled, setToggled ] = useState('closed');
+	const [ toggled, setToggled ] = useState('nothing');
 	const [ page, setPage ] = useState(parseInt(query.get('page')));
 	const [ topType, setTopType ] = useState(query.get('type'));
 	const [ topResults, setTopResults ] = useState([]);
 	const [ timeRange, setTimeRange ] = useState(query.get('time_range'));
 	const [ offset, setOffset ] = useState(limit * (page - 1));
 	const [ totalItems, setTotalItems ] = useState(0);
+
+	const colapseTable = useMediaQuery({ maxWidth: 700 });
+
+	console.log(colapseTable);
 
 	const getData = async () => {
 		spotifyWebApi.setAccessToken(authToken);
@@ -86,7 +92,7 @@ function Top() {
 			case 'artist':
 				return <ArtistTable results={topResults} />;
 			case 'track':
-				return <TrackTable results={topResults} />;
+				return colapseTable ? <TrackCards results={topResults} /> : <TrackTable results={topResults} />;
 			default:
 				return;
 		}

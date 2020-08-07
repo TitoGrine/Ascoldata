@@ -1,5 +1,7 @@
 /* Main content styling */
 
+/* Table */
+
 .top-content .content-section {
 	justify-content: space-between;
 }
@@ -27,7 +29,40 @@ table tbody > tr:nth-child(even) {
 }
 
 .track-artists a ~ a:before {
-	content: ', '
+	content: ', ';
+}
+
+/* Cards */
+
+#cards {
+	display: flex;
+	flex-wrap: nowrap;
+	overflow-x: auto;
+	gap: 1.5em;
+	height: auto;
+
+	-webkit-overflow-scrolling: touch;
+}
+
+.card {
+	flex: 0 0 auto;
+	color: antiquewhite;
+	width: 200px;
+	height: 90%;
+	padding: 1em;
+
+	display: flex;
+	flex-direction: column;
+	gap: 1.5em;
+	font-size: 1.1em;
+	align-items: center;
+}
+
+.card > div {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	text-align: center;
 }
 
 /* Sidebar styling */
