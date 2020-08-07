@@ -7,19 +7,19 @@ function TrackCard(props) {
 	return (
 		<div className="card">
 			<div>
-				Title:{' '}
+				<strong>Title: </strong>
 				<Link to={'/track?id=' + props.info.id} className="inner-link">
 					{props.info.name}
 				</Link>
 			</div>
 			<div>
-				Album:{' '}
+				<strong>Album: </strong>
 				<Link to={'/album?id=' + props.info.album.id} className="inner-link">
 					{props.info.album.name}
 				</Link>
 			</div>
 			<div className="track-artists">
-				Artist:{' '}
+				<strong>{`Artist${props.info.artists.length > 1 ? 's' : ''}:`}</strong>
 				{props.info.artists.length === 0 ? (
 					'undefined'
 				) : (
@@ -34,8 +34,14 @@ function TrackCard(props) {
 						.slice(0, 2)
 				)}
 			</div>
-			<div>Duration:  {formatDuration(props.info.duration_ms)}</div>
-			<div>Popularity:  {props.info.popularity}</div>
+			<div>
+				<strong>Duration: </strong>
+				{formatDuration(props.info.duration_ms)}
+			</div>
+			<div>
+				<strong>Popularity: </strong>
+				{props.info.popularity}
+			</div>
 		</div>
 	);
 }

@@ -35,8 +35,6 @@ function Top() {
 
 	const colapseTable = useMediaQuery({ maxWidth: 700 });
 
-	console.log(colapseTable);
-
 	const getData = async () => {
 		spotifyWebApi.setAccessToken(authToken);
 
