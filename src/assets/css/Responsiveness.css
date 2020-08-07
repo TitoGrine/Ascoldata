@@ -56,24 +56,27 @@
 		max-width: 150px;
 	}
 
-	/* Album, Artist & Track */
+	/* Album, Artist, Playlist & Track */
 
+	#artist-info,
+	#playlist-info,
 	#track-info,
-	#album-info {
+	#album-info,
+	#user-info {
 		flex-wrap: wrap;
 	}
 
 	#track-info,
-	#album-info #misc-data {
+	#album-info,
+	#album-info #misc-data,
+	#playlist-info #misc-data {
 		align-items: flex-start;
 		width: 100%;
+		padding: 0 0.5em;
 	}
 
-	#artist-info {
-		flex-wrap: wrap;
-	}
-
-	#artist-info #image {
+	#artist-info #image,
+	#playlist-info #image {
 		flex-basis: 100%;
 		text-align: center;
 	}
@@ -82,29 +85,32 @@
 		flex: 1 1 30%;
 	}
 
-	#track-stats,
-	#album-stats,
-	#artist-stats {
+	#stats {
 		grid-template-columns: repeat(2, 1fr);
 		grid-template-rows: repeat(3, 1fr);
-		margin: 3em 0;
+		margin-bottom: 3em;
+		gap: 2em;
+	}
+
+	#stats > div.stat-card {
+		align-self: flex-start;
 	}
 }
 
-@media screen and (max-width: 420px) {
+@media screen and (max-width: 450px) {
 	/* Track & Album */
 
-	#track-stats,
-	#album-stats,
-	#artist-stats {
+	#playlist-info #misc-data div:nth-child(-n + 4) {
+		flex: 1 1 40%;
+	}
+
+	#stats {
 		grid-template-columns: repeat(1, 1fr);
 		grid-template-rows: repeat(6, 1fr);
 		gap: 4em;
 	}
 
-	#track-stats > div.stat-card:last-child,
-	#album-stats > div.stat-card:last-child,
-	#artist-stats > div.stat-card:last-child {
+	#stats > div.stat-card:last-child {
 		margin-bottom: 4em;
 	}
 }

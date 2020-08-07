@@ -5,6 +5,8 @@ import './components/General/SelectInputs.css';
 import './components/General/Pagination.css';
 import './components/General/Album/Album.css';
 import './components/General/Artist/Artist.css';
+import './components/General/Playlist/Playlist.css';
+import './components/General/Stats/Stats.css';
 import './components/General/Track/Track.css';
 import './assets/css/Responsiveness.css';
 import { BrowserRouter as Router, Route } from 'react-router-dom';

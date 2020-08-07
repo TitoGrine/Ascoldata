@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import './Playlist.css';
 import Spotify from 'spotify-web-api-js';
-import axios from 'axios';
 import { useLocation } from 'react-router-dom';
 import { Image } from 'react-bootstrap';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
@@ -22,7 +20,7 @@ function Playlist() {
 	const query = new URLSearchParams(useLocation().search);
 	const playlist = query.get('id');
 
-	const [ toggled, setToggled ] = useState('closed');
+	const [ toggled, setToggled ] = useState('nothing');
 	const [ authToken, setAuthToken ] = useState(sessionStorage.getItem('authToken'));
 	const [ playlistName, setPlaylistName ] = useState('');
 	const [ playlistImage, setPlaylistImage ] = useState('');
@@ -145,7 +143,7 @@ function Playlist() {
 							</Textfit>
 						</div>
 					</div>
-					<div id="playlist-stats">
+					<div id="stats">
 						<StatCard
 							barStat={true}
 							title="Acousticness"

@@ -1,8 +1,3 @@
-.content-section {
-	display: flex;
-	flex-direction: column;
-}
-
 div.title-with-ref {
 	display: flex;
 	justify-content: center;
@@ -11,13 +6,11 @@ div.title-with-ref {
 
 .track-title {
 	text-align: center;
-	margin-bottom: 0.4em;
 }
 
 #track-info {
 	flex: 0 1 auto;
 	display: flex;
-	flex-wrap: nowrap;
 	justify-content: space-evenly;
 	align-items: center;
 	gap: 1.5em;

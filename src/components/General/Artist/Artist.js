@@ -148,7 +148,7 @@ function Artist() {
 						/>
 						<StatCard barStat={false} title="Popularity" value={artistPopularity} units="" />
 					</div>
-					<div id="artist-stats">
+					<div id="stats">
 						<StatCard
 							barStat={true}
 							title="Acousticness"

@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import './Stats.css';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 
 import { formatDuration } from '../../HelperFunc';
@@ -13,7 +12,7 @@ import SideToggle from '../../SideToggle';
 
 function Stats() {
 	const stats = JSON.parse(sessionStorage.getItem('userStats'));
-	const [ toggled, setToggled ] = useState('closed');
+	const [ toggled, setToggled ] = useState('nothing');
 
 	return (
 		<React.Fragment>
@@ -23,7 +22,7 @@ function Stats() {
 					<Textfit className="title" mode="single" max={35}>
 						· Your Statistics ·
 					</Textfit>
-					<section id="numbered-data">
+					<div id="user-info">
 						<StatCard
 							barStat={false}
 							title="Average song duration"
@@ -38,8 +37,8 @@ function Stats() {
 						/>
 						<StatCard barStat={false} title="Average tempo" value={Math.round(stats.tempo)} units="bpm" />
 						<StatCard barStat={false} title="Popularity" value={Math.round(stats.popularity)} units="" />
-					</section>
-					<section id="graphs">
+					</div>
+					<div id="stats">
 						<StatCard
 							barStat={true}
 							title="Acousticness"
@@ -82,7 +81,7 @@ function Stats() {
 							explanation="valExplanation"
 							color="orange"
 						/>
-					</section>
+					</div>
 				</section>
 				<section className={`sidebar-section slide-in-right sidebar-${toggled}`} />
 				<div className={`side-content slide-in-right sidebar-${toggled}`}>

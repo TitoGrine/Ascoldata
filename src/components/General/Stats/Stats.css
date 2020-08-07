@@ -1,30 +1,27 @@
 .content-section {
-    display: flex;
-    flex-direction: column;
+	display: flex;
+	flex-direction: column;
+	gap: 2em;
 }
 
 .content-section .title {
-    text-align: center;
-    place-items: center;
-    margin: 0.3em 0;
+	text-align: center;
+	place-items: center;
 }
 
-#numbered-data {
-    flex-basis: 0 1 auto;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    min-height: 20%;
-    padding: 0 1em;
-    font-size: 1.1em;
+#user-info {
+	flex: 0 1 auto;
+	display: flex;
+	justify-content: space-evenly;
+	align-items: center;
+	gap: 1.5em;
 }
 
-#graphs {
-    flex-basis: 1 1 auto;
-    margin: auto;
-    display: grid;
-    width: 100%;
-    height: 80%;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: 1fr 1fr;
+#stats {
+	display: grid;
+	width: 100%;
+	height: 80%;
+	grid-template-columns: repeat(3, 1fr);
+	grid-template-rows: 1fr 1fr;
+	gap: 1em;
 }

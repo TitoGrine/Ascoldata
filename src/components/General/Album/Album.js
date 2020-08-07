@@ -164,7 +164,7 @@ function Track() {
 							<StatCard barStat={false} title="Popularity" value={albumPopularity} units="" />
 						</div>
 					</div>
-					<div id="album-stats">
+					<div id="stats">
 						<StatCard
 							barStat={true}
 							title="Acousticness"

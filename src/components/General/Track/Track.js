@@ -149,7 +149,7 @@ function Track() {
 						<StatCard barStat={false} title="Key" value={keyBinds[trackStats.pitchKey + 1]} units="" />
 						<StatCard barStat={false} title="Popularity" value={trackPopularity} units="" />
 					</div>
-					<div id="track-stats">
+					<div id="stats">
 						<StatCard
 							barStat={true}
 							title="Acousticness"

@@ -22,13 +22,3 @@
 	height: 150px;
 	object-fit: cover;
 }
-
-#artist-stats {
-	flex-basis: 1 1 auto;
-	display: grid;
-	width: 100%;
-	height: 80%;
-	grid-template-columns: repeat(3, 1fr);
-	grid-template-rows: 1fr 1fr;
-	gap: 2em;
-}

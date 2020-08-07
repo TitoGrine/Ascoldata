@@ -165,8 +165,8 @@ a.inner-link {
 .side-toggle {
 	z-index: 50;
 	position: fixed;
-	bottom: 30px;
-	right: 30px;
+	bottom: 20px;
+	right: 20px;
 	background-size: contain;
 	cursor: pointer;
 	padding: 0;
