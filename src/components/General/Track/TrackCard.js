@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import { formatDuration } from '../../HelperFunc';
+import { Textfit } from 'react-textfit';
 
 function TrackCard(props) {
 	return (
@@ -9,7 +10,9 @@ function TrackCard(props) {
 			<div>
 				<strong>Title: </strong>
 				<Link to={'/track?id=' + props.info.id} className="inner-link">
-					{props.info.name}
+					<Textfit mode="multi" min={14} max={17}>
+						{props.info.name}
+					</Textfit>
 				</Link>
 			</div>
 			<div>

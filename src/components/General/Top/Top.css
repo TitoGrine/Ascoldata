@@ -37,25 +37,31 @@ table tbody > tr:nth-child(even) {
 #cards {
 	display: flex;
 	flex-wrap: nowrap;
-	overflow-x: auto;
-	gap: 0.5em;
+	overflow-x: scroll;
+	gap: 2em;
 	min-height: 520px;
 	height: 100%;
 
 	-webkit-overflow-scrolling: touch;
 	overflow-y: hidden;
+	scroll-snap-type: x mandatory;
+
+	scroll-snap-destination: 0% 100%;
+	scroll-snap-points-x: repeat(100%);
 }
 
 .card {
 	flex: 0 0 auto;
-	width: 250px;
-	min-height: 500px;
-	height: 90%;
+	width: clamp(200px, 80vw, 250px);
+	/* min-height: 500px; */
+	height: min(75vh, 90%);
 	padding: 2em 1em 1em 1em;
 	margin: 1em 0.5em;
 	border: 1px inset rgba(29, 185, 84, 0.4);
 	border-style: groove;
 	border-radius: 8px;
+
+	scroll-snap-align: center;
 
 	color: antiquewhite;
 	background-color: #191414;
@@ -66,7 +72,7 @@ table tbody > tr:nth-child(even) {
 	display: flex;
 	flex-direction: column;
 	gap: 1.5em;
-	font-size: 1.1em;
+	font-size: clamp(1.0em, 1.1em, 1.1em);
 	align-items: center;
 	overflow-y: hidden;
 }
