@@ -191,6 +191,7 @@ function Artist() {
 							explanation="valExplanation"
 							color="orange"
 						/>
+						<div id="mobile-separator" />
 					</div>
 				</section>
 				<section className={`sidebar-section slide-in-right sidebar-${toggled}`} />

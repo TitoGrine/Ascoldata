@@ -171,8 +171,8 @@
 		gap: 4em;
 	}
 
-	#stats > div.stat-card:last-child {
-		margin-bottom: 4em;
+	#mobile-separator {
+		display: block;
 	}
 
 	/* Find */

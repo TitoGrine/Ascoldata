@@ -67,6 +67,11 @@ section.sidebar-section {
 	box-shadow: 15px 15px 30px -5px rgba(25, 20, 20, 0.8);
 }
 
+#mobile-separator {
+	display: none;
+	min-height: 2em;
+}
+
 /* Side bar styling */
 
 section.sidebar-section {
