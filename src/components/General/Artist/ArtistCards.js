@@ -5,8 +5,8 @@ import ArtistCard from './ArtistCard';
 function ArtistCards(props) {
 	return (
 		<section id="cards">
-			{props.results.map((result) => {
-				return <ArtistCard key={result.id} info={result} />;
+			{props.results.map((result, index) => {
+				return <ArtistCard key={result.id} index={index} info={result} />;
 			})}
 		</section>
 	);

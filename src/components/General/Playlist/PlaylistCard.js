@@ -1,37 +1,46 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
 import { MdDone, MdBlock } from 'react-icons/md';
 
-function PlaylistCard(props) {
-	console.log(props.info);
+export class PlaylistCard extends Component {
+	constructor(props) {
+		super(props);
+		this.scrollStart = React.createRef();
+	}
 
-	return (
-		<div className="card">
-			<div>
-				<strong>Playlist: </strong>
-				<Link to={'/playlist?id=' + props.info.id} className="inner-link">
-					{props.info.name}
-				</Link>
+	componentDidMount() {
+		if (this.props.index === 0) this.scrollStart.current.scrollIntoView();
+	}
+
+	render() {
+		return (
+			<div className="card" ref={this.scrollStart}>
+				<div>
+					<strong>Playlist: </strong>
+					<Link to={'/playlist?id=' + this.props.info.id} className="inner-link">
+						{this.props.info.name}
+					</Link>
+				</div>
+				<div>
+					<strong>Owner: </strong>
+					{this.props.info.owner.display_name}
+				</div>
+				<div>
+					<strong>Public: </strong>
+					{this.props.info.public ? <MdDone style={checkStyle} /> : <MdBlock style={blockStyle} />}
+				</div>
+				<div>
+					<strong>Collaborative: </strong>
+					{this.props.info.collaborative ? <MdDone style={checkStyle} /> : <MdBlock style={blockStyle} />}
+				</div>
+				<div>
+					<strong>Nr. Songs: </strong>
+					{this.props.info.tracks.total}
+				</div>
 			</div>
-			<div>
-				<strong>Owner: </strong>
-				{props.info.owner.display_name}
-			</div>
-			<div>
-				<strong>Public: </strong>
-				{props.info.public ? <MdDone style={checkStyle} /> : <MdBlock style={blockStyle} />}
-			</div>
-			<div>
-				<strong>Collaborative: </strong>
-				{props.info.collaborative ? <MdDone style={checkStyle} /> : <MdBlock style={blockStyle} />}
-			</div>
-			<div>
-				<strong>Nr. Songs: </strong>
-				{props.info.tracks.total}
-			</div>
-		</div>
-	);
+		);
+	}
 }
 
 const checkStyle = {

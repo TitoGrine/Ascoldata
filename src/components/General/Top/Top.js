@@ -14,6 +14,7 @@ import Redirects from '../../Redirects';
 import Search from '../Search/Search';
 import SideToggle from '../../SideToggle';
 import TrackCards from '../Track/TrackCards';
+import ArtistCards from '../Artist/ArtistCards';
 
 const spotifyWebApi = new Spotify();
 
@@ -87,7 +88,7 @@ function Top() {
 
 		switch (topType) {
 			case 'artist':
-				return colapseTable ? <ArtistTable results={topResults} /> : <ArtistTable results={topResults} />;
+				return colapseTable ? <ArtistCards results={topResults} /> : <ArtistTable results={topResults} />;
 			case 'track':
 				return colapseTable ? <TrackCards results={topResults} /> : <TrackTable results={topResults} />;
 			default:
