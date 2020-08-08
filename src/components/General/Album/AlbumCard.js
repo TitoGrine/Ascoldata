@@ -1,21 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import { formatDuration } from '../../HelperFunc';
-
-function TrackCard(props) {
+function AlbumCard(props) {
 	return (
 		<div className="card">
 			<div>
-				<strong>Title: </strong>
-				<Link to={'/track?id=' + props.info.id} className="inner-link">
-					{props.info.name}
-				</Link>
-			</div>
-			<div>
 				<strong>Album: </strong>
-				<Link to={'/album?id=' + props.info.album.id} className="inner-link">
-					{props.info.album.name}
+				<Link to={'/album?id=' + props.info.id} className="inner-link">
+					{props.info.name}
 				</Link>
 			</div>
 			<div className="enum-artists">
@@ -35,15 +27,15 @@ function TrackCard(props) {
 				)}
 			</div>
 			<div>
-				<strong>Duration: </strong>
-				{formatDuration(props.info.duration_ms)}
+				<strong>Release Date: </strong>
+				{props.info.release_date}
 			</div>
 			<div>
-				<strong>Popularity: </strong>
-				{props.info.popularity}
+				<strong>Nr. Songs: </strong>
+				{props.info.total_tracks}
 			</div>
 		</div>
 	);
 }
 
-export default TrackCard;
+export default AlbumCard;

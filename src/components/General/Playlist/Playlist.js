@@ -13,6 +13,7 @@ import StatCard from '../Stats/StatCard';
 import { Textfit } from 'react-textfit';
 import Search from '../Search/Search';
 import SideToggle from '../../SideToggle';
+import { FaSpotify } from 'react-icons/fa';
 
 const spotifyWebApi = new Spotify();
 
@@ -23,6 +24,7 @@ function Playlist() {
 	const [ toggled, setToggled ] = useState('nothing');
 	const [ authToken, setAuthToken ] = useState(sessionStorage.getItem('authToken'));
 	const [ playlistName, setPlaylistName ] = useState('');
+	const [ playlistLink, setPlaylistLink ] = useState('');
 	const [ playlistImage, setPlaylistImage ] = useState('');
 	const [ playlistDescription, setPlaylistDescription ] = useState('');
 	const [ playlistFollowers, setPlaylistFollowers ] = useState('');
@@ -36,6 +38,7 @@ function Playlist() {
 		spotifyWebApi.getPlaylist(playlist).then(
 			function(data) {
 				setPlaylistName(data.name);
+				setPlaylistLink(data.external_urls.spotify);
 				setPlaylistImage(data.images.length === 0 ? '' : data.images[0].url);
 				setPlaylistDescription(data.description);
 				setPlaylistFollowers(data.followers.total);
@@ -123,6 +126,10 @@ function Playlist() {
 					<Textfit className="playlist-title" mode="single" max={36}>
 						· {playlistName} ·
 					</Textfit>
+					<a href={playlistLink} target="_blank">
+						<FaSpotify className="title-icon-link heartbeat" />
+					</a>
+
 					<div id="playlist-info">
 						<div id="image">
 							<Image src={playlistImage} thumbnail />

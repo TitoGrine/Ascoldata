@@ -9,6 +9,7 @@ import './components/General/Find/AttributeSlider.css';
 import './components/General/Find/Find.css';
 import './components/General/Playlist/Playlist.css';
 import './components/General/Stats/Stats.css';
+import './components/General/Top/Top.css';
 import './components/General/Track/Track.css';
 import './assets/css/Responsiveness.css';
 import { BrowserRouter as Router, Route } from 'react-router-dom';

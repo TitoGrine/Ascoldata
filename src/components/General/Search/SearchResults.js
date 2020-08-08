@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { useLocation, useHistory } from 'react-router-dom';
 import Spotify from 'spotify-web-api-js';
+import { useMediaQuery } from 'react-responsive';
 
 import { refreshToken } from '../../Auth/Auth';
 
@@ -14,6 +15,10 @@ import PlaylistTable from '../Playlist/PlaylistTable';
 import Search from './Search';
 import AlbumTable from '../Album/AlbumTable';
 import SideToggle from '../../SideToggle';
+import TrackCards from '../Track/TrackCards';
+import AlbumCards from '../Album/AlbumCards';
+import ArtistCards from '../Artist/ArtistCards';
+import PlaylistCards from '../Playlist/PlaylistCards';
 
 const spotifyWebApi = new Spotify();
 
@@ -26,11 +31,14 @@ function SearchResults() {
 	const q = query.get('q');
 	const type = query.get('type');
 
-	const [ toggled, setToggled ] = useState('closed');
+	const [ toggled, setToggled ] = useState('nothing');
 	const [ page, setPage ] = useState(parseInt(query.get('page')));
 	const [ results, setResults ] = useState([]);
 	const [ offset, setOffset ] = useState(limit * (page - 1));
 	const [ totalItems, setTotalItems ] = useState(0);
+
+	const colapseTable = useMediaQuery({ maxWidth: 700 });
+	const decreasePagination = useMediaQuery({ maxWidth: 500 });
 
 	const getData = async () => {
 		spotifyWebApi.setAccessToken(authToken);
@@ -82,13 +90,13 @@ function SearchResults() {
 
 		switch (type) {
 			case 'artist':
-				return <ArtistTable results={results} />;
+				return colapseTable ? <ArtistCards results={results} /> : <ArtistTable results={results} />;
 			case 'album':
-				return <AlbumTable results={results} />;
+				return colapseTable ? <AlbumCards results={results} /> : <AlbumTable results={results} />;
 			case 'playlist':
-				return <PlaylistTable results={results} />;
+				return colapseTable ? <PlaylistCards results={results} /> : <PlaylistTable results={results} />;
 			case 'track':
-				return <TrackTable results={results} />;
+				return colapseTable ? <TrackCards results={results} /> : <TrackTable results={results} />;
 			default:
 				return;
 		}
@@ -105,7 +113,7 @@ function SearchResults() {
 						activePage={page}
 						itemsCountPerPage={limit}
 						totalItemsCount={totalItems}
-						pageRangeDisplayed={8}
+						pageRangeDisplayed={decreasePagination ? 3 : 8}
 						onChange={switchPage}
 					/>
 				</section>

@@ -4,6 +4,7 @@
 	section.content-section {
 		grid-column: 1 / span 10;
 		grid-row: 1 / span 24;
+		height: calc(100vh - 4em);
 	}
 
 	section.sidebar-section,
@@ -51,6 +52,20 @@
 	section.sidebar-section,
 	div.side-content {
 		grid-column: 3 / span 10;
+	}
+
+	/* Pagination */
+
+	ul.pagination {
+		justify-self: center;
+	}
+
+	.pagination-divider {
+		display: none;
+	}
+
+	.top-content .content-section {
+		justify-content: start;
 	}
 
 	/* GeneralInfo */
@@ -138,6 +153,12 @@
 }
 
 @media screen and (max-width: 450px) {
+	/* Pagination */
+
+	ul.pagination {
+		margin-bottom: 5em;
+	}
+
 	/* Track & Album */
 
 	#playlist-info #misc-data div:nth-child(-n + 4) {

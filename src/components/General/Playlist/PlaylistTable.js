@@ -7,6 +7,7 @@ function PlaylistTable(props) {
 			<thead>
 				<tr>
 					<th>Playlist</th>
+					<th>Owner</th>
 					<th>Public</th>
 					<th>Collaborative</th>
 					<th>Nr. Songs</th>

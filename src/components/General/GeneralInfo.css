@@ -39,6 +39,7 @@
 #info #image img {
 	margin: auto;
 	min-width: 8em;
+	max-width: 200px;
 }
 
 .img-thumbnail {

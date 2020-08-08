@@ -3,6 +3,7 @@ import './UserPlaylists.css';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { useLocation, useHistory } from 'react-router-dom';
 import Spotify from 'spotify-web-api-js';
+import { useMediaQuery } from 'react-responsive';
 
 import { refreshToken } from '../../Auth/Auth';
 
@@ -13,6 +14,7 @@ import Pagination from 'react-js-pagination';
 import PlaylistTable from './PlaylistTable';
 import Search from '../Search/Search';
 import SideToggle from '../../SideToggle';
+import PlaylistCards from './PlaylistCards';
 
 const spotifyWebApi = new Spotify();
 
@@ -22,11 +24,14 @@ function UserPlaylists() {
 	const history = useHistory();
 	const limit = 12;
 
-	const [ toggled, setToggled ] = useState('closed');
+	const [ toggled, setToggled ] = useState('nothing');
 	const [ page, setPage ] = useState(parseInt(query.get('page')));
 	const [ userPlaylists, setUserPlaylists ] = useState([]);
 	const [ offset, setOffset ] = useState(limit * (page - 1));
 	const [ totalItems, setTotalItems ] = useState(0);
+
+	const colapseTable = useMediaQuery({ maxWidth: 700 });
+	const decreasePagination = useMediaQuery({ maxWidth: 500 });
 
 	const getData = () => {
 		spotifyWebApi.setAccessToken(authToken);
@@ -78,13 +83,17 @@ function UserPlaylists() {
 			<HeaderBar />
 			<div id="corporum" className="playlists-content">
 				<section className="content-section slide-in-left">
-					<PlaylistTable results={userPlaylists} />
+					{colapseTable ? (
+						<PlaylistCards results={userPlaylists} />
+					) : (
+						<PlaylistTable results={userPlaylists} />
+					)}
 					<div className="pagination-divider" />
 					<Pagination
 						activePage={page}
 						itemsCountPerPage={limit}
 						totalItemsCount={totalItems}
-						pageRangeDisplayed={8}
+						pageRangeDisplayed={decreasePagination ? 3 : 8}
 						onChange={switchPage}
 					/>
 				</section>

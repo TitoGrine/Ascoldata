@@ -1,16 +1,21 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-function ArtistTableRow(props) {
+function ArtistCard(props) {
 	return (
-		<tr>
-			<td>
+		<div className="card">
+			<div>
+				<strong>Artist: </strong>
 				<Link to={'/artist?id=' + props.info.id} className="inner-link">
 					{props.info.name}
 				</Link>
-			</td>
-			<td>{props.info.followers.total}</td>
-			<td>
+			</div>
+			<div>
+				<strong>Followers: </strong>
+				{props.info.followers.total}
+			</div>
+			<div>
+				<strong>{`Genre${props.info.genres.length > 1 ? 's' : ''}:`}</strong>
 				{props.info.genres.length === 0 ? (
 					'undefined'
 				) : (
@@ -20,10 +25,13 @@ function ArtistTableRow(props) {
 						})
 						.slice(0, 2)
 				)}
-			</td>
-			<td>{props.info.popularity}</td>
-		</tr>
+			</div>
+			<div>
+				<strong>Popularity: </strong>
+				{props.info.popularity}
+			</div>
+		</div>
 	);
 }
 
-export default ArtistTableRow;
+export default ArtistCard;

@@ -5,25 +5,27 @@ import Spotify from 'spotify-web-api-js';
 
 import { refreshToken } from '../../Auth/Auth';
 import { trimLimit } from '../../HelperFunc';
+import { useMediaQuery } from 'react-responsive';
 
 import HeaderBar from '../../HeaderBar';
 import Redirects from '../../Redirects';
 import TrackTable from '../Track/TrackTable';
-import Pagination from 'react-js-pagination';
 import Search from '../Search/Search';
 import SideToggle from '../../SideToggle';
+import TrackCards from '../Track/TrackCards';
 
 const spotifyWebApi = new Spotify();
 
 function Recommendations() {
 	const authToken = sessionStorage.getItem('authToken');
 	const query = new URLSearchParams(useLocation().search);
-	const history = useHistory();
 	const limit = 12;
 
-	const [ toggled, setToggled ] = useState('closed');
+	const [ toggled, setToggled ] = useState('nothing');
 	const [ seeds ] = useState(sessionStorage.getItem('track_seeds'));
 	const [ recommendations, setRecommendations ] = useState([]);
+
+	const colapseTable = useMediaQuery({ maxWidth: 700 });
 
 	const getParameters = () => {
 		let defaultParameters = {
@@ -79,7 +81,12 @@ function Recommendations() {
 			<HeaderBar />
 			<div id="corporum">
 				<section className="content-section slide-in-left">
-					{recommendations.length > 0 && <TrackTable results={recommendations} />}
+					{recommendations.length > 0 &&
+						(colapseTable ? (
+							<TrackCards results={recommendations} />
+						) : (
+							<TrackTable results={recommendations} />
+						))}
 				</section>
 				<section className={`sidebar-section slide-in-right sidebar-${toggled}`} />
 				<div className={`side-content slide-in-right sidebar-${toggled}`}>
