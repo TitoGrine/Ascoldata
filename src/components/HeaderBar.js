@@ -19,7 +19,7 @@ function HeaderBar(props) {
 	};
 
 	return (
-		<Navbar id="navbar" expand="lg">
+		<Navbar id="navbar" expand="sm">
 			<Navbar.Brand href="/">Ascoldata</Navbar.Brand>
 			<Navbar.Toggle aria-controls="basic-navbar-nav" />
 			<Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">

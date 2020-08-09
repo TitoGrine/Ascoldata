@@ -9,8 +9,7 @@ body {
 
 #navbar {
 	height: 4em;
-	padding: 1em;
-	align-items: flex-start;
+	padding: 0.5em 1em;
 }
 
 .navbar-toggler-icon {
@@ -32,6 +31,11 @@ body {
 	font-size: 1.3em;
 	letter-spacing: 5px;
 	align-self: center;
+}
+
+.navbar-collapse {
+	align-self: center;
+	box-sizing: border-box;
 }
 
 #navbar .navbar-nav {
@@ -236,8 +240,8 @@ a.inner-link {
 .side-toggle {
 	z-index: 50;
 	position: fixed;
-	bottom: 20px;
-	right: 20px;
+	bottom: 15px;
+	right: 15px;
 	background-size: contain;
 	cursor: pointer;
 	padding: 0;

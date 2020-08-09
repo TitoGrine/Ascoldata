@@ -84,6 +84,10 @@
 		max-width: 150px;
 	}
 
+	#profile-info {
+		gap: 1em;
+	}
+
 	/* Album, Artist, Playlist & Track */
 
 	#artist-info,
