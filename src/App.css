@@ -5,35 +5,48 @@ body {
 	background: rgb(20, 130, 59);
 	background: radial-gradient(circle, rgba(20, 130, 59, 1) 0%, rgba(29, 185, 84, 1) 100%);
 	color: antiquewhite;
-	height: 100vh;
 }
 
 #navbar {
 	height: 4em;
 	padding: 1em;
+	align-items: flex-start;
+}
+
+.navbar-toggler-icon {
+	width: 1.4em;
+	height: 1.4em;
+}
+
+.navbar-light .navbar-toggler {
+	border: 0;
+	padding: 0.25rem 0.5rem;
+}
+
+.navbar-light .navbar-toggler:focus {
+	outline: 1px solid #191414;
+	border-radius: 10px;
+}
+
+.navbar-brand {
+	font-size: 1.3em;
+	letter-spacing: 5px;
+	align-self: center;
 }
 
 #navbar .navbar-nav {
-	display: flex;
 	align-items: center;
-}
-
-#navbar .navbar-nav a {
-	margin: 0 0.5em;
-}
-
-#navbar .navbar-nav a:last-child {
-	margin: 0;
 }
 
 #navbar .nav-link {
 	font-size: 1.2em;
-	font-weight: 400;
+	font-weight: 600;
 	color: #191414;
+	animation: focusOut 0.15s linear forwards;
 }
 
 #navbar .nav-link:hover {
-	font-weight: 600;
+	animation: focusIn 0.15s linear forwards;
 }
 
 #corporum {

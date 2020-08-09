@@ -40,8 +40,8 @@ table tbody > tr:nth-child(even) {
 	-moz-box-sizing: border-box; /* Firefox, other Gecko */
 	box-sizing: border-box; /* Opera/IE 8+ */
 	flex-direction: column;
-	justify-content: space-around;
-	padding: 1em 0.5em;
+	padding: 1em;
+	gap: 2em;
 }
 
 form {

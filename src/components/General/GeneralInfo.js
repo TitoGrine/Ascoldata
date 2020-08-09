@@ -4,11 +4,14 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import Spotify from 'spotify-web-api-js';
 
 import { refreshToken } from '../Auth/Auth';
+import { getCountryFromISOCode } from '../HelperFunc';
 
 import Redirects from '../Redirects';
 import { Textfit } from 'react-textfit';
 import Search from './Search/Search';
 import SideToggle from '../SideToggle';
+import HeaderBar from '../HeaderBar';
+import { FaSpotify } from 'react-icons/fa';
 
 const spotifyWebApi = new Spotify();
 
@@ -115,14 +118,13 @@ function GeneralInfo() {
 						setImage(data.images.length === 0 ? '' : data.images[0].url);
 						setId(data.id);
 						setEmail(data.email);
-						setCountry(data.country);
+						setCountry(getCountryFromISOCode(data.country));
 						setFollowers(data.followers.total);
 						setProduct(data.product);
 						setLink(data.external_urls.spotify);
 						setURI(data.uri);
 
 						localStorage.setItem('country', data.country);
-						localStorage.setItem('profile-picture', data.images.length === 0 ? '' : data.images[0].url);
 					},
 					function(err) {
 						console.log(err);
@@ -136,64 +138,68 @@ function GeneralInfo() {
 	);
 
 	return (
-		<div id="corporum">
-			<section className="content-section slide-in-left">
-				<div id="profile-info">
-					<Textfit className="username" mode="single" max={36}>
-						· Hello<strong> {user} </strong> ·
-					</Textfit>
-					<div id="info">
-						<div id="image">
-							<Image src={image} thumbnail />
+		<React.Fragment>
+			<HeaderBar />
+			<div id="corporum">
+				<section className="content-section slide-in-left">
+					<div id="profile-info">
+						<Textfit className="username" mode="single" max={36}>
+							· Hello<strong> {user} </strong> ·
+						</Textfit>
+						<a href={link} target="_blank">
+							<FaSpotify className="title-icon-link heartbeat" />
+						</a>
+						<div id="info">
+							<div id="image">
+								<Image src={image} thumbnail />
+							</div>
+							<ul id="user-info">
+								<li>
+									<strong>ID:</strong> {id}
+								</li>
+								<li>
+									<strong>Email:</strong> {email}
+								</li>
+								<li>
+									<strong>Country:</strong> {country}
+								</li>
+								<li>
+									<strong>Subscription:</strong> {product}
+								</li>
+								<li>
+									<strong>No. followers:</strong> {followers}
+								</li>
+								<li>
+									<strong>Spotify URI:</strong> {uri}
+								</li>
+							</ul>
 						</div>
-						<ul id="user-info">
-							<li>
-								<strong>ID:</strong> {id}
-							</li>
-							<li>
-								<strong>Email:</strong> {email}
-							</li>
-							<li>
-								<strong>Country:</strong> {country}
-							</li>
-							<li>
-								<strong>Subscription:</strong> {product}
-							</li>
-							<li>
-								<strong>No. followers:</strong> {followers}
-							</li>
-							<li>
-								<strong>Spotify link:</strong> <a href={link}>{link}</a>
-							</li>
-							<li>
-								<strong>Spotify URI:</strong> {uri}
-							</li>
-						</ul>
 					</div>
-				</div>
-			</section>
-			<section className={`sidebar-section slide-in-right sidebar-${toggled}`} />
-			<div className={`side-content slide-in-right sidebar-${toggled}`}>
-				<Tabs>
-					<TabList>
-						<Tab>Search</Tab>
-						<Tab>Go to</Tab>
-					</TabList>
+					<div id="mobile-separator" />
+				</section>
+				<section className={`sidebar-section slide-in-right sidebar-${toggled}`} />
+				<div className={`side-content slide-in-right sidebar-${toggled}`}>
+					<Tabs>
+						<TabList>
+							<Tab>Search</Tab>
+							<Tab>Go to</Tab>
+						</TabList>
 
-					<TabPanel>
-						<Search />
-					</TabPanel>
-					<TabPanel>
-						<Redirects exclude="user" />
-					</TabPanel>
-				</Tabs>
+						<TabPanel>
+							<Search />
+						</TabPanel>
+						<TabPanel>
+							<Redirects exclude="user" />
+						</TabPanel>
+					</Tabs>
+				</div>
+				<SideToggle
+					toggleFunc={(state) => {
+						setToggled(state);
+					}}
+				/>
 			</div>
-			<SideToggle
-				toggleFunc={(state) => {
-					setToggled(state);
-				}}
-			/>
-		</div>
+		</React.Fragment>
 	);
 }
 

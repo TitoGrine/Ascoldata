@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
+import HeaderBar from '../HeaderBar';
 
 class Login extends Component {
 	constructor() {
@@ -28,6 +29,7 @@ class Login extends Component {
 		if (!localStorage.getItem('refreshToken')) {
 			return (
 				<React.Fragment>
+					<HeaderBar />
 					<div id="corporum">
 						<section className="content-section slide-in-left">
 							<div

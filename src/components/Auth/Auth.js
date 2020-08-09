@@ -10,11 +10,18 @@ export const refreshToken = async (updateFunction) => {
 		.then((response) => {
 			localStorage.setItem('authToken', response.data.access_token);
 
-			console.log('That stank though..');
-
 			updateFunction(response.data.access_token);
 		})
 		.catch((err) => {
 			console.log(err);
 		});
+};
+
+export const clearStorage = () => {
+	localStorage.removeItem('authToken');
+	localStorage.removeItem('refreshToken');
+	localStorage.removeItem('track_seeds');
+	localStorage.removeItem('country');
+	localStorage.removeItem('profile-picture');
+	localStorage.removeItem('userStats');
 };

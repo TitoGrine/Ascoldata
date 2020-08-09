@@ -1,18 +1,20 @@
 import React, { useState } from 'react';
 import { Navbar, Nav, Image } from 'react-bootstrap';
 
-function HeaderBar() {
-	const [ profilePicture ] = useState(localStorage.getItem('profile-picture'));
+import { clearStorage } from './Auth/Auth';
+import { useHistory } from 'react-router-dom';
+
+function HeaderBar(props) {
+	const history = useHistory();
+
+	const logOut = () => {
+		clearStorage();
+		history.replace('/');
+	};
 
 	const getLoginState = () => {
 		if (localStorage.getItem('refreshToken') !== null) {
-			return (
-				<Nav.Link href="/">
-					<div id="image">
-						<Image style={profileStyle} src={profilePicture} roundedCircle />
-					</div>
-				</Nav.Link>
-			);
+			return <Nav.Link onClick={logOut}>Log Out</Nav.Link>;
 		}
 	};
 
@@ -29,10 +31,5 @@ function HeaderBar() {
 		</Navbar>
 	);
 }
-
-const profileStyle = {
-	width: '50px',
-	height: '50px'
-};
 
 export default HeaderBar;
