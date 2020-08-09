@@ -17,12 +17,12 @@ import TrackCards from '../Track/TrackCards';
 const spotifyWebApi = new Spotify();
 
 function Liked() {
-	const authToken = sessionStorage.getItem('authToken');
 	const query = new URLSearchParams(useLocation().search);
 	const history = useHistory();
 	const limit = 12;
 
 	const [ toggled, setToggled ] = useState('nothing');
+	const [ authToken, setAuthToken ] = useState(localStorage.getItem('authToken'));
 	const [ page, setPage ] = useState(parseInt(query.get('page')));
 	const [ userLiked, setUserLiked ] = useState([]);
 	const [ offset, setOffset ] = useState(limit * (page - 1));
@@ -48,7 +48,7 @@ function Liked() {
 				function(err) {
 					console.log(err);
 
-					if (err.status === 401) refreshToken();
+					if (err.status === 401) refreshToken((new_token) => setAuthToken(new_token));
 				}
 			);
 	};
@@ -66,7 +66,7 @@ function Liked() {
 				setPage(1 + offset / limit);
 			}
 		},
-		[ offset ]
+		[ authToken, offset ]
 	);
 
 	useEffect(

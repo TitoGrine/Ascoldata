@@ -8,8 +8,8 @@ class Login extends Component {
 		const params = this.getHashParams();
 
 		if (params.access_token) {
-			sessionStorage.setItem('authToken', params.access_token);
-			sessionStorage.setItem('refreshToken', params.refresh_token);
+			localStorage.setItem('authToken', params.access_token);
+			localStorage.setItem('refreshToken', params.refresh_token);
 		}
 	}
 
@@ -25,7 +25,7 @@ class Login extends Component {
 	}
 
 	render() {
-		if (!sessionStorage.getItem('authToken')) {
+		if (!localStorage.getItem('refreshToken')) {
 			return (
 				<React.Fragment>
 					<div id="corporum">
@@ -44,7 +44,7 @@ class Login extends Component {
 								</p>
 							</div>
 						</section>
-						<section className="sidebar-section slide-in-right sidebar-closed" />
+						<section className="sidebar-section slide-in-right sidebar-nothing" />
 					</div>
 				</React.Fragment>
 			);

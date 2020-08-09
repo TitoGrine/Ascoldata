@@ -23,7 +23,6 @@ import PlaylistCards from '../Playlist/PlaylistCards';
 const spotifyWebApi = new Spotify();
 
 function SearchResults() {
-	const authToken = sessionStorage.getItem('authToken');
 	const query = new URLSearchParams(useLocation().search);
 	const history = useHistory();
 	const limit = 12;
@@ -32,6 +31,7 @@ function SearchResults() {
 	const type = query.get('type');
 
 	const [ toggled, setToggled ] = useState('nothing');
+	const [ authToken, setAuthToken ] = useState(localStorage.getItem('authToken'));
 	const [ page, setPage ] = useState(parseInt(query.get('page')));
 	const [ results, setResults ] = useState([]);
 	const [ offset, setOffset ] = useState(limit * (page - 1));
@@ -57,7 +57,7 @@ function SearchResults() {
 				function(err) {
 					console.log(err);
 
-					if (err.status === 401) refreshToken();
+					if (err.status === 401) refreshToken((new_token) => setAuthToken(new_token));
 				}
 			);
 	};
@@ -75,7 +75,7 @@ function SearchResults() {
 				setPage(1 + offset / limit);
 			}
 		},
-		[ offset ]
+		[ authToken, offset ]
 	);
 
 	useEffect(

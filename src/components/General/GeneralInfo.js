@@ -14,7 +14,7 @@ const spotifyWebApi = new Spotify();
 
 function GeneralInfo() {
 	const [ toggled, setToggled ] = useState('nothing');
-	const [ authToken, setAuthToken ] = useState(sessionStorage.getItem('authToken'));
+	const [ authToken, setAuthToken ] = useState(localStorage.getItem('authToken'));
 	const [ user, setUser ] = useState('');
 	const [ id, setId ] = useState('');
 	const [ image, setImage ] = useState('');
@@ -62,7 +62,7 @@ function GeneralInfo() {
 
 				setCalcStats(true);
 
-				sessionStorage.setItem('userStats', JSON.stringify(avgStats));
+				localStorage.setItem('userStats', JSON.stringify(avgStats));
 
 				//console.log(avgStats);
 			},
@@ -92,14 +92,10 @@ function GeneralInfo() {
 
 					calcUserStats(tracks, avgPopularity);
 
-					sessionStorage.setItem('track_seeds', tracks.slice(0, 5));
+					localStorage.setItem('track_seeds', tracks.slice(0, 5));
 				},
 				function(err) {
 					console.log(err);
-
-					if (err.status === 401) refreshToken();
-
-					return;
 				}
 			);
 	};
@@ -125,13 +121,13 @@ function GeneralInfo() {
 						setLink(data.external_urls.spotify);
 						setURI(data.uri);
 
-						sessionStorage.setItem('country', data.country);
-						sessionStorage.setItem('profile-picture', data.images.length === 0 ? '' : data.images[0].url);
+						localStorage.setItem('country', data.country);
+						localStorage.setItem('profile-picture', data.images.length === 0 ? '' : data.images[0].url);
 					},
 					function(err) {
 						console.log(err);
 
-						if (err.status === 401) refreshToken();
+						if (err.status === 401) refreshToken((new_token) => setAuthToken(new_token));
 					}
 				);
 			}

@@ -19,12 +19,12 @@ import ArtistCards from '../Artist/ArtistCards';
 const spotifyWebApi = new Spotify();
 
 function Top() {
-	const authToken = sessionStorage.getItem('authToken');
 	const query = new URLSearchParams(useLocation().search);
 	const history = useHistory();
 	const limit = 12;
 
 	const [ toggled, setToggled ] = useState('nothing');
+	const [ authToken, setAuthToken ] = useState(localStorage.getItem('authToken'));
 	const [ page, setPage ] = useState(parseInt(query.get('page')));
 	const [ topType, setTopType ] = useState(query.get('type'));
 	const [ topResults, setTopResults ] = useState([]);
@@ -54,7 +54,7 @@ function Top() {
 						function(err) {
 							console.log(err);
 
-							if (err.status === 401) refreshToken();
+							if (err.status === 401) refreshToken((new_token) => setAuthToken(new_token));
 						}
 					);
 				break;
@@ -74,7 +74,7 @@ function Top() {
 						function(err) {
 							console.log(err);
 
-							if (err.status === 401) refreshToken();
+							if (err.status === 401) refreshToken((new_token) => setAuthToken(new_token));
 						}
 					);
 				break;

@@ -21,7 +21,7 @@ function Track() {
 	const track = query.get('id');
 
 	const [ toggled, setToggled ] = useState('nothing');
-	const [ authToken ] = useState(sessionStorage.getItem('authToken'));
+	const [ authToken, setAuthToken ] = useState(localStorage.getItem('authToken'));
 	const [ trackLink, setTrackLink ] = useState('');
 	const [ trackName, setTrackName ] = useState('');
 	const [ trackAlbum, setTrackAlbum ] = useState('');
@@ -51,7 +51,7 @@ function Track() {
 			function(err) {
 				console.log(err);
 
-				if (err.status === 401) refreshToken();
+				if (err.status === 401) refreshToken((new_token) => setAuthToken(new_token));
 			}
 		);
 	};
@@ -77,8 +77,6 @@ function Track() {
 			},
 			function(err) {
 				console.log(err);
-
-				if (err.status === 401) refreshToken();
 			}
 		);
 	};

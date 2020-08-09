@@ -17,12 +17,12 @@ import TrackCards from '../Track/TrackCards';
 const spotifyWebApi = new Spotify();
 
 function Recommendations() {
-	const authToken = sessionStorage.getItem('authToken');
 	const query = new URLSearchParams(useLocation().search);
 	const limit = 12;
 
 	const [ toggled, setToggled ] = useState('nothing');
-	const [ seeds ] = useState(sessionStorage.getItem('track_seeds'));
+	const [ authToken, setAuthToken ] = useState(localStorage.getItem('authToken'));
+	const [ seeds ] = useState(localStorage.getItem('track_seeds'));
 	const [ recommendations, setRecommendations ] = useState([]);
 
 	const colapseTable = useMediaQuery({ maxWidth: 700 });
@@ -57,12 +57,12 @@ function Recommendations() {
 			function(data) {
 				// console.log(data);
 				setRecommendations(data.tracks);
-				sessionStorage.setItem('track_seeds', data.seeds.map((seed) => seed.id));
+				localStorage.setItem('track_seeds', data.seeds.map((seed) => seed.id));
 			},
 			function(err) {
 				console.log(err);
 
-				if (err.status === 401) refreshToken();
+				if (err.status === 401) refreshToken((new_token) => setAuthToken(new_token));
 			}
 		);
 	};

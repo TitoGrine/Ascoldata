@@ -1,15 +1,20 @@
 import axios from 'axios';
 
-export const refreshToken = async () => {
+export const refreshToken = async (updateFunction) => {
 	let headers = {
-		refresh_token: sessionStorage.getItem('refreshToken')
+		refresh_token: localStorage.getItem('refreshToken')
 	};
 
-	axios.get(process.env.REACT_APP_FIREBASE_REFRESH_FUNC, { params: headers }).then((response) => {
-		console.log(response.data);
+	axios
+		.get(process.env.REACT_APP_FIREBASE_REFRESH_FUNC, { params: headers })
+		.then((response) => {
+			localStorage.setItem('authToken', response.data.access_token);
 
-		sessionStorage.setItem('authToken', response.data.access_token);
+			console.log('That stank though..');
 
-		window.location.reload();
-	});
+			updateFunction(response.data.access_token);
+		})
+		.catch((err) => {
+			console.log(err);
+		});
 };

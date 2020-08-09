@@ -21,7 +21,7 @@ function Artist() {
 	const artist = query.get('id');
 
 	const [ toggled, setToggled ] = useState('nothing');
-	const [ authToken ] = useState(sessionStorage.getItem('authToken'));
+	const [ authToken, setAuthToken ] = useState(localStorage.getItem('authToken'));
 	const [ artistName, setArtistName ] = useState('');
 	const [ artistLink, setArtistLink ] = useState('');
 	const [ artistImage, setArtistImage ] = useState('');
@@ -44,13 +44,13 @@ function Artist() {
 			function(err) {
 				console.log(err);
 
-				if (err.status === 401) refreshToken();
+				if (err.status === 401) refreshToken((new_token) => setAuthToken(new_token));
 			}
 		);
 	};
 
 	const getArtistTopTracks = async () => {
-		spotifyWebApi.getArtistTopTracks(artist, sessionStorage.getItem('country')).then(
+		spotifyWebApi.getArtistTopTracks(artist, localStorage.getItem('country')).then(
 			function(data) {
 				getArtistStats(
 					data.tracks.map((track) => {
@@ -60,8 +60,6 @@ function Artist() {
 			},
 			function(err) {
 				console.log(err);
-
-				if (err.status === 401) refreshToken();
 			}
 		);
 	};
@@ -102,7 +100,7 @@ function Artist() {
 			function(err) {
 				console.log(err);
 
-				if (err.status === 401) refreshToken();
+				if (err.status === 401) refreshToken((new_token) => setAuthToken(new_token));
 			}
 		);
 	};

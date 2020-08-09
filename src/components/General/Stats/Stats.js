@@ -11,7 +11,7 @@ import Search from '../Search/Search';
 import SideToggle from '../../SideToggle';
 
 function Stats() {
-	const stats = JSON.parse(sessionStorage.getItem('userStats'));
+	const stats = JSON.parse(localStorage.getItem('userStats'));
 	const [ toggled, setToggled ] = useState('nothing');
 
 	return (

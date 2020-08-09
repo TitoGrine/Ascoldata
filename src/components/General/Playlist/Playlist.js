@@ -22,7 +22,7 @@ function Playlist() {
 	const playlist = query.get('id');
 
 	const [ toggled, setToggled ] = useState('nothing');
-	const [ authToken, setAuthToken ] = useState(sessionStorage.getItem('authToken'));
+	const [ authToken, setAuthToken ] = useState(localStorage.getItem('authToken'));
 	const [ playlistName, setPlaylistName ] = useState('');
 	const [ playlistLink, setPlaylistLink ] = useState('');
 	const [ playlistImage, setPlaylistImage ] = useState('');
@@ -60,7 +60,7 @@ function Playlist() {
 			function(err) {
 				console.log(err);
 
-				if (err.status === 401) refreshToken();
+				if (err.status === 401) refreshToken((new_token) => setAuthToken(new_token));
 			}
 		);
 	};
@@ -99,7 +99,7 @@ function Playlist() {
 			function(err) {
 				console.log(err);
 
-				if (err.status === 401) refreshToken();
+				if (err.status === 401) refreshToken((new_token) => setAuthToken(new_token));
 			}
 		);
 	};
