@@ -5,7 +5,7 @@ import { Image } from 'react-bootstrap';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 
 import { refreshToken } from '../../Auth/Auth';
-import { formatDuration } from '../../HelperFunc';
+import { formatDuration, decodeString } from '../../HelperFunc';
 
 import HeaderBar from '../../HeaderBar';
 import Redirects from '../../Redirects';
@@ -40,7 +40,7 @@ function Playlist() {
 				setPlaylistName(data.name);
 				setPlaylistLink(data.external_urls.spotify);
 				setPlaylistImage(data.images.length === 0 ? '' : data.images[0].url);
-				setPlaylistDescription(data.description);
+				setPlaylistDescription(decodeString(data.description));
 				setPlaylistFollowers(data.followers.total);
 				setPlaylistOwner(data.owner);
 				setPlaylistTracks(data.tracks.total);
