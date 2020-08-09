@@ -12,6 +12,10 @@ body {
 	padding: 0.5em 1em;
 }
 
+.navbar {
+	z-index: 9999;
+}
+
 .navbar-toggler-icon {
 	width: 1.4em;
 	height: 1.4em;

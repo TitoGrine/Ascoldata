@@ -7,7 +7,6 @@ import { useMediaQuery } from 'react-responsive';
 
 import { refreshToken } from '../../Auth/Auth';
 
-import HeaderBar from '../../HeaderBar';
 import ArtistTable from '../Artist/ArtistTable';
 import TrackTable from '../Track/TrackTable';
 import Redirects from '../../Redirects';
@@ -135,7 +134,6 @@ function Top() {
 
 	return (
 		<React.Fragment>
-			<HeaderBar />
 			<div id="corporum" className="top-content">
 				<section className="content-section content-section-top slide-in-left">
 					{renderTable()}

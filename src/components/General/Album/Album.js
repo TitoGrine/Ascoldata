@@ -8,7 +8,6 @@ import { FaSpotify } from 'react-icons/fa';
 import { refreshToken } from '../../Auth/Auth';
 import { formatDuration } from '../../HelperFunc';
 
-import HeaderBar from '../../HeaderBar';
 import Redirects from '../../Redirects';
 import StatCard from '../Stats/StatCard';
 import { Image } from 'react-bootstrap';
@@ -142,7 +141,6 @@ function Track() {
 
 	return (
 		<React.Fragment>
-			<HeaderBar />
 			<div id="corporum">
 				<section className="content-section slide-in-left">
 					<Textfit className="album-title" mode="single" max={36}>

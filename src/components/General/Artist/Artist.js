@@ -7,7 +7,6 @@ import { FaSpotify } from 'react-icons/fa';
 
 import { refreshToken } from '../../Auth/Auth';
 
-import HeaderBar from '../../HeaderBar';
 import Redirects from '../../Redirects';
 import StatCard from '../Stats/StatCard';
 import { Textfit } from 'react-textfit';
@@ -122,7 +121,6 @@ function Artist() {
 
 	return (
 		<React.Fragment>
-			<HeaderBar />
 			<div id="corporum">
 				<section className="content-section slide-in-left">
 					<Textfit className="artist-title" mode="single" max={36}>

@@ -7,7 +7,6 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { refreshToken } from '../../Auth/Auth';
 import { formatDuration, decodeString } from '../../HelperFunc';
 
-import HeaderBar from '../../HeaderBar';
 import Redirects from '../../Redirects';
 import StatCard from '../Stats/StatCard';
 import { Textfit } from 'react-textfit';
@@ -120,7 +119,6 @@ function Playlist() {
 
 	return (
 		<React.Fragment>
-			<HeaderBar />
 			<div id="corporum">
 				<section className="content-section slide-in-left">
 					<Textfit className="playlist-title" mode="single" max={36}>

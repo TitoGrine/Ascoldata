@@ -7,7 +7,6 @@ import { useMediaQuery } from 'react-responsive';
 
 import { refreshToken } from '../../Auth/Auth';
 
-import HeaderBar from '../../HeaderBar';
 import Redirects from '../../Redirects';
 import PlaylistTableRow from './PlaylistTableRow';
 import Pagination from 'react-js-pagination';
@@ -80,7 +79,6 @@ function UserPlaylists() {
 
 	return (
 		<React.Fragment>
-			<HeaderBar />
 			<div id="corporum" className="playlists-content">
 				<section className="content-section slide-in-left">
 					{colapseTable ? (

@@ -26,25 +26,29 @@ import Liked from './components/General/Liked Songs/Liked';
 import SearchResults from './components/General/Search/SearchResults';
 import Find from './components/General/Find/Find';
 import Recommendations from './components/General/Find/Recommendations';
+import HeaderBar from './components/HeaderBar';
 
 function App() {
 	return (
-		<div className="App">
-			<Router>
-				<Route exact={true} path="/" component={Home} />
-				<Route exact={true} path="/top" component={Top} />
-				<Route exact={true} path="/stats" component={Stats} />
-				<Route exact={true} path="/artist" component={Artist} />
-				<Route exact={true} path="/track" component={Track} />
-				<Route exact={true} path="/album" component={Album} />
-				<Route exact={true} path="/playlist" component={Playlist} />
-				<Route exact={true} path="/playlists" component={UserPlaylists} />
-				<Route exact={true} path="/liked" component={Liked} />
-				<Route exact={true} path="/search" component={SearchResults} />
-				<Route exact={true} path="/find" component={Find} />
-				<Route exact={true} path="/recommendations" component={Recommendations} />
-			</Router>
-		</div>
+		<React.Fragment>
+			<HeaderBar />
+			<div className="App">
+				<Router>
+					<Route exact={true} path="/" component={Home} />
+					<Route exact={true} path="/top" component={Top} />
+					<Route exact={true} path="/stats" component={Stats} />
+					<Route exact={true} path="/artist" component={Artist} />
+					<Route exact={true} path="/track" component={Track} />
+					<Route exact={true} path="/album" component={Album} />
+					<Route exact={true} path="/playlist" component={Playlist} />
+					<Route exact={true} path="/playlists" component={UserPlaylists} />
+					<Route exact={true} path="/liked" component={Liked} />
+					<Route exact={true} path="/search" component={SearchResults} />
+					<Route exact={true} path="/find" component={Find} />
+					<Route exact={true} path="/recommendations" component={Recommendations} />
+				</Router>
+			</div>
+		</React.Fragment>
 	);
 }
 

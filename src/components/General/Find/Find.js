@@ -4,7 +4,6 @@ import { useHistory } from 'react-router-dom';
 
 import { keyBinds, trimLimit } from '../../HelperFunc';
 
-import HeaderBar from '../../HeaderBar';
 import Redirects from '../../Redirects';
 import Search from '../Search/Search';
 import AttributeSlider from './AttributeSlider';
@@ -91,7 +90,6 @@ function Find() {
 
 	return (
 		<React.Fragment>
-			<HeaderBar />
 			<div id="corporum" className="find-content">
 				<section className="content-section slide-in-left">
 					<div id="attribute-inputs">

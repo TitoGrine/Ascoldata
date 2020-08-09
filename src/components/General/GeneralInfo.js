@@ -139,7 +139,6 @@ function GeneralInfo() {
 
 	return (
 		<React.Fragment>
-			<HeaderBar />
 			<div id="corporum">
 				<section className="content-section slide-in-left">
 					<div id="profile-info">

@@ -7,7 +7,6 @@ import { refreshToken } from '../../Auth/Auth';
 import { trimLimit } from '../../HelperFunc';
 import { useMediaQuery } from 'react-responsive';
 
-import HeaderBar from '../../HeaderBar';
 import Redirects from '../../Redirects';
 import TrackTable from '../Track/TrackTable';
 import Search from '../Search/Search';
@@ -78,7 +77,6 @@ function Recommendations() {
 
 	return (
 		<React.Fragment>
-			<HeaderBar />
 			<div id="corporum">
 				<section className="content-section slide-in-left">
 					{recommendations.length > 0 &&

@@ -3,7 +3,6 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 
 import { formatDuration } from '../../HelperFunc';
 
-import HeaderBar from '../../HeaderBar';
 import Redirects from '../../Redirects';
 import StatCard from './StatCard';
 import { Textfit } from 'react-textfit';
@@ -16,7 +15,6 @@ function Stats() {
 
 	return (
 		<React.Fragment>
-			<HeaderBar />
 			<div id="corporum">
 				<section className="content-section slide-in-left">
 					<Textfit className="title" mode="single" max={35}>
