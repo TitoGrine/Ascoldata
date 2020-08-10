@@ -139,8 +139,9 @@ function GeneralInfo() {
 
 	return (
 		<React.Fragment>
+			<HeaderBar />
 			<div id="corporum">
-				<section className="content-section slide-in-left">
+				<section className="content-section">
 					<div id="profile-info">
 						<Textfit className="username" mode="single" max={36}>
 							· Hello<strong> {user} </strong> ·

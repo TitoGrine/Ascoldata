@@ -98,8 +98,9 @@ function Track() {
 
 	return (
 		<React.Fragment>
+			<HeaderBar />
 			<div id="corporum">
-				<section className="content-section slide-in-left">
+				<section className="content-section">
 					<Textfit className="track-title" mode="single" max={36}>
 						· {trackName} ·
 					</Textfit>

@@ -14,6 +14,7 @@ import PlaylistTable from './PlaylistTable';
 import Search from '../Search/Search';
 import SideToggle from '../../SideToggle';
 import PlaylistCards from './PlaylistCards';
+import HeaderBar from '../../HeaderBar';
 
 const spotifyWebApi = new Spotify();
 
@@ -79,8 +80,9 @@ function UserPlaylists() {
 
 	return (
 		<React.Fragment>
+			<HeaderBar />
 			<div id="corporum" className="playlists-content">
-				<section className="content-section slide-in-left">
+				<section className="content-section">
 					{colapseTable ? (
 						<PlaylistCards results={userPlaylists} />
 					) : (

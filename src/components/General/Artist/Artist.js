@@ -12,6 +12,7 @@ import StatCard from '../Stats/StatCard';
 import { Textfit } from 'react-textfit';
 import Search from '../Search/Search';
 import SideToggle from '../../SideToggle';
+import HeaderBar from '../../HeaderBar';
 
 const spotifyWebApi = new Spotify();
 
@@ -121,8 +122,9 @@ function Artist() {
 
 	return (
 		<React.Fragment>
+			<HeaderBar />
 			<div id="corporum">
-				<section className="content-section slide-in-left">
+				<section className="content-section">
 					<Textfit className="artist-title" mode="single" max={36}>
 						{' '}
 						· {artistName} ·{' '}

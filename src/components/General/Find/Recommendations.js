@@ -12,6 +12,7 @@ import TrackTable from '../Track/TrackTable';
 import Search from '../Search/Search';
 import SideToggle from '../../SideToggle';
 import TrackCards from '../Track/TrackCards';
+import HeaderBar from '../../HeaderBar';
 
 const spotifyWebApi = new Spotify();
 
@@ -77,8 +78,9 @@ function Recommendations() {
 
 	return (
 		<React.Fragment>
+			<HeaderBar />
 			<div id="corporum">
-				<section className="content-section slide-in-left">
+				<section className="content-section">
 					{recommendations.length > 0 &&
 						(colapseTable ? (
 							<TrackCards results={recommendations} />

@@ -18,6 +18,7 @@ import TrackCards from '../Track/TrackCards';
 import AlbumCards from '../Album/AlbumCards';
 import ArtistCards from '../Artist/ArtistCards';
 import PlaylistCards from '../Playlist/PlaylistCards';
+import HeaderBar from '../../HeaderBar';
 
 const spotifyWebApi = new Spotify();
 
@@ -103,8 +104,9 @@ function SearchResults() {
 
 	return (
 		<React.Fragment>
+			<HeaderBar />
 			<div id="corporum" className="playlists-content">
-				<section className="content-section slide-in-left">
+				<section className="content-section">
 					{renderTable()}
 					<div className="pagination-divider" />
 					<Pagination

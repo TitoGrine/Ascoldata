@@ -14,6 +14,7 @@ import Search from '../Search/Search';
 import SideToggle from '../../SideToggle';
 import TrackCards from '../Track/TrackCards';
 import ArtistCards from '../Artist/ArtistCards';
+import HeaderBar from '../../HeaderBar';
 
 const spotifyWebApi = new Spotify();
 
@@ -134,8 +135,9 @@ function Top() {
 
 	return (
 		<React.Fragment>
+			<HeaderBar />
 			<div id="corporum" className="top-content">
-				<section className="content-section content-section-top slide-in-left">
+				<section className="content-section content-section-top">
 					{renderTable()}
 					<div className="pagination-divider" />
 					<Pagination

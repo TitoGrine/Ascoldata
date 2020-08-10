@@ -10,6 +10,7 @@ import AttributeSlider from './AttributeSlider';
 
 import Spotify from 'spotify-web-api-js';
 import SideToggle from '../../SideToggle';
+import HeaderBar from '../../HeaderBar';
 const spotifyWebApi = new Spotify();
 
 function Find() {
@@ -90,8 +91,9 @@ function Find() {
 
 	return (
 		<React.Fragment>
+			<HeaderBar />
 			<div id="corporum" className="find-content">
-				<section className="content-section slide-in-left">
+				<section className="content-section">
 					<div id="attribute-inputs">
 						<div className="dropdown-value-input" onChange={keyChange}>
 							<label htmlFor="key">Key:</label>

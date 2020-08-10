@@ -13,6 +13,7 @@ import { Textfit } from 'react-textfit';
 import Search from '../Search/Search';
 import SideToggle from '../../SideToggle';
 import { FaSpotify } from 'react-icons/fa';
+import HeaderBar from '../../HeaderBar';
 
 const spotifyWebApi = new Spotify();
 
@@ -119,8 +120,9 @@ function Playlist() {
 
 	return (
 		<React.Fragment>
+			<HeaderBar />
 			<div id="corporum">
-				<section className="content-section slide-in-left">
+				<section className="content-section">
 					<Textfit className="playlist-title" mode="single" max={36}>
 						· {playlistName} ·
 					</Textfit>

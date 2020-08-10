@@ -8,6 +8,7 @@ import StatCard from './StatCard';
 import { Textfit } from 'react-textfit';
 import Search from '../Search/Search';
 import SideToggle from '../../SideToggle';
+import HeaderBar from '../../HeaderBar';
 
 function Stats() {
 	const stats = JSON.parse(localStorage.getItem('userStats'));
@@ -15,8 +16,9 @@ function Stats() {
 
 	return (
 		<React.Fragment>
+			<HeaderBar />
 			<div id="corporum">
-				<section className="content-section slide-in-left">
+				<section className="content-section">
 					<Textfit className="title" mode="single" max={35}>
 						· Your Statistics ·
 					</Textfit>

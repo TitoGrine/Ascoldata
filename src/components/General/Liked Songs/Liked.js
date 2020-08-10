@@ -12,6 +12,7 @@ import Pagination from 'react-js-pagination';
 import Search from '../Search/Search';
 import SideToggle from '../../SideToggle';
 import TrackCards from '../Track/TrackCards';
+import HeaderBar from '../../HeaderBar';
 
 const spotifyWebApi = new Spotify();
 
@@ -77,8 +78,9 @@ function Liked() {
 
 	return (
 		<React.Fragment>
+			<HeaderBar />
 			<div id="corporum">
-				<section className="content-section slide-in-left">
+				<section className="content-section">
 					{userLiked.length > 0 &&
 						(colapseTable ? <TrackCards results={userLiked} /> : <TrackTable results={userLiked} />)}
 					<div className="pagination-divider" />

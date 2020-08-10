@@ -26,12 +26,10 @@ import Liked from './components/General/Liked Songs/Liked';
 import SearchResults from './components/General/Search/SearchResults';
 import Find from './components/General/Find/Find';
 import Recommendations from './components/General/Find/Recommendations';
-import HeaderBar from './components/HeaderBar';
 
 function App() {
 	return (
 		<React.Fragment>
-			<HeaderBar />
 			<div className="App">
 				<Router>
 					<Route exact={true} path="/" component={Home} />
