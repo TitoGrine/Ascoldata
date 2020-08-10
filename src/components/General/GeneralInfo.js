@@ -202,7 +202,7 @@ function GeneralInfo() {
 							<Search />
 						</TabPanel>
 						<TabPanel>
-							<Redirects exclude="user" />
+							<Redirects exclude="home" />
 						</TabPanel>
 					</Tabs>
 				</div>

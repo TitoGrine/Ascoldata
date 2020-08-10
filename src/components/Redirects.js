@@ -5,34 +5,34 @@ function Redirects(props) {
 	const getRedirects = () => {
 		return (
 			<React.Fragment>
-				{props.exclude !== 'user' && (
+				{props.exclude !== 'home' && (
 					<li>
-						<Link to="/">User</Link>
+						<Link to="/">Home</Link>
 					</li>
 				)}
 				{props.exclude !== 'top' && (
 					<li>
-						<Link to={`/top?type=track&time_range=short_term&page=${1}`}>Top</Link>
+						<Link to={`/top?type=track&time_range=short_term&page=${1}`}>Top Listened</Link>
 					</li>
 				)}
 				{props.exclude !== 'statistics' && (
 					<li>
-						<Link to="/stats">Statistics</Link>
+						<Link to="/stats">Your Statistics</Link>
 					</li>
 				)}
 				{props.exclude !== 'liked' && (
 					<li>
-						<Link to={`/liked?page=${1}`}>Liked</Link>
+						<Link to={`/liked?page=${1}`}>Your Liked Songs</Link>
 					</li>
 				)}
 				{props.exclude !== 'playlists' && (
 					<li>
-						<Link to={`/playlists?page=${1}`}>Playlists</Link>
+						<Link to={`/playlists?page=${1}`}>Your Playlists</Link>
 					</li>
 				)}
 				{props.exclude !== 'find' && (
 					<li>
-						<Link to={`/find`}>Find</Link>
+						<Link to={`/find`}>Find New Songs</Link>
 					</li>
 				)}
 			</React.Fragment>

@@ -40,8 +40,8 @@ label > input {
 	position: absolute;
 	top: 5px;
 	left: 0;
-	height: 19px;
-	width: 19px;
+	height: 20px;
+	width: 20px;
 	background-color: #191414;
 	border-radius: 50%;
 }
@@ -60,12 +60,12 @@ label input:checked ~ .checkmark:after {
 
 /* Style the checkmark/indicator */
 label .checkmark:after {
-	left: 5px;
-	top: 5px;
+	left: calc(50% - 4px);
+	top: calc(50% - 4px);
 	height: 8px;
 	width: 8px;
 	background-color: #1db954;
-	border-radius: 50%;
+	border-radius: 50px;
 }
 
 /* Toggle styling */

@@ -145,7 +145,7 @@ function Top() {
 	return (
 		<React.Fragment>
 			<Helmet>
-				<title>Top - Ascoldata</title>
+				<title>Top Listened - Ascoldata</title>
 			</Helmet>
 			<HeaderBar />
 			<div id="corporum" className="top-content">
