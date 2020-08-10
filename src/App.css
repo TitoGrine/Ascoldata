@@ -7,15 +7,6 @@ body {
 	color: antiquewhite;
 }
 
-#navbar {
-	height: 4em;
-	padding: 0.5em 1em;
-}
-
-.navbar {
-	z-index: 9999;
-}
-
 .navbar-toggler-icon {
 	width: 1.4em;
 	height: 1.4em;
@@ -37,13 +28,31 @@ body {
 	align-self: center;
 }
 
-.navbar-collapse {
-	align-self: center;
-	box-sizing: border-box;
+.navbar-collapse.show {
+	clip-path: inset(0 0 100% 0);
+	animation: reveal linear 0.5s forwards;
+}
+
+@-webkit-keyframes reveal {
+	0% {
+		clip-path: inset(0 0 100% 0);
+	}
+	100% {
+		clip-path: inset(0 0 0 0);
+	}
+}
+@keyframes reveal {
+	0% {
+		clip-path: inset(0 0 100% 0);
+	}
+	100% {
+		clip-path: inset(0 0 0 0);
+	}
 }
 
 #navbar .navbar-nav {
 	align-items: center;
+	gap: 1rem;
 }
 
 #navbar .nav-link {
@@ -59,7 +68,7 @@ body {
 
 #corporum {
 	display: grid;
-	height: calc(100vh - 4em);
+	height: calc(100vh - 60px);
 	grid-template-columns: repeat(10, 1fr);
 	grid-template-rows: repeat(24, 1fr);
 	overflow-x: hidden;
@@ -115,6 +124,9 @@ div.side-content ul.redirects {
 	align-self: flex-start;
 	height: 90%;
 	padding: 1em;
+	display: flex;
+	flex-direction: column;
+	gap: 0.7em;
 }
 
 div.side-content ul.redirects li {

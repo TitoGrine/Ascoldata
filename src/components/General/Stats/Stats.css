@@ -7,6 +7,7 @@
 .content-section .title {
 	text-align: center;
 	place-items: center;
+	margin-bottom: 1em;
 }
 
 #misc-info {

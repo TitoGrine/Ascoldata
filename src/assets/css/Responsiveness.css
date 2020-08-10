@@ -4,7 +4,6 @@
 	section.content-section {
 		grid-column: 1 / span 10;
 		grid-row: 1 / span 24;
-		height: calc(100vh - 4em);
 	}
 
 	section.sidebar-section,
