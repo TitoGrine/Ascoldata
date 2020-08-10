@@ -17,6 +17,7 @@ import TrackCards from '../Track/TrackCards';
 import ArtistCards from '../Artist/ArtistCards';
 import HeaderBar from '../../HeaderBar';
 import LoadingSpinner from '../../LoadingSpinner';
+import { Helmet } from 'react-helmet';
 
 const spotifyWebApi = new Spotify();
 
@@ -143,6 +144,9 @@ function Top() {
 
 	return (
 		<React.Fragment>
+			<Helmet>
+				<title>Top - Ascoldata</title>
+			</Helmet>
 			<HeaderBar />
 			<div id="corporum" className="top-content">
 				<section className="content-section content-section-top">

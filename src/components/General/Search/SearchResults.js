@@ -21,6 +21,7 @@ import ArtistCards from '../Artist/ArtistCards';
 import PlaylistCards from '../Playlist/PlaylistCards';
 import HeaderBar from '../../HeaderBar';
 import LoadingSpinner from '../../LoadingSpinner';
+import { Helmet } from 'react-helmet';
 
 const spotifyWebApi = new Spotify();
 
@@ -110,6 +111,9 @@ function SearchResults() {
 
 	return (
 		<React.Fragment>
+			<Helmet>
+				<title>{`${q} - Ascoldata`}</title>
+			</Helmet>
 			<HeaderBar />
 			<div id="corporum" className="playlists-content">
 				<section className="content-section">

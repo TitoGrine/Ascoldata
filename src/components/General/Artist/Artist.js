@@ -15,6 +15,7 @@ import Search from '../Search/Search';
 import SideToggle from '../../SideToggle';
 import HeaderBar from '../../HeaderBar';
 import LoadingSpinner from '../../LoadingSpinner';
+import { Helmet } from 'react-helmet';
 
 const spotifyWebApi = new Spotify();
 
@@ -132,6 +133,9 @@ function Artist() {
 
 	return (
 		<React.Fragment>
+			<Helmet>
+				<title>{`${artistName.length === 0 ? 'Artist' : artistName} - Ascoldata`}</title>
+			</Helmet>
 			<HeaderBar />
 			<div id="corporum">
 				<section className="content-section">
@@ -139,8 +143,7 @@ function Artist() {
 					{!promiseInProgress && (
 						<React.Fragment>
 							<Textfit className="artist-title" mode="single" max={36}>
-								{' '}
-								· {artistName} ·{' '}
+								· {artistName} ·
 							</Textfit>
 							<a href={artistLink} target="_blank">
 								<FaSpotify className="title-icon-link heartbeat" />

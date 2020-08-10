@@ -16,6 +16,7 @@ import SideToggle from '../../SideToggle';
 import PlaylistCards from './PlaylistCards';
 import HeaderBar from '../../HeaderBar';
 import LoadingSpinner from '../../LoadingSpinner';
+import { Helmet } from 'react-helmet';
 
 const spotifyWebApi = new Spotify();
 
@@ -85,6 +86,9 @@ function UserPlaylists() {
 
 	return (
 		<React.Fragment>
+			<Helmet>
+				<title>{`Your Playlists - Ascoldata`}</title>
+			</Helmet>
 			<HeaderBar />
 			<div id="corporum" className="playlists-content">
 				<section className="content-section">

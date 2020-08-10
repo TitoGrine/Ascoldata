@@ -9,6 +9,7 @@ import { Textfit } from 'react-textfit';
 import Search from '../Search/Search';
 import SideToggle from '../../SideToggle';
 import HeaderBar from '../../HeaderBar';
+import { Helmet } from 'react-helmet';
 
 function Stats() {
 	const stats = JSON.parse(localStorage.getItem('userStats'));
@@ -16,6 +17,9 @@ function Stats() {
 
 	return (
 		<React.Fragment>
+			<Helmet>
+				<title>{`Your Statistics - Ascoldata`}</title>
+			</Helmet>
 			<HeaderBar />
 			<div id="corporum">
 				<section className="content-section">

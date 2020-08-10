@@ -16,6 +16,7 @@ import SideToggle from '../../SideToggle';
 import { FaSpotify } from 'react-icons/fa';
 import HeaderBar from '../../HeaderBar';
 import LoadingSpinner from '../../LoadingSpinner';
+import { Helmet } from 'react-helmet';
 
 const spotifyWebApi = new Spotify();
 
@@ -128,6 +129,9 @@ function Playlist() {
 
 	return (
 		<React.Fragment>
+			<Helmet>
+				<title>{`${playlistName.length === 0 ? 'Playlist' : playlistName} - Ascoldata`}</title>
+			</Helmet>
 			<HeaderBar />
 			<div id="corporum">
 				<section className="content-section">

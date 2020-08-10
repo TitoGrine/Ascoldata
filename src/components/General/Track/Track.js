@@ -15,6 +15,7 @@ import StatCard from '../Stats/StatCard';
 import Search from '../Search/Search';
 import SideToggle from '../../SideToggle';
 import LoadingSpinner from '../../LoadingSpinner';
+import { Helmet } from 'react-helmet';
 
 const spotifyWebApi = new Spotify();
 
@@ -108,6 +109,9 @@ function Track() {
 
 	return (
 		<React.Fragment>
+			<Helmet>
+				<title>{`${trackName.length === 0 ? 'Song' : trackName} - Ascoldata`}</title>
+			</Helmet>
 			<HeaderBar />
 			<div id="corporum">
 				<section className="content-section">
