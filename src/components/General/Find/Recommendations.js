@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { useLocation, useHistory } from 'react-router-dom';
 import Spotify from 'spotify-web-api-js';
+import { trackPromise, usePromiseTracker } from 'react-promise-tracker';
 
 import { refreshToken } from '../../Auth/Auth';
 import { trimLimit } from '../../HelperFunc';
@@ -13,6 +14,7 @@ import Search from '../Search/Search';
 import SideToggle from '../../SideToggle';
 import TrackCards from '../Track/TrackCards';
 import HeaderBar from '../../HeaderBar';
+import LoadingSpinner from '../../LoadingSpinner';
 
 const spotifyWebApi = new Spotify();
 
@@ -26,6 +28,8 @@ function Recommendations() {
 	const [ recommendations, setRecommendations ] = useState([]);
 
 	const colapseTable = useMediaQuery({ maxWidth: 700 });
+
+	const { promiseInProgress } = usePromiseTracker();
 
 	const getParameters = () => {
 		let defaultParameters = {
@@ -53,17 +57,19 @@ function Recommendations() {
 	const getData = () => {
 		spotifyWebApi.setAccessToken(authToken);
 
-		spotifyWebApi.getRecommendations(getParameters()).then(
-			function(data) {
-				// console.log(data);
-				setRecommendations(data.tracks);
-				localStorage.setItem('track_seeds', data.seeds.map((seed) => seed.id));
-			},
-			function(err) {
-				console.log(err);
+		trackPromise(
+			spotifyWebApi.getRecommendations(getParameters()).then(
+				function(data) {
+					// console.log(data);
+					setRecommendations(data.tracks);
+					localStorage.setItem('track_seeds', data.seeds.map((seed) => seed.id));
+				},
+				function(err) {
+					console.log(err);
 
-				if (err.status === 401) refreshToken((new_token) => setAuthToken(new_token));
-			}
+					if (err.status === 401) refreshToken((new_token) => setAuthToken(new_token));
+				}
+			)
 		);
 	};
 
@@ -81,7 +87,9 @@ function Recommendations() {
 			<HeaderBar />
 			<div id="corporum">
 				<section className="content-section">
-					{recommendations.length > 0 &&
+					<LoadingSpinner />
+					{!promiseInProgress &&
+						recommendations.length > 0 &&
 						(colapseTable ? (
 							<TrackCards results={recommendations} />
 						) : (

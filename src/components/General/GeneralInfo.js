@@ -2,16 +2,18 @@ import React, { useState, useEffect } from 'react';
 import { Image } from 'react-bootstrap';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import Spotify from 'spotify-web-api-js';
+import { trackPromise, usePromiseTracker } from 'react-promise-tracker';
+import { Textfit } from 'react-textfit';
+import { FaSpotify } from 'react-icons/fa';
 
 import { refreshToken } from '../Auth/Auth';
 import { getCountryFromISOCode } from '../HelperFunc';
 
 import Redirects from '../Redirects';
-import { Textfit } from 'react-textfit';
 import Search from './Search/Search';
 import SideToggle from '../SideToggle';
 import HeaderBar from '../HeaderBar';
-import { FaSpotify } from 'react-icons/fa';
+import LoadingSpinner from '../LoadingSpinner';
 
 const spotifyWebApi = new Spotify();
 
@@ -28,6 +30,8 @@ function GeneralInfo() {
 	const [ link, setLink ] = useState('');
 	const [ uri, setURI ] = useState('');
 	const [ calcStats, setCalcStats ] = useState(false);
+
+	const { promiseInProgress } = usePromiseTracker();
 
 	const calcUserStats = (results, avgPopularity) => {
 		spotifyWebApi.getAudioFeaturesForTracks(results).then(
@@ -110,27 +114,29 @@ function GeneralInfo() {
 
 				if (!calcStats) getUserStats();
 
-				spotifyWebApi.getMe().then(
-					function(data) {
-						//console.log(data);
+				trackPromise(
+					spotifyWebApi.getMe().then(
+						function(data) {
+							//console.log(data);
 
-						setUser(data.display_name);
-						setImage(data.images.length === 0 ? '' : data.images[0].url);
-						setId(data.id);
-						setEmail(data.email);
-						setCountry(getCountryFromISOCode(data.country));
-						setFollowers(data.followers.total);
-						setProduct(data.product);
-						setLink(data.external_urls.spotify);
-						setURI(data.uri);
+							setUser(data.display_name);
+							setImage(data.images.length === 0 ? '' : data.images[0].url);
+							setId(data.id);
+							setEmail(data.email);
+							setCountry(getCountryFromISOCode(data.country));
+							setFollowers(data.followers.total);
+							setProduct(data.product);
+							setLink(data.external_urls.spotify);
+							setURI(data.uri);
 
-						localStorage.setItem('country', data.country);
-					},
-					function(err) {
-						console.log(err);
+							localStorage.setItem('country', data.country);
+						},
+						function(err) {
+							console.log(err);
 
-						if (err.status === 401) refreshToken((new_token) => setAuthToken(new_token));
-					}
+							if (err.status === 401) refreshToken((new_token) => setAuthToken(new_token));
+						}
+					)
 				);
 			}
 		},
@@ -142,39 +148,42 @@ function GeneralInfo() {
 			<HeaderBar />
 			<div id="corporum">
 				<section className="content-section">
-					<div id="profile-info">
-						<Textfit className="username" mode="single" max={36}>
-							· Hello<strong> {user} </strong> ·
-						</Textfit>
-						<a href={link} target="_blank">
-							<FaSpotify className="title-icon-link heartbeat" />
-						</a>
-						<div id="info">
-							<div id="image">
-								<Image src={image} thumbnail />
+					<LoadingSpinner />
+					{!promiseInProgress && (
+						<div id="profile-info">
+							<Textfit className="username" mode="single" max={36}>
+								· Hello<strong> {user} </strong> ·
+							</Textfit>
+							<a href={link} target="_blank">
+								<FaSpotify className="title-icon-link heartbeat" />
+							</a>
+							<div id="info">
+								<div id="image">
+									<Image src={image} thumbnail />
+								</div>
+								<ul id="user-info">
+									<li>
+										<strong>ID:</strong> {id}
+									</li>
+									<li>
+										<strong>Email:</strong> {email}
+									</li>
+									<li>
+										<strong>Country:</strong> {country}
+									</li>
+									<li>
+										<strong>Subscription:</strong> {product}
+									</li>
+									<li>
+										<strong>No. followers:</strong> {followers}
+									</li>
+									<li>
+										<strong>Spotify URI:</strong> {uri}
+									</li>
+								</ul>
 							</div>
-							<ul id="user-info">
-								<li>
-									<strong>ID:</strong> {id}
-								</li>
-								<li>
-									<strong>Email:</strong> {email}
-								</li>
-								<li>
-									<strong>Country:</strong> {country}
-								</li>
-								<li>
-									<strong>Subscription:</strong> {product}
-								</li>
-								<li>
-									<strong>No. followers:</strong> {followers}
-								</li>
-								<li>
-									<strong>Spotify URI:</strong> {uri}
-								</li>
-							</ul>
 						</div>
-					</div>
+					)}
 					<div id="mobile-separator" />
 				</section>
 				<section className={`sidebar-section slide-in-right sidebar-${toggled}`} />

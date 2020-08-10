@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 import HeaderBar from '../HeaderBar';
+import LoadingSpinner from '../LoadingSpinner';
 
 class Login extends Component {
 	constructor() {

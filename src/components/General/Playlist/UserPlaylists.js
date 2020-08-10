@@ -4,17 +4,18 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { useLocation, useHistory } from 'react-router-dom';
 import Spotify from 'spotify-web-api-js';
 import { useMediaQuery } from 'react-responsive';
+import { trackPromise, usePromiseTracker } from 'react-promise-tracker';
 
 import { refreshToken } from '../../Auth/Auth';
 
 import Redirects from '../../Redirects';
-import PlaylistTableRow from './PlaylistTableRow';
 import Pagination from 'react-js-pagination';
 import PlaylistTable from './PlaylistTable';
 import Search from '../Search/Search';
 import SideToggle from '../../SideToggle';
 import PlaylistCards from './PlaylistCards';
 import HeaderBar from '../../HeaderBar';
+import LoadingSpinner from '../../LoadingSpinner';
 
 const spotifyWebApi = new Spotify();
 
@@ -33,26 +34,30 @@ function UserPlaylists() {
 	const colapseTable = useMediaQuery({ maxWidth: 700 });
 	const decreasePagination = useMediaQuery({ maxWidth: 500 });
 
+	const { promiseInProgress } = usePromiseTracker();
+
 	const getData = () => {
 		spotifyWebApi.setAccessToken(authToken);
 
-		spotifyWebApi
-			.getUserPlaylists({
-				limit: limit,
-				offset: offset
-			})
-			.then(
-				function(data) {
-					//console.log(data);
-					setUserPlaylists(data.items);
-					setTotalItems(data.total);
-				},
-				function(err) {
-					console.log(err);
+		trackPromise(
+			spotifyWebApi
+				.getUserPlaylists({
+					limit: limit,
+					offset: offset
+				})
+				.then(
+					function(data) {
+						//console.log(data);
+						setUserPlaylists(data.items);
+						setTotalItems(data.total);
+					},
+					function(err) {
+						console.log(err);
 
-					if (err.status === 401) refreshToken((new_token) => setAuthToken(new_token));
-				}
-			);
+						if (err.status === 401) refreshToken((new_token) => setAuthToken(new_token));
+					}
+				)
+		);
 	};
 
 	const switchPage = (ev) => {
@@ -83,11 +88,13 @@ function UserPlaylists() {
 			<HeaderBar />
 			<div id="corporum" className="playlists-content">
 				<section className="content-section">
-					{colapseTable ? (
-						<PlaylistCards results={userPlaylists} />
-					) : (
-						<PlaylistTable results={userPlaylists} />
-					)}
+					<LoadingSpinner />
+					{!promiseInProgress &&
+						(colapseTable ? (
+							<PlaylistCards results={userPlaylists} />
+						) : (
+							<PlaylistTable results={userPlaylists} />
+						))}
 					<div className="pagination-divider" />
 					<Pagination
 						activePage={page}

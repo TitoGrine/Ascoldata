@@ -3,6 +3,7 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { useLocation, useHistory } from 'react-router-dom';
 import Spotify from 'spotify-web-api-js';
 import { useMediaQuery } from 'react-responsive';
+import { trackPromise, usePromiseTracker } from 'react-promise-tracker';
 
 import { refreshToken } from '../../Auth/Auth';
 
@@ -19,6 +20,7 @@ import AlbumCards from '../Album/AlbumCards';
 import ArtistCards from '../Artist/ArtistCards';
 import PlaylistCards from '../Playlist/PlaylistCards';
 import HeaderBar from '../../HeaderBar';
+import LoadingSpinner from '../../LoadingSpinner';
 
 const spotifyWebApi = new Spotify();
 
@@ -40,26 +42,30 @@ function SearchResults() {
 	const colapseTable = useMediaQuery({ maxWidth: 700 });
 	const decreasePagination = useMediaQuery({ maxWidth: 500 });
 
+	const { promiseInProgress } = usePromiseTracker();
+
 	const getData = async () => {
 		spotifyWebApi.setAccessToken(authToken);
 
-		spotifyWebApi
-			.search(q, [ type ], {
-				limit: limit,
-				offset: offset
-			})
-			.then(
-				function(data) {
-					// console.log(data);
-					setResults(data[`${type}s`].items);
-					setTotalItems(data[`${type}s`].total);
-				},
-				function(err) {
-					console.log(err);
+		trackPromise(
+			spotifyWebApi
+				.search(q, [ type ], {
+					limit: limit,
+					offset: offset
+				})
+				.then(
+					function(data) {
+						// console.log(data);
+						setResults(data[`${type}s`].items);
+						setTotalItems(data[`${type}s`].total);
+					},
+					function(err) {
+						console.log(err);
 
-					if (err.status === 401) refreshToken((new_token) => setAuthToken(new_token));
-				}
-			);
+						if (err.status === 401) refreshToken((new_token) => setAuthToken(new_token));
+					}
+				)
+		);
 	};
 
 	const switchPage = (ev) => {
@@ -107,7 +113,8 @@ function SearchResults() {
 			<HeaderBar />
 			<div id="corporum" className="playlists-content">
 				<section className="content-section">
-					{renderTable()}
+					<LoadingSpinner />
+					{!promiseInProgress && renderTable()}
 					<div className="pagination-divider" />
 					<Pagination
 						activePage={page}

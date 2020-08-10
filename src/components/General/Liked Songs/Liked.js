@@ -3,6 +3,7 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { useLocation, useHistory } from 'react-router-dom';
 import Spotify from 'spotify-web-api-js';
 import { useMediaQuery } from 'react-responsive';
+import { trackPromise, usePromiseTracker } from 'react-promise-tracker';
 
 import { refreshToken } from '../../Auth/Auth';
 
@@ -13,6 +14,7 @@ import Search from '../Search/Search';
 import SideToggle from '../../SideToggle';
 import TrackCards from '../Track/TrackCards';
 import HeaderBar from '../../HeaderBar';
+import LoadingSpinner from '../../LoadingSpinner';
 
 const spotifyWebApi = new Spotify();
 
@@ -31,26 +33,30 @@ function Liked() {
 	const colapseTable = useMediaQuery({ maxWidth: 700 });
 	const decreasePagination = useMediaQuery({ maxWidth: 500 });
 
+	const { promiseInProgress } = usePromiseTracker();
+
 	const getData = () => {
 		spotifyWebApi.setAccessToken(authToken);
 
-		spotifyWebApi
-			.getMySavedTracks({
-				limit: limit,
-				offset: offset
-			})
-			.then(
-				function(data) {
-					//console.log(data);
-					setUserLiked(data.items);
-					setTotalItems(data.total);
-				},
-				function(err) {
-					console.log(err);
+		trackPromise(
+			spotifyWebApi
+				.getMySavedTracks({
+					limit: limit,
+					offset: offset
+				})
+				.then(
+					function(data) {
+						//console.log(data);
+						setUserLiked(data.items);
+						setTotalItems(data.total);
+					},
+					function(err) {
+						console.log(err);
 
-					if (err.status === 401) refreshToken((new_token) => setAuthToken(new_token));
-				}
-			);
+						if (err.status === 401) refreshToken((new_token) => setAuthToken(new_token));
+					}
+				)
+		);
 	};
 
 	const switchPage = (ev) => {
@@ -81,7 +87,9 @@ function Liked() {
 			<HeaderBar />
 			<div id="corporum">
 				<section className="content-section">
-					{userLiked.length > 0 &&
+					<LoadingSpinner />
+					{!promiseInProgress &&
+						userLiked.length > 0 &&
 						(colapseTable ? <TrackCards results={userLiked} /> : <TrackTable results={userLiked} />)}
 					<div className="pagination-divider" />
 					<Pagination

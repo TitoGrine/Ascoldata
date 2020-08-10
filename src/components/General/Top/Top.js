@@ -4,6 +4,7 @@ import { useLocation, useHistory } from 'react-router-dom';
 import Spotify from 'spotify-web-api-js';
 import Pagination from 'react-js-pagination';
 import { useMediaQuery } from 'react-responsive';
+import { trackPromise, usePromiseTracker } from 'react-promise-tracker';
 
 import { refreshToken } from '../../Auth/Auth';
 
@@ -15,6 +16,7 @@ import SideToggle from '../../SideToggle';
 import TrackCards from '../Track/TrackCards';
 import ArtistCards from '../Artist/ArtistCards';
 import HeaderBar from '../../HeaderBar';
+import LoadingSpinner from '../../LoadingSpinner';
 
 const spotifyWebApi = new Spotify();
 
@@ -35,48 +37,54 @@ function Top() {
 	const colapseTable = useMediaQuery({ maxWidth: 700 });
 	const decreasePagination = useMediaQuery({ maxWidth: 500 });
 
+	const { promiseInProgress } = usePromiseTracker();
+
 	const getData = async () => {
 		spotifyWebApi.setAccessToken(authToken);
 
 		switch (topType) {
 			case 'artist':
-				spotifyWebApi
-					.getMyTopArtists({
-						limit: limit,
-						offset: offset,
-						time_range: timeRange
-					})
-					.then(
-						function(data) {
-							setTotalItems(data.total);
-							setTopResults(data.items);
-						},
-						function(err) {
-							console.log(err);
+				trackPromise(
+					spotifyWebApi
+						.getMyTopArtists({
+							limit: limit,
+							offset: offset,
+							time_range: timeRange
+						})
+						.then(
+							function(data) {
+								setTotalItems(data.total);
+								setTopResults(data.items);
+							},
+							function(err) {
+								console.log(err);
 
-							if (err.status === 401) refreshToken((new_token) => setAuthToken(new_token));
-						}
-					);
+								if (err.status === 401) refreshToken((new_token) => setAuthToken(new_token));
+							}
+						)
+				);
 				break;
 
 			case 'track':
-				spotifyWebApi
-					.getMyTopTracks({
-						limit: limit,
-						offset: offset,
-						time_range: timeRange
-					})
-					.then(
-						function(data) {
-							setTotalItems(data.total);
-							setTopResults(data.items);
-						},
-						function(err) {
-							console.log(err);
+				trackPromise(
+					spotifyWebApi
+						.getMyTopTracks({
+							limit: limit,
+							offset: offset,
+							time_range: timeRange
+						})
+						.then(
+							function(data) {
+								setTotalItems(data.total);
+								setTopResults(data.items);
+							},
+							function(err) {
+								console.log(err);
 
-							if (err.status === 401) refreshToken((new_token) => setAuthToken(new_token));
-						}
-					);
+								if (err.status === 401) refreshToken((new_token) => setAuthToken(new_token));
+							}
+						)
+				);
 				break;
 			default:
 				break;
@@ -138,7 +146,8 @@ function Top() {
 			<HeaderBar />
 			<div id="corporum" className="top-content">
 				<section className="content-section content-section-top">
-					{renderTable()}
+					<LoadingSpinner />
+					{!promiseInProgress && renderTable()}
 					<div className="pagination-divider" />
 					<Pagination
 						activePage={page}
