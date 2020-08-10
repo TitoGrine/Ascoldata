@@ -11,7 +11,7 @@ import AttributeSlider from './AttributeSlider';
 import Spotify from 'spotify-web-api-js';
 import SideToggle from '../../SideToggle';
 import HeaderBar from '../../HeaderBar';
-const spotifyWebApi = new Spotify();
+import { Helmet } from 'react-helmet';
 
 function Find() {
 	const [ toggled, setToggled ] = useState('nothing');
@@ -91,6 +91,9 @@ function Find() {
 
 	return (
 		<React.Fragment>
+			<Helmet>
+				<title>{`Find Songs - Ascoldata`}</title>
+			</Helmet>
 			<HeaderBar />
 			<div id="corporum" className="find-content">
 				<section className="content-section">

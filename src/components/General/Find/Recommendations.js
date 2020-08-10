@@ -15,6 +15,7 @@ import SideToggle from '../../SideToggle';
 import TrackCards from '../Track/TrackCards';
 import HeaderBar from '../../HeaderBar';
 import LoadingSpinner from '../../LoadingSpinner';
+import { Helmet } from 'react-helmet';
 
 const spotifyWebApi = new Spotify();
 
@@ -84,6 +85,9 @@ function Recommendations() {
 
 	return (
 		<React.Fragment>
+			<Helmet>
+				<title>{`Song Recommendations - Ascoldata`}</title>
+			</Helmet>
 			<HeaderBar />
 			<div id="corporum">
 				<section className="content-section">
