@@ -27,6 +27,7 @@ function Artist() {
 	const [ authToken, setAuthToken ] = useState(localStorage.getItem('authToken'));
 	const [ artistName, setArtistName ] = useState('');
 	const [ artistLink, setArtistLink ] = useState('');
+	const [ artistUri, setArtistUri ] = useState('');
 	const [ artistImage, setArtistImage ] = useState('');
 	const [ artistFollowers, setArtistFollowers ] = useState('');
 	const [ artistGenres, setArtistGenres ] = useState('');
@@ -42,6 +43,7 @@ function Artist() {
 				function(data) {
 					setArtistName(data.name);
 					setArtistLink(data.external_urls.spotify);
+					setArtistUri(data.uri);
 					setArtistImage(data.images.length === 0 ? '' : data.images[0].url);
 					setArtistFollowers(data.followers.total);
 					setArtistGenres(data.genres);
@@ -145,9 +147,17 @@ function Artist() {
 							<Textfit className="artist-title" mode="single" max={36}>
 								· {artistName} ·
 							</Textfit>
-							<a href={artistLink} target="_blank">
-								<FaSpotify className="title-icon-link heartbeat" />
-							</a>
+
+							<iframe
+								src={`https://open.spotify.com/follow/1/?uri=${artistUri}&size=basic&theme=light&show-count=0`}
+								width="95"
+								height="25"
+								scrolling="no"
+								frameBorder="0"
+								className="title-icon-link"
+								style={{ border: 'none', overflow: 'hidden' }}
+								allowtransparency="true"
+							/>
 
 							<div id="artist-info">
 								<div id="image">

@@ -250,7 +250,7 @@ function Track() {
 								<iframe
 									src={`https://embed.spotify.com/?uri=${albumUri}&view=list&theme=black`}
 									width="100%"
-									height="80%"
+									height="90%"
 									frameBorder="0"
 									allowtransparency="true"
 									allow="encrypted-media"

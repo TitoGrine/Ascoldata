@@ -17,6 +17,14 @@
 	gap: 1.5em;
 }
 
+#artist-info #image {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	gap: 0.5em;
+}
+
 #artist-info #image > img {
 	width: 150px;
 	height: 150px;
