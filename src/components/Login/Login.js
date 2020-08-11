@@ -13,6 +13,10 @@ class Login extends Component {
 			localStorage.setItem('authToken', params.access_token);
 			localStorage.setItem('refreshToken', params.refresh_token);
 		}
+
+		this.state = {
+			loginRequested: false
+		};
 	}
 
 	getHashParams() {
@@ -37,14 +41,33 @@ class Login extends Component {
 								className="col d-flex flex-column align-items-center justify-content-center"
 								style={{ height: '100%' }}
 							>
-								<form action={process.env.REACT_APP_FIREBASE_LOGIN_FUNC}>
-									<Button type="submit" size="lg" style={buttonStyle}>
-										<strong>Log in with Spotify {process.env.REACT_APP_TEST}</strong>
-									</Button>
-								</form>
-								<p style={textStyle}>
-									In order to access your data, please log in with your Spotify account.
-								</p>
+								{!this.state.loginRequested && (
+									<React.Fragment>
+										<form
+											action={process.env.REACT_APP_FIREBASE_LOGIN_FUNC}
+											onSubmit={(ev) => {
+												this.setState({
+													loginRequested: true
+												});
+												ev.target.submit();
+											}}
+										>
+											<Button type="submit" size="lg" style={buttonStyle}>
+												<strong>Log in with Spotify</strong>
+											</Button>
+										</form>
+										<p style={textStyle}>
+											<strong>Please log in with your Spotify account.</strong>
+											<br />
+											No data from your Spotify account or activity is collected.
+										</p>
+									</React.Fragment>
+								)}
+								{this.state.loginRequested && (
+									<React.Fragment>
+										<p style={textStyle}>Waiting for Spotify...</p>
+									</React.Fragment>
+								)}
 							</div>
 						</section>
 						<section className="sidebar-section slide-in-right sidebar-nothing" />
@@ -59,7 +82,9 @@ class Login extends Component {
 
 const textStyle = {
 	padding: '1.2em 0.5em',
-	fontWeight: '300'
+	fontWeight: '400',
+	fontSize: '1.3em',
+	textAlign: 'center'
 };
 
 const buttonStyle = {

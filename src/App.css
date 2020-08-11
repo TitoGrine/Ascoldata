@@ -274,6 +274,45 @@ a.inner-link {
 	box-shadow: 8px 8px 20px -5px rgba(25, 20, 20, 0.8);
 }
 
+.confirmation-modal .modal-content {
+	background-color: #191414;
+	padding: 0.4em;
+
+	-webkit-box-shadow: 0px 0px 28px 10px rgba(29, 185, 84, 0.4);
+	-moz-box-shadow: 0px 0px 28px 10px rgba(29, 185, 84, 0.4);
+	box-shadow: 0px 0px 28px 10px rgba(29, 185, 84, 0.4);
+}
+
+.confirmation-modal .modal-header,
+.confirmation-modal .modal-footer {
+	border: 0;
+}
+
+.confirmation-modal .modal-header button {
+	color: #1db954;
+	text-shadow: none;
+	font-size: 1.8rem;
+}
+
+.confirmation-modal .modal-footer button {
+	text-decoration: none;
+	font-size: 1rem;
+	font-weight: 500;
+	border-width: 0;
+	border-radius: 5px;
+	width: 25%;
+}
+
+.confirmation-modal .modal-footer button.btn-primary {
+	color: #191414;
+	background-color: #1db954;
+}
+
+.confirmation-modal .modal-footer button.btn-secondary {
+	color: #1db954;
+	background-color: rgb(250, 235, 215, 0.1);
+}
+
 /* Tooltips */
 
 .tooltip.top > .tooltip-arrow,

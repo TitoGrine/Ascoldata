@@ -161,7 +161,7 @@ function GeneralInfo() {
 									</li>
 									{displayTrack.length !== 0 && (
 										<li className="played_song">
-											<strong>Last Played Song:</strong>
+											<strong>Last Played:</strong>
 											<iframe
 												src={`https://embed.spotify.com/?uri=${displayTrack}&view=list&theme=black`}
 												width="350"
