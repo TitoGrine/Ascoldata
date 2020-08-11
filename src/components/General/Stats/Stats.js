@@ -30,9 +30,9 @@ function Stats() {
 
 	const { promiseInProgress } = usePromiseTracker();
 
-	const calcUserStats = (results, avgPopularity) => {
+	const calcUserStats = (tracks, avgPopularity) => {
 		trackPromise(
-			spotifyWebApi.getAudioFeaturesForTracks(results).then(
+			spotifyWebApi.getAudioFeaturesForTracks(tracks).then(
 				function(data) {
 					//console.log(data.audio_features);
 
@@ -98,8 +98,6 @@ function Stats() {
 							}, 0) / data.items.length;
 
 						calcUserStats(tracks, avgPopularity);
-
-						localStorage.setItem('track_seeds', tracks.slice(0, 5));
 					},
 					function(err) {
 						console.log(err);
@@ -119,6 +117,7 @@ function Stats() {
 	useEffect(
 		() => {
 			if (authToken) {
+				spotifyWebApi.setAccessToken(authToken);
 				getData();
 			}
 		},
