@@ -5,6 +5,7 @@ import { Textfit } from 'react-textfit';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { FaSpotify } from 'react-icons/fa';
 import { trackPromise, usePromiseTracker } from 'react-promise-tracker';
+import { getSong } from 'genius-lyrics-api';
 
 import { refreshToken } from '../../Auth/Auth';
 import { keyBinds } from '../../HelperFunc';
@@ -32,6 +33,8 @@ function Track() {
 	const [ trackDuration, setTrackDuration ] = useState('');
 	const [ trackPopularity, setTrackPopularity ] = useState('');
 
+	const [ geniusLink, setGeniusLink ] = useState('');
+
 	const [ trackStats, setTrackStats ] = useState({});
 
 	const { promiseInProgress } = usePromiseTracker();
@@ -53,6 +56,8 @@ function Track() {
 					setTrackArtists(data.artists);
 					setTrackDuration(data.duration_ms);
 					setTrackPopularity(data.popularity);
+
+					// if (geniusLink.length === 0) getGeniusLink();
 				},
 				function(err) {
 					console.log(err);
@@ -91,6 +96,24 @@ function Track() {
 			)
 		);
 	};
+
+	// const getGeniusLink = async () => {
+	// 	const options = {
+	// 		apiKey: process.env.REACT_APP_GENIUS_TOKEN,
+	// 		title: trackName,
+	// 		artist: '',
+	// 		optimizeQuery: true
+	// 	};
+
+	// 	getSong(options).then(
+	// 		function(song) {
+	// 			console.log(song);
+	// 		},
+	// 		function(err) {
+	// 			console.log(err);
+	// 		}
+	// 	);
+	// };
 
 	const getData = async () => {
 		getTrackMetaData();

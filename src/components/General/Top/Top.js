@@ -18,6 +18,7 @@ import ArtistCards from '../Artist/ArtistCards';
 import HeaderBar from '../../HeaderBar';
 import LoadingSpinner from '../../LoadingSpinner';
 import { Helmet } from 'react-helmet';
+import RadioInput from '../../RadioInput';
 
 const spotifyWebApi = new Spotify();
 
@@ -175,71 +176,51 @@ function Top() {
 								<form>
 									<p> View top: </p>
 									<div className="type-labels">
-										<label>
-											<input
-												id="track"
-												type="radio"
-												name="radios"
-												value="track"
-												checked={topType.localeCompare('track') === 0}
-												onChange={updateTopType}
-											/>
-											<span className="checkmark" />
-											Tracks
-										</label>
-										<label>
-											<input
-												id="artist"
-												type="radio"
-												name="radios"
-												value="artist"
-												checked={topType.localeCompare('artist') === 0}
-												onChange={updateTopType}
-											/>
-											<span className="checkmark" />
-											Artists
-										</label>
+										<RadioInput
+											id="track"
+											value="track"
+											name="type"
+											checked={topType.localeCompare('track') === 0}
+											onChange={updateTopType}
+											title="Track"
+										/>
+										<RadioInput
+											id="artist"
+											value="artist"
+											name="type"
+											checked={topType.localeCompare('artist') === 0}
+											onChange={updateTopType}
+											title="Artist"
+										/>
 									</div>
 								</form>
 								<form>
 									<p> Select a time range: </p>
 									<div className="time-labels">
-										<label>
-											<input
-												id="short_term"
-												type="radio"
-												name="radios"
-												value="short_term"
-												checked={timeRange.localeCompare('short_term') === 0}
-												onChange={updateTimeRange}
-											/>
-											<span className="checkmark" />
-											Short Term
-										</label>
-										<label>
-											<input
-												id="medium_term"
-												type="radio"
-												name="radios"
-												value="medium_term"
-												checked={timeRange.localeCompare('medium_term') === 0}
-												onChange={updateTimeRange}
-											/>
-											<span className="checkmark" />
-											Medium Term
-										</label>
-										<label>
-											<input
-												id="long_term"
-												type="radio"
-												name="radios"
-												value="long_term"
-												checked={timeRange.localeCompare('long_term') === 0}
-												onChange={updateTimeRange}
-											/>
-											<span className="checkmark" />
-											Long Term
-										</label>
+										<RadioInput
+											id="short_term"
+											value="short_term"
+											name="time_range"
+											checked={timeRange.localeCompare('short_term') === 0}
+											onChange={updateTimeRange}
+											title="Short Term"
+										/>
+										<RadioInput
+											id="medium_term"
+											value="medium_term"
+											name="time_range"
+											checked={timeRange.localeCompare('medium_term') === 0}
+											onChange={updateTimeRange}
+											title="Medium Term"
+										/>
+										<RadioInput
+											id="long_term"
+											value="long_term"
+											name="time_range"
+											checked={timeRange.localeCompare('long_term') === 0}
+											onChange={updateTimeRange}
+											title="Long Term"
+										/>
 									</div>
 								</form>
 							</div>

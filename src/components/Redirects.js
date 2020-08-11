@@ -17,7 +17,7 @@ function Redirects(props) {
 				)}
 				{props.exclude !== 'statistics' && (
 					<li>
-						<Link to="/stats">Your Statistics</Link>
+						<Link to={`/stats?time_range=short_term`}>Your Statistics</Link>
 					</li>
 				)}
 				{props.exclude !== 'liked' && (

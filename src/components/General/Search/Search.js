@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './Search.css';
 import { GrSearch } from 'react-icons/gr';
+import RadioInput from '../../RadioInput';
 
 function Search() {
 	const [ searchType, setSearchType ] = useState('album');
@@ -21,54 +22,38 @@ function Search() {
 				</div>
 				<p> Looking for: </p>
 				<div className="query-type-labels">
-					<label>
-						<input
-							id="album"
-							type="radio"
-							name="type"
-							value="album"
-							checked={searchType.localeCompare('album') === 0}
-							onChange={updateSearch}
-						/>
-						<span className="checkmark" />
-						Albums
-					</label>
-					<label>
-						<input
-							id="artist"
-							type="radio"
-							name="type"
-							value="artist"
-							checked={searchType.localeCompare('artist') === 0}
-							onChange={updateSearch}
-						/>
-						<span className="checkmark" />
-						Artists
-					</label>
-					<label>
-						<input
-							id="playlist"
-							type="radio"
-							name="type"
-							value="playlist"
-							checked={searchType.localeCompare('playlist') === 0}
-							onChange={updateSearch}
-						/>
-						<span className="checkmark" />
-						Playlists
-					</label>
-					<label>
-						<input
-							id="track"
-							type="radio"
-							name="type"
-							value="track"
-							checked={searchType.localeCompare('track') === 0}
-							onChange={updateSearch}
-						/>
-						<span className="checkmark" />
-						Songs
-					</label>
+					<RadioInput
+						id="album"
+						value="album"
+						name="type"
+						checked={searchType.localeCompare('album') === 0}
+						onChange={updateSearch}
+						title="Albums"
+					/>
+					<RadioInput
+						id="artist"
+						value="artist"
+						name="type"
+						checked={searchType.localeCompare('artist') === 0}
+						onChange={updateSearch}
+						title="Artists"
+					/>
+					<RadioInput
+						id="playlist"
+						value="playlist"
+						name="type"
+						checked={searchType.localeCompare('playlist') === 0}
+						onChange={updateSearch}
+						title="Playlists"
+					/>
+					<RadioInput
+						id="track"
+						value="track"
+						name="type"
+						checked={searchType.localeCompare('track') === 0}
+						onChange={updateSearch}
+						title="Songs"
+					/>
 				</div>
 				<input type="number" name="page" value={1} style={{ display: 'none' }} readOnly />
 			</form>

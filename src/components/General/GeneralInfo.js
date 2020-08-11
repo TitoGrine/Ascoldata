@@ -30,60 +30,13 @@ function GeneralInfo() {
 	const [ product, setProduct ] = useState('');
 	const [ link, setLink ] = useState('');
 	const [ uri, setURI ] = useState('');
-	const [ calcStats, setCalcStats ] = useState(false);
 
 	const { promiseInProgress } = usePromiseTracker();
 
-	const calcUserStats = (results, avgPopularity) => {
-		spotifyWebApi.getAudioFeaturesForTracks(results).then(
-			function(data) {
-				//console.log(data.audio_features);
-
-				const avgStats = {
-					acousticness: 0,
-					danceability: 0,
-					duration_ms: 0,
-					energy: 0,
-					instrumentalness: 0,
-					liveness: 0,
-					loudness: 0,
-					mode: 0,
-					speechiness: 0,
-					tempo: 0,
-					valence: 0,
-					popularity: avgPopularity
-				};
-
-				data.audio_features.forEach((track_info) => {
-					avgStats.acousticness += 2 * track_info.acousticness;
-					avgStats.danceability += 2 * track_info.danceability;
-					avgStats.duration_ms += track_info.duration_ms / 50;
-					avgStats.energy += 2 * track_info.energy;
-					avgStats.instrumentalness += 2 * track_info.instrumentalness;
-					avgStats.liveness += 2 * track_info.liveness;
-					avgStats.loudness += track_info.loudness / 50;
-					avgStats.mode += track_info.mode;
-					avgStats.speechiness += 2 * track_info.speechiness;
-					avgStats.tempo += track_info.tempo / 50;
-					avgStats.valence += 2 * track_info.valence;
-				});
-
-				setCalcStats(true);
-
-				localStorage.setItem('userStats', JSON.stringify(avgStats));
-
-				//console.log(avgStats);
-			},
-			function(err) {
-				console.log(err);
-			}
-		);
-	};
-
-	const getUserStats = () => {
+	const getUserSeeds = async () => {
 		spotifyWebApi
 			.getMyTopTracks({
-				limit: 50,
+				limit: 5,
 				offset: 0,
 				time_range: 'short_term'
 			})
@@ -93,52 +46,51 @@ function GeneralInfo() {
 						return track.id;
 					});
 
-					let avgPopularity =
-						data.items.reduce((total, track) => {
-							return total + track.popularity;
-						}, 0) / data.items.length;
-
-					calcUserStats(tracks, avgPopularity);
-
-					localStorage.setItem('track_seeds', tracks.slice(0, 5));
+					localStorage.setItem('track_seeds', tracks);
 				},
 				function(err) {
 					console.log(err);
+
+					if (err.status === 401) refreshToken((new_token) => setAuthToken(new_token));
 				}
 			);
+	};
+
+	const getData = async () => {
+		spotifyWebApi.setAccessToken(authToken);
+
+		trackPromise(
+			spotifyWebApi.getMe().then(
+				function(data) {
+					//console.log(data);
+
+					setUser(data.display_name);
+					setImage(data.images.length === 0 ? '' : data.images[0].url);
+					setId(data.id);
+					setEmail(data.email);
+					setCountry(getCountryFromISOCode(data.country));
+					setFollowers(data.followers.total);
+					setProduct(data.product);
+					setLink(data.external_urls.spotify);
+					setURI(data.uri);
+
+					localStorage.setItem('country', data.country);
+
+					getUserSeeds();
+				},
+				function(err) {
+					console.log(err);
+
+					if (err.status === 401) refreshToken((new_token) => setAuthToken(new_token));
+				}
+			)
+		);
 	};
 
 	useEffect(
 		() => {
 			if (authToken) {
-				spotifyWebApi.setAccessToken(authToken);
-
-				if (!calcStats) getUserStats();
-
-				trackPromise(
-					spotifyWebApi.getMe().then(
-						function(data) {
-							//console.log(data);
-
-							setUser(data.display_name);
-							setImage(data.images.length === 0 ? '' : data.images[0].url);
-							setId(data.id);
-							setEmail(data.email);
-							setCountry(getCountryFromISOCode(data.country));
-							setFollowers(data.followers.total);
-							setProduct(data.product);
-							setLink(data.external_urls.spotify);
-							setURI(data.uri);
-
-							localStorage.setItem('country', data.country);
-						},
-						function(err) {
-							console.log(err);
-
-							if (err.status === 401) refreshToken((new_token) => setAuthToken(new_token));
-						}
-					)
-				);
+				getData();
 			}
 		},
 		[ authToken ]

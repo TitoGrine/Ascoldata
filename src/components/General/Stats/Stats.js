@@ -1,7 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+import { trackPromise, usePromiseTracker } from 'react-promise-tracker';
+import { useLocation, useHistory } from 'react-router-dom';
+import Spotify from 'spotify-web-api-js';
 
 import { formatDuration } from '../../HelperFunc';
+import { refreshToken } from '../../Auth/Auth';
 
 import Redirects from '../../Redirects';
 import StatCard from './StatCard';
@@ -10,10 +14,116 @@ import Search from '../Search/Search';
 import SideToggle from '../../SideToggle';
 import HeaderBar from '../../HeaderBar';
 import { Helmet } from 'react-helmet';
+import LoadingSpinner from '../../LoadingSpinner';
+import RadioInput from '../../RadioInput';
+
+const spotifyWebApi = new Spotify();
 
 function Stats() {
-	const stats = JSON.parse(localStorage.getItem('userStats'));
+	const query = new URLSearchParams(useLocation().search);
+	const history = useHistory();
+
 	const [ toggled, setToggled ] = useState('nothing');
+	const [ authToken, setAuthToken ] = useState(localStorage.getItem('authToken'));
+	const [ stats, setStats ] = useState('');
+	const [ timeRange, setTimeRange ] = useState(query.get('time_range'));
+
+	const { promiseInProgress } = usePromiseTracker();
+
+	const calcUserStats = (results, avgPopularity) => {
+		trackPromise(
+			spotifyWebApi.getAudioFeaturesForTracks(results).then(
+				function(data) {
+					//console.log(data.audio_features);
+
+					const avgStats = {
+						acousticness: 0,
+						danceability: 0,
+						duration_ms: 0,
+						energy: 0,
+						instrumentalness: 0,
+						liveness: 0,
+						loudness: 0,
+						mode: 0,
+						speechiness: 0,
+						tempo: 0,
+						valence: 0,
+						popularity: avgPopularity
+					};
+
+					data.audio_features.forEach((track_info) => {
+						avgStats.acousticness += 2 * track_info.acousticness;
+						avgStats.danceability += 2 * track_info.danceability;
+						avgStats.duration_ms += track_info.duration_ms / 50;
+						avgStats.energy += 2 * track_info.energy;
+						avgStats.instrumentalness += 2 * track_info.instrumentalness;
+						avgStats.liveness += 2 * track_info.liveness;
+						avgStats.loudness += track_info.loudness / 50;
+						avgStats.mode += track_info.mode;
+						avgStats.speechiness += 2 * track_info.speechiness;
+						avgStats.tempo += track_info.tempo / 50;
+						avgStats.valence += 2 * track_info.valence;
+					});
+
+					setStats(avgStats);
+
+					//console.log(avgStats);
+				},
+				function(err) {
+					console.log(err);
+
+					if (err.status === 401) refreshToken((new_token) => setAuthToken(new_token));
+				}
+			)
+		);
+	};
+
+	const getData = () => {
+		trackPromise(
+			spotifyWebApi
+				.getMyTopTracks({
+					limit: 50,
+					offset: 0,
+					time_range: timeRange
+				})
+				.then(
+					function(data) {
+						let tracks = data.items.map((track) => {
+							return track.id;
+						});
+
+						let avgPopularity =
+							data.items.reduce((total, track) => {
+								return total + track.popularity;
+							}, 0) / data.items.length;
+
+						calcUserStats(tracks, avgPopularity);
+
+						localStorage.setItem('track_seeds', tracks.slice(0, 5));
+					},
+					function(err) {
+						console.log(err);
+
+						if (err.status === 401) refreshToken((new_token) => setAuthToken(new_token));
+					}
+				)
+		);
+	};
+
+	const updateTimeRange = (ev) => {
+		setStats([]);
+		history.push(`/stats?time_range=${ev.target.value}`);
+		setTimeRange(ev.target.value);
+	};
+
+	useEffect(
+		() => {
+			if (authToken) {
+				getData();
+			}
+		},
+		[ authToken, timeRange ]
+	);
 
 	return (
 		<React.Fragment>
@@ -23,79 +133,128 @@ function Stats() {
 			<HeaderBar />
 			<div id="corporum">
 				<section className="content-section">
-					<Textfit className="title" mode="single" max={35}>
-						· Your Statistics ·
-					</Textfit>
-					<div id="misc-info">
-						<StatCard
-							barStat={false}
-							title="Average song duration"
-							value={formatDuration(stats.duration_ms)}
-							units=""
-						/>
-						<StatCard
-							barStat={false}
-							title="Average loudness"
-							value={Math.round(stats.loudness)}
-							units="dB"
-						/>
-						<StatCard barStat={false} title="Average tempo" value={Math.round(stats.tempo)} units="bpm" />
-						<StatCard barStat={false} title="Popularity" value={Math.round(stats.popularity)} units="" />
-					</div>
-					<div id="stats">
-						<StatCard
-							barStat={true}
-							title="Acousticness"
-							percentage={stats.acousticness}
-							explanation="acoustExplanation"
-							color="seagreen"
-						/>
-						<StatCard
-							barStat={true}
-							title="Danceability"
-							percentage={stats.danceability}
-							explanation="danceExplanation"
-							color="violet"
-						/>
-						<StatCard
-							barStat={true}
-							title="Energy"
-							percentage={stats.energy}
-							explanation="energyExplanation"
-							color="orangered"
-						/>
-						<StatCard
-							barStat={true}
-							title="Instrumentalness"
-							percentage={stats.instrumentalness}
-							explanation="instrumExplanation"
-							color="limegreen"
-						/>
-						<StatCard
-							barStat={true}
-							title="Liveness"
-							percentage={stats.liveness}
-							explanation="liveExplanation"
-							color="deepskyblue"
-						/>
-						<StatCard
-							barStat={true}
-							title="Valence"
-							percentage={stats.valence}
-							explanation="valExplanation"
-							color="orange"
-						/>
-						<div id="mobile-separator" />
-					</div>
+					<LoadingSpinner />
+					{!promiseInProgress && (
+						<React.Fragment>
+							<Textfit className="title" mode="single" max={35}>
+								· Your Statistics ·
+							</Textfit>
+							<div id="misc-info">
+								<StatCard
+									barStat={false}
+									title="Average song duration"
+									value={formatDuration(stats.duration_ms)}
+									units=""
+								/>
+								<StatCard
+									barStat={false}
+									title="Average loudness"
+									value={Math.round(stats.loudness)}
+									units="dB"
+								/>
+								<StatCard
+									barStat={false}
+									title="Average tempo"
+									value={Math.round(stats.tempo)}
+									units="bpm"
+								/>
+								<StatCard
+									barStat={false}
+									title="Popularity"
+									value={Math.round(stats.popularity)}
+									units=""
+								/>
+							</div>
+							<div id="stats">
+								<StatCard
+									barStat={true}
+									title="Acousticness"
+									percentage={stats.acousticness}
+									explanation="acoustExplanation"
+									color="seagreen"
+								/>
+								<StatCard
+									barStat={true}
+									title="Danceability"
+									percentage={stats.danceability}
+									explanation="danceExplanation"
+									color="violet"
+								/>
+								<StatCard
+									barStat={true}
+									title="Energy"
+									percentage={stats.energy}
+									explanation="energyExplanation"
+									color="orangered"
+								/>
+								<StatCard
+									barStat={true}
+									title="Instrumentalness"
+									percentage={stats.instrumentalness}
+									explanation="instrumExplanation"
+									color="limegreen"
+								/>
+								<StatCard
+									barStat={true}
+									title="Liveness"
+									percentage={stats.liveness}
+									explanation="liveExplanation"
+									color="deepskyblue"
+								/>
+								<StatCard
+									barStat={true}
+									title="Valence"
+									percentage={stats.valence}
+									explanation="valExplanation"
+									color="orange"
+								/>
+								<div id="mobile-separator" />
+							</div>
+						</React.Fragment>
+					)}
 				</section>
 				<section className={`sidebar-section slide-in-right sidebar-${toggled}`} />
 				<div className={`side-content slide-in-right sidebar-${toggled}`}>
 					<Tabs>
 						<TabList>
+							<Tab>Settings</Tab>
 							<Tab>Search</Tab>
 							<Tab>Go to</Tab>
 						</TabList>
 
+						<TabPanel>
+							<div className="settings">
+								<form>
+									<p> Select a time range: </p>
+									<div className="time-labels">
+										<RadioInput
+											id="short_term"
+											value="short_term"
+											name="time_range"
+											checked={timeRange.localeCompare('short_term') === 0}
+											onChange={updateTimeRange}
+											title="Short Term"
+										/>
+										<RadioInput
+											id="medium_term"
+											value="medium_term"
+											name="time_range"
+											checked={timeRange.localeCompare('medium_term') === 0}
+											onChange={updateTimeRange}
+											title="Medium Term"
+										/>
+										<RadioInput
+											id="long_term"
+											value="long_term"
+											name="time_range"
+											checked={timeRange.localeCompare('long_term') === 0}
+											onChange={updateTimeRange}
+											title="Long Term"
+										/>
+									</div>
+								</form>
+							</div>
+						</TabPanel>
 						<TabPanel>
 							<Search />
 						</TabPanel>
