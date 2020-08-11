@@ -31,7 +31,7 @@ function Find() {
 	const history = useHistory();
 
 	const submitForm = async (ev) => {
-		let link = `/recommendations?page=${1}`;
+		let link = `/recommendations?`;
 
 		if (key !== 0) link += `&key=${key}`;
 		if (mode !== -1) link += `&mode=${mode}`;

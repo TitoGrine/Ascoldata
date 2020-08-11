@@ -32,6 +32,10 @@ function Recommendations() {
 
 	const { promiseInProgress } = usePromiseTracker();
 
+	const getKey = () => {
+		let key = {};
+	};
+
 	const getParameters = () => {
 		let defaultParameters = {
 			limit: limit,
@@ -64,6 +68,13 @@ function Recommendations() {
 					// console.log(data);
 					setRecommendations(data.tracks);
 					localStorage.setItem('track_seeds', data.seeds.map((seed) => seed.id));
+
+					const recommendations = {
+						query: query.toString(),
+						results: data.tracks
+					};
+
+					localStorage.setItem('recommendations', JSON.stringify(recommendations));
 				},
 				function(err) {
 					console.log(err);
@@ -77,6 +88,13 @@ function Recommendations() {
 	useEffect(
 		() => {
 			if (authToken) {
+				let prev_recommendations = JSON.parse(localStorage.getItem('recommendations'));
+
+				if (!query.toString().localeCompare(prev_recommendations.query)) {
+					setRecommendations(prev_recommendations.results);
+					return;
+				}
+
 				getData();
 			}
 		},
@@ -89,7 +107,7 @@ function Recommendations() {
 				<title>{`Song Recommendations - Ascoldata`}</title>
 			</Helmet>
 			<HeaderBar />
-			<div id="corporum">
+			<div id="corporum" className="recommendation-content">
 				<section className="content-section">
 					<LoadingSpinner />
 					{!promiseInProgress &&
@@ -99,6 +117,9 @@ function Recommendations() {
 						) : (
 							<TrackTable results={recommendations} />
 						))}
+					<button className="find-button" onClick={getData}>
+						Refresh
+					</button>
 				</section>
 				<section className={`sidebar-section slide-in-right sidebar-${toggled}`} />
 				<div className={`side-content slide-in-right sidebar-${toggled}`}>

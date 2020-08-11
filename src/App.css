@@ -241,14 +241,6 @@ a.inner-link {
 	color: #1db954;
 }
 
-.title-follow-button {
-	position: absolute;
-	font-size: 30px;
-	right: 100px;
-	top: 18px;
-	color: #1db954;
-}
-
 .side-toggle {
 	z-index: 50;
 	position: fixed;

@@ -5,6 +5,12 @@
 	gap: 2em;
 }
 
+.recommendation-content > section.content-section {
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: center;
+}
+
 #attribute-inputs {
 	width: 100%;
 	display: flex;
