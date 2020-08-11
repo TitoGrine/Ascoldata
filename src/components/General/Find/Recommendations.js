@@ -109,6 +109,9 @@ function Recommendations() {
 			<HeaderBar />
 			<div id="corporum" className="recommendation-content">
 				<section className="content-section">
+					<button className="find-button" onClick={getData}>
+						Refresh
+					</button>
 					<LoadingSpinner />
 					{!promiseInProgress &&
 						recommendations.length > 0 &&
@@ -117,9 +120,6 @@ function Recommendations() {
 						) : (
 							<TrackTable results={recommendations} />
 						))}
-					<button className="find-button" onClick={getData}>
-						Refresh
-					</button>
 				</section>
 				<section className={`sidebar-section slide-in-right sidebar-${toggled}`} />
 				<div className={`side-content slide-in-right sidebar-${toggled}`}>
