@@ -28,6 +28,7 @@ function Track() {
 	const [ authToken, setAuthToken ] = useState(localStorage.getItem('authToken'));
 	const [ albumName, setAlbumName ] = useState('');
 	const [ albumLink, setAlbumLink ] = useState('');
+	const [ albumUri, setAlbumUri ] = useState('');
 	const [ albumImage, setAlbumImage ] = useState('');
 	const [ albumLabel, setAlbumLabel ] = useState('');
 	const [ albumArtists, setAlbumArtists ] = useState('');
@@ -49,6 +50,7 @@ function Track() {
 
 					setAlbumName(data.name);
 					setAlbumLink(data.external_urls.spotify);
+					setAlbumUri(data.uri);
 					setAlbumImage(data.images.length === 0 ? '' : data.images[0].url);
 					setAlbumLabel(data.label);
 					setAlbumArtists(data.artists);
@@ -236,10 +238,25 @@ function Track() {
 				<div className={`side-content slide-in-right sidebar-${toggled}`}>
 					<Tabs>
 						<TabList>
+							<Tab>Preview</Tab>
+
 							<Tab>Search</Tab>
 							<Tab>Go to</Tab>
 						</TabList>
 
+						<TabPanel className="preview_tab">
+							<LoadingSpinner />
+							{!promiseInProgress && (
+								<iframe
+									src={`https://embed.spotify.com/?uri=${albumUri}&view=list&theme=black`}
+									width="100%"
+									height="80%"
+									frameBorder="0"
+									allowtransparency="true"
+									allow="encrypted-media"
+								/>
+							)}
+						</TabPanel>
 						<TabPanel>
 							<Search />
 						</TabPanel>

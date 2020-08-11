@@ -27,6 +27,7 @@ function Track() {
 	const [ toggled, setToggled ] = useState('nothing');
 	const [ authToken, setAuthToken ] = useState(localStorage.getItem('authToken'));
 	const [ trackLink, setTrackLink ] = useState('');
+	const [ trackUri, setTrackUri ] = useState('');
 	const [ trackName, setTrackName ] = useState('');
 	const [ trackAlbum, setTrackAlbum ] = useState('');
 	const [ trackArtists, setTrackArtists ] = useState('');
@@ -52,6 +53,7 @@ function Track() {
 				function(data) {
 					setTrackName(data.name);
 					setTrackLink(data.external_urls.spotify);
+					setTrackUri(data.uri);
 					setTrackAlbum(data.album);
 					setTrackArtists(data.artists);
 					setTrackDuration(data.duration_ms);
@@ -253,10 +255,24 @@ function Track() {
 				<div className={`side-content slide-in-right sidebar-${toggled}`}>
 					<Tabs>
 						<TabList>
+							<Tab>Preview</Tab>
 							<Tab>Search</Tab>
 							<Tab>Go to</Tab>
 						</TabList>
 
+						<TabPanel className="preview_tab">
+							<LoadingSpinner />
+							{!promiseInProgress && (
+								<iframe
+									src={`https://embed.spotify.com/?uri=${trackUri}&view=list&theme=black`}
+									width="100%"
+									height="80%"
+									frameBorder="0"
+									allowtransparency="true"
+									allow="encrypted-media"
+								/>
+							)}
+						</TabPanel>
 						<TabPanel>
 							<Search />
 						</TabPanel>

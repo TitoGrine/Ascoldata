@@ -35,7 +35,7 @@
 
 #info #image img {
 	margin: auto;
-	width: clamp(100px, 100%, 200px);
+	width: clamp(150px, 100%, 200px);
 	box-sizing: border-box;
 }
 
@@ -50,7 +50,7 @@
 	flex: 1 1 auto;
 	display: flex;
 	flex-direction: column;
-	gap: 1em;
+	gap: 1.5em;
 }
 
 #info li {
@@ -65,4 +65,13 @@
 
 #info li strong {
 	font-weight: 500;
+}
+
+#info li.played_song {
+	list-style-type: none;
+	font-size: 1.1em;
+	font-weight: 300;
+	display: flex;
+	flex-direction: column;
+	gap: 1em;
 }

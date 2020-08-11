@@ -198,6 +198,7 @@ div.side-content ul.redirects li a:hover {
 	justify-content: center;
 	list-style-type: none;
 	padding: 0;
+	gap: 0.5em;
 
 	font-size: 1.3em;
 	font-weight: 600;
@@ -208,16 +209,22 @@ div.side-content ul.redirects li a:hover {
 	text-align: center;
 	width: 5em;
 	padding-bottom: 0.2em;
-	animation: focusOut 1s linear forwards;
+	animation: focusOut 0.2s linear forwards;
 }
 
 .react-tabs__tab--selected {
 	border-bottom: 2px solid #191414;
-	animation: focusIn 1s linear forwards;
+	animation: focusIn 0.4s linear forwards;
 }
 
 .react-tabs__tab-panel--selected {
 	flex-basis: 100%;
+}
+
+.react-tabs__tab-panel--selected.preview_tab {
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
 /* MISC */

@@ -22,6 +22,4 @@ export const clearStorage = () => {
 	localStorage.removeItem('refreshToken');
 	localStorage.removeItem('track_seeds');
 	localStorage.removeItem('country');
-	localStorage.removeItem('profile-picture');
-	localStorage.removeItem('userStats');
 };

@@ -30,6 +30,7 @@ function GeneralInfo() {
 	const [ product, setProduct ] = useState('');
 	const [ link, setLink ] = useState('');
 	const [ uri, setURI ] = useState('');
+	const [ displayTrack, setDisplayTrack ] = useState('');
 
 	const { promiseInProgress } = usePromiseTracker();
 
@@ -56,6 +57,30 @@ function GeneralInfo() {
 			);
 	};
 
+	const getLastTrack = () => {
+		spotifyWebApi.getMyCurrentPlayingTrack().then(
+			function(data) {
+				if (data) setDisplayTrack(data.context.uri);
+				else
+					spotifyWebApi
+						.getMyRecentlyPlayedTracks({
+							limit: 1
+						})
+						.then(
+							function(data) {
+								if (data) setDisplayTrack(data.items[0].context.uri);
+							},
+							function(err) {
+								console.log(err);
+							}
+						);
+			},
+			function(err) {
+				console.log(err);
+			}
+		);
+	};
+
 	const getData = async () => {
 		spotifyWebApi.setAccessToken(authToken);
 
@@ -77,6 +102,7 @@ function GeneralInfo() {
 					localStorage.setItem('country', data.country);
 
 					getUserSeeds();
+					getLastTrack();
 				},
 				function(err) {
 					console.log(err);
@@ -133,9 +159,19 @@ function GeneralInfo() {
 									<li>
 										<strong>No. followers:</strong> {followers}
 									</li>
-									<li>
-										<strong>Spotify URI:</strong> {uri}
-									</li>
+									{displayTrack.length !== 0 && (
+										<li className="played_song">
+											<strong>Last Played Song:</strong>
+											<iframe
+												src={`https://embed.spotify.com/?uri=${displayTrack}&view=list&theme=black`}
+												width="350"
+												height="80"
+												frameBorder="0"
+												allowtransparency="true"
+												allow="encrypted-media"
+											/>
+										</li>
+									)}
 								</ul>
 							</div>
 						</div>

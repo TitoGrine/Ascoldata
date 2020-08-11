@@ -5,10 +5,8 @@ import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { MdInfo } from 'react-icons/md';
 
 function StatCard(props) {
-
 	const getExplanation = () => {
-
-		switch(props.explanation){
+		switch (props.explanation) {
 			case 'acoustExplanation':
 				return 'Acousticness measures how acoustic the songs are.';
 			case 'danceExplanation':
@@ -20,11 +18,11 @@ function StatCard(props) {
 			case 'liveExplanation':
 				return 'Liveness predicts the likelyhood the songs are played live, that is, in the presence of an audience.';
 			case 'valExplanation':
-				return 'Valence measures how positive the songs are. High valence means positive songs, while low valence represents more negative songs.';
+				return 'Valence measures how positive the songs are. High valence means positive/happier songs, while low valence represents more negative/sadder songs.';
 			default:
-				return 'No information..';
+				return 'No information...';
 		}
-	}
+	};
 
 	const getCard = () => {
 		if (props.barStat) {
@@ -32,7 +30,7 @@ function StatCard(props) {
 				<div className="stat-card">
 					<p>
 						{props.title}
-						<OverlayTrigger key="top" placement="top" overlay={<Tooltip>{ getExplanation() }</Tooltip>}>
+						<OverlayTrigger key="top" placement="top" overlay={<Tooltip>{getExplanation()}</Tooltip>}>
 							<MdInfo />
 						</OverlayTrigger>
 					</p>
@@ -41,15 +39,16 @@ function StatCard(props) {
 				</div>
 			);
 		} else {
-            return (
-                <div className="stat-card">
-					<p>
-						{props.title}
-					</p>
-					<strong className="stat-value">{props.value}<p>{props.units}</p></strong>
+			return (
+				<div className="stat-card">
+					<p>{props.title}</p>
+					<strong className="stat-value">
+						{props.value}
+						<p>{props.units}</p>
+					</strong>
 				</div>
-            )
-        }
+			);
+		}
 	};
 
 	return <React.Fragment>{getCard()}</React.Fragment>;
