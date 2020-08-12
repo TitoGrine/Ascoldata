@@ -11,6 +11,12 @@ div.title-with-ref {
 #track-info {
 	flex: 0 1 auto;
 	display: flex;
+	flex-direction: column;
+	gap: 1.5em;
+}
+
+#track-info > div {
+	display: flex;
 	justify-content: space-evenly;
 	align-items: center;
 	gap: 1.5em;

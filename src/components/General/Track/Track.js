@@ -151,57 +151,79 @@ function Track() {
 							</a>
 
 							<div id="track-info">
-								<StatCard
-									barStat={false}
-									title="Album"
-									value={
-										<Link
-											key={trackAlbum.id}
-											to={'/album?id=' + trackAlbum.id}
-											className="inner-link"
-										>
-											{trackAlbum.name}
-										</Link>
-									}
-									units=""
-								/>
-								<StatCard
-									barStat={false}
-									title="Artist"
-									value={
-										trackArtists === '' ? (
-											''
-										) : (
-											trackArtists
-												.map((artist) => {
-													return (
-														<Link
-															key={artist.id}
-															to={'/artist?id=' + artist.id}
-															className="inner-link"
-														>
-															{artist.name}
-														</Link>
-													);
-												})
-												.slice(0, 2)
-										)
-									}
-									units=""
-								/>
-								<StatCard
-									barStat={false}
-									title="Duration"
-									value={formatDuration(trackDuration)}
-									units=""
-								/>
-								<StatCard
-									barStat={false}
-									title="Key"
-									value={keyBinds[trackStats.pitchKey + 1]}
-									units=""
-								/>
-								<StatCard barStat={false} title="Popularity" value={trackPopularity} units="" />
+								<div>
+									<StatCard
+										barStat={false}
+										title="Album"
+										value={
+											<Link
+												key={trackAlbum.id}
+												to={'/album?id=' + trackAlbum.id}
+												className="inner-link"
+											>
+												{trackAlbum.name}
+											</Link>
+										}
+										units=""
+									/>
+									<StatCard
+										barStat={false}
+										title="Artist"
+										value={
+											trackArtists === '' ? (
+												''
+											) : (
+												trackArtists
+													.map((artist) => {
+														return (
+															<Link
+																key={artist.id}
+																to={'/artist?id=' + artist.id}
+																className="inner-link"
+															>
+																{artist.name}
+															</Link>
+														);
+													})
+													.slice(0, 2)
+											)
+										}
+										units=""
+									/>
+									<StatCard
+										barStat={false}
+										title="Duration"
+										value={formatDuration(trackDuration)}
+										units=""
+									/>
+								</div>
+								<div>
+									<StatCard
+										barStat={false}
+										title="Key"
+										value={keyBinds[trackStats.pitchKey + 1]}
+										units=""
+									/>
+									<StatCard
+										barStat={false}
+										title="Mode"
+										value={trackStats.mode ? 'Major' : 'Minor'}
+										units=""
+									/>
+									<StatCard
+										barStat={false}
+										title="Tempo"
+										value={Math.round(trackStats.tempo)}
+										units="bpm"
+									/>
+									<StatCard
+										barStat={false}
+										title="Loudness"
+										value={trackStats.loudness ? trackStats.loudness.toFixed(2) : 0}
+										units="dB"
+									/>
+									<StatCard barStat={false} title="Popularity" value={trackPopularity} units="" />
+								</div>
 							</div>
 							<div id="stats">
 								<StatCard

@@ -207,7 +207,7 @@ div.side-content ul.redirects li a:hover {
 .react-tabs__tab {
 	cursor: pointer;
 	text-align: center;
-	width: 5em;
+	width: 6em;
 	padding-bottom: 0.2em;
 	animation: focusOut 0.2s linear forwards;
 }

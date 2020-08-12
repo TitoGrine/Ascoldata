@@ -17,8 +17,9 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	font-size: 1.2em;
-	gap: 2em;
+	font-size: 1.3em;
+	gap: 4em;
+	margin-top: 1em;
 }
 
 #attribute-inputs div > label {
@@ -58,4 +59,12 @@ button.find-button {
 
 .slider .attribute-disabled {
 	filter: opacity(0.3);
+}
+
+.react-tabs__tab-panel--selected.instructions-tab {
+	font-size: 1.2rem;
+	font-weight: 500;
+	overflow-y: auto;
+	max-height: 55vh;
+	line-height: 2rem;
 }

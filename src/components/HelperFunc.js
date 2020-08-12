@@ -16,6 +16,36 @@ export const formatDuration = (duration_ms) => {
 		: hours + 'h ' + ('00' + minutes % 60).slice(-2) + 'min';
 };
 
+export const getExplanation = (explanation) => {
+	switch (explanation) {
+		case 'acoustExplanation':
+			return 'Acousticness measures how acoustic the songs are.';
+		case 'danceExplanation':
+			return 'Danceability describes how suitable the songs are for dancing based on a combination of musical elements including tempo, rhythm stability, beat strength, and overall regularity.';
+		case 'energyExplanation':
+			return 'Energy represents a perceptual measure of intensity and activity. Typically, energetic songs feel fast, loud, and noisy. Perceptual features contributing to this attribute include dynamic range, perceived loudness, timbre, onset rate, and general entropy.';
+		case 'instrumExplanation':
+			return 'Instrumentalness measures how likely the songs are to not contain vocals.';
+		case 'liveExplanation':
+			return 'Liveness predicts the likelyhood the songs are played live, that is, in the presence of an audience.';
+		case 'valExplanation':
+			return 'Valence measures how positive the songs are. High valence means positive/happier songs, while low valence represents more negative/sadder songs.';
+		case 'speechExplanation':
+			return 'Speechiness detects the presence of spoken words in a track.';
+		case 'popExplanation':
+			return 'A measure of how popular the track is. The algorithm is based mainly by the total number of plays the track has had and how recent those tracks are.';
+		case 'tempoExplanation':
+			return 'The overall estimated tempo of a track in beats per minute (BPM). Tempo is the speed or pace of a given piece and derives directly from the average beat duration.';
+		case 'keyExplanation':
+			return 'The key or pitch class the track is in.';
+		case 'modeExplanation':
+			return 'Mode indicates the modality (major or minor) of a strack, that is, the type of scale from which its melodic content is derived.';
+
+		default:
+			return 'No information...';
+	}
+};
+
 /**
  * Pretty weird but clever way to decode a string with special HTML entities.
  * 

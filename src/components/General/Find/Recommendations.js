@@ -32,10 +32,6 @@ function Recommendations() {
 
 	const { promiseInProgress } = usePromiseTracker();
 
-	const getKey = () => {
-		let key = {};
-	};
-
 	const getParameters = () => {
 		let defaultParameters = {
 			limit: limit,
@@ -43,7 +39,7 @@ function Recommendations() {
 		};
 
 		if (query.get('key')) defaultParameters.target_key = trimLimit(query.get('key'), 0, 13);
-		if (query.get('mode')) defaultParameters.target_mode = Math.round(trimLimit(query.get('mode'), 0, 1));
+		if (query.get('mode')) defaultParameters.target_mode = Math.round(trimLimit(query.get('mode')));
 
 		if (query.get('acousticness')) defaultParameters.target_acousticness = trimLimit(query.get('acousticness'));
 		if (query.get('danceability')) defaultParameters.target_danceability = trimLimit(query.get('danceability'));
@@ -51,7 +47,7 @@ function Recommendations() {
 		if (query.get('instrumentalness'))
 			defaultParameters.target_instrumentalness = trimLimit(query.get('instrumentalness'));
 		if (query.get('liveness')) defaultParameters.target_liveness = trimLimit(query.get('liveness'));
-		if (query.get('loudness')) defaultParameters.target_loudness = trimLimit(query.get('loudness'));
+		if (query.get('tempo')) defaultParameters.target_tempo = trimLimit(query.get('tempo'), 0, 250);
 		if (query.get('popularity')) defaultParameters.target_popularity = trimLimit(query.get('popularity'), 0, 100);
 		if (query.get('speechiness')) defaultParameters.target_speechiness = trimLimit(query.get('speechiness'));
 		if (query.get('valence')) defaultParameters.target_valence = trimLimit(query.get('valence'));
@@ -90,7 +86,7 @@ function Recommendations() {
 			if (authToken) {
 				let prev_recommendations = JSON.parse(localStorage.getItem('recommendations'));
 
-				if (!query.toString().localeCompare(prev_recommendations.query)) {
+				if (prev_recommendations && !query.toString().localeCompare(prev_recommendations.query)) {
 					setRecommendations(prev_recommendations.results);
 					return;
 				}

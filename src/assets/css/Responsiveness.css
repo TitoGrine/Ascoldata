@@ -4,7 +4,6 @@
 	section.content-section {
 		grid-column: 1 / span 10;
 		grid-row: 1 / span 24;
-		/* animation: none; */
 
 		-webkit-animation: slide-in-down 1s cubic-bezier(0.455, 0.030, 0.515, 0.955) both;
 		animation: slide-in-down 1s cubic-bezier(0.455, 0.030, 0.515, 0.955) both;
@@ -95,13 +94,13 @@
 
 	#artist-info,
 	#playlist-info,
-	#track-info,
+	#track-info > div,
 	#album-info,
 	#misc-info {
 		flex-wrap: wrap;
 	}
 
-	#track-info,
+	#track-info > div,
 	#album-info,
 	#album-info #misc-data,
 	#playlist-info #misc-data {
@@ -116,8 +115,8 @@
 		text-align: center;
 	}
 
-	#track-info > .stat-card {
-		flex: 1 1 30%;
+	#track-info > div > .stat-card {
+		flex: 1 1 40%;
 	}
 
 	#stats {

@@ -1,4 +1,7 @@
 import React from 'react';
+import { OverlayTrigger, Tooltip } from 'react-bootstrap';
+
+import { getExplanation } from '../../HelperFunc';
 
 function AttributeSlider(props) {
 	const value = isNaN(props.value) ? '' : props.value;
@@ -32,7 +35,9 @@ function AttributeSlider(props) {
 				/>
 				<span className="toggle" />
 			</label>
-			<label className="slider-name">{props.name}</label>
+			<OverlayTrigger key="top" placement="top" overlay={<Tooltip>{getExplanation(props.explanation)}</Tooltip>}>
+				<label className="slider-name">{props.name}</label>
+			</OverlayTrigger>
 			{renderInput()}
 			<input
 				className={`slider-input attribute-${props.value === -1 ? 'disabled' : 'enabled'}`}

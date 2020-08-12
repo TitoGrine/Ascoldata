@@ -4,33 +4,20 @@ import PercentBar from './PercentBar';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { MdInfo } from 'react-icons/md';
 
-function StatCard(props) {
-	const getExplanation = () => {
-		switch (props.explanation) {
-			case 'acoustExplanation':
-				return 'Acousticness measures how acoustic the songs are.';
-			case 'danceExplanation':
-				return 'Danceability describes how suitable the songs are for dancing based on a combination of musical elements including tempo, rhythm stability, beat strength, and overall regularity.';
-			case 'energyExplanation':
-				return 'Energy represents a perceptual measure of intensity and activity. Typically, energetic songs feel fast, loud, and noisy. Perceptual features contributing to this attribute include dynamic range, perceived loudness, timbre, onset rate, and general entropy.';
-			case 'instrumExplanation':
-				return 'Instrumentalness measures how likely the songs are to not contain vocals.';
-			case 'liveExplanation':
-				return 'Liveness predicts the likelyhood the songs are played live, that is, in the presence of an audience.';
-			case 'valExplanation':
-				return 'Valence measures how positive the songs are. High valence means positive/happier songs, while low valence represents more negative/sadder songs.';
-			default:
-				return 'No information...';
-		}
-	};
+import { getExplanation } from '../../HelperFunc';
 
+function StatCard(props) {
 	const getCard = () => {
 		if (props.barStat) {
 			return (
 				<div className="stat-card">
 					<p>
 						{props.title}
-						<OverlayTrigger key="top" placement="top" overlay={<Tooltip>{getExplanation()}</Tooltip>}>
+						<OverlayTrigger
+							key="top"
+							placement="top"
+							overlay={<Tooltip>{getExplanation(props.explanation)}</Tooltip>}
+						>
 							<MdInfo />
 						</OverlayTrigger>
 					</p>
