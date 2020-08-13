@@ -4,39 +4,30 @@ import { useLocation, useHistory } from 'react-router-dom';
 import Spotify from 'spotify-web-api-js';
 import { useMediaQuery } from 'react-responsive';
 import { trackPromise, usePromiseTracker } from 'react-promise-tracker';
+import { Helmet } from 'react-helmet';
 
-import { refreshToken } from '../../Auth/Auth';
+import { refreshToken } from '../Auth/Auth';
 
-import Redirects from '../../Redirects';
+import Redirects from '../Redirects';
 import TrackTable from '../Track/TrackTable';
 import Pagination from 'react-js-pagination';
-import ArtistTable from '../Artist/ArtistTable';
-import PlaylistTable from '../Playlist/PlaylistTable';
-import Search from './Search';
-import AlbumTable from '../Album/AlbumTable';
-import SideToggle from '../../SideToggle';
+import Search from '../Search/Search';
+import SideToggle from '../SideToggle';
 import TrackCards from '../Track/TrackCards';
-import AlbumCards from '../Album/AlbumCards';
-import ArtistCards from '../Artist/ArtistCards';
-import PlaylistCards from '../Playlist/PlaylistCards';
-import HeaderBar from '../../HeaderBar';
-import LoadingSpinner from '../../LoadingSpinner';
-import { Helmet } from 'react-helmet';
+import HeaderBar from '../HeaderBar';
+import LoadingSpinner from '../LoadingSpinner';
 
 const spotifyWebApi = new Spotify();
 
-function SearchResults() {
+function Liked() {
 	const query = new URLSearchParams(useLocation().search);
 	const history = useHistory();
 	const limit = 12;
 
-	const q = query.get('q');
-	const type = query.get('type');
-
 	const [ toggled, setToggled ] = useState('nothing');
 	const [ authToken, setAuthToken ] = useState(localStorage.getItem('authToken'));
 	const [ page, setPage ] = useState(parseInt(query.get('page')));
-	const [ results, setResults ] = useState([]);
+	const [ userLiked, setUserLiked ] = useState([]);
 	const [ offset, setOffset ] = useState(limit * (page - 1));
 	const [ totalItems, setTotalItems ] = useState(0);
 
@@ -45,20 +36,20 @@ function SearchResults() {
 
 	const { promiseInProgress } = usePromiseTracker();
 
-	const getData = async () => {
+	const getData = () => {
 		spotifyWebApi.setAccessToken(authToken);
 
 		trackPromise(
 			spotifyWebApi
-				.search(q, [ type ], {
+				.getMySavedTracks({
 					limit: limit,
 					offset: offset
 				})
 				.then(
 					function(data) {
-						// console.log(data);
-						setResults(data[`${type}s`].items);
-						setTotalItems(data[`${type}s`].total);
+						//console.log(data);
+						setUserLiked(data.items);
+						setTotalItems(data.total);
 					},
 					function(err) {
 						console.log(err);
@@ -87,38 +78,23 @@ function SearchResults() {
 
 	useEffect(
 		() => {
-			history.push(`/search?q=${q}&type=${type}&page=${page}`);
+			history.push(`/liked?page=${page}`);
 		},
 		[ page ]
 	);
 
-	const renderTable = () => {
-		if (results.length === 0) return;
-
-		switch (type) {
-			case 'artist':
-				return colapseTable ? <ArtistCards results={results} /> : <ArtistTable results={results} />;
-			case 'album':
-				return colapseTable ? <AlbumCards results={results} /> : <AlbumTable results={results} />;
-			case 'playlist':
-				return colapseTable ? <PlaylistCards results={results} /> : <PlaylistTable results={results} />;
-			case 'track':
-				return colapseTable ? <TrackCards results={results} /> : <TrackTable results={results} />;
-			default:
-				return;
-		}
-	};
-
 	return (
 		<React.Fragment>
 			<Helmet>
-				<title>{`${q} - Ascoldata`}</title>
+				<title>{`Your Liked Songs - Ascoldata`}</title>
 			</Helmet>
 			<HeaderBar />
-			<div id="corporum" className="playlists-content">
+			<div id="corporum">
 				<section className="content-section">
 					<LoadingSpinner />
-					{!promiseInProgress && renderTable()}
+					{!promiseInProgress &&
+						userLiked.length > 0 &&
+						(colapseTable ? <TrackCards results={userLiked} /> : <TrackTable results={userLiked} />)}
 					<div className="pagination-divider" />
 					<Pagination
 						activePage={page}
@@ -140,7 +116,7 @@ function SearchResults() {
 							<Search />
 						</TabPanel>
 						<TabPanel>
-							<Redirects exclude="" />
+							<Redirects exclude="liked" />
 						</TabPanel>
 					</Tabs>
 				</div>
@@ -154,4 +130,4 @@ function SearchResults() {
 	);
 }
 
-export default SearchResults;
+export default Liked;

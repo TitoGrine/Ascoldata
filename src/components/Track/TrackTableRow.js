@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import { formatDuration } from '../../HelperFunc';
+import { formatDuration } from '../HelperFunc';
 
 function TrackTableRow(props) {
 	return (

@@ -1,31 +1,34 @@
 import React from 'react';
 import './App.css';
-import './components/General/GeneralInfo.css';
-import './components/General/SelectInputs.css';
-import './components/General/Pagination.css';
-import './components/General/Album/Album.css';
-import './components/General/Artist/Artist.css';
-import './components/General/Find/AttributeSlider.css';
-import './components/General/Find/Find.css';
-import './components/General/Playlist/Playlist.css';
-import './components/General/Stats/Stats.css';
-import './components/General/Top/Top.css';
-import './components/General/Track/Track.css';
+import './assets/css/SelectInputs.css';
+import './assets/css/Pagination.css';
+import './assets/css/GeneralInfo.css';
+import './assets/css/Album.css';
+import './assets/css/Artist.css';
+import './assets/css/AttributeSlider.css';
+import './assets/css/Find.css';
+import './assets/css/Playlist.css';
+import './assets/css/Search.css';
+import './assets/css/StatCard.css';
+import './assets/css/Stats.css';
+import './assets/css/Top.css';
+import './assets/css/Track.css';
+import './assets/css/UserPlaylists.css';
 import './assets/css/Responsiveness.css';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 import Home from './components/Home';
-import Top from './components/General/Top/Top';
-import Stats from './components/General/Stats/Stats';
-import Artist from './components/General/Artist/Artist';
-import Track from './components/General/Track/Track';
-import Album from './components/General/Album/Album';
-import UserPlaylists from './components/General/Playlist/UserPlaylists';
-import Playlist from './components/General/Playlist/Playlist';
-import Liked from './components/General/Liked Songs/Liked';
-import SearchResults from './components/General/Search/SearchResults';
-import Find from './components/General/Find/Find';
-import Recommendations from './components/General/Find/Recommendations';
+import Top from './components/Top/Top';
+import Stats from './components/Stats/Stats';
+import Artist from './components/Artist/Artist';
+import Track from './components/Track/Track';
+import Album from './components/Album/Album';
+import UserPlaylists from './components/Playlist/UserPlaylists';
+import Playlist from './components/Playlist/Playlist';
+import Liked from './components/Liked/Liked';
+import SearchResults from './components/Search/SearchResults';
+import Find from './components/Find/Find';
+import Recommendations from './components/Find/Recommendations';
 
 function App() {
 	return (

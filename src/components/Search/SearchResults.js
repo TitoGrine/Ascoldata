@@ -1,34 +1,42 @@
 import React, { useState, useEffect } from 'react';
-import './UserPlaylists.css';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { useLocation, useHistory } from 'react-router-dom';
 import Spotify from 'spotify-web-api-js';
 import { useMediaQuery } from 'react-responsive';
 import { trackPromise, usePromiseTracker } from 'react-promise-tracker';
 
-import { refreshToken } from '../../Auth/Auth';
+import { refreshToken } from '../Auth/Auth';
 
-import Redirects from '../../Redirects';
+import Redirects from '../Redirects';
+import TrackTable from '../Track/TrackTable';
 import Pagination from 'react-js-pagination';
-import PlaylistTable from './PlaylistTable';
-import Search from '../Search/Search';
-import SideToggle from '../../SideToggle';
-import PlaylistCards from './PlaylistCards';
-import HeaderBar from '../../HeaderBar';
-import LoadingSpinner from '../../LoadingSpinner';
+import ArtistTable from '../Artist/ArtistTable';
+import PlaylistTable from '../Playlist/PlaylistTable';
+import PlaylistCards from '../Playlist/PlaylistCards';
+import Search from './Search';
+import AlbumTable from '../Album/AlbumTable';
+import SideToggle from '../SideToggle';
+import TrackCards from '../Track/TrackCards';
+import AlbumCards from '../Album/AlbumCards';
+import ArtistCards from '../Artist/ArtistCards';
+import HeaderBar from '../HeaderBar';
+import LoadingSpinner from '../LoadingSpinner';
 import { Helmet } from 'react-helmet';
 
 const spotifyWebApi = new Spotify();
 
-function UserPlaylists() {
+function SearchResults() {
 	const query = new URLSearchParams(useLocation().search);
 	const history = useHistory();
 	const limit = 12;
 
+	const q = query.get('q');
+	const type = query.get('type');
+
 	const [ toggled, setToggled ] = useState('nothing');
 	const [ authToken, setAuthToken ] = useState(localStorage.getItem('authToken'));
 	const [ page, setPage ] = useState(parseInt(query.get('page')));
-	const [ userPlaylists, setUserPlaylists ] = useState([]);
+	const [ results, setResults ] = useState([]);
 	const [ offset, setOffset ] = useState(limit * (page - 1));
 	const [ totalItems, setTotalItems ] = useState(0);
 
@@ -37,20 +45,20 @@ function UserPlaylists() {
 
 	const { promiseInProgress } = usePromiseTracker();
 
-	const getData = () => {
+	const getData = async () => {
 		spotifyWebApi.setAccessToken(authToken);
 
 		trackPromise(
 			spotifyWebApi
-				.getUserPlaylists({
+				.search(q, [ type ], {
 					limit: limit,
 					offset: offset
 				})
 				.then(
 					function(data) {
-						//console.log(data);
-						setUserPlaylists(data.items);
-						setTotalItems(data.total);
+						// console.log(data);
+						setResults(data[`${type}s`].items);
+						setTotalItems(data[`${type}s`].total);
 					},
 					function(err) {
 						console.log(err);
@@ -74,31 +82,43 @@ function UserPlaylists() {
 				setPage(1 + offset / limit);
 			}
 		},
-		[ offset ]
+		[ authToken, offset ]
 	);
 
 	useEffect(
 		() => {
-			history.push(`/playlists?page=${page}`);
+			history.push(`/search?q=${q}&type=${type}&page=${page}`);
 		},
 		[ page ]
 	);
 
+	const renderTable = () => {
+		if (results.length === 0) return;
+
+		switch (type) {
+			case 'artist':
+				return colapseTable ? <ArtistCards results={results} /> : <ArtistTable results={results} />;
+			case 'album':
+				return colapseTable ? <AlbumCards results={results} /> : <AlbumTable results={results} />;
+			case 'playlist':
+				return colapseTable ? <PlaylistCards results={results} /> : <PlaylistTable results={results} />;
+			case 'track':
+				return colapseTable ? <TrackCards results={results} /> : <TrackTable results={results} />;
+			default:
+				return;
+		}
+	};
+
 	return (
 		<React.Fragment>
 			<Helmet>
-				<title>{`Your Playlists - Ascoldata`}</title>
+				<title>{`${q} - Ascoldata`}</title>
 			</Helmet>
 			<HeaderBar />
 			<div id="corporum" className="playlists-content">
 				<section className="content-section">
 					<LoadingSpinner />
-					{!promiseInProgress &&
-						(colapseTable ? (
-							<PlaylistCards results={userPlaylists} />
-						) : (
-							<PlaylistTable results={userPlaylists} />
-						))}
+					{!promiseInProgress && renderTable()}
 					<div className="pagination-divider" />
 					<Pagination
 						activePage={page}
@@ -120,7 +140,7 @@ function UserPlaylists() {
 							<Search />
 						</TabPanel>
 						<TabPanel>
-							<Redirects exclude="playlists" />
+							<Redirects exclude="" />
 						</TabPanel>
 					</Tabs>
 				</div>
@@ -134,4 +154,4 @@ function UserPlaylists() {
 	);
 }
 
-export default UserPlaylists;
+export default SearchResults;

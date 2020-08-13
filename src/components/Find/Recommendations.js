@@ -1,20 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
-import { useLocation, useHistory } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import Spotify from 'spotify-web-api-js';
 import { trackPromise, usePromiseTracker } from 'react-promise-tracker';
 
-import { refreshToken } from '../../Auth/Auth';
-import { trimLimit } from '../../HelperFunc';
+import { refreshToken } from '../Auth/Auth';
+import { trimLimit } from '../HelperFunc';
 import { useMediaQuery } from 'react-responsive';
 
-import Redirects from '../../Redirects';
+import Redirects from '../Redirects';
 import TrackTable from '../Track/TrackTable';
 import Search from '../Search/Search';
-import SideToggle from '../../SideToggle';
+import SideToggle from '../SideToggle';
 import TrackCards from '../Track/TrackCards';
-import HeaderBar from '../../HeaderBar';
-import LoadingSpinner from '../../LoadingSpinner';
+import HeaderBar from '../HeaderBar';
+import LoadingSpinner from '../LoadingSpinner';
 import { Helmet } from 'react-helmet';
 
 const spotifyWebApi = new Spotify();

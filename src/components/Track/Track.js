@@ -7,15 +7,15 @@ import { FaSpotify } from 'react-icons/fa';
 import { trackPromise, usePromiseTracker } from 'react-promise-tracker';
 import { getSong } from 'genius-lyrics-api';
 
-import { refreshToken } from '../../Auth/Auth';
-import { keyBinds } from '../../HelperFunc';
+import { refreshToken } from '../Auth/Auth';
+import { keyBinds } from '../HelperFunc';
 
-import HeaderBar from '../../HeaderBar';
-import Redirects from '../../Redirects';
+import HeaderBar from '../HeaderBar';
+import Redirects from '../Redirects';
 import StatCard from '../Stats/StatCard';
 import Search from '../Search/Search';
-import SideToggle from '../../SideToggle';
-import LoadingSpinner from '../../LoadingSpinner';
+import SideToggle from '../SideToggle';
+import LoadingSpinner from '../LoadingSpinner';
 import { Helmet } from 'react-helmet';
 
 const spotifyWebApi = new Spotify();

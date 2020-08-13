@@ -6,16 +6,16 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { FaSpotify } from 'react-icons/fa';
 import { trackPromise, usePromiseTracker } from 'react-promise-tracker';
 
-import { refreshToken } from '../../Auth/Auth';
-import { formatDuration } from '../../HelperFunc';
+import { refreshToken } from '../Auth/Auth';
+import { formatDuration } from '../HelperFunc';
 
-import Redirects from '../../Redirects';
+import Redirects from '../Redirects';
 import StatCard from '../Stats/StatCard';
 import { Image } from 'react-bootstrap';
 import Search from '../Search/Search';
-import SideToggle from '../../SideToggle';
-import HeaderBar from '../../HeaderBar';
-import LoadingSpinner from '../../LoadingSpinner';
+import SideToggle from '../SideToggle';
+import HeaderBar from '../HeaderBar';
+import LoadingSpinner from '../LoadingSpinner';
 import { Helmet } from 'react-helmet';
 
 const spotifyWebApi = new Spotify();

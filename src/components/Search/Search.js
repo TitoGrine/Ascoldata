@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import './Search.css';
 import { GrSearch } from 'react-icons/gr';
-import RadioInput from '../../RadioInput';
+
+import RadioInput from '../RadioInput';
 
 function Search() {
 	const [ searchType, setSearchType ] = useState('album');

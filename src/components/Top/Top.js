@@ -6,19 +6,19 @@ import Pagination from 'react-js-pagination';
 import { useMediaQuery } from 'react-responsive';
 import { trackPromise, usePromiseTracker } from 'react-promise-tracker';
 
-import { refreshToken } from '../../Auth/Auth';
+import { refreshToken } from '../Auth/Auth';
 
 import ArtistTable from '../Artist/ArtistTable';
 import TrackTable from '../Track/TrackTable';
-import Redirects from '../../Redirects';
+import Redirects from '../Redirects';
 import Search from '../Search/Search';
-import SideToggle from '../../SideToggle';
+import SideToggle from '../SideToggle';
 import TrackCards from '../Track/TrackCards';
 import ArtistCards from '../Artist/ArtistCards';
-import HeaderBar from '../../HeaderBar';
-import LoadingSpinner from '../../LoadingSpinner';
+import HeaderBar from '../HeaderBar';
+import LoadingSpinner from '../LoadingSpinner';
 import { Helmet } from 'react-helmet';
-import RadioInput from '../../RadioInput';
+import RadioInput from '../RadioInput';
 
 const spotifyWebApi = new Spotify();
 

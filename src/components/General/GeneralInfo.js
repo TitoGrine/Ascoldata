@@ -10,7 +10,7 @@ import { refreshToken } from '../Auth/Auth';
 import { getCountryFromISOCode } from '../HelperFunc';
 
 import Redirects from '../Redirects';
-import Search from './Search/Search';
+import Search from '../Search/Search';
 import SideToggle from '../SideToggle';
 import HeaderBar from '../HeaderBar';
 import LoadingSpinner from '../LoadingSpinner';

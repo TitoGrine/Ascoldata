@@ -1,6 +1,6 @@
 /* Responsiveness */
 
-@media screen and (max-width: 960px) {
+@media screen and (max-width: 980px) {
 	section.content-section {
 		grid-column: 1 / span 10;
 		grid-row: 1 / span 24;
@@ -102,8 +102,7 @@
 
 	#track-info > div,
 	#album-info,
-	#album-info #misc-data,
-	#playlist-info #misc-data {
+	#album-info #misc-data {
 		align-items: flex-start;
 		width: 100%;
 		padding: 0 0.5em;

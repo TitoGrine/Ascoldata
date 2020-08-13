@@ -4,18 +4,18 @@ import { trackPromise, usePromiseTracker } from 'react-promise-tracker';
 import { useLocation, useHistory } from 'react-router-dom';
 import Spotify from 'spotify-web-api-js';
 
-import { formatDuration } from '../../HelperFunc';
-import { refreshToken } from '../../Auth/Auth';
+import { formatDuration } from '../HelperFunc';
+import { refreshToken } from '../Auth/Auth';
 
-import Redirects from '../../Redirects';
+import Redirects from '../Redirects';
 import StatCard from './StatCard';
 import { Textfit } from 'react-textfit';
 import Search from '../Search/Search';
-import SideToggle from '../../SideToggle';
-import HeaderBar from '../../HeaderBar';
+import SideToggle from '../SideToggle';
+import HeaderBar from '../HeaderBar';
 import { Helmet } from 'react-helmet';
-import LoadingSpinner from '../../LoadingSpinner';
-import RadioInput from '../../RadioInput';
+import LoadingSpinner from '../LoadingSpinner';
+import RadioInput from '../RadioInput';
 
 const spotifyWebApi = new Spotify();
 

@@ -20,12 +20,11 @@
 	justify-content: space-around;
 	align-items: flex-end;
 	width: 80%;
-	gap: 0.5em;
+	gap: 1em;
 }
 
 #playlist-info #misc-data #playlist-description {
 	flex: 1 0 100%;
-	/* padding: 0 1em; */
 }
 
 #playlist-info #misc-data #playlist-description .divider {

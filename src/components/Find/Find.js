@@ -3,14 +3,14 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { useHistory } from 'react-router-dom';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 
-import { keyBinds, trimLimit, getExplanation } from '../../HelperFunc';
+import { keyBinds, trimLimit, getExplanation } from '../HelperFunc';
 
-import Redirects from '../../Redirects';
+import Redirects from '../Redirects';
 import Search from '../Search/Search';
 import AttributeSlider from './AttributeSlider';
 
-import SideToggle from '../../SideToggle';
-import HeaderBar from '../../HeaderBar';
+import SideToggle from '../SideToggle';
+import HeaderBar from '../HeaderBar';
 import { Helmet } from 'react-helmet';
 
 function Find() {
