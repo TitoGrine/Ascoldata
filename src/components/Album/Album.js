@@ -130,7 +130,7 @@ function Track() {
 					title="Artist"
 					value={albumArtists.map((artist) => {
 						return (
-							<Link key={artist.id} to={'/artist?id=' + artist.id} style={{ color: '#1db954' }}>
+							<Link key={artist.id} to={`/artist?id=${artist.id}`} style={{ color: '#1db954' }}>
 								{artist.name}
 							</Link>
 						);
@@ -182,7 +182,19 @@ function Track() {
 										value={formatDuration(albumDuration)}
 										units=""
 									/>
-									<StatCard barStat={false} title="Nr. Songs" value={albumNrSongs} units="" />
+									<StatCard
+										barStat={false}
+										title="Nr. Songs"
+										value={
+											<Link
+												to={`/album_tracks?id=${album}&page=${1}`}
+												style={{ color: '#1db954' }}
+											>
+												{albumNrSongs}
+											</Link>
+										}
+										units=""
+									/>
 									<StatCard barStat={false} title="Popularity" value={albumPopularity} units="" />
 								</div>
 							</div>

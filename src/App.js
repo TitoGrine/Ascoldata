@@ -29,6 +29,7 @@ import Liked from './components/Liked/Liked';
 import SearchResults from './components/Search/SearchResults';
 import Find from './components/Find/Find';
 import Recommendations from './components/Find/Recommendations';
+import AlbumTracks from './components/Album/AlbumTracks';
 
 function App() {
 	return (
@@ -41,6 +42,7 @@ function App() {
 					<Route exact={true} path="/artist" component={Artist} />
 					<Route exact={true} path="/track" component={Track} />
 					<Route exact={true} path="/album" component={Album} />
+					<Route exact={true} path="/album_tracks" component={AlbumTracks} />
 					<Route exact={true} path="/playlist" component={Playlist} />
 					<Route exact={true} path="/playlists" component={UserPlaylists} />
 					<Route exact={true} path="/liked" component={Liked} />

@@ -18,7 +18,7 @@ import { Helmet } from 'react-helmet';
 
 const spotifyWebApi = new Spotify();
 
-function GeneralInfo() {
+function User() {
 	const [ toggled, setToggled ] = useState('nothing');
 	const [ authToken, setAuthToken ] = useState(localStorage.getItem('authToken'));
 	const [ user, setUser ] = useState('');
@@ -204,4 +204,4 @@ function GeneralInfo() {
 	);
 }
 
-export default GeneralInfo;
+export default User;

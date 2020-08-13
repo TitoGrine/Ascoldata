@@ -1,11 +1,11 @@
 import React from 'react';
 
 import HeaderBar from './HeaderBar';
-import GeneralInfo from './General/GeneralInfo';
+import User from './User/User';
 import Login from './Login/Login';
 
 function Home() {
-	return localStorage.getItem('refreshToken') !== null ? <GeneralInfo /> : <Login />;
+	return localStorage.getItem('refreshToken') !== null ? <User /> : <Login />;
 }
 
 export default Home;
