@@ -3,8 +3,12 @@ import React from 'react';
 import TrackTableRow from './TrackTableRow';
 
 function TrackTable(props) {
+	const maxHeight = {
+		maxHeight: props.maxHeight ? `${props.maxHeight}%` : '100%'
+	};
+
 	return (
-		<table>
+		<table style={maxHeight}>
 			<thead>
 				<tr>
 					<th>Title</th>

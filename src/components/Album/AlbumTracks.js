@@ -113,19 +113,26 @@ function AlbumTracks() {
 			</Helmet>
 			<HeaderBar />
 			<div id="corporum">
-				<section className="content-section">
+				<section className="content-section table-content">
 					<LoadingSpinner />
 					{!promiseInProgress &&
-						albumTracks.length > 0 &&
-						(colapseTable ? <TrackCards results={albumTracks} /> : <TrackTable results={albumTracks} />)}
-					<div className="pagination-divider" />
-					<Pagination
-						activePage={page}
-						itemsCountPerPage={limit}
-						totalItemsCount={totalItems}
-						pageRangeDisplayed={decreasePagination ? 3 : 8}
-						onChange={switchPage}
-					/>
+					albumTracks.length > 0 && (
+						<React.Fragment>
+							{colapseTable ? (
+								<TrackCards results={albumTracks} />
+							) : (
+								<TrackTable results={albumTracks} maxHeight={albumTracks.length / limit * 100} />
+							)}
+							{/* <div className="pagination-divider" /> */}
+							<Pagination
+								activePage={page}
+								itemsCountPerPage={limit}
+								totalItemsCount={totalItems}
+								pageRangeDisplayed={decreasePagination ? 3 : 8}
+								onChange={switchPage}
+							/>
+						</React.Fragment>
+					)}
 				</section>
 				<section className={`sidebar-section slide-in-right sidebar-${toggled}`} />
 				<div className={`side-content slide-in-right sidebar-${toggled}`}>

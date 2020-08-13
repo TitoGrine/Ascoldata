@@ -60,6 +60,11 @@
 		grid-column: 3 / span 10;
 	}
 
+	section.table-content {
+		display: flex;
+		gap: 2em;
+	}
+
 	/* Pagination */
 
 	ul.pagination {
