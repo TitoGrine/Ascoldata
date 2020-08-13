@@ -211,7 +211,6 @@ function Stats() {
 										);
 									})}
 									units=""
-									style={{ flexBasis: '100%' }}
 								/>
 							</div>
 							<div id="stats">
