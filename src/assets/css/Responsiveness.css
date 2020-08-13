@@ -1,6 +1,10 @@
 /* Responsiveness */
 
 @media screen and (max-width: 980px) {
+	.side-toggle {
+		display: block;
+	}
+
 	section.content-section {
 		grid-column: 1 / span 10;
 		grid-row: 1 / span 24;
@@ -203,12 +207,6 @@
 
 	#info li iframe {
 		width: 95%;
-	}
-}
-
-@media screen and (min-width: 961px) {
-	.side-toggle {
-		display: none;
 	}
 }
 

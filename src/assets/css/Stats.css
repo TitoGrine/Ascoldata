@@ -13,9 +13,14 @@
 #misc-info {
 	flex: 0 1 auto;
 	display: flex;
+	flex-wrap: wrap;
 	justify-content: space-evenly;
 	align-items: center;
 	gap: 1.5em;
+}
+
+#misc-info div:last-child {
+	flex-basis: 100%;
 }
 
 #stats {

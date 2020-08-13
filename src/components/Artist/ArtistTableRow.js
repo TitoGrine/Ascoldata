@@ -14,11 +14,9 @@ function ArtistTableRow(props) {
 				{props.info.genres.length === 0 ? (
 					'undefined'
 				) : (
-					props.info.genres
-						.map((genre, index) => {
-							return genre + (index === props.info.genres.length - 1 || index === 1 ? '' : ',');
-						})
-						.slice(0, 2)
+					props.info.genres.slice(0, 2).map((genre, index) => {
+						return genre + (index === props.info.genres.length - 1 ? '' : ',');
+					})
 				)}
 			</td>
 			<td>{props.info.popularity}</td>

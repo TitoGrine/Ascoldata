@@ -26,6 +26,7 @@ function Stats() {
 	const [ toggled, setToggled ] = useState('nothing');
 	const [ authToken, setAuthToken ] = useState(localStorage.getItem('authToken'));
 	const [ stats, setStats ] = useState('');
+	const [ topGenres, setTopGenres ] = useState([]);
 	const [ timeRange, setTimeRange ] = useState(query.get('time_range'));
 
 	const { promiseInProgress } = usePromiseTracker();
@@ -106,6 +107,42 @@ function Stats() {
 					}
 				)
 		);
+
+		trackPromise(
+			spotifyWebApi
+				.getMyTopArtists({
+					limit: 50,
+					offset: 0,
+					time_range: timeRange
+				})
+				.then(
+					function(data) {
+						let genres = {};
+
+						data.items.forEach((artist) => {
+							artist.genres.forEach((genre) => {
+								if (genres[genre]) genres[genre]++;
+								else genres[genre] = 1;
+							});
+						});
+
+						// Order genres with more than one occurence
+						setTopGenres(
+							Object.keys(genres)
+								.filter((genre) => {
+									return genres[genre] > 1;
+								})
+								.sort(function(a, b) {
+									return genres[b] - genres[a];
+								})
+								.slice(0, 4)
+						);
+					},
+					function(err) {
+						console.log(err);
+					}
+				)
+		);
 	};
 
 	const updateTimeRange = (ev) => {
@@ -162,6 +199,19 @@ function Stats() {
 									title="Popularity"
 									value={Math.round(stats.popularity)}
 									units=""
+								/>
+								<StatCard
+									barStat={false}
+									title="Most Listened Genres"
+									value={topGenres.map((genre, index) => {
+										return (
+											genre.charAt(0).toUpperCase() +
+											genre.slice(1) +
+											(index === topGenres.length - 1 ? '' : ', ')
+										);
+									})}
+									units=""
+									style={{ flexBasis: '100%' }}
 								/>
 							</div>
 							<div id="stats">
