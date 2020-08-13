@@ -90,19 +90,25 @@ function Liked() {
 			</Helmet>
 			<HeaderBar />
 			<div id="corporum">
-				<section className="content-section">
+				<section className="content-section table-content">
 					<LoadingSpinner />
 					{!promiseInProgress &&
-						userLiked.length > 0 &&
-						(colapseTable ? <TrackCards results={userLiked} /> : <TrackTable results={userLiked} />)}
-					<div className="pagination-divider" />
-					<Pagination
-						activePage={page}
-						itemsCountPerPage={limit}
-						totalItemsCount={totalItems}
-						pageRangeDisplayed={decreasePagination ? 3 : 8}
-						onChange={switchPage}
-					/>
+					userLiked.length > 0 && (
+						<React.Fragment>
+							{colapseTable ? (
+								<TrackCards results={userLiked} />
+							) : (
+								<TrackTable results={userLiked} maxHeight={userLiked.length / limit * 100} />
+							)}
+							<Pagination
+								activePage={page}
+								itemsCountPerPage={limit}
+								totalItemsCount={totalItems}
+								pageRangeDisplayed={decreasePagination ? 3 : 8}
+								onChange={switchPage}
+							/>
+						</React.Fragment>
+					)}
 				</section>
 				<section className={`sidebar-section slide-in-right sidebar-${toggled}`} />
 				<div className={`side-content slide-in-right sidebar-${toggled}`}>

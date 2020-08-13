@@ -2,8 +2,12 @@ import React from 'react';
 import PlaylistTableRow from './PlaylistTableRow';
 
 function PlaylistTable(props) {
+	const maxHeight = {
+		maxHeight: props.maxHeight ? `${props.maxHeight}%` : '100%'
+	};
+
 	return (
-		<table>
+		<table style={maxHeight}>
 			<thead>
 				<tr>
 					<th>Playlist</th>

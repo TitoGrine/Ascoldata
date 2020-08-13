@@ -97,13 +97,29 @@ function SearchResults() {
 
 		switch (type) {
 			case 'artist':
-				return colapseTable ? <ArtistCards results={results} /> : <ArtistTable results={results} />;
+				return colapseTable ? (
+					<ArtistCards results={results} />
+				) : (
+					<ArtistTable results={results} maxHeight={results.length / limit * 100} />
+				);
 			case 'album':
-				return colapseTable ? <AlbumCards results={results} /> : <AlbumTable results={results} />;
+				return colapseTable ? (
+					<AlbumCards results={results} />
+				) : (
+					<AlbumTable results={results} maxHeight={results.length / limit * 100} />
+				);
 			case 'playlist':
-				return colapseTable ? <PlaylistCards results={results} /> : <PlaylistTable results={results} />;
+				return colapseTable ? (
+					<PlaylistCards results={results} />
+				) : (
+					<PlaylistTable results={results} maxHeight={results.length / limit * 100} />
+				);
 			case 'track':
-				return colapseTable ? <TrackCards results={results} /> : <TrackTable results={results} />;
+				return colapseTable ? (
+					<TrackCards results={results} />
+				) : (
+					<TrackTable results={results} maxHeight={results.length / limit * 100} />
+				);
 			default:
 				return;
 		}
@@ -115,18 +131,21 @@ function SearchResults() {
 				<title>{`${q} - Ascoldata`}</title>
 			</Helmet>
 			<HeaderBar />
-			<div id="corporum" className="playlists-content">
-				<section className="content-section">
+			<div id="corporum">
+				<section className="content-section table-content">
 					<LoadingSpinner />
-					{!promiseInProgress && renderTable()}
-					<div className="pagination-divider" />
-					<Pagination
-						activePage={page}
-						itemsCountPerPage={limit}
-						totalItemsCount={totalItems}
-						pageRangeDisplayed={decreasePagination ? 3 : 8}
-						onChange={switchPage}
-					/>
+					{!promiseInProgress && (
+						<React.Fragment>
+							{renderTable()}
+							<Pagination
+								activePage={page}
+								itemsCountPerPage={limit}
+								totalItemsCount={totalItems}
+								pageRangeDisplayed={decreasePagination ? 3 : 8}
+								onChange={switchPage}
+							/>
+						</React.Fragment>
+					)}
 				</section>
 				<section className={`sidebar-section slide-in-right sidebar-${toggled}`} />
 				<div className={`side-content slide-in-right sidebar-${toggled}`}>

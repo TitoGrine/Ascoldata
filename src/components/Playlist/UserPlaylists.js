@@ -89,23 +89,25 @@ function UserPlaylists() {
 				<title>{`Your Playlists - Ascoldata`}</title>
 			</Helmet>
 			<HeaderBar />
-			<div id="corporum" className="playlists-content">
-				<section className="content-section">
+			<div id="corporum">
+				<section className="content-section table-content">
 					<LoadingSpinner />
-					{!promiseInProgress &&
-						(colapseTable ? (
-							<PlaylistCards results={userPlaylists} />
-						) : (
-							<PlaylistTable results={userPlaylists} />
-						))}
-					<div className="pagination-divider" />
-					<Pagination
-						activePage={page}
-						itemsCountPerPage={limit}
-						totalItemsCount={totalItems}
-						pageRangeDisplayed={decreasePagination ? 3 : 8}
-						onChange={switchPage}
-					/>
+					{!promiseInProgress && (
+						<React.Fragment>
+							{colapseTable ? (
+								<PlaylistCards results={userPlaylists} />
+							) : (
+								<PlaylistTable results={userPlaylists} maxHeight={userPlaylists.length / limit * 100} />
+							)}
+							<Pagination
+								activePage={page}
+								itemsCountPerPage={limit}
+								totalItemsCount={totalItems}
+								pageRangeDisplayed={decreasePagination ? 3 : 8}
+								onChange={switchPage}
+							/>
+						</React.Fragment>
+					)}
 				</section>
 				<section className={`sidebar-section slide-in-right sidebar-${toggled}`} />
 				<div className={`side-content slide-in-right sidebar-${toggled}`}>

@@ -3,8 +3,12 @@ import React from 'react';
 import ArtistTableRow from './ArtistTableRow';
 
 function ArtistTable(props) {
+	const maxHeight = {
+		maxHeight: props.maxHeight ? `${props.maxHeight}%` : '100%'
+	};
+
 	return (
-		<table>
+		<table style={maxHeight}>
 			<thead>
 				<tr>
 					<th>Artist</th>

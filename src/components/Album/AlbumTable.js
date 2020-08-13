@@ -3,8 +3,12 @@ import React from 'react';
 import AlbumTableRow from './AlbumTableRow';
 
 function AlbumTable(props) {
-    return (
-        <table>
+	const maxHeight = {
+		maxHeight: props.maxHeight ? `${props.maxHeight}%` : '100%'
+	};
+
+	return (
+		<table style={maxHeight}>
 			<thead>
 				<tr>
 					<th>Album</th>
@@ -19,7 +23,7 @@ function AlbumTable(props) {
 				})}
 			</tbody>
 		</table>
-    )
+	);
 }
 
-export default AlbumTable
+export default AlbumTable;

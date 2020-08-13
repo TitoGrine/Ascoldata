@@ -103,19 +103,25 @@ function Recommendations() {
 				<title>{`Song Recommendations - Ascoldata`}</title>
 			</Helmet>
 			<HeaderBar />
-			<div id="corporum" className="recommendation-content">
-				<section className="content-section">
-					<button className="find-button" onClick={getData}>
-						Refresh
-					</button>
+			<div id="corporum">
+				<section className="content-section table-content">
 					<LoadingSpinner />
 					{!promiseInProgress &&
-						recommendations.length > 0 &&
-						(colapseTable ? (
-							<TrackCards results={recommendations} />
-						) : (
-							<TrackTable results={recommendations} />
-						))}
+					recommendations.length > 0 && (
+						<React.Fragment>
+							{colapseTable ? (
+								<TrackCards results={recommendations} />
+							) : (
+								<TrackTable
+									results={recommendations}
+									maxHeight={recommendations.length / limit * 100}
+								/>
+							)}
+							<button className="refresh-button" onClick={getData}>
+								Refresh
+							</button>
+						</React.Fragment>
+					)}
 				</section>
 				<section className={`sidebar-section slide-in-right sidebar-${toggled}`} />
 				<div className={`side-content slide-in-right sidebar-${toggled}`}>

@@ -123,7 +123,6 @@ function AlbumTracks() {
 							) : (
 								<TrackTable results={albumTracks} maxHeight={albumTracks.length / limit * 100} />
 							)}
-							{/* <div className="pagination-divider" /> */}
 							<Pagination
 								activePage={page}
 								itemsCountPerPage={limit}

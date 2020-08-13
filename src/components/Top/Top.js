@@ -98,9 +98,17 @@ function Top() {
 
 		switch (topType) {
 			case 'artist':
-				return colapseTable ? <ArtistCards results={topResults} /> : <ArtistTable results={topResults} />;
+				return colapseTable ? (
+					<ArtistCards results={topResults} />
+				) : (
+					<ArtistTable results={topResults} maxHeight={topResults.length / limit * 100} />
+				);
 			case 'track':
-				return colapseTable ? <TrackCards results={topResults} /> : <TrackTable results={topResults} />;
+				return colapseTable ? (
+					<TrackCards results={topResults} />
+				) : (
+					<TrackTable results={topResults} maxHeight={topResults.length / limit * 100} />
+				);
 			default:
 				return;
 		}
@@ -150,17 +158,20 @@ function Top() {
 			</Helmet>
 			<HeaderBar />
 			<div id="corporum" className="top-content">
-				<section className="content-section content-section-top">
+				<section className="content-section content-section-top  table-content">
 					<LoadingSpinner />
-					{!promiseInProgress && renderTable()}
-					<div className="pagination-divider" />
-					<Pagination
-						activePage={page}
-						itemsCountPerPage={limit}
-						totalItemsCount={totalItems}
-						pageRangeDisplayed={decreasePagination ? 3 : 8}
-						onChange={switchPage}
-					/>
+					{!promiseInProgress && (
+						<React.Fragment>
+							{renderTable()}
+							<Pagination
+								activePage={page}
+								itemsCountPerPage={limit}
+								totalItemsCount={totalItems}
+								pageRangeDisplayed={decreasePagination ? 3 : 8}
+								onChange={switchPage}
+							/>
+						</React.Fragment>
+					)}
 				</section>
 				<section className={`sidebar-section slide-in-right sidebar-${toggled}`} />
 				<div className={`side-content slide-in-right sidebar-${toggled}`}>
