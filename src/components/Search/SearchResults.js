@@ -3,7 +3,7 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { useLocation, useHistory } from 'react-router-dom';
 import Spotify from 'spotify-web-api-js';
 import { useMediaQuery } from 'react-responsive';
-import { trackPromise, usePromiseTracker } from 'react-promise-tracker';
+import { trackPromise } from 'react-promise-tracker';
 
 import { refreshToken } from '../Auth/Auth';
 
@@ -43,8 +43,6 @@ function SearchResults() {
 	const colapseTable = useMediaQuery({ maxWidth: 700 });
 	const decreasePagination = useMediaQuery({ maxWidth: 500 });
 
-	const { promiseInProgress } = usePromiseTracker();
-
 	const getData = async () => {
 		spotifyWebApi.setAccessToken(authToken);
 
@@ -57,8 +55,12 @@ function SearchResults() {
 				.then(
 					function(data) {
 						// console.log(data);
-						setResults(data[`${type}s`].items);
-						setTotalItems(data[`${type}s`].total);
+
+						if (data[`${type}s`].items.length === 0 && offset !== 0) switchPage(1);
+						else {
+							setTotalItems(data[`${type}s`].total);
+							setResults(data[`${type}s`].items);
+						}
 					},
 					function(err) {
 						console.log(err);
@@ -93,8 +95,6 @@ function SearchResults() {
 	);
 
 	const renderTable = () => {
-		if (results.length === 0) return;
-
 		switch (type) {
 			case 'artist':
 				return colapseTable ? (
@@ -134,7 +134,7 @@ function SearchResults() {
 			<div id="corporum">
 				<section className="content-section table-content">
 					<LoadingSpinner />
-					{!promiseInProgress && (
+					{results.length > 0 && (
 						<React.Fragment>
 							{renderTable()}
 							<Pagination

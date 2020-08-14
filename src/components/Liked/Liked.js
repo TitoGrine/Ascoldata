@@ -3,7 +3,7 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { useLocation, useHistory } from 'react-router-dom';
 import Spotify from 'spotify-web-api-js';
 import { useMediaQuery } from 'react-responsive';
-import { trackPromise, usePromiseTracker } from 'react-promise-tracker';
+import { trackPromise } from 'react-promise-tracker';
 import { Helmet } from 'react-helmet';
 
 import { refreshToken } from '../Auth/Auth';
@@ -33,8 +33,6 @@ function Liked() {
 
 	const colapseTable = useMediaQuery({ maxWidth: 700 });
 	const decreasePagination = useMediaQuery({ maxWidth: 500 });
-
-	const { promiseInProgress } = usePromiseTracker();
 
 	const getData = () => {
 		spotifyWebApi.setAccessToken(authToken);
@@ -92,8 +90,7 @@ function Liked() {
 			<div id="corporum">
 				<section className="content-section table-content">
 					<LoadingSpinner />
-					{!promiseInProgress &&
-					userLiked.length > 0 && (
+					{userLiked.length > 0 && (
 						<React.Fragment>
 							{colapseTable ? (
 								<TrackCards results={userLiked} />

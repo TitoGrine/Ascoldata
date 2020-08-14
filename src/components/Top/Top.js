@@ -4,7 +4,7 @@ import { useLocation, useHistory } from 'react-router-dom';
 import Spotify from 'spotify-web-api-js';
 import Pagination from 'react-js-pagination';
 import { useMediaQuery } from 'react-responsive';
-import { trackPromise, usePromiseTracker } from 'react-promise-tracker';
+import { trackPromise } from 'react-promise-tracker';
 
 import { refreshToken } from '../Auth/Auth';
 
@@ -38,8 +38,6 @@ function Top() {
 
 	const colapseTable = useMediaQuery({ maxWidth: 700 });
 	const decreasePagination = useMediaQuery({ maxWidth: 500 });
-
-	const { promiseInProgress } = usePromiseTracker();
 
 	const getData = async () => {
 		spotifyWebApi.setAccessToken(authToken);
@@ -94,8 +92,6 @@ function Top() {
 	};
 
 	const renderTable = () => {
-		if (topResults.length === 0) return;
-
 		switch (topType) {
 			case 'artist':
 				return colapseTable ? (
@@ -160,7 +156,7 @@ function Top() {
 			<div id="corporum" className="top-content">
 				<section className="content-section content-section-top  table-content">
 					<LoadingSpinner />
-					{!promiseInProgress && (
+					{topResults.length > 0 && (
 						<React.Fragment>
 							{renderTable()}
 							<Pagination

@@ -3,7 +3,7 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { useLocation, useHistory } from 'react-router-dom';
 import Spotify from 'spotify-web-api-js';
 import { useMediaQuery } from 'react-responsive';
-import { trackPromise, usePromiseTracker } from 'react-promise-tracker';
+import { trackPromise } from 'react-promise-tracker';
 import Pagination from 'react-js-pagination';
 import { Helmet } from 'react-helmet';
 
@@ -33,8 +33,6 @@ function UserPlaylists() {
 
 	const colapseTable = useMediaQuery({ maxWidth: 700 });
 	const decreasePagination = useMediaQuery({ maxWidth: 500 });
-
-	const { promiseInProgress } = usePromiseTracker();
 
 	const getData = () => {
 		spotifyWebApi.setAccessToken(authToken);
@@ -92,7 +90,7 @@ function UserPlaylists() {
 			<div id="corporum">
 				<section className="content-section table-content">
 					<LoadingSpinner />
-					{!promiseInProgress && (
+					{userPlaylists.length > 0 && (
 						<React.Fragment>
 							{colapseTable ? (
 								<PlaylistCards results={userPlaylists} />

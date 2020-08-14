@@ -3,7 +3,7 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { useLocation, useHistory } from 'react-router-dom';
 import Pagination from 'react-js-pagination';
 import Spotify from 'spotify-web-api-js';
-import { trackPromise, usePromiseTracker } from 'react-promise-tracker';
+import { trackPromise } from 'react-promise-tracker';
 
 import { refreshToken } from '../Auth/Auth';
 import { useMediaQuery } from 'react-responsive';
@@ -35,8 +35,6 @@ function AlbumTracks() {
 
 	const colapseTable = useMediaQuery({ maxWidth: 700 });
 	const decreasePagination = useMediaQuery({ maxWidth: 500 });
-
-	const { promiseInProgress } = usePromiseTracker();
 
 	const getAlbumTracks = (tracks) => {
 		trackPromise(
@@ -115,8 +113,7 @@ function AlbumTracks() {
 			<div id="corporum">
 				<section className="content-section table-content">
 					<LoadingSpinner />
-					{!promiseInProgress &&
-					albumTracks.length > 0 && (
+					{albumTracks.length > 0 && (
 						<React.Fragment>
 							{colapseTable ? (
 								<TrackCards results={albumTracks} />

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { useLocation } from 'react-router-dom';
 import Spotify from 'spotify-web-api-js';
-import { trackPromise, usePromiseTracker } from 'react-promise-tracker';
+import { trackPromise } from 'react-promise-tracker';
 
 import { refreshToken } from '../Auth/Auth';
 import { trimLimit } from '../HelperFunc';
@@ -29,8 +29,6 @@ function Recommendations() {
 	const [ recommendations, setRecommendations ] = useState([]);
 
 	const colapseTable = useMediaQuery({ maxWidth: 700 });
-
-	const { promiseInProgress } = usePromiseTracker();
 
 	const getParameters = () => {
 		let defaultParameters = {
@@ -106,8 +104,7 @@ function Recommendations() {
 			<div id="corporum">
 				<section className="content-section table-content">
 					<LoadingSpinner />
-					{!promiseInProgress &&
-					recommendations.length > 0 && (
+					{recommendations.length > 0 && (
 						<React.Fragment>
 							{colapseTable ? (
 								<TrackCards results={recommendations} />
