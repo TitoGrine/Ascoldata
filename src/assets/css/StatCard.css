@@ -38,7 +38,7 @@ strong.stat-value p {
 	width: 70%;
 	min-height: 0.7em;
 	max-height: 0.7em;
-	background: antiquewhite;
+	background: var(--color-secondary);
 	border-radius: 2em;
 	margin: 0.6em auto 0 auto;
 	vertical-align: middle;

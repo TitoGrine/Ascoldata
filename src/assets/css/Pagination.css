@@ -14,11 +14,11 @@ ul.pagination {
 }
 
 .pagination > li a {
-	color: antiquewhite;
+	color: var(--color-secondary);
 	width: 100%;
 	height: 100%;
 	padding: 0.4em 0.8em;
-	border: 1px solid antiquewhite;
+	border: 1px solid var(--color-secondary);
 	box-sizing: border-box;
 	font-size: 1.1em;
 	filter: opacity(0.6);
@@ -35,7 +35,7 @@ ul.pagination {
 
 .pagination > li.active a {
 	font-weight: 600;
-	color: #1db954;
+	color: var(--color-primary);
 	filter: opacity(1);
 }
 
@@ -50,13 +50,13 @@ ul.pagination {
 
 .pagination > li.disabled a:hover {
 	animation: none;
-	background-color: #191414;
+	background-color: var(--color-neutral);
 	color: slategray;
 	cursor: default;
 }
 
 .pagination > li.active a:hover {
-	background-color: #191414;
-	color: #1db954;
+	background-color: var(--color-neutral);
+	color: var(--color-primary);
 	cursor: default;
 }

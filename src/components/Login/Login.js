@@ -91,8 +91,8 @@ const buttonStyle = {
 	padding: '0.6em 1.4em',
 	fontSize: '1.3rem',
 	fontWeight: '400',
-	backgroundColor: '#1db954',
-	color: '#191414',
+	backgroundColor: 'var(--color-primary)',
+	color: 'var(--color-neutral)',
 	borderWidth: '0'
 };
 

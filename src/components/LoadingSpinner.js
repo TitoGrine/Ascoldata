@@ -15,7 +15,7 @@ function LoadingSpinner() {
 }
 
 const spinnerStyle = {
-	color: '#1db954',
+	color: 'var(--color-primary)',
 	position: 'absolute',
 	width: '40px',
 	height: '40px',

@@ -9,7 +9,7 @@
 }
 
 .navbar-light .navbar-toggler:focus {
-	outline: 1px solid #191414;
+	outline: 1px solid var(--color-neutral);
 	border-radius: 10px;
 }
 
@@ -27,7 +27,7 @@
 #navbar .nav-link {
 	font-size: 1.2em;
 	font-weight: 600;
-	color: #191414;
+	color: var(--color-neutral);
 	animation: focusOut 0.15s linear forwards;
 }
 
@@ -47,7 +47,7 @@ section.content-section {
 	z-index: 10;
 	grid-column: 1 / span 7;
 	grid-row: 2 / span 21;
-	background-color: #191414;
+	background-color: var(--color-neutral);
 	padding: 1em;
 
 	-webkit-box-shadow: 15px 15px 30px -5px rgba(25, 20, 20, 0.8);
@@ -62,7 +62,7 @@ section.sidebar-section {
 	z-index: 5;
 	grid-column: 7 / span 4;
 	grid-row: 6 / span 18;
-	background-color: antiquewhite;
+	background-color: var(--color-secondary);
 
 	-webkit-box-shadow: 15px 15px 30px -5px rgba(25, 20, 20, 0.8);
 	-moz-box-shadow: 15px 15px 30px -5px rgba(25, 20, 20, 0.8);
@@ -84,7 +84,7 @@ section.table-content {
 /* Side bar styling */
 
 section.sidebar-section {
-	color: #191414 !important;
+	color: var(--color-neutral) !important;
 	display: flex;
 	justify-content: flex-end;
 }
@@ -93,7 +93,7 @@ div.side-content {
 	z-index: 5;
 	grid-column: 8 / span 4;
 	grid-row: 6 / span 18;
-	color: #191414 !important;
+	color: var(--color-neutral) !important;
 	padding: 1.5em;
 	display: flex;
 	flex-wrap: wrap;
@@ -121,7 +121,7 @@ div.side-content ul.redirects li a {
 	text-decoration: none;
 	font-size: 1.2em;
 	font-weight: 600;
-	color: #191414;
+	color: var(--color-neutral);
 	animation: focusOut 0.1s linear forwards;
 }
 
@@ -159,8 +159,8 @@ div.side-content ul.redirects li a:hover {
 
 	scroll-snap-align: center;
 
-	color: antiquewhite;
-	background-color: #191414;
+	color: var(--color-secondary);
+	background-color: var(--color-neutral);
 	-webkit-box-shadow: inset 0px 0px 28px 0px rgba(29, 185, 84, 0.4);
 	-moz-box-shadow: inset 0px 0px 28px 0px rgba(29, 185, 84, 0.4);
 	box-shadow: inset 0px 0px 28px 0px rgba(29, 185, 84, 0.4);
@@ -211,7 +211,7 @@ div.side-content ul.redirects li a:hover {
 }
 
 .react-tabs__tab--selected {
-	border-bottom: 2px solid #191414;
+	border-bottom: 2px solid var(--color-neutral);
 	animation: focusIn 0.4s linear forwards;
 }
 
@@ -228,7 +228,7 @@ div.side-content ul.redirects li a:hover {
 /* MISC */
 
 a.inner-link {
-	color: #1db954;
+	color: var(--color-primary);
 }
 
 .title-icon-link {
@@ -236,7 +236,7 @@ a.inner-link {
 	font-size: 30px;
 	right: 18px;
 	top: 18px;
-	color: #1db954;
+	color: var(--color-spotify);
 }
 
 .side-toggle {
@@ -257,7 +257,7 @@ a.inner-link {
 
 .side-toggle:focus {
 	outline: none;
-	border: 3px solid #1db954;
+	border: 3px solid var(--color-primary);
 }
 
 .side-toggle:hover {
@@ -274,7 +274,7 @@ a.inner-link {
 }
 
 .confirmation-modal .modal-content {
-	background-color: #191414;
+	background-color: var(--color-neutral);
 	padding: 0.4em;
 
 	-webkit-box-shadow: 0px 0px 28px 10px rgba(29, 185, 84, 0.4);
@@ -288,7 +288,7 @@ a.inner-link {
 }
 
 .confirmation-modal .modal-header button {
-	color: #1db954;
+	color: var(--color-primary);
 	text-shadow: none;
 	font-size: 1.8rem;
 }
@@ -303,12 +303,12 @@ a.inner-link {
 }
 
 .confirmation-modal .modal-footer button.btn-primary {
-	color: #191414;
-	background-color: #1db954;
+	color: var(--color-neutral);
+	background-color: var(--color-primary);
 }
 
 .confirmation-modal .modal-footer button.btn-secondary {
-	color: #1db954;
+	color: var(--color-primary);
 	background-color: rgb(250, 235, 215, 0.1);
 }
 
@@ -317,7 +317,7 @@ a.inner-link {
 .tooltip.top > .tooltip-arrow,
 .tooltip > .tooltip-inner {
 	background-color: rgba(250, 235, 215, 1.0);
-	color: #191414;
+	color: var(--color-neutral);
 	background: 1.0;
 	padding: 1em;
 }
@@ -330,15 +330,15 @@ a.inner-link {
 
 /* Currently Firefox-only */
 * {
-	scrollbar-color: #1db954 #191414;
+	scrollbar-color: var(--color-primary) var(--color-neutral);
 }
 
 /* Works on Chrome/Edge/Safari */
 *::-webkit-scrollbar-track {
-	background: #191414;
+	background: var(--color-neutral);
 }
 *::-webkit-scrollbar-thumb {
-	background-color: #1db954;
+	background-color: var(--color-primary);
 	border-radius: 20px;
 	border: 3px solid orange;
 }

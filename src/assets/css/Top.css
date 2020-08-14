@@ -4,11 +4,11 @@ table {
 	margin: 0 auto;
 	width: 100%;
 	height: 100%;
-	font-size: 1.1em;
+	font-size: 1.2em;
 }
 
 table th {
-	border-bottom: 1px solid antiquewhite;
+	border-bottom: 1px solid var(--color-secondary);
 	padding: 0 0.5rem 0.3em 0.5rem;
 }
 

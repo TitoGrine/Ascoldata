@@ -30,7 +30,7 @@
 #playlist-info #misc-data #playlist-description .divider {
 	width: 85%;
 	margin: 0 auto 0.5em auto;
-	border-bottom: 1px solid antiquewhite;
+	border-bottom: 1px solid var(--color-secondary);
 }
 
 #playlist-info #misc-data div:nth-child(-n + 4) {

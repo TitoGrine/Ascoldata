@@ -19,8 +19,8 @@
 #search-bar > input {
 	flex: 1 2 80%;
 	flex-shrink: 5;
-	color: #191414;
-	border: 1px solid #191414;
+	color: var(--color-neutral);
+	border: 1px solid var(--color-neutral);
 	border-right: 0;
 	border-radius: 5px 0 0 5px;
 	padding-left: 0.6em;
@@ -34,11 +34,11 @@
 	font-size: 1.3rem;
 	font-weight: 600;
 	padding: 0.2em 1em 0.4em 1em;
-	color: #191414;
-	background-color: #1db954;
+	color: var(--color-neutral);
+	background-color: var(--color-primary);
 	max-width: 80px;
 
-	border: 1px solid #191414;
+	border: 1px solid var(--color-neutral);
 	border-radius: 0 5px 5px 0;
 	outline: none;
 }

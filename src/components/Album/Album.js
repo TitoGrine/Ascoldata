@@ -130,7 +130,11 @@ function Track() {
 					title="Artist"
 					value={albumArtists.map((artist) => {
 						return (
-							<Link key={artist.id} to={`/artist?id=${artist.id}`} style={{ color: '#1db954' }}>
+							<Link
+								key={artist.id}
+								to={`/artist?id=${artist.id}`}
+								style={{ color: 'var(--color-primary)' }}
+							>
 								{artist.name}
 							</Link>
 						);
@@ -188,7 +192,7 @@ function Track() {
 										value={
 											<Link
 												to={`/album_tracks?id=${album}&page=${1}`}
-												style={{ color: '#1db954' }}
+												style={{ color: 'var(--color-primary)' }}
 											>
 												{albumNrSongs}
 											</Link>

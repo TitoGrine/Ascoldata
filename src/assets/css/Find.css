@@ -22,7 +22,7 @@
 
 .dropdown-value-input > select {
 	padding: 0.2em;
-	background-color: antiquewhite;
+	background-color: var(--color-secondary);
 }
 
 .dropdown-value-input > label:first-child {
@@ -43,8 +43,8 @@ button.find-button {
 	font-size: 1.2rem;
 	font-weight: 600;
 	padding: 0.8em 1em;
-	color: #191414;
-	background-color: #1db954;
+	color: var(--color-neutral);
+	background-color: var(--color-primary);
 	border-width: 0;
 	border-radius: 5px;
 	width: 10em;
@@ -56,8 +56,8 @@ button.refresh-button {
 	font-size: 1.2rem;
 	font-weight: 600;
 	padding: 0.6em 1em;
-	color: #191414;
-	background-color: #1db954;
+	color: var(--color-neutral);
+	background-color: var(--color-primary);
 	border-width: 0;
 	border-radius: 5px;
 	width: 10em;

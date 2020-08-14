@@ -22,14 +22,14 @@ function SideToggle(props) {
 
 const optionsStyle = {
 	fontSize: '50px',
-	color: '#191414',
-	backgroundColor: 'antiquewhite'
+	color: 'var(--color-neutral)',
+	backgroundColor: 'var(--color-secondary)'
 };
 
 const closeStyle = {
 	fontSize: '50px',
-	color: 'antiquewhite',
-	backgroundColor: '#191414'
+	color: 'var(--color-secondary)',
+	backgroundColor: 'var(--color-neutral)'
 };
 
 export default SideToggle;
