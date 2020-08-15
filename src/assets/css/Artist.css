@@ -8,6 +8,15 @@
 	margin-bottom: 0.4em;
 }
 
+.artist-links {
+	position: absolute;
+	right: 18px;
+	top: 18px;
+	display: flex;
+	gap: 0.8em;
+	align-items: center;
+}
+
 #artist-info {
 	flex: 0 1 auto;
 	display: flex;

@@ -231,12 +231,23 @@ a.inner-link {
 	color: var(--color-primary);
 }
 
-.title-icon-link {
+.spotify-icon-link {
 	position: absolute;
 	font-size: 30px;
 	right: 18px;
 	top: 18px;
 	color: var(--color-spotify);
+}
+
+.wikipedia-icon-link {
+	/* position: absolute;
+	right: 18px;
+	top: 48px; */
+	font-size: 40px;
+	color: black;
+	background-color: var(--color-wikipedia);
+	padding: 0 8px;
+	border-radius: 2px;
 }
 
 .side-toggle {

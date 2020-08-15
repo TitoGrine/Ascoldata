@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import Spotify from 'spotify-web-api-js';
+import wiki from 'wikijs';
 import { useLocation } from 'react-router-dom';
 import { Image } from 'react-bootstrap';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { trackPromise, usePromiseTracker } from 'react-promise-tracker';
+import { FaWikipediaW } from 'react-icons/fa';
 
 import { refreshToken } from '../Auth/Auth';
 
@@ -26,6 +28,7 @@ function Artist() {
 	const [ authToken, setAuthToken ] = useState(localStorage.getItem('authToken'));
 	const [ artistName, setArtistName ] = useState('');
 	const [ artistLink, setArtistLink ] = useState('');
+	const [ artistWikiLink, setArtistWikiLink ] = useState('');
 	const [ artistUri, setArtistUri ] = useState('');
 	const [ artistImage, setArtistImage ] = useState('');
 	const [ artistFollowers, setArtistFollowers ] = useState('');
@@ -47,6 +50,8 @@ function Artist() {
 					setArtistFollowers(data.followers.total);
 					setArtistGenres(data.genres);
 					setArtistPopularity(data.popularity);
+
+					getWikiPage(data.name);
 				},
 				function(err) {
 					console.log(err);
@@ -117,6 +122,30 @@ function Artist() {
 		);
 	};
 
+	const getWikiPage = async (query) => {
+		if (query)
+			wiki()
+				.page(`${query} (musician)`)
+				.then((page) => {
+					setArtistWikiLink(page.raw.fullurl);
+				})
+				.catch((err) => {
+					wiki()
+						.page(`${query} (band)`)
+						.then((page) => {
+							setArtistWikiLink(page.raw.fullurl);
+						})
+						.catch((err) => {
+							wiki()
+								.page(`${query}`)
+								.then((page) => {
+									setArtistWikiLink(page.raw.fullurl);
+								})
+								.catch((err) => {});
+						});
+				});
+	};
+
 	const getData = async () => {
 		getArtistMetaData();
 		getArtistTopTracks();
@@ -147,16 +176,23 @@ function Artist() {
 								· {artistName} ·
 							</Textfit>
 
-							<iframe
-								src={`https://open.spotify.com/follow/1/?uri=${artistUri}&size=basic&theme=light&show-count=0`}
-								width="95"
-								height="25"
-								scrolling="no"
-								frameBorder="0"
-								className="title-icon-link"
-								style={{ border: 'none', overflow: 'hidden' }}
-								allowtransparency="true"
-							/>
+							<div className="artist-links">
+								<iframe
+									src={`https://open.spotify.com/follow/1/?uri=${artistUri}&size=basic&theme=light&show-count=0`}
+									width="95"
+									height="25"
+									scrolling="no"
+									frameBorder="0"
+									style={{ border: 'none', overflow: 'hidden' }}
+									allowtransparency="true"
+								/>
+
+								{artistWikiLink.length > 0 && (
+									<a href={artistWikiLink} target="_blank">
+										<FaWikipediaW className="wikipedia-icon-link heartbeat" />
+									</a>
+								)}
+							</div>
 
 							<div id="artist-info">
 								<div id="image">

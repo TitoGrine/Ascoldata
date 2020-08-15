@@ -170,7 +170,7 @@ function Track() {
 								· {albumName} ·
 							</Textfit>
 							<a href={albumLink} target="_blank">
-								<FaSpotify className="title-icon-link heartbeat" />
+								<FaSpotify className="spotify-icon-link heartbeat" />
 							</a>
 							<div id="album-info">
 								<div id="image">

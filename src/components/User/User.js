@@ -137,7 +137,7 @@ function User() {
 								· Hello<strong> {user} </strong> ·
 							</Textfit>
 							<a href={link} target="_blank">
-								<FaSpotify className="title-icon-link heartbeat" />
+								<FaSpotify className="spotify-icon-link heartbeat" />
 							</a>
 							<div id="info">
 								<div id="image">
