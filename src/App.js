@@ -30,6 +30,7 @@ import SearchResults from './components/Search/SearchResults';
 import Find from './components/Find/Find';
 import Recommendations from './components/Find/Recommendations';
 import AlbumTracks from './components/Album/AlbumTracks';
+import PlaylistTracks from './components/Playlist/PlaylistTracks';
 
 function App() {
 	return (
@@ -45,6 +46,7 @@ function App() {
 					<Route exact={true} path="/album_tracks" component={AlbumTracks} />
 					<Route exact={true} path="/playlist" component={Playlist} />
 					<Route exact={true} path="/playlists" component={UserPlaylists} />
+					<Route exact={true} path="/playlist_tracks" component={PlaylistTracks} />
 					<Route exact={true} path="/liked" component={Liked} />
 					<Route exact={true} path="/search" component={SearchResults} />
 					<Route exact={true} path="/find" component={Find} />

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Spotify from 'spotify-web-api-js';
-import { useLocation } from 'react-router-dom';
+import { useLocation, Link } from 'react-router-dom';
 import { Image } from 'react-bootstrap';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { trackPromise, usePromiseTracker } from 'react-promise-tracker';
@@ -33,7 +33,7 @@ function Playlist() {
 	const [ playlistDescription, setPlaylistDescription ] = useState('');
 	const [ playlistFollowers, setPlaylistFollowers ] = useState('');
 	const [ playlistOwner, setPlaylistOwner ] = useState('');
-	const [ playlistTracks, setPlaylistTracks ] = useState('');
+	const [ playlistNoTracks, setPlaylistNoTracks ] = useState('');
 	const [ playlistDuration, setPlaylistDuration ] = useState('');
 
 	const [ playlistStats, setPlaylistStats ] = useState({});
@@ -51,7 +51,7 @@ function Playlist() {
 					setPlaylistDescription(decodeString(data.description));
 					setPlaylistFollowers(data.followers.total);
 					setPlaylistOwner(data.owner);
-					setPlaylistTracks(data.tracks.total);
+					setPlaylistNoTracks(data.tracks.total);
 
 					setPlaylistDuration(
 						data.tracks.items.reduce((total, track) => {
@@ -165,7 +165,19 @@ function Playlist() {
 										value={formatDuration(playlistDuration)}
 										units=""
 									/>
-									<StatCard barStat={false} title="Nr. Songs" value={playlistTracks} units="" />
+									<StatCard
+										barStat={false}
+										title="Nr. Songs"
+										value={
+											<Link
+												to={`/playlist_tracks?id=${playlist}&page=${1}`}
+												style={{ color: 'var(--color-primary)' }}
+											>
+												{playlistNoTracks}
+											</Link>
+										}
+										units=""
+									/>
 									{playlistDescription.length > 0 && (
 										<Textfit id="playlist-description" mode="multi" max={20}>
 											<div className="divider" />
