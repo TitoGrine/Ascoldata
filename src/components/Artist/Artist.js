@@ -5,7 +5,7 @@ import { useLocation } from 'react-router-dom';
 import { Image } from 'react-bootstrap';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { trackPromise, usePromiseTracker } from 'react-promise-tracker';
-import { FaWikipediaW } from 'react-icons/fa';
+import { FaWikipediaW, FaSpotify } from 'react-icons/fa';
 
 import { refreshToken } from '../Auth/Auth';
 
@@ -123,6 +123,8 @@ function Artist() {
 	};
 
 	const getWikiPage = async (query) => {
+		query = query.replace(/[\%\|\+\-\*\\\[\]\&\<\>\.]/g, '');
+
 		if (query)
 			wiki()
 				.page(`${query} (musician)`)
@@ -176,27 +178,27 @@ function Artist() {
 								· {artistName} ·
 							</Textfit>
 
-							<div className="artist-links">
-								<iframe
-									src={`https://open.spotify.com/follow/1/?uri=${artistUri}&size=basic&theme=light&show-count=0`}
-									width="95"
-									height="25"
-									scrolling="no"
-									frameBorder="0"
-									style={{ border: 'none', overflow: 'hidden' }}
-									allowtransparency="true"
-								/>
-
-								{artistWikiLink.length > 0 && (
-									<a href={artistWikiLink} target="_blank">
-										<FaWikipediaW className="wikipedia-icon-link heartbeat" />
-									</a>
-								)}
-							</div>
+							{artistWikiLink.length > 0 && (
+								<a href={artistWikiLink} target="_blank">
+									<FaWikipediaW className="wikipedia-icon-link heartbeat" />
+								</a>
+							)}
+							<a href={artistLink} target="_blank">
+								<FaSpotify className="spotify-icon-link heartbeat" />
+							</a>
 
 							<div id="artist-info">
 								<div id="image">
 									<Image src={artistImage} thumbnail />
+									<iframe
+										src={`https://open.spotify.com/follow/1/?uri=${artistUri}&size=basic&theme=light&show-count=0`}
+										width="95"
+										height="25"
+										scrolling="no"
+										frameBorder="0"
+										style={{ border: 'none', overflow: 'hidden' }}
+										allowtransparency="true"
+									/>
 								</div>
 								<StatCard barStat={false} title="Followers" value={artistFollowers} units="" />
 								<StatCard

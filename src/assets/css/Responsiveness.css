@@ -189,6 +189,11 @@
 		display: block;
 	}
 
+	.spotify-icon-link,
+	.wikipedia-icon-link {
+		top: 16vh;
+	}
+
 	/* Find */
 
 	.mode-value-input,

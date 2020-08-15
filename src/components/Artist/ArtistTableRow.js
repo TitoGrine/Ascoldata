@@ -15,7 +15,11 @@ function ArtistTableRow(props) {
 					'undefined'
 				) : (
 					props.info.genres.slice(0, 2).map((genre, index) => {
-						return genre + (index === props.info.genres.length - 1 ? '' : ',');
+						return (
+							genre.charAt(0).toUpperCase() +
+							genre.slice(1) +
+							(index === props.info.genres.length - 1 || index ? '' : ', ')
+						);
 					})
 				)}
 			</td>
