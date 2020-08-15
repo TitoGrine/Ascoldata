@@ -177,7 +177,6 @@ function Artist() {
 							<Textfit className="artist-title" mode="single" max={36}>
 								· {artistName} ·
 							</Textfit>
-
 							{artistWikiLink.length > 0 && (
 								<a href={artistWikiLink} target="_blank">
 									<FaWikipediaW className="wikipedia-icon-link heartbeat" />
@@ -186,7 +185,6 @@ function Artist() {
 							<a href={artistLink} target="_blank">
 								<FaSpotify className="spotify-icon-link heartbeat" />
 							</a>
-
 							<div id="artist-info">
 								<div id="image">
 									<Image src={artistImage} thumbnail />
@@ -254,6 +252,7 @@ function Artist() {
 								/>
 								<div id="mobile-separator" />
 							</div>
+							)
 						</React.Fragment>
 					)}
 				</section>

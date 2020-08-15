@@ -40,7 +40,7 @@ function PlaylistTracks() {
 		trackPromise(
 			spotifyWebApi.getTracks(tracks).then(
 				function(data) {
-					// console.log(data);
+					console.log(data);
 					setPlaylistTracks(data.tracks);
 					// setPlaylistName(data.tracks.length > 0 ? data.tracks[0].playlist.name : '');
 				},
@@ -64,11 +64,11 @@ function PlaylistTracks() {
 				})
 				.then(
 					function(data) {
-						// console.log(data);
+						console.log(data);
 						setTotalItems(data.total);
 						getPlaylistTracks(
 							data.items.map((item) => {
-								return item.id;
+								return item.track.id;
 							})
 						);
 					},
