@@ -255,7 +255,6 @@ function Track() {
 					<Tabs>
 						<TabList>
 							<Tab>Preview</Tab>
-
 							<Tab>Search</Tab>
 							<Tab>Go to</Tab>
 						</TabList>

@@ -28,6 +28,7 @@ function Playlist() {
 	const [ authToken, setAuthToken ] = useState(localStorage.getItem('authToken'));
 	const [ playlistName, setPlaylistName ] = useState('');
 	const [ playlistLink, setPlaylistLink ] = useState('');
+	const [ playlistUri, setPlaylistUri ] = useState('');
 	const [ playlistImage, setPlaylistImage ] = useState('');
 	const [ playlistDescription, setPlaylistDescription ] = useState('');
 	const [ playlistFollowers, setPlaylistFollowers ] = useState('');
@@ -45,6 +46,7 @@ function Playlist() {
 				function(data) {
 					setPlaylistName(data.name);
 					setPlaylistLink(data.external_urls.spotify);
+					setPlaylistUri(data.uri);
 					setPlaylistImage(data.images.length === 0 ? '' : data.images[0].url);
 					setPlaylistDescription(decodeString(data.description));
 					setPlaylistFollowers(data.followers.total);
@@ -224,10 +226,24 @@ function Playlist() {
 				<div className={`side-content slide-in-right sidebar-${toggled}`}>
 					<Tabs>
 						<TabList>
+							<Tab>Preview</Tab>
 							<Tab>Search</Tab>
 							<Tab>Go to</Tab>
 						</TabList>
 
+						<TabPanel className="preview_tab">
+							<LoadingSpinner />
+							{!promiseInProgress && (
+								<iframe
+									src={`https://embed.spotify.com/?uri=${playlistUri}&view=list&theme=black`}
+									width="100%"
+									height="90%"
+									frameBorder="0"
+									allowtransparency="true"
+									allow="encrypted-media"
+								/>
+							)}
+						</TabPanel>
 						<TabPanel>
 							<Search />
 						</TabPanel>
