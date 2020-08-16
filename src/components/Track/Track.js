@@ -10,12 +10,12 @@ import { getSong } from 'genius-lyrics-api';
 import { refreshToken } from '../Auth/Auth';
 import { keyBinds } from '../HelperFunc';
 
-import HeaderBar from '../HeaderBar';
-import Redirects from '../Redirects';
+import HeaderBar from '../Common/HeaderBar';
+import Redirects from '../Common/Redirects';
 import StatCard from '../Stats/StatCard';
 import Search from '../Search/Search';
-import SideToggle from '../SideToggle';
-import LoadingSpinner from '../LoadingSpinner';
+import SideToggle from '../Common/SideToggle';
+import LoadingSpinner from '../Common/LoadingSpinner';
 import { Helmet } from 'react-helmet';
 
 const spotifyWebApi = new Spotify();

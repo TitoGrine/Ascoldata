@@ -7,15 +7,16 @@ import Spotify from 'spotify-web-api-js';
 import { formatDuration } from '../HelperFunc';
 import { refreshToken } from '../Auth/Auth';
 
-import Redirects from '../Redirects';
+import Redirects from '../Common/Redirects';
 import StatCard from './StatCard';
 import { Textfit } from 'react-textfit';
 import Search from '../Search/Search';
-import SideToggle from '../SideToggle';
-import HeaderBar from '../HeaderBar';
+import SideToggle from '../Common/SideToggle';
+import HeaderBar from '../Common/HeaderBar';
 import { Helmet } from 'react-helmet';
-import LoadingSpinner from '../LoadingSpinner';
-import RadioInput from '../RadioInput';
+import LoadingSpinner from '../Common/LoadingSpinner';
+import RadioInput from '../Common/RadioInput';
+import NoContent from '../Common/NoContent';
 
 const spotifyWebApi = new Spotify();
 
@@ -24,6 +25,7 @@ function Stats() {
 	const history = useHistory();
 
 	const [ toggled, setToggled ] = useState('nothing');
+	const [ existsData, setExistsData ] = useState(false);
 	const [ authToken, setAuthToken ] = useState(localStorage.getItem('authToken'));
 	const [ stats, setStats ] = useState('');
 	const [ topGenres, setTopGenres ] = useState([]);
@@ -98,7 +100,10 @@ function Stats() {
 								return total + track.popularity;
 							}, 0) / data.items.length;
 
-						calcUserStats(tracks, avgPopularity);
+						if (tracks.length > 0) {
+							calcUserStats(tracks, avgPopularity);
+							setExistsData(true);
+						}
 					},
 					function(err) {
 						console.log(err);
@@ -161,6 +166,65 @@ function Stats() {
 		[ authToken, timeRange ]
 	);
 
+	const renderStats = () => {
+		if (existsData) {
+			return (
+				<div id="stats">
+					<StatCard
+						barStat={true}
+						title="Acousticness"
+						percentage={stats.acousticness}
+						explanation="acoustExplanation"
+						color="seagreen"
+					/>
+					<StatCard
+						barStat={true}
+						title="Danceability"
+						percentage={stats.danceability}
+						explanation="danceExplanation"
+						color="violet"
+					/>
+					<StatCard
+						barStat={true}
+						title="Energy"
+						percentage={stats.energy}
+						explanation="energyExplanation"
+						color="orangered"
+					/>
+					<StatCard
+						barStat={true}
+						title="Instrumentalness"
+						percentage={stats.instrumentalness}
+						explanation="instrumExplanation"
+						color="limegreen"
+					/>
+					<StatCard
+						barStat={true}
+						title="Liveness"
+						percentage={stats.liveness}
+						explanation="liveExplanation"
+						color="deepskyblue"
+					/>
+					<StatCard
+						barStat={true}
+						title="Valence"
+						percentage={stats.valence}
+						explanation="valExplanation"
+						color="orange"
+					/>
+					<div id="mobile-separator" />
+				</div>
+			);
+		}
+
+		return (
+			<NoContent
+				mainText="You haven't listened to enough music to gather information..."
+				secondaryText="Go enjoy some beats and come back, we'll wait 😊"
+			/>
+		);
+	};
+
 	return (
 		<React.Fragment>
 			<Helmet>
@@ -175,89 +239,47 @@ function Stats() {
 							<Textfit className="title" mode="single" max={35}>
 								· Your Statistics ·
 							</Textfit>
-							<div id="misc-info">
-								<StatCard
-									barStat={false}
-									title="Average song duration"
-									value={formatDuration(stats.duration_ms)}
-									units=""
-								/>
-								<StatCard
-									barStat={false}
-									title="Average loudness"
-									value={Math.round(stats.loudness)}
-									units="dB"
-								/>
-								<StatCard
-									barStat={false}
-									title="Average tempo"
-									value={Math.round(stats.tempo)}
-									units="bpm"
-								/>
-								<StatCard
-									barStat={false}
-									title="Popularity"
-									value={Math.round(stats.popularity)}
-									units=""
-								/>
-								<StatCard
-									barStat={false}
-									title="Most Listened Genres"
-									value={topGenres.map((genre, index) => {
-										return (
-											genre.charAt(0).toUpperCase() +
-											genre.slice(1) +
-											(index === topGenres.length - 1 ? '' : ', ')
-										);
-									})}
-									units=""
-								/>
-							</div>
-							<div id="stats">
-								<StatCard
-									barStat={true}
-									title="Acousticness"
-									percentage={stats.acousticness}
-									explanation="acoustExplanation"
-									color="seagreen"
-								/>
-								<StatCard
-									barStat={true}
-									title="Danceability"
-									percentage={stats.danceability}
-									explanation="danceExplanation"
-									color="violet"
-								/>
-								<StatCard
-									barStat={true}
-									title="Energy"
-									percentage={stats.energy}
-									explanation="energyExplanation"
-									color="orangered"
-								/>
-								<StatCard
-									barStat={true}
-									title="Instrumentalness"
-									percentage={stats.instrumentalness}
-									explanation="instrumExplanation"
-									color="limegreen"
-								/>
-								<StatCard
-									barStat={true}
-									title="Liveness"
-									percentage={stats.liveness}
-									explanation="liveExplanation"
-									color="deepskyblue"
-								/>
-								<StatCard
-									barStat={true}
-									title="Valence"
-									percentage={stats.valence}
-									explanation="valExplanation"
-									color="orange"
-								/>
-								<div id="mobile-separator" />
-							</div>
+							{existsData && (
+								<div id="misc-info">
+									<StatCard
+										barStat={false}
+										title="Average song duration"
+										value={formatDuration(stats.duration_ms)}
+										units=""
+									/>
+									<StatCard
+										barStat={false}
+										title="Average loudness"
+										value={Math.round(stats.loudness)}
+										units="dB"
+									/>
+									<StatCard
+										barStat={false}
+										title="Average tempo"
+										value={Math.round(stats.tempo)}
+										units="bpm"
+									/>
+									<StatCard
+										barStat={false}
+										title="Popularity"
+										value={Math.round(stats.popularity)}
+										units=""
+									/>
+									<StatCard
+										barStat={false}
+										title="Most Listened Genres"
+										value={topGenres.map((genre, index) => {
+											return (
+												genre.charAt(0).toUpperCase() +
+												genre.slice(1) +
+												(index === topGenres.length - 1 ? '' : ', ')
+											);
+										})}
+										units=""
+									/>
+								</div>
+							)}
+							{renderStats()}
 						</React.Fragment>
 					)}
 				</section>

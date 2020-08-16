@@ -7,7 +7,7 @@ import { trackPromise } from 'react-promise-tracker';
 
 import { refreshToken } from '../Auth/Auth';
 
-import Redirects from '../Redirects';
+import Redirects from '../Common/Redirects';
 import TrackTable from '../Track/TrackTable';
 import Pagination from 'react-js-pagination';
 import ArtistTable from '../Artist/ArtistTable';
@@ -15,13 +15,14 @@ import PlaylistTable from '../Playlist/PlaylistTable';
 import PlaylistCards from '../Playlist/PlaylistCards';
 import Search from './Search';
 import AlbumTable from '../Album/AlbumTable';
-import SideToggle from '../SideToggle';
+import SideToggle from '../Common/SideToggle';
 import TrackCards from '../Track/TrackCards';
 import AlbumCards from '../Album/AlbumCards';
 import ArtistCards from '../Artist/ArtistCards';
-import HeaderBar from '../HeaderBar';
-import LoadingSpinner from '../LoadingSpinner';
+import HeaderBar from '../Common/HeaderBar';
+import LoadingSpinner from '../Common/LoadingSpinner';
 import { Helmet } from 'react-helmet';
+import NoContent from '../Common/NoContent';
 
 const spotifyWebApi = new Spotify();
 
@@ -95,6 +96,8 @@ function SearchResults() {
 	);
 
 	const renderTable = () => {
+		if (results.length !== 0) return <NoContent mainText={`Couldn't find any ${type}s with that name 😞`} />;
+
 		switch (type) {
 			case 'artist':
 				return colapseTable ? (

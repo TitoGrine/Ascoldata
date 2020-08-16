@@ -8,14 +8,15 @@ import { Helmet } from 'react-helmet';
 
 import { refreshToken } from '../Auth/Auth';
 
-import Redirects from '../Redirects';
+import Redirects from '../Common/Redirects';
 import TrackTable from '../Track/TrackTable';
 import Pagination from 'react-js-pagination';
 import Search from '../Search/Search';
-import SideToggle from '../SideToggle';
+import SideToggle from '../Common/SideToggle';
 import TrackCards from '../Track/TrackCards';
-import HeaderBar from '../HeaderBar';
-import LoadingSpinner from '../LoadingSpinner';
+import HeaderBar from '../Common/HeaderBar';
+import LoadingSpinner from '../Common/LoadingSpinner';
+import NoContent from '../Common/NoContent';
 
 const spotifyWebApi = new Spotify();
 
@@ -105,6 +106,12 @@ function Liked() {
 								onChange={switchPage}
 							/>
 						</React.Fragment>
+					)}
+					{userLiked.length === 0 && (
+						<NoContent
+							mainText="You haven't liked any songs 😮"
+							secondaryText="Try the Find New Songs segment if you are looking for recommendations."
+						/>
 					)}
 				</section>
 				<section className={`sidebar-section slide-in-right sidebar-${toggled}`} />

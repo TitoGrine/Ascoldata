@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Navbar, Nav, Modal, Button } from 'react-bootstrap';
 
-import { clearStorage } from './Auth/Auth';
+import { clearStorage } from '../Auth/Auth';
 import { useHistory } from 'react-router-dom';
 
 function HeaderBar(props) {

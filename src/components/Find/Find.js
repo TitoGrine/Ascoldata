@@ -5,12 +5,12 @@ import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 
 import { keyBinds, trimLimit, getExplanation } from '../HelperFunc';
 
-import Redirects from '../Redirects';
+import Redirects from '../Common/Redirects';
 import Search from '../Search/Search';
 import AttributeSlider from './AttributeSlider';
 
-import SideToggle from '../SideToggle';
-import HeaderBar from '../HeaderBar';
+import SideToggle from '../Common/SideToggle';
+import HeaderBar from '../Common/HeaderBar';
 import { Helmet } from 'react-helmet';
 
 function Find() {

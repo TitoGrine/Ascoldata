@@ -9,13 +9,13 @@ import { Helmet } from 'react-helmet';
 
 import { refreshToken } from '../Auth/Auth';
 
-import Redirects from '../Redirects';
+import Redirects from '../Common/Redirects';
 import PlaylistTable from './PlaylistTable';
 import Search from '../Search/Search';
-import SideToggle from '../SideToggle';
+import SideToggle from '../Common/SideToggle';
 import PlaylistCards from './PlaylistCards';
-import HeaderBar from '../HeaderBar';
-import LoadingSpinner from '../LoadingSpinner';
+import HeaderBar from '../Common/HeaderBar';
+import LoadingSpinner from '../Common/LoadingSpinner';
 
 const spotifyWebApi = new Spotify();
 

@@ -8,14 +8,15 @@ import { refreshToken } from '../Auth/Auth';
 import { trimLimit } from '../HelperFunc';
 import { useMediaQuery } from 'react-responsive';
 
-import Redirects from '../Redirects';
+import Redirects from '../Common/Redirects';
 import TrackTable from '../Track/TrackTable';
 import Search from '../Search/Search';
-import SideToggle from '../SideToggle';
+import SideToggle from '../Common/SideToggle';
 import TrackCards from '../Track/TrackCards';
-import HeaderBar from '../HeaderBar';
-import LoadingSpinner from '../LoadingSpinner';
+import HeaderBar from '../Common/HeaderBar';
+import LoadingSpinner from '../Common/LoadingSpinner';
 import { Helmet } from 'react-helmet';
+import NoContent from '../Common/NoContent';
 
 const spotifyWebApi = new Spotify();
 
@@ -118,6 +119,12 @@ function Recommendations() {
 								Refresh
 							</button>
 						</React.Fragment>
+					)}
+					{recommendations.length === 0 && (
+						<NoContent
+							mainText="Nothing was found for what you were looking for..."
+							secondaryText="Try a different combination of attributes 😊"
+						/>
 					)}
 				</section>
 				<section className={`sidebar-section slide-in-right sidebar-${toggled}`} />

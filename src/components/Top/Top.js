@@ -10,15 +10,16 @@ import { refreshToken } from '../Auth/Auth';
 
 import ArtistTable from '../Artist/ArtistTable';
 import TrackTable from '../Track/TrackTable';
-import Redirects from '../Redirects';
+import Redirects from '../Common/Redirects';
 import Search from '../Search/Search';
-import SideToggle from '../SideToggle';
+import SideToggle from '../Common/SideToggle';
 import TrackCards from '../Track/TrackCards';
 import ArtistCards from '../Artist/ArtistCards';
-import HeaderBar from '../HeaderBar';
-import LoadingSpinner from '../LoadingSpinner';
+import HeaderBar from '../Common/HeaderBar';
+import LoadingSpinner from '../Common/LoadingSpinner';
 import { Helmet } from 'react-helmet';
-import RadioInput from '../RadioInput';
+import RadioInput from '../Common/RadioInput';
+import NoContent from '../Common/NoContent';
 
 const spotifyWebApi = new Spotify();
 
@@ -92,6 +93,14 @@ function Top() {
 	};
 
 	const renderTable = () => {
+		if (topResults.length === 0)
+			return (
+				<NoContent
+					mainText="It seems like you haven't listened to enough Spotify..."
+					secondaryText="There is no better time than now 😉"
+				/>
+			);
+
 		switch (topType) {
 			case 'artist':
 				return colapseTable ? (

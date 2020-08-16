@@ -8,15 +8,16 @@ import { trackPromise, usePromiseTracker } from 'react-promise-tracker';
 import { refreshToken } from '../Auth/Auth';
 import { formatDuration, decodeString } from '../HelperFunc';
 
-import Redirects from '../Redirects';
+import Redirects from '../Common/Redirects';
 import StatCard from '../Stats/StatCard';
 import { Textfit } from 'react-textfit';
 import Search from '../Search/Search';
-import SideToggle from '../SideToggle';
+import SideToggle from '../Common/SideToggle';
 import { FaSpotify } from 'react-icons/fa';
-import HeaderBar from '../HeaderBar';
-import LoadingSpinner from '../LoadingSpinner';
+import HeaderBar from '../Common/HeaderBar';
+import LoadingSpinner from '../Common/LoadingSpinner';
 import { Helmet } from 'react-helmet';
+import NoContent from '../Common/NoContent';
 
 const spotifyWebApi = new Spotify();
 
@@ -25,6 +26,7 @@ function Playlist() {
 	const playlist = query.get('id');
 
 	const [ toggled, setToggled ] = useState('nothing');
+	const [ existsData, setExistsData ] = useState(false);
 	const [ authToken, setAuthToken ] = useState(localStorage.getItem('authToken'));
 	const [ playlistName, setPlaylistName ] = useState('');
 	const [ playlistLink, setPlaylistLink ] = useState('');
@@ -59,11 +61,14 @@ function Playlist() {
 						}, 0)
 					);
 
-					getPlaylistStats(
-						data.tracks.items.map((track) => {
-							return track.track.id;
-						})
-					);
+					if (data.tracks.items.length > 0) {
+						getPlaylistStats(
+							data.tracks.items.map((track) => {
+								return track.track.id;
+							})
+						);
+						setExistsData(true);
+					}
 				},
 				function(err) {
 					console.log(err);
@@ -129,6 +134,60 @@ function Playlist() {
 		[ authToken ]
 	);
 
+	const renderStats = () => {
+		if (existsData) {
+			return (
+				<div id="stats">
+					<StatCard
+						barStat={true}
+						title="Acousticness"
+						percentage={playlistStats.acousticness}
+						explanation="acoustExplanation"
+						color="seagreen"
+					/>
+					<StatCard
+						barStat={true}
+						title="Danceability"
+						percentage={playlistStats.danceability}
+						explanation="danceExplanation"
+						color="violet"
+					/>
+					<StatCard
+						barStat={true}
+						title="Energy"
+						percentage={playlistStats.energy}
+						explanation="energyExplanation"
+						color="orangered"
+					/>
+					<StatCard
+						barStat={true}
+						title="Instrumentalness"
+						percentage={playlistStats.instrumentalness}
+						explanation="instrumExplanation"
+						color="limegreen"
+					/>
+					<StatCard
+						barStat={true}
+						title="Liveness"
+						percentage={playlistStats.liveness}
+						explanation="liveExplanation"
+						color="deepskyblue"
+					/>
+					<StatCard
+						barStat={true}
+						title="Valence"
+						percentage={playlistStats.valence}
+						explanation="valExplanation"
+						color="orange"
+					/>
+					<div id="mobile-separator" />
+				</div>
+			);
+		}
+
+		return <NoContent mainText="Playlist doesn't have enough songs for analysis..." />;
+	};
+
 	return (
 		<React.Fragment>
 			<Helmet>
@@ -186,51 +245,7 @@ function Playlist() {
 									)}
 								</div>
 							</div>
-							<div id="stats">
-								<StatCard
-									barStat={true}
-									title="Acousticness"
-									percentage={playlistStats.acousticness}
-									explanation="acoustExplanation"
-									color="seagreen"
-								/>
-								<StatCard
-									barStat={true}
-									title="Danceability"
-									percentage={playlistStats.danceability}
-									explanation="danceExplanation"
-									color="violet"
-								/>
-								<StatCard
-									barStat={true}
-									title="Energy"
-									percentage={playlistStats.energy}
-									explanation="energyExplanation"
-									color="orangered"
-								/>
-								<StatCard
-									barStat={true}
-									title="Instrumentalness"
-									percentage={playlistStats.instrumentalness}
-									explanation="instrumExplanation"
-									color="limegreen"
-								/>
-								<StatCard
-									barStat={true}
-									title="Liveness"
-									percentage={playlistStats.liveness}
-									explanation="liveExplanation"
-									color="deepskyblue"
-								/>
-								<StatCard
-									barStat={true}
-									title="Valence"
-									percentage={playlistStats.valence}
-									explanation="valExplanation"
-									color="orange"
-								/>
-								<div id="mobile-separator" />
-							</div>
+							{renderStats()}
 						</React.Fragment>
 					)}
 				</section>

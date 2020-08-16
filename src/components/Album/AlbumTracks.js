@@ -8,13 +8,13 @@ import { trackPromise } from 'react-promise-tracker';
 import { refreshToken } from '../Auth/Auth';
 import { useMediaQuery } from 'react-responsive';
 
-import Redirects from '../Redirects';
+import Redirects from '../Common/Redirects';
 import Search from '../Search/Search';
-import SideToggle from '../SideToggle';
+import SideToggle from '../Common/SideToggle';
 import TrackCards from '../Track/TrackCards';
 import TrackTable from '../Track/TrackTable';
-import HeaderBar from '../HeaderBar';
-import LoadingSpinner from '../LoadingSpinner';
+import HeaderBar from '../Common/HeaderBar';
+import LoadingSpinner from '../Common/LoadingSpinner';
 import { Helmet } from 'react-helmet';
 
 const spotifyWebApi = new Spotify();

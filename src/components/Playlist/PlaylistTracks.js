@@ -8,14 +8,15 @@ import { trackPromise } from 'react-promise-tracker';
 import { refreshToken } from '../Auth/Auth';
 import { useMediaQuery } from 'react-responsive';
 
-import Redirects from '../Redirects';
+import Redirects from '../Common/Redirects';
 import Search from '../Search/Search';
-import SideToggle from '../SideToggle';
+import SideToggle from '../Common/SideToggle';
 import TrackCards from '../Track/TrackCards';
 import TrackTable from '../Track/TrackTable';
-import HeaderBar from '../HeaderBar';
-import LoadingSpinner from '../LoadingSpinner';
+import HeaderBar from '../Common/HeaderBar';
+import LoadingSpinner from '../Common/LoadingSpinner';
 import { Helmet } from 'react-helmet';
+import NoContent from '../Common/NoContent';
 
 const spotifyWebApi = new Spotify();
 
@@ -129,6 +130,7 @@ function PlaylistTracks() {
 							/>
 						</React.Fragment>
 					)}
+					{playlistTracks.length === 0 && <NoContent mainText="This playlist doesn't have any songs..." />}
 				</section>
 				<section className={`sidebar-section slide-in-right sidebar-${toggled}`} />
 				<div className={`side-content slide-in-right sidebar-${toggled}`}>

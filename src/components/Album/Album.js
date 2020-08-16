@@ -9,14 +9,15 @@ import { trackPromise, usePromiseTracker } from 'react-promise-tracker';
 import { refreshToken } from '../Auth/Auth';
 import { formatDuration } from '../HelperFunc';
 
-import Redirects from '../Redirects';
+import Redirects from '../Common/Redirects';
 import StatCard from '../Stats/StatCard';
 import { Image } from 'react-bootstrap';
 import Search from '../Search/Search';
-import SideToggle from '../SideToggle';
-import HeaderBar from '../HeaderBar';
-import LoadingSpinner from '../LoadingSpinner';
+import SideToggle from '../Common/SideToggle';
+import HeaderBar from '../Common/HeaderBar';
+import LoadingSpinner from '../Common/LoadingSpinner';
 import { Helmet } from 'react-helmet';
+import NoContent from '../Common/NoContent';
 
 const spotifyWebApi = new Spotify();
 
@@ -25,6 +26,7 @@ function Track() {
 	const album = query.get('id');
 
 	const [ toggled, setToggled ] = useState('nothing');
+	const [ existsData, setExistsData ] = useState(false);
 	const [ authToken, setAuthToken ] = useState(localStorage.getItem('authToken'));
 	const [ albumName, setAlbumName ] = useState('');
 	const [ albumLink, setAlbumLink ] = useState('');
@@ -59,11 +61,14 @@ function Track() {
 					setAlbumRelDate(data.release_date);
 					setAlbumPopularity(data.popularity);
 
-					getAlbumFeatures(
-						data.tracks.items.map((track) => {
-							return track.id;
-						})
-					);
+					if (data.tracks.items.length > 0) {
+						getAlbumFeatures(
+							data.tracks.items.map((track) => {
+								return track.id;
+							})
+						);
+						setExistsData(true);
+					}
 				},
 				function(err) {
 					console.log(err);
@@ -127,15 +132,15 @@ function Track() {
 			return (
 				<StatCard
 					barStat={false}
-					title="Artist"
-					value={albumArtists.map((artist) => {
+					title={`Artist${albumArtists.length > 1 ? 's' : ''}`}
+					value={albumArtists.map((artist, index) => {
 						return (
 							<Link
 								key={artist.id}
 								to={`/artist?id=${artist.id}`}
 								style={{ color: 'var(--color-primary)' }}
 							>
-								{artist.name}
+								{`${artist.name}${index === albumArtists.length - 1 ? '' : ', '}`}
 							</Link>
 						);
 					})}
@@ -154,6 +159,60 @@ function Track() {
 		},
 		[ authToken ]
 	);
+
+	const renderStats = () => {
+		if (existsData) {
+			return (
+				<div id="stats">
+					<StatCard
+						barStat={true}
+						title="Acousticness"
+						percentage={albumStats.acousticness}
+						explanation="acoustExplanation"
+						color="seagreen"
+					/>
+					<StatCard
+						barStat={true}
+						title="Danceability"
+						percentage={albumStats.danceability}
+						explanation="danceExplanation"
+						color="violet"
+					/>
+					<StatCard
+						barStat={true}
+						title="Energy"
+						percentage={albumStats.energy}
+						explanation="energyExplanation"
+						color="orangered"
+					/>
+					<StatCard
+						barStat={true}
+						title="Instrumentalness"
+						percentage={albumStats.instrumentalness}
+						explanation="instrumExplanation"
+						color="limegreen"
+					/>
+					<StatCard
+						barStat={true}
+						title="Liveness"
+						percentage={albumStats.liveness}
+						explanation="liveExplanation"
+						color="deepskyblue"
+					/>
+					<StatCard
+						barStat={true}
+						title="Valence"
+						percentage={albumStats.valence}
+						explanation="valExplanation"
+						color="orange"
+					/>
+					<div id="mobile-separator" />
+				</div>
+			);
+		}
+
+		return <NoContent mainText="Album doesn't have enough songs for analysis..." />;
+	};
 
 	return (
 		<React.Fragment>
@@ -202,51 +261,7 @@ function Track() {
 									<StatCard barStat={false} title="Popularity" value={albumPopularity} units="" />
 								</div>
 							</div>
-							<div id="stats">
-								<StatCard
-									barStat={true}
-									title="Acousticness"
-									percentage={albumStats.acousticness}
-									explanation="acoustExplanation"
-									color="seagreen"
-								/>
-								<StatCard
-									barStat={true}
-									title="Danceability"
-									percentage={albumStats.danceability}
-									explanation="danceExplanation"
-									color="violet"
-								/>
-								<StatCard
-									barStat={true}
-									title="Energy"
-									percentage={albumStats.energy}
-									explanation="energyExplanation"
-									color="orangered"
-								/>
-								<StatCard
-									barStat={true}
-									title="Instrumentalness"
-									percentage={albumStats.instrumentalness}
-									explanation="instrumExplanation"
-									color="limegreen"
-								/>
-								<StatCard
-									barStat={true}
-									title="Liveness"
-									percentage={albumStats.liveness}
-									explanation="liveExplanation"
-									color="deepskyblue"
-								/>
-								<StatCard
-									barStat={true}
-									title="Valence"
-									percentage={albumStats.valence}
-									explanation="valExplanation"
-									color="orange"
-								/>
-								<div id="mobile-separator" />
-							</div>
+							{renderStats()}
 						</React.Fragment>
 					)}
 				</section>

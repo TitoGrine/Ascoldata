@@ -1,6 +1,6 @@
 import React from 'react';
 
-import HeaderBar from './HeaderBar';
+import HeaderBar from './Common/HeaderBar';
 import User from './User/User';
 import Login from './Login/Login';
 
