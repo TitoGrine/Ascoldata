@@ -1,0 +1,16 @@
+.playlist-creator {
+	display: flex;
+	flex-direction: column;
+	gap: 0.6em;
+	margin-top: 2em;
+	align-items: center;
+	height: 100%;
+	font-size: 1.3em;
+}
+
+.playlist-creator > img {
+	width: 200px;
+	height: 200px;
+	object-fit: cover;
+	background-color: var(--color-primary);
+}

@@ -11,25 +11,25 @@ import { useMediaQuery } from 'react-responsive';
 import Redirects from '../Common/Redirects';
 import Search from '../Search/Search';
 import SideToggle from '../Common/SideToggle';
-import TrackCards from '../Track/TrackCards';
-import TrackTable from '../Track/TrackTable';
 import HeaderBar from '../Common/HeaderBar';
 import LoadingSpinner from '../Common/LoadingSpinner';
 import { Helmet } from 'react-helmet';
 import NoContent from '../Common/NoContent';
+import PlaylistCards from './PlaylistCards';
+import PlaylistTable from './PlaylistTable';
 
 const spotifyWebApi = new Spotify();
 
-function PlaylistTracks() {
+function CreatorPlaylists() {
 	const query = new URLSearchParams(useLocation().search);
 	const history = useHistory();
 	const limit = 12;
 
-	const playlistId = query.get('id');
+	const creatorId = query.get('id');
 	const [ toggled, setToggled ] = useState('nothing');
 	const [ authToken, setAuthToken ] = useState(localStorage.getItem('authToken'));
-	const [ playlistName, setPlaylistName ] = useState('');
-	const [ playlistTracks, setPlaylistTracks ] = useState([]);
+	const [ creatorName, setcreatorName ] = useState('');
+	const [ creatorPlaylists, setCreatorPlaylists ] = useState([]);
 	const [ page, setPage ] = useState(parseInt(query.get('page')));
 	const [ offset, setOffset ] = useState(limit * (page - 1));
 	const [ totalItems, setTotalItems ] = useState(0);
@@ -37,29 +37,12 @@ function PlaylistTracks() {
 	const colapseTable = useMediaQuery({ maxWidth: 700 });
 	const decreasePagination = useMediaQuery({ maxWidth: 500 });
 
-	const getPlaylistTracks = (tracks) => {
-		trackPromise(
-			spotifyWebApi.getTracks(tracks).then(
-				function(data) {
-					// console.log(data);
-					setPlaylistTracks(data.tracks);
-					// setPlaylistName(data.tracks.length > 0 ? data.tracks[0].playlist.name : '');
-				},
-				function(err) {
-					console.log(err);
-
-					if (err.status === 401) refreshToken((new_token) => setAuthToken(new_token));
-				}
-			)
-		);
-	};
-
 	const getData = () => {
 		spotifyWebApi.setAccessToken(authToken);
 
 		trackPromise(
 			spotifyWebApi
-				.getPlaylistTracks(playlistId, {
+				.getUserPlaylists(creatorId, {
 					limit: limit,
 					offset: offset
 				})
@@ -67,11 +50,8 @@ function PlaylistTracks() {
 					function(data) {
 						// console.log(data);
 						setTotalItems(data.total);
-						getPlaylistTracks(
-							data.items.map((item) => {
-								return item.track.id;
-							})
-						);
+						setCreatorPlaylists(data.items);
+						setcreatorName(data.items.length > 0 ? data.items[0].owner.display_name : '');
 					},
 					function(err) {
 						console.log(err);
@@ -100,7 +80,7 @@ function PlaylistTracks() {
 
 	useEffect(
 		() => {
-			history.push(`/playlist_tracks?id=${playlistId}&page=${page}`);
+			history.push(`/creator_playlists?id=${creatorId}&page=${page}`);
 		},
 		[ page ]
 	);
@@ -108,18 +88,21 @@ function PlaylistTracks() {
 	return (
 		<React.Fragment>
 			<Helmet>
-				<title>{`${playlistName} tracks - Ascoldata`}</title>
+				<title>{`${creatorName} Playlists - Ascoldata`}</title>
 			</Helmet>
 			<HeaderBar />
 			<div id="corporum">
 				<section className="content-section table-content">
 					<LoadingSpinner />
-					{playlistTracks.length > 0 && (
+					{creatorPlaylists.length > 0 && (
 						<React.Fragment>
 							{colapseTable ? (
-								<TrackCards results={playlistTracks} />
+								<PlaylistCards results={creatorPlaylists} />
 							) : (
-								<TrackTable results={playlistTracks} maxHeight={playlistTracks.length / limit * 100} />
+								<PlaylistTable
+									results={creatorPlaylists}
+									maxHeight={creatorPlaylists.length / limit * 100}
+								/>
 							)}
 							<Pagination
 								activePage={page}
@@ -130,7 +113,9 @@ function PlaylistTracks() {
 							/>
 						</React.Fragment>
 					)}
-					{playlistTracks.length === 0 && <NoContent mainText="This playlist doesn't have any songs..." />}
+					{creatorPlaylists.length === 0 && (
+						<NoContent mainText="This creator doesn't have any playlists..." />
+					)}
 				</section>
 				<section className={`sidebar-section slide-in-right sidebar-${toggled}`} />
 				<div className={`side-content slide-in-right sidebar-${toggled}`}>
@@ -158,4 +143,4 @@ function PlaylistTracks() {
 	);
 }
 
-export default PlaylistTracks;
+export default CreatorPlaylists;

@@ -18,6 +18,7 @@ import HeaderBar from '../Common/HeaderBar';
 import LoadingSpinner from '../Common/LoadingSpinner';
 import { Helmet } from 'react-helmet';
 import NoContent from '../Common/NoContent';
+import Owner from '../User/Creator';
 
 const spotifyWebApi = new Spotify();
 
@@ -35,6 +36,7 @@ function Playlist() {
 	const [ playlistDescription, setPlaylistDescription ] = useState('');
 	const [ playlistFollowers, setPlaylistFollowers ] = useState('');
 	const [ playlistOwner, setPlaylistOwner ] = useState('');
+	const [ playlistOwnerData, setPlaylistOwnerData ] = useState('');
 	const [ playlistNoTracks, setPlaylistNoTracks ] = useState('');
 	const [ playlistDuration, setPlaylistDuration ] = useState('');
 
@@ -69,6 +71,8 @@ function Playlist() {
 						);
 						setExistsData(true);
 					}
+
+					if (data.owner.id) getOwnerInfo(data.owner.id);
 				},
 				function(err) {
 					console.log(err);
@@ -76,6 +80,20 @@ function Playlist() {
 					if (err.status === 401) refreshToken((new_token) => setAuthToken(new_token));
 				}
 			)
+		);
+	};
+
+	const getOwnerInfo = (owner) => {
+		spotifyWebApi.getUser(owner).then(
+			function(data) {
+				// console.log(data);
+				setPlaylistOwnerData(data);
+			},
+			function(err) {
+				console.log(err);
+
+				if (err.status === 401) refreshToken((new_token) => setAuthToken(new_token));
+			}
 		);
 	};
 
@@ -254,6 +272,7 @@ function Playlist() {
 					<Tabs>
 						<TabList>
 							<Tab>Preview</Tab>
+							<Tab>Creator</Tab>
 							<Tab>Search</Tab>
 							<Tab>Go to</Tab>
 						</TabList>
@@ -270,6 +289,9 @@ function Playlist() {
 									allow="encrypted-media"
 								/>
 							)}
+						</TabPanel>
+						<TabPanel>
+							<Owner info={playlistOwnerData} />
 						</TabPanel>
 						<TabPanel>
 							<Search />

@@ -2,12 +2,13 @@ import React from 'react';
 import './App.css';
 import './assets/css/SelectInputs.css';
 import './assets/css/Pagination.css';
-import './assets/css/GeneralInfo.css';
+import './assets/css/User.css';
 import './assets/css/Album.css';
 import './assets/css/Artist.css';
 import './assets/css/AttributeSlider.css';
 import './assets/css/Find.css';
 import './assets/css/Playlist.css';
+import './assets/css/Owner.css';
 import './assets/css/Search.css';
 import './assets/css/StatCard.css';
 import './assets/css/Stats.css';
@@ -31,6 +32,7 @@ import Find from './components/Find/Find';
 import Recommendations from './components/Find/Recommendations';
 import AlbumTracks from './components/Album/AlbumTracks';
 import PlaylistTracks from './components/Playlist/PlaylistTracks';
+import CreatorPlaylists from './components/Playlist/CreatorPlaylists';
 
 function App() {
 	return (
@@ -47,6 +49,7 @@ function App() {
 					<Route exact={true} path="/playlist" component={Playlist} />
 					<Route exact={true} path="/playlists" component={UserPlaylists} />
 					<Route exact={true} path="/playlist_tracks" component={PlaylistTracks} />
+					<Route exact={true} path="/creator_playlists" component={CreatorPlaylists} />
 					<Route exact={true} path="/liked" component={Liked} />
 					<Route exact={true} path="/search" component={SearchResults} />
 					<Route exact={true} path="/find" component={Find} />
