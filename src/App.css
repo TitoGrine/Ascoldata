@@ -227,6 +227,15 @@ a.inner-link {
 	color: var(--color-primary);
 }
 
+.alert {
+	position: fixed;
+	z-index: 200;
+	top: 0;
+	left: 50vw;
+	-webkit-transform: translate(-50%, 0);
+	transform: translate(-50%, 0);
+}
+
 .no-content-warning {
 	place-self: center;
 	margin: auto;

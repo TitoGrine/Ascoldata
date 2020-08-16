@@ -23,6 +23,7 @@ import HeaderBar from '../Common/HeaderBar';
 import LoadingSpinner from '../Common/LoadingSpinner';
 import { Helmet } from 'react-helmet';
 import NoContent from '../Common/NoContent';
+import { Alert } from 'react-bootstrap';
 
 const spotifyWebApi = new Spotify();
 
@@ -35,6 +36,7 @@ function SearchResults() {
 	const type = query.get('type');
 
 	const [ toggled, setToggled ] = useState('nothing');
+	const [ showAlert, setShowAlert ] = useState(false);
 	const [ authToken, setAuthToken ] = useState(localStorage.getItem('authToken'));
 	const [ page, setPage ] = useState(parseInt(query.get('page')));
 	const [ results, setResults ] = useState([]);
@@ -43,6 +45,12 @@ function SearchResults() {
 
 	const colapseTable = useMediaQuery({ maxWidth: 700 });
 	const decreasePagination = useMediaQuery({ maxWidth: 500 });
+
+	const autoDismiss = async () => {
+		window.setTimeout(() => {
+			setShowAlert(false);
+		}, 5000);
+	};
 
 	const getData = async () => {
 		spotifyWebApi.setAccessToken(authToken);
@@ -57,8 +65,11 @@ function SearchResults() {
 					function(data) {
 						// console.log(data);
 
-						if (data[`${type}s`].items.length === 0 && offset !== 0) switchPage(1);
-						else {
+						if (data[`${type}s`].items.length === 0 && offset !== 0) {
+							setShowAlert(true);
+							autoDismiss();
+							switchPage(1);
+						} else {
 							setTotalItems(data[`${type}s`].total);
 							setResults(data[`${type}s`].items);
 						}
@@ -96,7 +107,7 @@ function SearchResults() {
 	);
 
 	const renderTable = () => {
-		if (results.length !== 0) return <NoContent mainText={`Couldn't find any ${type}s with that name 😞`} />;
+		if (results.length === 0) return <NoContent mainText={`Couldn't find any ${type}s with that name 😞`} />;
 
 		switch (type) {
 			case 'artist':
@@ -133,6 +144,17 @@ function SearchResults() {
 			<Helmet>
 				<title>{`${q} - Ascoldata`}</title>
 			</Helmet>
+			<Alert
+				variant="warning"
+				show={showAlert}
+				onClose={() => {
+					setShowAlert(false);
+				}}
+				dismissible
+			>
+				<Alert.Heading>Ups!</Alert.Heading>
+				<p>The page you were trying to see doesn't actually have any {type}s. Sorry about that!</p>
+			</Alert>
 			<HeaderBar />
 			<div id="corporum">
 				<section className="content-section table-content">
