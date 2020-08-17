@@ -132,7 +132,7 @@ function Artist() {
 
 		if (query)
 			wiki()
-				.page(`${query} (musician)`)
+				.page(`${query} (singer)`)
 				.then((page) => {
 					setArtistWikiLink(page.raw.fullurl);
 				})
@@ -144,11 +144,18 @@ function Artist() {
 						})
 						.catch((err) => {
 							wiki()
-								.page(`${query}`)
+								.page(`${query} (musician)`)
 								.then((page) => {
 									setArtistWikiLink(page.raw.fullurl);
 								})
-								.catch((err) => {});
+								.catch((err) => {
+									wiki()
+										.page(`${query}`)
+										.then((page) => {
+											setArtistWikiLink(page.raw.fullurl);
+										})
+										.catch((err) => {});
+								});
 						});
 				});
 	};

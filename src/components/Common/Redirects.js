@@ -25,6 +25,11 @@ function Redirects(props) {
 						<Link to={`/liked?page=${1}`}>Your Liked Songs</Link>
 					</li>
 				)}
+				{props.exclude !== 'followed' && (
+					<li>
+						<Link to={`/followed`}>Followed Artists</Link>
+					</li>
+				)}
 				{props.exclude !== 'playlists' && (
 					<li>
 						<Link to={`/playlists?page=${1}`}>Your Playlists</Link>

@@ -23,6 +23,7 @@ ul.pagination {
 	font-size: 1.1em;
 	filter: opacity(0.6);
 	animation: focusOut 0.1s linear;
+	cursor: pointer;
 }
 
 .pagination > li:first-child a {
@@ -41,6 +42,7 @@ ul.pagination {
 
 .pagination > li.disabled a {
 	color: slategray;
+	cursor: default;
 }
 
 .pagination > li a:hover {
@@ -52,7 +54,6 @@ ul.pagination {
 	animation: none;
 	background-color: var(--color-neutral);
 	color: slategray;
-	cursor: default;
 }
 
 .pagination > li.active a:hover {

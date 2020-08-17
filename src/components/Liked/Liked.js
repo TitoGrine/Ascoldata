@@ -3,7 +3,7 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { useLocation, useHistory } from 'react-router-dom';
 import Spotify from 'spotify-web-api-js';
 import { useMediaQuery } from 'react-responsive';
-import { trackPromise } from 'react-promise-tracker';
+import { trackPromise, usePromiseTracker } from 'react-promise-tracker';
 import { Helmet } from 'react-helmet';
 
 import { refreshToken } from '../Auth/Auth';
@@ -24,6 +24,8 @@ function Liked() {
 	const query = new URLSearchParams(useLocation().search);
 	const history = useHistory();
 	const limit = 12;
+
+	const { promiseInProgress } = usePromiseTracker();
 
 	const [ toggled, setToggled ] = useState('nothing');
 	const [ authToken, setAuthToken ] = useState(localStorage.getItem('authToken'));
@@ -107,7 +109,8 @@ function Liked() {
 							/>
 						</React.Fragment>
 					)}
-					{userLiked.length === 0 && (
+					{!promiseInProgress &&
+					userLiked.length === 0 && (
 						<NoContent
 							mainText="You haven't liked any songs 😮"
 							secondaryText="Try the Find New Songs segment if you are looking for recommendations."

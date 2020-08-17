@@ -4,7 +4,7 @@ import { useLocation, useHistory } from 'react-router-dom';
 import Spotify from 'spotify-web-api-js';
 import Pagination from 'react-js-pagination';
 import { useMediaQuery } from 'react-responsive';
-import { trackPromise } from 'react-promise-tracker';
+import { trackPromise, usePromiseTracker } from 'react-promise-tracker';
 
 import { refreshToken } from '../Auth/Auth';
 
@@ -27,6 +27,8 @@ function Top() {
 	const query = new URLSearchParams(useLocation().search);
 	const history = useHistory();
 	const limit = 12;
+
+	const { promiseInProgress } = usePromiseTracker();
 
 	const [ toggled, setToggled ] = useState('nothing');
 	const [ authToken, setAuthToken ] = useState(localStorage.getItem('authToken'));
@@ -163,20 +165,16 @@ function Top() {
 			</Helmet>
 			<HeaderBar />
 			<div id="corporum" className="top-content">
-				<section className="content-section content-section-top  table-content">
+				<section className="content-section content-section-top table-content">
 					<LoadingSpinner />
-					{topResults.length > 0 && (
-						<React.Fragment>
-							{renderTable()}
-							<Pagination
-								activePage={page}
-								itemsCountPerPage={limit}
-								totalItemsCount={totalItems}
-								pageRangeDisplayed={decreasePagination ? 3 : 8}
-								onChange={switchPage}
-							/>
-						</React.Fragment>
-					)}
+					{!promiseInProgress && renderTable()}
+					<Pagination
+						activePage={page}
+						itemsCountPerPage={limit}
+						totalItemsCount={totalItems}
+						pageRangeDisplayed={decreasePagination ? 3 : 8}
+						onChange={switchPage}
+					/>
 				</section>
 				<section className={`sidebar-section slide-in-right sidebar-${toggled}`} />
 				<div className={`side-content slide-in-right sidebar-${toggled}`}>

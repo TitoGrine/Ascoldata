@@ -3,7 +3,7 @@ import { Spinner } from 'react-bootstrap';
 import { usePromiseTracker } from 'react-promise-tracker';
 
 function LoadingSpinner() {
-	const { promiseInProgress } = usePromiseTracker({ delay: 300 });
+	const { promiseInProgress } = usePromiseTracker({ delay: 200 });
 
 	return (
 		promiseInProgress && (
