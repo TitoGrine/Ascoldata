@@ -101,11 +101,10 @@ div.side-content {
 
 div.side-content ul.redirects {
 	align-self: flex-start;
-	height: 90%;
-	padding: 1em;
+	padding: 0.5em 1em;
 	display: flex;
 	flex-direction: column;
-	gap: 0.7em;
+	gap: 1em;
 }
 
 div.side-content ul.redirects li {
@@ -113,13 +112,12 @@ div.side-content ul.redirects li {
 	text-decoration: none;
 	font-size: 1.1em;
 	font-weight: 500;
-	margin-top: 0.5em;
 }
 
 div.side-content ul.redirects li a {
 	list-style-type: none;
 	text-decoration: none;
-	font-size: 1.2em;
+	font-size: min(6vw, 1.2em);
 	font-weight: 600;
 	color: var(--color-neutral);
 	animation: focusOut 0.1s linear forwards;
@@ -192,7 +190,7 @@ div.side-content ul.redirects li a:hover {
 	padding: 0;
 	gap: 0.5em;
 
-	font-size: 1.3em;
+	font-size: min(5vw, 1.3em);
 	font-weight: 600;
 }
 
@@ -211,6 +209,8 @@ div.side-content ul.redirects li a:hover {
 
 .react-tabs__tab-panel--selected {
 	flex-basis: 100%;
+	max-height: 90%;
+	overflow-y: auto;
 }
 
 .react-tabs__tab-panel--selected.preview_tab {

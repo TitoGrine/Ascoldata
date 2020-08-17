@@ -2,15 +2,15 @@
 	display: flex;
 	flex-direction: column;
 	gap: 0.5em;
-	margin-top: 2em;
+	margin-top: 1em;
 	align-items: center;
 	/* height: 100%; */
-	font-size: 1.3em;
+	font-size: min(6vw, 1.3em);
 }
 
 .playlist-creator > img {
-	width: 180px;
-	height: 180px;
+	width: min(40vw, 180px);
+	height: min(40vw, 180px);
 	object-fit: cover;
 	background-color: var(--color-primary);
 }

@@ -12,7 +12,8 @@
 	justify-content: center;
 	align-items: center;
 	font-size: 1.3em;
-	gap: 4em;
+	padding: 0 0.5em;
+	gap: min(10vw, 4em);
 	margin-top: 1em;
 }
 
@@ -72,6 +73,6 @@ button.refresh-button {
 	font-size: 1.2rem;
 	font-weight: 500;
 	overflow-y: auto;
-	max-height: 55vh;
+	max-height: 65vh;
 	line-height: 2rem;
 }
