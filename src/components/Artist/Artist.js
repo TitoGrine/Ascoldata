@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Spotify from 'spotify-web-api-js';
 import wiki from 'wikijs';
-import { useLocation } from 'react-router-dom';
+import { useLocation, Redirect } from 'react-router-dom';
 import { Image } from 'react-bootstrap';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { trackPromise, usePromiseTracker } from 'react-promise-tracker';
@@ -229,6 +229,8 @@ function Artist() {
 		return <NoContent mainText="Artist doesn't have enough songs for analysis..." />;
 	};
 
+	if (!authToken) return <Redirect to="/" />;
+
 	return (
 		<React.Fragment>
 			<Helmet>
@@ -267,8 +269,20 @@ function Artist() {
 								<StatCard barStat={false} title="Followers" value={artistFollowers} units="" />
 								<StatCard
 									barStat={false}
-									title="Genre"
-									value={artistGenres.length === 0 ? 'undefined' : artistGenres[0]}
+									title={`Genre${artistGenres.length - 1 ? 's' : ''}`}
+									value={
+										artistGenres.length === 0 ? (
+											'undefined'
+										) : (
+											artistGenres.slice(0, 2).map((genre, index) => {
+												return (
+													genre.charAt(0).toUpperCase() +
+													genre.slice(1) +
+													(index === artistGenres.length - 1 || index ? '' : ', ')
+												);
+											})
+										)
+									}
 									units=""
 								/>
 								<StatCard barStat={false} title="Popularity" value={artistPopularity} units="" />

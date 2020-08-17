@@ -1,4 +1,5 @@
 ul.pagination {
+	grid-row: -1;
 	align-self: center;
 	display: flex;
 	max-width: min(95vw, 350px);

@@ -3,7 +3,7 @@ import PercentBar from './PercentBar';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { MdInfo } from 'react-icons/md';
 
-import { getExplanation } from '../HelperFunc';
+import { getExplanation } from '../Util/HelperFunc';
 
 function StatCard(props) {
 	const getCard = () => {

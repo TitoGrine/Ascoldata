@@ -15,6 +15,7 @@ import LoadingSpinner from '../Common/LoadingSpinner';
 import NoContent from '../Common/NoContent';
 import ArtistCards from '../Artist/ArtistCards';
 import ArtistTable from '../Artist/ArtistTable';
+import { Redirect } from 'react-router-dom';
 
 const spotifyWebApi = new Spotify();
 
@@ -72,6 +73,8 @@ function Followed() {
 		},
 		[ authToken, currPage ]
 	);
+
+	if (!authToken) return <Redirect to="/" />;
 
 	return (
 		<React.Fragment>

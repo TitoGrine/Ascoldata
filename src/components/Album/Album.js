@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import Spotify from 'spotify-web-api-js';
-import { useLocation, Link } from 'react-router-dom';
+import { useLocation, Link, Redirect } from 'react-router-dom';
 import { Textfit } from 'react-textfit';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { FaSpotify } from 'react-icons/fa';
 import { trackPromise, usePromiseTracker } from 'react-promise-tracker';
 
 import { refreshToken } from '../Auth/Auth';
-import { formatDuration } from '../HelperFunc';
+import { formatDuration } from '../Util/HelperFunc';
 
 import Redirects from '../Common/Redirects';
 import StatCard from '../Stats/StatCard';
@@ -213,6 +213,8 @@ function Track() {
 
 		return <NoContent mainText="Album doesn't have enough songs for analysis..." />;
 	};
+
+	if (!authToken) return <Redirect to="/" />;
 
 	return (
 		<React.Fragment>

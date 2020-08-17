@@ -111,7 +111,9 @@
 
 	#track-info > div,
 	#album-info,
-	#album-info #misc-data {
+	#artist-info,
+	#album-info #misc-data,
+	#playlist-info {
 		align-items: flex-start;
 		width: 100%;
 		padding: 0 0.5em;
@@ -140,6 +142,11 @@
 }
 
 @media screen and (max-width: 600px) {
+	section.sidebar-section,
+	div.side-content {
+		grid-column: 1 / span 10;
+	}
+
 	/* Find */
 
 	#attribute-inputs {
@@ -189,9 +196,13 @@
 		display: block;
 	}
 
-	.spotify-icon-link,
-	.wikipedia-icon-link {
+	.spotify-icon-link {
 		top: 16vh;
+	}
+
+	.wikipedia-icon-link {
+		right: 18px;
+		top: 25vh;
 	}
 
 	/* Find */

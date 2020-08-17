@@ -9,7 +9,7 @@ function RadioInput(props) {
 				name={props.name}
 				value={props.value}
 				checked={props.checked}
-				onChange={props.onChange}
+				onChange={(ev) => props.onChange(ev)}
 			/>
 			<span className="checkmark" />
 			{props.title}

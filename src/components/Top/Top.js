@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
-import { useLocation, useHistory } from 'react-router-dom';
+import { useLocation, useHistory, Redirect } from 'react-router-dom';
 import Spotify from 'spotify-web-api-js';
 import Pagination from 'react-js-pagination';
 import { useMediaQuery } from 'react-responsive';
 import { trackPromise, usePromiseTracker } from 'react-promise-tracker';
+import { Helmet } from 'react-helmet';
 
 import { refreshToken } from '../Auth/Auth';
 
@@ -17,7 +18,6 @@ import TrackCards from '../Track/TrackCards';
 import ArtistCards from '../Artist/ArtistCards';
 import HeaderBar from '../Common/HeaderBar';
 import LoadingSpinner from '../Common/LoadingSpinner';
-import { Helmet } from 'react-helmet';
 import RadioInput from '../Common/RadioInput';
 import NoContent from '../Common/NoContent';
 
@@ -153,10 +153,12 @@ function Top() {
 
 	useEffect(
 		() => {
-			history.push(`/top?type=${topType}&time_range=${timeRange}&page=${page}`);
+			if (authToken) history.push(`/top?type=${topType}&time_range=${timeRange}&page=${page}`);
 		},
 		[ page ]
 	);
+
+	if (!authToken) return <Redirect to="/" />;
 
 	return (
 		<React.Fragment>

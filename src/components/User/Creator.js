@@ -50,15 +50,15 @@ function Creator(props) {
 			<Textfit mode="single" min={25} max={30}>
 				<strong>· {props.info.display_name} ·</strong>
 			</Textfit>
-			<p>
+			<div>
 				Followers: <strong>{props.info.followers.total}</strong>
-			</p>
-			<p>
+			</div>
+			<div>
 				Playlists:{' '}
 				<Link to={`/creator_playlists?id=${props.info.id}&page=${1}`} style={{ color: 'var(--color-primary)' }}>
 					{creatorPlaylists}
 				</Link>
-			</p>
+			</div>
 			<a href={props.info.external_urls.spotify} target="_blank" className="inner-link">
 				Go to Spotify page.
 			</a>

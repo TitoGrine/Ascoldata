@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { trackPromise, usePromiseTracker } from 'react-promise-tracker';
-import { useLocation, useHistory } from 'react-router-dom';
+import { useLocation, useHistory, Redirect } from 'react-router-dom';
 import Spotify from 'spotify-web-api-js';
 
-import { formatDuration } from '../HelperFunc';
+import { formatDuration } from '../Util/HelperFunc';
 import { refreshToken } from '../Auth/Auth';
 
 import Redirects from '../Common/Redirects';
@@ -224,6 +224,8 @@ function Stats() {
 			/>
 		);
 	};
+
+	if (!authToken) return <Redirect to="/" />;
 
 	return (
 		<React.Fragment>

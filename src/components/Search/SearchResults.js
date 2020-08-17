@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
-import { useLocation, useHistory } from 'react-router-dom';
+import { useLocation, useHistory, Redirect } from 'react-router-dom';
 import Spotify from 'spotify-web-api-js';
 import { useMediaQuery } from 'react-responsive';
 import { trackPromise } from 'react-promise-tracker';
@@ -101,7 +101,7 @@ function SearchResults() {
 
 	useEffect(
 		() => {
-			history.push(`/search?q=${q}&type=${type}&page=${page}`);
+			if (authToken) history.push(`/search?q=${q}&type=${type}&page=${page}`);
 		},
 		[ page ]
 	);
@@ -138,6 +138,8 @@ function SearchResults() {
 				return;
 		}
 	};
+
+	if (!authToken) return <Redirect to="/" />;
 
 	return (
 		<React.Fragment>

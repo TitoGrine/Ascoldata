@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Redirect } from 'react-router-dom';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 
-import { keyBinds, trimLimit, getExplanation } from '../HelperFunc';
+import { keyBinds, trimLimit, getExplanation } from '../Util/HelperFunc';
 
 import Redirects from '../Common/Redirects';
 import Search from '../Search/Search';
@@ -88,6 +88,8 @@ function Find() {
 				break;
 		}
 	};
+
+	if (!localStorage.getItem('refreshToken')) return <Redirect to="/" />;
 
 	return (
 		<React.Fragment>

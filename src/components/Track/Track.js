@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Spotify from 'spotify-web-api-js';
-import { useLocation, Link } from 'react-router-dom';
+import { useLocation, Link, Redirect } from 'react-router-dom';
 import { Textfit } from 'react-textfit';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { FaSpotify } from 'react-icons/fa';
@@ -8,7 +8,7 @@ import { trackPromise, usePromiseTracker } from 'react-promise-tracker';
 import { getSong } from 'genius-lyrics-api';
 
 import { refreshToken } from '../Auth/Auth';
-import { keyBinds } from '../HelperFunc';
+import { keyBinds } from '../Util/HelperFunc';
 
 import HeaderBar from '../Common/HeaderBar';
 import Redirects from '../Common/Redirects';
@@ -131,6 +131,8 @@ function Track() {
 		},
 		[ authToken ]
 	);
+
+	if (!authToken) return <Redirect to="/" />;
 
 	return (
 		<React.Fragment>

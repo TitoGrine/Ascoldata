@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
-import { useLocation, useHistory } from 'react-router-dom';
+import { useLocation, useHistory, Redirect } from 'react-router-dom';
 import Pagination from 'react-js-pagination';
 import Spotify from 'spotify-web-api-js';
 import { trackPromise } from 'react-promise-tracker';
@@ -80,10 +80,12 @@ function CreatorPlaylists() {
 
 	useEffect(
 		() => {
-			history.push(`/creator_playlists?id=${creatorId}&page=${page}`);
+			if (authToken) history.push(`/creator_playlists?id=${creatorId}&page=${page}`);
 		},
 		[ page ]
 	);
+
+	if (!authToken) return <Redirect to="/" />;
 
 	return (
 		<React.Fragment>

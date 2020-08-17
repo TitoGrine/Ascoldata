@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
-import { useLocation, useHistory } from 'react-router-dom';
+import { useLocation, useHistory, Redirect } from 'react-router-dom';
 import Spotify from 'spotify-web-api-js';
 import { useMediaQuery } from 'react-responsive';
 import { trackPromise, usePromiseTracker } from 'react-promise-tracker';
@@ -79,10 +79,12 @@ function Liked() {
 
 	useEffect(
 		() => {
-			history.push(`/liked?page=${page}`);
+			if (authToken) history.push(`/liked?page=${page}`);
 		},
 		[ page ]
 	);
+
+	if (!authToken) return <Redirect to="/" />;
 
 	return (
 		<React.Fragment>

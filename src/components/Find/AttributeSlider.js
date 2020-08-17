@@ -1,7 +1,7 @@
 import React from 'react';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 
-import { getExplanation } from '../HelperFunc';
+import { getExplanation } from '../Util/HelperFunc';
 
 function AttributeSlider(props) {
 	const value = isNaN(props.value) ? '' : props.value;

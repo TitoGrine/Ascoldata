@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import Spotify from 'spotify-web-api-js';
-import { useLocation, Link } from 'react-router-dom';
+import { useLocation, Link, Redirect } from 'react-router-dom';
 import { Image } from 'react-bootstrap';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { trackPromise, usePromiseTracker } from 'react-promise-tracker';
 
 import { refreshToken } from '../Auth/Auth';
-import { formatDuration, decodeString } from '../HelperFunc';
+import { formatDuration, decodeString } from '../Util/HelperFunc';
 
 import Redirects from '../Common/Redirects';
 import StatCard from '../Stats/StatCard';
@@ -205,6 +205,8 @@ function Playlist() {
 
 		return <NoContent mainText="Playlist doesn't have enough songs for analysis..." />;
 	};
+
+	if (!authToken) return <Redirect to="/" />;
 
 	return (
 		<React.Fragment>

@@ -153,9 +153,7 @@ div.side-content ul.redirects li a:hover {
 	width: clamp(200px, 85vw, 300px);
 	height: min(80vh, 100%);
 	padding: 2em 1em;
-	border: 2px inset var(--color-primary);
-	border-style: groove;
-	border-radius: 8px;
+	border: 2px groove var(--color-primary);
 
 	scroll-snap-align: center;
 
@@ -261,7 +259,7 @@ a.inner-link {
 	top: 18px;
 	right: 66px;
 	justify-self: flex-end;
-	font-size: 39px;
+	font-size: 36px;
 	color: black;
 	background-color: var(--color-wikipedia);
 	padding: 0 8px;
@@ -305,10 +303,7 @@ a.inner-link {
 .confirmation-modal .modal-content {
 	background-color: var(--color-neutral);
 	padding: 0.4em;
-
-	-webkit-box-shadow: 0px 0px 28px 10px rgba(29, 185, 84, 0.4);
-	-moz-box-shadow: 0px 0px 28px 10px rgba(29, 185, 84, 0.4);
-	box-shadow: 0px 0px 28px 10px rgba(29, 185, 84, 0.4);
+	border: 2px groove var(--color-primary);
 }
 
 .confirmation-modal .modal-header,

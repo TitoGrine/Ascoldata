@@ -14,7 +14,7 @@ function SideToggle(props) {
 	};
 
 	return (
-		<button className="side-toggle" onClick={toggleButton}>
+		<button className="side-toggle" onClick={() => toggleButton()}>
 			{renderIcon()}
 		</button>
 	);

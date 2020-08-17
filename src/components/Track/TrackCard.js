@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
-import { formatDuration } from '../HelperFunc';
+import { formatDuration } from '../Util/HelperFunc';
 
 export class TrackCard extends Component {
 	constructor(props) {

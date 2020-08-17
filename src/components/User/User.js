@@ -7,7 +7,7 @@ import { Textfit } from 'react-textfit';
 import { FaSpotify } from 'react-icons/fa';
 
 import { refreshToken } from '../Auth/Auth';
-import { getCountryFromISOCode } from '../HelperFunc';
+import { getCountryFromISOCode } from '../Util/HelperFunc';
 
 import Redirects from '../Common/Redirects';
 import Search from '../Search/Search';
@@ -58,27 +58,18 @@ function User() {
 	};
 
 	const getLastTrack = () => {
-		spotifyWebApi.getMyCurrentPlayingTrack().then(
-			function(data) {
-				if (data) setDisplayTrack(data.context.uri);
-				else
-					spotifyWebApi
-						.getMyRecentlyPlayedTracks({
-							limit: 1
-						})
-						.then(
-							function(data) {
-								if (data) setDisplayTrack(data.items[0].context.uri);
-							},
-							function(err) {
-								console.log(err);
-							}
-						);
-			},
-			function(err) {
-				console.log(err);
-			}
-		);
+		spotifyWebApi
+			.getMyRecentlyPlayedTracks({
+				limit: 1
+			})
+			.then(
+				function(data) {
+					if (data.items.length > 0) setDisplayTrack(data.items[0].track.uri);
+				},
+				function(err) {
+					console.log(err);
+				}
+			);
 	};
 
 	const getData = async () => {
