@@ -20,7 +20,7 @@
 	flex: 1 2 80%;
 	flex-shrink: 5;
 	color: var(--color-neutral);
-	border: 1px groove var(--color-primary);
+	border: 2px groove var(--color-primary);
 	border-right: 0;
 	border-radius: 5px 0 0 5px;
 	padding-left: 0.6em;
@@ -38,7 +38,7 @@
 	background-color: var(--color-primary);
 	max-width: 80px;
 
-	border: 1px groove var(--color-primary);
+	border: 2px groove var(--color-primary);
 	border-radius: 0 5px 5px 0;
 	outline: none;
 }
