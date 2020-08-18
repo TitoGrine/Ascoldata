@@ -343,12 +343,15 @@ a.inner-link {
 
 /* Tooltips */
 
-.tooltip.top > .tooltip-arrow,
 .tooltip > .tooltip-inner {
-	background-color: rgba(250, 235, 215, 1.0);
+	background-color: var(--color-secondary);
 	color: var(--color-neutral);
 	background: 1.0;
 	padding: 1em;
+}
+
+.tooltip > .arrow::before {
+	border-top-color: var(--color-secondary);
 }
 
 .tooltip.show {
