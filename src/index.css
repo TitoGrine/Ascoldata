@@ -1,12 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Barlow:wght@100;200;300;400;500;600;700;800&display=swap');
 
 :root {
-	--color-primary: #3cbbb1;
+	/* --color-primary: #3cbbb1; */
 	/* --color-primary: #e9724c; */
-	/* --color-primary: #20fc8f; */
+	--color-primary: #20fc8f;
 	/* --color-primary: #68b684; */
-	/* --color-primary: #f08700; */
-	/* --color-primary: #00a9a5; */
 
 	--color-secondary: #fff0dc;
 	--color-neutral: #191414;

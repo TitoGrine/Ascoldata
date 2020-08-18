@@ -101,7 +101,7 @@ div.side-content {
 
 div.side-content ul.redirects {
 	align-self: flex-start;
-	padding: 0.5em 1em;
+	padding: 0.5em 0em;
 	display: flex;
 	flex-direction: column;
 	gap: 1em;
@@ -121,6 +121,10 @@ div.side-content ul.redirects li a {
 	font-weight: 600;
 	color: var(--color-neutral);
 	animation: focusOut 0.1s linear forwards;
+}
+
+div.side-content ul.redirects li a:before {
+	content: '· ';
 }
 
 div.side-content ul.redirects li a:hover {
@@ -211,6 +215,7 @@ div.side-content ul.redirects li a:hover {
 	flex-basis: 100%;
 	max-height: 90%;
 	overflow-y: auto;
+	padding: 0 1em;
 }
 
 .react-tabs__tab-panel--selected.preview_tab {

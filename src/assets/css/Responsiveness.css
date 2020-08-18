@@ -144,7 +144,11 @@
 @media screen and (max-width: 600px) {
 	section.sidebar-section,
 	div.side-content {
-		grid-column: 1 / span 10;
+		grid-column: 2 / span 10;
+	}
+
+	.react-tabs__tab-panel--selected {
+		padding: 0 0.5em;
 	}
 
 	/* Find */
