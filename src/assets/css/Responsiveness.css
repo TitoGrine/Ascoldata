@@ -9,8 +9,8 @@
 		grid-column: 1 / span 10;
 		grid-row: 1 / span 24;
 
-		-webkit-animation: slide-in-down 1s cubic-bezier(0.455, 0.030, 0.515, 0.955) both;
-		animation: slide-in-down 1s cubic-bezier(0.455, 0.030, 0.515, 0.955) both;
+		-webkit-animation: slide-in-down 1s cubic-bezier(0.455, 0.030, 0.515, 0.955) forwards;
+		animation: slide-in-down 1s cubic-bezier(0.455, 0.030, 0.515, 0.955) forwards;
 	}
 
 	section.sidebar-section,
@@ -28,16 +28,15 @@
 	section.sidebar-closed,
 	div.sidebar-closed {
 		display: flex;
-		-webkit-animation: slide-out-right 0.8s cubic-bezier(0.455, 0.030, 0.515, 0.955) both;
-		animation: slide-out-right 0.8s cubic-bezier(0.455, 0.030, 0.515, 0.955) both;
-		animation-fill-mode: forwards;
+		-webkit-animation: slide-out-right 0.8s cubic-bezier(0.455, 0.030, 0.515, 0.955) forwards;
+		animation: slide-out-right 0.8s cubic-bezier(0.455, 0.030, 0.515, 0.955) forwards;
 	}
 
 	section.sidebar-toggled,
 	div.sidebar-toggled {
 		display: flex;
-		-webkit-animation: short-slide-in-right 0.8s cubic-bezier(0.455, 0.030, 0.515, 0.955) both;
-		animation: short-slide-in-right 0.8s cubic-bezier(0.455, 0.030, 0.515, 0.955) both;
+		-webkit-animation: short-slide-in-right 0.8s cubic-bezier(0.455, 0.030, 0.515, 0.955) forwards;
+		animation: short-slide-in-right 0.8s cubic-bezier(0.455, 0.030, 0.515, 0.955) forwards;
 	}
 
 	/* Find */

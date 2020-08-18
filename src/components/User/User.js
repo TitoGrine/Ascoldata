@@ -15,6 +15,7 @@ import SideToggle from '../Common/SideToggle';
 import HeaderBar from '../Common/HeaderBar';
 import LoadingSpinner from '../Common/LoadingSpinner';
 import { Helmet } from 'react-helmet';
+import { calcUserValues } from '../Util/Compatibility';
 
 const spotifyWebApi = new Spotify();
 
@@ -108,6 +109,7 @@ function User() {
 		() => {
 			if (authToken) {
 				getData();
+				calcUserValues(authToken);
 			}
 		},
 		[ authToken ]

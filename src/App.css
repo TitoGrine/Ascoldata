@@ -40,7 +40,7 @@
 	height: calc(100vh - 60px);
 	grid-template-columns: repeat(10, 1fr);
 	grid-template-rows: repeat(24, 1fr);
-	overflow-x: hidden;
+	overflow: hidden;
 }
 
 section.content-section {

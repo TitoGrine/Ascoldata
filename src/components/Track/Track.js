@@ -17,6 +17,7 @@ import Search from '../Search/Search';
 import SideToggle from '../Common/SideToggle';
 import LoadingSpinner from '../Common/LoadingSpinner';
 import { Helmet } from 'react-helmet';
+import { evalCompatibility } from '../Util/Compatibility';
 
 const spotifyWebApi = new Spotify();
 
@@ -60,6 +61,7 @@ function Track() {
 					setTrackPopularity(data.popularity);
 
 					// if (geniusLink.length === 0) getGeniusLink();
+					getTrackFeatures(data.artists.map((artist) => artist.id));
 				},
 				function(err) {
 					console.log(err);
@@ -70,7 +72,7 @@ function Track() {
 		);
 	};
 
-	const getTrackFeatures = async () => {
+	const getTrackFeatures = async (artists) => {
 		trackPromise(
 			spotifyWebApi.getAudioFeaturesForTrack(track).then(
 				function(data) {
@@ -89,6 +91,7 @@ function Track() {
 					};
 
 					setTrackStats(avgStats);
+					evalCompatibility(avgStats, artists);
 				},
 				function(err) {
 					console.log(err);
@@ -119,7 +122,6 @@ function Track() {
 
 	const getData = async () => {
 		getTrackMetaData();
-		getTrackFeatures();
 	};
 
 	useEffect(

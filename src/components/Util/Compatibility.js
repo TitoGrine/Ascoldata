@@ -1,0 +1,241 @@
+import Spotify from 'spotify-web-api-js';
+
+const spotifyWebApi = new Spotify();
+
+const weigths = {
+	acousticness: 0.14,
+	danceability: 0.14,
+	energy: 0.12,
+	instrumentalness: 0.16,
+	liveness: 0.06,
+	speechiness: 0.16,
+	tempo: 0.06,
+	valence: 0.16
+};
+
+const calcStats = (tracks) => {
+	return new Promise((resolve, reject) => {
+		spotifyWebApi.getAudioFeaturesForTracks(tracks).then(
+			function(data) {
+				//console.log(data.audio_features);
+
+				const avgStats = {
+					acousticness: 0,
+					danceability: 0,
+					energy: 0,
+					instrumentalness: 0,
+					liveness: 0,
+					speechiness: 0,
+					tempo: 0,
+					valence: 0
+				};
+
+				data.audio_features.forEach((track_info) => {
+					avgStats.acousticness += 100 * track_info.acousticness / data.audio_features.length;
+					avgStats.danceability += 100 * track_info.danceability / data.audio_features.length;
+					avgStats.energy += 100 * track_info.energy / data.audio_features.length;
+					avgStats.instrumentalness += 100 * track_info.instrumentalness / data.audio_features.length;
+					avgStats.liveness += 100 * track_info.liveness / data.audio_features.length;
+					avgStats.speechiness += 100 * track_info.speechiness / data.audio_features.length;
+					avgStats.tempo += track_info.tempo / data.audio_features.length;
+					avgStats.valence += 100 * track_info.valence / data.audio_features.length;
+				});
+
+				resolve(avgStats);
+			},
+			function(err) {
+				console.log(err);
+			}
+		);
+	});
+};
+
+const getTopTracksStats = (timeRange) => {
+	return new Promise((resolve) => {
+		spotifyWebApi
+			.getMyTopTracks({
+				limit: 50,
+				offset: 0,
+				time_range: timeRange
+			})
+			.then(
+				function(data) {
+					let tracks = data.items.map((track) => {
+						return track.id;
+					});
+
+					if (tracks.length > 0)
+						calcStats(tracks).then((stats) => {
+							resolve(stats);
+						});
+				},
+				function(err) {
+					console.log(err);
+				}
+			);
+	});
+};
+
+const getLikedTracksStats = () => {
+	return new Promise((resolve) => {
+		spotifyWebApi
+			.getMySavedTracks({
+				limit: 50,
+				offset: 0
+			})
+			.then(
+				function(data) {
+					let tracks = data.items.map((track) => {
+						return track.id;
+					});
+
+					if (tracks.length > 0)
+						calcStats(tracks).then((stats) => {
+							resolve(stats);
+						});
+				},
+				function(err) {
+					console.log(err);
+				}
+			);
+	});
+};
+
+const getTopGenres = (timeRange, genres) => {
+	return new Promise((resolve) => {
+		spotifyWebApi
+			.getMyTopArtists({
+				limit: 50,
+				offset: 0,
+				time_range: timeRange
+			})
+			.then(
+				function(data) {
+					data.items.forEach((artist) => {
+						artist.genres.forEach((genre) => {
+							if (genres[genre]) genres[genre]++;
+							else genres[genre] = 1;
+						});
+					});
+
+					// Order genres with more than one occurence
+					resolve(genres);
+				},
+				function(err) {
+					console.log(err);
+				}
+			);
+	});
+};
+
+export const calcUserValues = async (authToken) => {
+	if (localStorage.getItem('compatibilityValues')) return;
+
+	spotifyWebApi.setAccessToken(authToken);
+
+	let div = 0;
+	let userValues = {};
+	let topGenres = {};
+
+	let shortStats = await getTopTracksStats('short_term');
+	let mediumStats = await getTopTracksStats('medium_term');
+	let longStats = await getTopTracksStats('long_term');
+	let likedStats = await getLikedTracksStats();
+
+	if (shortStats) {
+		for (var key in shortStats) userValues[key] = 4 * shortStats[key];
+
+		div = 4;
+	}
+
+	if (mediumStats) {
+		for (var key in mediumStats) userValues[key] += 2 * mediumStats[key];
+
+		div += 2;
+	}
+
+	if (longStats) {
+		for (var key in longStats) userValues[key] += longStats[key];
+
+		div++;
+	}
+
+	if (likedStats) {
+		for (var key in likedStats) userValues[key] += 4 * likedStats[key];
+
+		div += 4;
+	}
+
+	for (var key in userValues) userValues[key] = userValues[key] / div;
+
+	topGenres = await getTopGenres('short_term', topGenres);
+	topGenres = await getTopGenres('medium_term', topGenres);
+	topGenres = await getTopGenres('long_term', topGenres);
+
+	for (var genre in topGenres) if (topGenres[genre] < 3) delete topGenres[genre];
+
+	userValues['topGenres'] = topGenres;
+
+	localStorage.setItem('compatibilityValues', JSON.stringify(userValues));
+};
+
+const getArtistsGenres = async (artists) => {
+	return new Promise((resolve) => {
+		let authToken = localStorage.getItem('authToken');
+
+		if (!authToken) resolve([]);
+
+		spotifyWebApi.setAccessToken(authToken);
+
+		spotifyWebApi.getArtists(artists).then(
+			function(data) {
+				let genres = [];
+
+				data.artists.forEach((artist) => {
+					genres = [ ...genres, ...artist.genres ];
+				});
+
+				resolve(genres);
+			},
+			function(err) {
+				console.log(err);
+
+				resolve([]);
+			}
+		);
+	});
+};
+
+export const evalCompatibility = async (values, artists) => {
+	let penalty = 0;
+	let target = localStorage.getItem('compatibilityValues');
+
+	if (!target || !values) return -1;
+
+	target = JSON.parse(target);
+
+	for (var key in target) {
+		if (key === 'topGenres') continue;
+
+		var diff = Math.max(target[key] - values[key], values[key] - target[key]);
+
+		penalty += key === 'tempo' ? 0.04 * diff / 250 : weigths[key] * diff;
+	}
+
+	let compatibility = 100 - penalty + penalty * (1 - penalty / 20);
+
+	let genres = await getArtistsGenres(artists);
+	let topGenres = target['topGenres'];
+	let occurences = 0;
+	let totalOccurences = 1;
+
+	for (var genre in topGenres) totalOccurences += topGenres[genre];
+
+	genres.forEach((genre) => {
+		if (Object.prototype.hasOwnProperty.call(topGenres, genre)) occurences += parseInt(topGenres[genre]);
+	});
+
+	compatibility += occurences-- * (100 - compatibility) / totalOccurences;
+
+	console.log(compatibility);
+};

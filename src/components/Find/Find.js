@@ -263,10 +263,10 @@ function Find() {
 							<p>
 								In here you can find songs using Spotify's recommendations functionality and control it
 								using various attributes.
-								<br />For every attribute you choose a value, Spotify will try to find songs with values
-								as close to the ones you choose, while still being a good match for your tastes.
+								<br />Every attribute for which you select a value, Spotify will try to find songs with
+								values close to the ones you choose, while still being a good match for your tastes.
 								<br />If you are not sure what an attribute is exactly, <strong>hover on it</strong> and
-								see an explanation of it based on Spotify's documentation.
+								see an explanation based on Spotify's documentation.
 								<br />If you don't select anything, then you will get recommendations based on your
 								latest top heard songs.
 								<br />

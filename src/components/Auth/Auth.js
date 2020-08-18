@@ -23,4 +23,5 @@ export const clearStorage = () => {
 	localStorage.removeItem('track_seeds');
 	localStorage.removeItem('country');
 	localStorage.removeItem('recommendations');
+	localStorage.removeItem('compatibilityValues');
 };
