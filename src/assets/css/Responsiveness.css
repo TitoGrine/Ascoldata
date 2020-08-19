@@ -112,8 +112,9 @@
 	#track-info > div,
 	#album-info,
 	#artist-info,
+	#playlist-info,
 	#album-info #misc-data,
-	#playlist-info {
+	#playlist-info #misc-data {
 		align-items: flex-start;
 		width: 100%;
 		padding: 0 0.5em;

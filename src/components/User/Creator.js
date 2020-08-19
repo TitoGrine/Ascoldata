@@ -47,7 +47,7 @@ function Creator(props) {
 				style={{ border: 'none', overflow: 'hidden' }}
 				allowtransparency="true"
 			/>
-			<Textfit mode="single" min={25} max={30}>
+			<Textfit mode="single" min={20} max={30}>
 				<strong>· {props.info.display_name} ·</strong>
 			</Textfit>
 			<div>

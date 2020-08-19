@@ -57,6 +57,8 @@ function Playlist() {
 					setPlaylistOwner(data.owner);
 					setPlaylistNoTracks(data.tracks.total);
 
+					console.log(data.followers);
+
 					setPlaylistDuration(
 						data.tracks.items.reduce((total, track) => {
 							return total + track.track.duration_ms;
