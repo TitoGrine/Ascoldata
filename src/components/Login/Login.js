@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
+
+import { addToDate } from '../Util/HelperFunc';
+
 import HeaderBar from '../Common/HeaderBar';
-import LoadingSpinner from '../Common/LoadingSpinner';
 
 class Login extends Component {
 	constructor() {
@@ -10,6 +12,9 @@ class Login extends Component {
 		const params = this.getHashParams();
 
 		if (params.access_token) {
+			let expirationDate = addToDate(new Date(), 8);
+
+			localStorage.setItem('expirationDate', expirationDate.getTime());
 			localStorage.setItem('authToken', params.access_token);
 			localStorage.setItem('refreshToken', params.refresh_token);
 		}

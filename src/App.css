@@ -54,8 +54,8 @@ section.content-section {
 	-moz-box-shadow: 15px 15px 30px -5px rgba(25, 20, 20, 0.8);
 	box-shadow: 15px 15px 30px -5px rgba(25, 20, 20, 0.8);
 
-	-webkit-animation: slide-in-left 1s cubic-bezier(0.455, 0.030, 0.515, 0.955) both;
-	animation: slide-in-left 1s cubic-bezier(0.455, 0.030, 0.515, 0.955) both;
+	-webkit-animation: slide-in-left 0.6s cubic-bezier(0.455, 0.030, 0.515, 0.955) both;
+	animation: slide-in-left 0.6s cubic-bezier(0.455, 0.030, 0.515, 0.955) both;
 }
 
 section.sidebar-section {
@@ -477,8 +477,8 @@ a.inner-link {
 
 @-webkit-keyframes slide-in-right {
 	0% {
-		-webkit-transform: translateX(1000px);
-		transform: translateX(1000px);
+		-webkit-transform: translateX(1500px);
+		transform: translateX(1500px);
 		opacity: 0;
 	}
 	100% {
@@ -489,8 +489,8 @@ a.inner-link {
 }
 @keyframes slide-in-right {
 	0% {
-		-webkit-transform: translateX(1000px);
-		transform: translateX(1000px);
+		-webkit-transform: translateX(1500px);
+		transform: translateX(1500px);
 		opacity: 0;
 	}
 	100% {

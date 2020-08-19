@@ -1,6 +1,14 @@
 import axios from 'axios';
 
 export const refreshToken = async (updateFunction) => {
+	let currDate = new Date().getTime();
+	let expirationDate = localStorage.getItem('expirationDate');
+
+	if (!expirationDate || currDate < expirationDate) {
+		clearStorage();
+		return;
+	}
+
 	let headers = {
 		refresh_token: localStorage.getItem('refreshToken')
 	};
@@ -23,4 +31,5 @@ export const clearStorage = () => {
 	localStorage.removeItem('track_seeds');
 	localStorage.removeItem('country');
 	localStorage.removeItem('recommendations');
+	localStorage.removeItem('expirationDate');
 };

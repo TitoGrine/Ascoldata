@@ -9,8 +9,8 @@
 		grid-column: 1 / span 10;
 		grid-row: 1 / span 24;
 
-		-webkit-animation: slide-in-down 1s cubic-bezier(0.455, 0.030, 0.515, 0.955) both;
-		animation: slide-in-down 1s cubic-bezier(0.455, 0.030, 0.515, 0.955) both;
+		-webkit-animation: slide-in-down 0.8s cubic-bezier(0.455, 0.030, 0.515, 0.955) both;
+		animation: slide-in-down 0.8s cubic-bezier(0.455, 0.030, 0.515, 0.955) both;
 	}
 
 	section.sidebar-section,
