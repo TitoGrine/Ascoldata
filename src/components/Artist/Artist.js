@@ -8,6 +8,7 @@ import { trackPromise, usePromiseTracker } from 'react-promise-tracker';
 import { FaWikipediaW, FaSpotify } from 'react-icons/fa';
 
 import { refreshToken } from '../Auth/Auth';
+import default_art from '../../assets/images/default_art.png';
 
 import Redirects from '../Common/Redirects';
 import StatCard from '../Stats/StatCard';
@@ -32,7 +33,7 @@ function Artist() {
 	const [ artistLink, setArtistLink ] = useState('');
 	const [ artistWikiLink, setArtistWikiLink ] = useState('');
 	const [ artistUri, setArtistUri ] = useState('');
-	const [ artistImage, setArtistImage ] = useState('');
+	const [ artistImage, setArtistImage ] = useState(default_art);
 	const [ artistFollowers, setArtistFollowers ] = useState('');
 	const [ artistGenres, setArtistGenres ] = useState('');
 	const [ artistPopularity, setArtistPopularity ] = useState('');
@@ -48,7 +49,8 @@ function Artist() {
 					setArtistName(data.name);
 					setArtistLink(data.external_urls.spotify);
 					setArtistUri(data.uri);
-					setArtistImage(data.images.length === 0 ? '' : data.images[0].url);
+					if (data.images.length > 0) setArtistImage(data.images[0].url);
+
 					setArtistFollowers(data.followers.total);
 					setArtistGenres(data.genres);
 					setArtistPopularity(data.popularity);

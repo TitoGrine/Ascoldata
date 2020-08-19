@@ -8,6 +8,7 @@ import { FaSpotify } from 'react-icons/fa';
 
 import { refreshToken } from '../Auth/Auth';
 import { getCountryFromISOCode } from '../Util/HelperFunc';
+import default_image from '../../assets/images/default_pic.png';
 
 import Redirects from '../Common/Redirects';
 import Search from '../Search/Search';
@@ -23,7 +24,7 @@ function User() {
 	const [ authToken, setAuthToken ] = useState(localStorage.getItem('authToken'));
 	const [ user, setUser ] = useState('');
 	const [ id, setId ] = useState('');
-	const [ image, setImage ] = useState('');
+	const [ image, setImage ] = useState(default_image);
 	const [ email, setEmail ] = useState('');
 	const [ country, setCountry ] = useState('');
 	const [ followers, setFollowers ] = useState('');
@@ -80,8 +81,9 @@ function User() {
 				function(data) {
 					//console.log(data);
 
+					if (data.images.length > 0) setImage(data.images[0].url);
+
 					setUser(data.display_name);
-					setImage(data.images.length === 0 ? '' : data.images[0].url);
 					setId(data.id);
 					setEmail(data.email);
 					setCountry(getCountryFromISOCode(data.country));

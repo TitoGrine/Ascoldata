@@ -4,9 +4,9 @@ export const refreshToken = async (updateFunction) => {
 	let currDate = new Date().getTime();
 	let expirationDate = localStorage.getItem('expirationDate');
 
-	if (!expirationDate || currDate < expirationDate) {
+	if (!expirationDate || expirationDate < currDate) {
 		clearStorage();
-		return;
+		window.location.reload();
 	}
 
 	let headers = {

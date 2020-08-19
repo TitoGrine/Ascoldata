@@ -12,7 +12,7 @@ class Login extends Component {
 		const params = this.getHashParams();
 
 		if (params.access_token) {
-			let expirationDate = addToDate(new Date(), 8);
+			let expirationDate = addToDate(new Date(), 48);
 
 			localStorage.setItem('expirationDate', expirationDate.getTime());
 			localStorage.setItem('authToken', params.access_token);
