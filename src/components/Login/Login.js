@@ -13,8 +13,10 @@ class Login extends Component {
 
 		if (params.access_token) {
 			let expirationDate = addToDate(new Date(), 48);
+			let bufferDate = addToDate(new Date(), 0, 2);
 
 			localStorage.setItem('expirationDate', expirationDate.getTime());
+			localStorage.setItem('bufferDate', bufferDate.getTime());
 			localStorage.setItem('authToken', params.access_token);
 			localStorage.setItem('refreshToken', params.refresh_token);
 		}

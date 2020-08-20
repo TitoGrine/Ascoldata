@@ -6,8 +6,8 @@ export const trimLimit = (number, min = 0, max = 1) => {
 	return Math.max(min, Math.min(parseFloat(number), max));
 };
 
-export const addToDate = (date, hours) => {
-	return new Date(date.getTime() + hours * 60 * 60000);
+export const addToDate = (date, hours, minutes = 0) => {
+	return new Date(date.getTime() + (hours * 60 + minutes) * 60000);
 };
 
 export const formatDuration = (duration_ms) => {
