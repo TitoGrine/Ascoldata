@@ -263,9 +263,17 @@ a.inner-link {
 	font-size: 1.3em;
 }
 
+.icon-link {
+	font-size: 36px;
+	line-height: 0;
+	text-align: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
 .spotify-icon-link {
 	position: absolute;
-	font-size: 36px;
 	right: 18px;
 	top: 18px;
 	color: var(--color-spotify);
@@ -275,12 +283,13 @@ a.inner-link {
 	position: absolute;
 	top: 18px;
 	right: 66px;
-	justify-self: flex-end;
-	font-size: 36px;
 	color: black;
 	background-color: var(--color-wikipedia);
-	padding: 0 8px;
 	border-radius: 2px;
+}
+
+.wikipedia-icon-link > svg {
+	padding: 4px 6px;
 }
 
 .side-toggle {

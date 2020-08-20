@@ -248,12 +248,16 @@ function Artist() {
 								· {artistName} ·
 							</Textfit>
 							{artistWikiLink.length > 0 && (
-								<a href={artistWikiLink} target="_blank">
-									<FaWikipediaW className="wikipedia-icon-link heartbeat" />
+								<a
+									href={artistWikiLink}
+									target="_blank"
+									className="icon-link wikipedia-icon-link heartbeat"
+								>
+									<FaWikipediaW />
 								</a>
 							)}
-							<a href={artistLink} target="_blank">
-								<FaSpotify className="spotify-icon-link heartbeat" />
+							<a href={artistLink} target="_blank" className="icon-link spotify-icon-link heartbeat">
+								<FaSpotify />
 							</a>
 							<div id="artist-info">
 								<div id="image">
