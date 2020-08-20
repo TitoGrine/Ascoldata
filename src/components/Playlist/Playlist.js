@@ -58,8 +58,6 @@ function Playlist() {
 					setPlaylistOwner(data.owner);
 					setPlaylistNoTracks(data.tracks.total);
 
-					console.log(data.followers);
-
 					setPlaylistDuration(
 						data.tracks.items.reduce((total, track) => {
 							return total + track.track.duration_ms;
@@ -225,8 +223,8 @@ function Playlist() {
 							<Textfit className="playlist-title" mode="single" max={36}>
 								· {playlistName} ·
 							</Textfit>
-							<a href={playlistLink} target="_blank">
-								<FaSpotify className="spotify-icon-link heartbeat" />
+							<a href={playlistLink} target="_blank" className="icon-link spotify-icon-link heartbeat">
+								<FaSpotify />
 							</a>
 
 							<div id="playlist-info">

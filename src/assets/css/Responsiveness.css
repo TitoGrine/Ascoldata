@@ -52,6 +52,17 @@
 		margin: auto;
 		grid-column: 1 / span 2;
 	}
+
+	#stats {
+		grid-template-columns: repeat(2, 1fr);
+		grid-template-rows: repeat(3, 1fr);
+		margin: 2em 0;
+		gap: 2em;
+	}
+
+	#stats > div.stat-card {
+		align-self: flex-start;
+	}
 }
 
 @media screen and (max-width: 700px) {
@@ -131,17 +142,6 @@
 
 	#track-info > div > .stat-card {
 		flex: 1 1 40%;
-	}
-
-	#stats {
-		grid-template-columns: repeat(2, 1fr);
-		grid-template-rows: repeat(3, 1fr);
-		margin-bottom: 3em;
-		gap: 2em;
-	}
-
-	#stats > div.stat-card {
-		align-self: flex-start;
 	}
 }
 

@@ -129,8 +129,8 @@ function User() {
 							<Textfit className="username" mode="single" max={36}>
 								· Hello<strong> {user} </strong> ·
 							</Textfit>
-							<a href={link} target="_blank">
-								<FaSpotify className="spotify-icon-link heartbeat" />
+							<a href={link} target="_blank" className="icon-link spotify-icon-link heartbeat">
+								<FaSpotify />
 							</a>
 							<div id="info">
 								<div id="image">

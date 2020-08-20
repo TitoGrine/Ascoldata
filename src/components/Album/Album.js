@@ -232,8 +232,8 @@ function Track() {
 							<Textfit className="album-title" mode="single" max={36}>
 								· {albumName} ·
 							</Textfit>
-							<a href={albumLink} target="_blank">
-								<FaSpotify className="spotify-icon-link heartbeat" />
+							<a href={albumLink} target="_blank" className="icon-link spotify-icon-link heartbeat">
+								<FaSpotify />
 							</a>
 							<div id="album-info">
 								<div id="image">

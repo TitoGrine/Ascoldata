@@ -11,7 +11,6 @@ function PlaylistTableRow(props) {
 			</td>
 			<td>{props.info.owner.display_name}</td>
 			<td>{props.info.public ? 'Yes' : 'No'}</td>
-			<td>{props.info.collaborative ? 'Yes' : 'No'}</td>
 			<td>{props.info.tracks.total}</td>
 		</tr>
 	);

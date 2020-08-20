@@ -31,10 +31,6 @@ export class PlaylistCard extends Component {
 					{this.props.info.public ? <MdDone style={checkStyle} /> : <MdBlock style={blockStyle} />}
 				</div>
 				<div>
-					<strong>Collaborative: </strong>
-					{this.props.info.collaborative ? <MdDone style={checkStyle} /> : <MdBlock style={blockStyle} />}
-				</div>
-				<div>
 					<strong>Nr. Songs: </strong>
 					{this.props.info.tracks.total}
 				</div>

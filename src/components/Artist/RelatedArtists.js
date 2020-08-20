@@ -29,6 +29,17 @@ function RelatedArtists() {
 
 	const colapseTable = useMediaQuery({ maxWidth: 700 });
 
+	const getArtistName = () => {
+		spotifyWebApi.getArtist(artistId).then(
+			function(data) {
+				setArtistName(data.name);
+			},
+			function(err) {
+				console.log(err);
+			}
+		);
+	};
+
 	const getData = () => {
 		spotifyWebApi.setAccessToken(authToken);
 
@@ -51,6 +62,8 @@ function RelatedArtists() {
 		() => {
 			if (authToken) {
 				getData();
+
+				if (artistName.length === 0) getArtistName();
 			}
 		},
 		[ authToken ]
