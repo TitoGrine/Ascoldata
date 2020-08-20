@@ -24,7 +24,7 @@ function HeaderBar(props) {
 		<React.Fragment>
 			<Navbar id="navbar" expand="sm">
 				<Navbar.Brand href="/">
-					<img src={logo} id="header_logo" alt="Ascoldata's logo." />
+					<img src={logo} id="header-logo" alt="Ascoldata's logo." />
 					Ascoldata
 				</Navbar.Brand>
 				<Navbar.Toggle aria-controls="basic-navbar-nav" />
