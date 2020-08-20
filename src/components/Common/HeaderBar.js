@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Navbar, Nav, Modal, Button } from 'react-bootstrap';
-import logo from '../../assets/images/logo1.png';
+import logo from '../../assets/images/logo.svg';
 
 import { clearStorage } from '../Auth/Auth';
 import { useHistory } from 'react-router-dom';

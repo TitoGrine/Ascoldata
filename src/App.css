@@ -19,12 +19,12 @@
 	align-self: center;
 	display: flex;
 	align-items: center;
-	gap: 0.5em;
+	gap: 0.6em;
 }
 
 #header_logo {
-	width: 40px;
-	height: 40px;
+	width: 34px;
+	height: 34px;
 }
 
 #navbar .navbar-nav {

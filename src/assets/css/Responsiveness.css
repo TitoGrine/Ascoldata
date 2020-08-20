@@ -65,6 +65,10 @@
 		gap: 2em;
 	}
 
+	.no-content-warning {
+		max-width: 80%;
+	}
+
 	/* Pagination */
 
 	ul.pagination {
@@ -82,7 +86,6 @@
 	/* GeneralInfo */
 
 	#info {
-		/* flex-direction: column; */
 		align-items: center;
 		flex-wrap: wrap;
 	}
