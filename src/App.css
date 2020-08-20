@@ -58,6 +58,11 @@ section.content-section {
 	background-color: var(--color-neutral);
 	padding: 1em;
 
+	display: flex;
+	flex-direction: column;
+	gap: 1em;
+	overflow-x: auto;
+
 	-webkit-box-shadow: 15px 15px 30px -5px rgba(25, 20, 20, 0.8);
 	-moz-box-shadow: 15px 15px 30px -5px rgba(25, 20, 20, 0.8);
 	box-shadow: 15px 15px 30px -5px rgba(25, 20, 20, 0.8);
@@ -81,7 +86,6 @@ section.table-content {
 	display: grid;
 	grid-template-rows: 18fr 2fr;
 	justify-items: center;
-	gap: 1em;
 }
 
 #mobile-separator {

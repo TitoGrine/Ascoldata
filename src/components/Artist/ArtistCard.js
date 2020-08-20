@@ -16,7 +16,7 @@ export class ArtistCard extends Component {
 			<div className="card" ref={this.scrollStart}>
 				<div>
 					<strong>Artist: </strong>
-					<Link to={'/artist?id=' + this.props.info.id} className="inner-link">
+					<Link to={`/artist?id=${this.props.info.id}`} className="inner-link">
 						{this.props.info.name}
 					</Link>
 				</div>

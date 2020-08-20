@@ -14,9 +14,9 @@ import './assets/css/StatCard.css';
 import './assets/css/Stats.css';
 import './assets/css/Top.css';
 import './assets/css/Track.css';
-import './assets/css/UserPlaylists.css';
 import './assets/css/ErrorPage.css';
 import './assets/css/Responsiveness.css';
+
 import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom';
 
 import Home from './components/Home';
@@ -36,6 +36,7 @@ import PlaylistTracks from './components/Playlist/PlaylistTracks';
 import CreatorPlaylists from './components/Playlist/CreatorPlaylists';
 import Followed from './components/Followed/Followed';
 import ErrorPage from './components/Error/ErrorPage';
+import RelatedArtists from './components/Artist/RelatedArtists';
 
 function App() {
 	return (
@@ -47,6 +48,7 @@ function App() {
 						<Route exact={true} path="/top" component={Top} />
 						<Route exact={true} path="/stats" component={Stats} />
 						<Route exact={true} path="/artist" component={Artist} />
+						<Route exact={true} path="/related_artists" component={RelatedArtists} />
 						<Route exact={true} path="/track" component={Track} />
 						<Route exact={true} path="/album" component={Album} />
 						<Route exact={true} path="/album_tracks" component={AlbumTracks} />

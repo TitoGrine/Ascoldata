@@ -5,7 +5,7 @@ function ArtistTableRow(props) {
 	return (
 		<tr>
 			<td>
-				<Link to={'/artist?id=' + props.info.id} className="inner-link">
+				<Link to={`/artist?id=${props.info.id}`} className="inner-link">
 					{props.info.name}
 				</Link>
 			</td>

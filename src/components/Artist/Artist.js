@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import Spotify from 'spotify-web-api-js';
 import wiki from 'wikijs';
-import { useLocation, Redirect } from 'react-router-dom';
+import { useLocation, Redirect, Link } from 'react-router-dom';
 import { Image } from 'react-bootstrap';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { trackPromise, usePromiseTracker } from 'react-promise-tracker';
-import { FaWikipediaW, FaSpotify } from 'react-icons/fa';
+import { FaWikipediaW, FaSpotify, FaItunesNote } from 'react-icons/fa';
 
 import { refreshToken } from '../Auth/Auth';
 import default_art from '../../assets/images/default_art.png';
@@ -288,6 +288,16 @@ function Artist() {
 									units=""
 								/>
 								<StatCard barStat={false} title="Popularity" value={artistPopularity} units="" />
+								<StatCard
+									barStat={false}
+									title="Related Artists"
+									value={
+										<Link to={`/related_artists?id=${artist}`} className="inner-link">
+											<FaItunesNote />
+										</Link>
+									}
+									units=""
+								/>
 							</div>
 							{renderStats()}
 						</React.Fragment>

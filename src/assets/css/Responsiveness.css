@@ -182,6 +182,10 @@
 }
 
 @media screen and (max-width: 450px) {
+	section.table-content {
+		gap: 0;
+	}
+
 	/* Pagination */
 
 	ul.pagination {
