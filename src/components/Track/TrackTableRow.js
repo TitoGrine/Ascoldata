@@ -7,12 +7,12 @@ function TrackTableRow(props) {
 	return (
 		<tr>
 			<td>
-				<Link to={'/track?id=' + props.info.id} className="inner-link">
+				<Link to={`/track?id=${props.info.id}`} className="inner-link">
 					{props.info.name}
 				</Link>
 			</td>
 			<td>
-				<Link to={'/album?id=' + props.info.album.id} className="inner-link">
+				<Link to={`/album?id=${props.info.album.id}`} className="inner-link">
 					{props.info.album.name}
 				</Link>
 			</td>
@@ -23,7 +23,7 @@ function TrackTableRow(props) {
 					props.info.artists
 						.map((artist) => {
 							return (
-								<Link key={artist.id} to={'/artist?id=' + artist.id} className="inner-link">
+								<Link key={artist.id} to={`/artist?id=${artist.id}`} className="inner-link">
 									{artist.name}
 								</Link>
 							);

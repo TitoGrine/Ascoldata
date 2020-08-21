@@ -1,13 +1,5 @@
-.content-section {
-	display: flex;
-	flex-direction: column;
-	gap: 1em;
-}
-
 .content-section .title {
 	text-align: center;
-	place-items: center;
-	margin-bottom: 1em;
 }
 
 #misc-info {

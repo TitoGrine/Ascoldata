@@ -14,9 +14,10 @@ import './assets/css/StatCard.css';
 import './assets/css/Stats.css';
 import './assets/css/Top.css';
 import './assets/css/Track.css';
-import './assets/css/UserPlaylists.css';
+import './assets/css/ErrorPage.css';
 import './assets/css/Responsiveness.css';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+
+import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom';
 
 import Home from './components/Home';
 import Top from './components/Top/Top';
@@ -34,28 +35,46 @@ import AlbumTracks from './components/Album/AlbumTracks';
 import PlaylistTracks from './components/Playlist/PlaylistTracks';
 import CreatorPlaylists from './components/Playlist/CreatorPlaylists';
 import Followed from './components/Followed/Followed';
+import ErrorPage from './components/Error/ErrorPage';
+import RelatedArtists from './components/Artist/RelatedArtists';
 
 function App() {
 	return (
 		<React.Fragment>
 			<div className="App">
 				<Router>
-					<Route exact={true} path="/" component={Home} />
-					<Route exact={true} path="/top" component={Top} />
-					<Route exact={true} path="/stats" component={Stats} />
-					<Route exact={true} path="/artist" component={Artist} />
-					<Route exact={true} path="/track" component={Track} />
-					<Route exact={true} path="/album" component={Album} />
-					<Route exact={true} path="/album_tracks" component={AlbumTracks} />
-					<Route exact={true} path="/playlist" component={Playlist} />
-					<Route exact={true} path="/playlists" component={UserPlaylists} />
-					<Route exact={true} path="/playlist_tracks" component={PlaylistTracks} />
-					<Route exact={true} path="/creator_playlists" component={CreatorPlaylists} />
-					<Route exact={true} path="/liked" component={Liked} />
-					<Route exact={true} path="/followed" component={Followed} />
-					<Route exact={true} path="/search" component={SearchResults} />
-					<Route exact={true} path="/find" component={Find} />
-					<Route exact={true} path="/recommendations" component={Recommendations} />
+					<Switch>
+						<Route exact={true} path="/" component={Home} />
+						<Route exact={true} path="/top" component={Top} />
+						<Route exact={true} path="/stats" component={Stats} />
+						<Route exact={true} path="/artist" component={Artist} />
+						<Route exact={true} path="/related_artists" component={RelatedArtists} />
+						<Route exact={true} path="/track" component={Track} />
+						<Route exact={true} path="/album" component={Album} />
+						<Route exact={true} path="/album_tracks" component={AlbumTracks} />
+						<Route exact={true} path="/playlist" component={Playlist} />
+						<Route exact={true} path="/playlists" component={UserPlaylists} />
+						<Route exact={true} path="/playlist_tracks" component={PlaylistTracks} />
+						<Route exact={true} path="/creator_playlists" component={CreatorPlaylists} />
+						<Route exact={true} path="/liked" component={Liked} />
+						<Route exact={true} path="/followed" component={Followed} />
+						<Route exact={true} path="/search" component={SearchResults} />
+						<Route exact={true} path="/find" component={Find} />
+						<Route exact={true} path="/recommendations" component={Recommendations} />
+						<Route
+							exact={true}
+							path="/404"
+							render={() => (
+								<ErrorPage
+									errorCode={404}
+									errorShort="Page not found"
+									errorDescription="Sorry, the page you were looking for doesn't exist..."
+								/>
+							)}
+						/>
+						/* Default to 404 page when route not found */
+						<Redirect to="/404" />
+					</Switch>
 				</Router>
 			</div>
 		</React.Fragment>

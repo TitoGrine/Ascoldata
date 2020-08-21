@@ -5,7 +5,7 @@ function AlbumTableRow(props) {
 	return (
 		<tr>
 			<td>
-				<Link to={'/album?id=' + props.info.id} className="inner-link">
+				<Link to={`/album?id=${props.info.id}`} className="inner-link">
 					{props.info.name}
 				</Link>
 			</td>
@@ -16,7 +16,7 @@ function AlbumTableRow(props) {
 					props.info.artists
 						.map((artist) => {
 							return (
-								<Link key={artist.id} to={'/artist?id=' + artist.id} className="inner-link">
+								<Link key={artist.id} to={`/artist?id=${artist.id}`} className="inner-link">
 									{artist.name}
 								</Link>
 							);

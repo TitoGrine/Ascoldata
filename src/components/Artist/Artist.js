@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import Spotify from 'spotify-web-api-js';
 import wiki from 'wikijs';
-import { useLocation, Redirect } from 'react-router-dom';
+import { useLocation, Redirect, Link } from 'react-router-dom';
 import { Image } from 'react-bootstrap';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { trackPromise, usePromiseTracker } from 'react-promise-tracker';
-import { FaWikipediaW, FaSpotify } from 'react-icons/fa';
+import { FaWikipediaW, FaSpotify, FaItunesNote } from 'react-icons/fa';
 
 import { refreshToken } from '../Auth/Auth';
+import default_art from '../../assets/images/default_art.png';
 
 import Redirects from '../Common/Redirects';
 import StatCard from '../Stats/StatCard';
@@ -32,7 +33,7 @@ function Artist() {
 	const [ artistLink, setArtistLink ] = useState('');
 	const [ artistWikiLink, setArtistWikiLink ] = useState('');
 	const [ artistUri, setArtistUri ] = useState('');
-	const [ artistImage, setArtistImage ] = useState('');
+	const [ artistImage, setArtistImage ] = useState(default_art);
 	const [ artistFollowers, setArtistFollowers ] = useState('');
 	const [ artistGenres, setArtistGenres ] = useState('');
 	const [ artistPopularity, setArtistPopularity ] = useState('');
@@ -48,7 +49,8 @@ function Artist() {
 					setArtistName(data.name);
 					setArtistLink(data.external_urls.spotify);
 					setArtistUri(data.uri);
-					setArtistImage(data.images.length === 0 ? '' : data.images[0].url);
+					if (data.images.length > 0) setArtistImage(data.images[0].url);
+
 					setArtistFollowers(data.followers.total);
 					setArtistGenres(data.genres);
 					setArtistPopularity(data.popularity);
@@ -246,12 +248,16 @@ function Artist() {
 								· {artistName} ·
 							</Textfit>
 							{artistWikiLink.length > 0 && (
-								<a href={artistWikiLink} target="_blank">
-									<FaWikipediaW className="wikipedia-icon-link heartbeat" />
+								<a
+									href={artistWikiLink}
+									target="_blank"
+									className="icon-link wikipedia-icon-link heartbeat"
+								>
+									<FaWikipediaW />
 								</a>
 							)}
-							<a href={artistLink} target="_blank">
-								<FaSpotify className="spotify-icon-link heartbeat" />
+							<a href={artistLink} target="_blank" className="icon-link spotify-icon-link heartbeat">
+								<FaSpotify />
 							</a>
 							<div id="artist-info">
 								<div id="image">
@@ -286,6 +292,16 @@ function Artist() {
 									units=""
 								/>
 								<StatCard barStat={false} title="Popularity" value={artistPopularity} units="" />
+								<StatCard
+									barStat={false}
+									title="Related Artists"
+									value={
+										<Link to={`/related_artists?id=${artist}`} className="inner-link">
+											<FaItunesNote />
+										</Link>
+									}
+									units=""
+								/>
 							</div>
 							{renderStats()}
 						</React.Fragment>

@@ -31,14 +31,14 @@ const calcStats = (tracks) => {
 				};
 
 				data.audio_features.forEach((track_info) => {
-					avgStats.acousticness += 100 * track_info.acousticness / data.audio_features.length;
-					avgStats.danceability += 100 * track_info.danceability / data.audio_features.length;
-					avgStats.energy += 100 * track_info.energy / data.audio_features.length;
-					avgStats.instrumentalness += 100 * track_info.instrumentalness / data.audio_features.length;
-					avgStats.liveness += 100 * track_info.liveness / data.audio_features.length;
-					avgStats.speechiness += 100 * track_info.speechiness / data.audio_features.length;
+					avgStats.acousticness += track_info.acousticness / data.audio_features.length;
+					avgStats.danceability += track_info.danceability / data.audio_features.length;
+					avgStats.energy += track_info.energy / data.audio_features.length;
+					avgStats.instrumentalness += track_info.instrumentalness / data.audio_features.length;
+					avgStats.liveness += track_info.liveness / data.audio_features.length;
+					avgStats.speechiness += track_info.speechiness / data.audio_features.length;
 					avgStats.tempo += track_info.tempo / data.audio_features.length;
-					avgStats.valence += 100 * track_info.valence / data.audio_features.length;
+					avgStats.valence += track_info.valence / data.audio_features.length;
 				});
 
 				resolve(avgStats);
@@ -101,7 +101,7 @@ const getLikedTracksStats = () => {
 	});
 };
 
-const getTopGenres = (timeRange, genres) => {
+const getTopGenres = (timeRange, userValues) => {
 	return new Promise((resolve) => {
 		spotifyWebApi
 			.getMyTopArtists({
@@ -111,15 +111,18 @@ const getTopGenres = (timeRange, genres) => {
 			})
 			.then(
 				function(data) {
+					let avgPopularity = 0;
 					data.items.forEach((artist) => {
 						artist.genres.forEach((genre) => {
-							if (genres[genre]) genres[genre]++;
-							else genres[genre] = 1;
+							if (userValues.topGenres[genre]) userValues.topGenres[genre]++;
+							else userValues.topGenres[genre] = 1;
 						});
+
+						avgPopularity += artist.popularity / data.items.length;
 					});
 
 					// Order genres with more than one occurence
-					resolve(genres);
+					resolve(avgPopularity);
 				},
 				function(err) {
 					console.log(err);
@@ -135,7 +138,6 @@ export const calcUserValues = async (authToken) => {
 
 	let div = 0;
 	let userValues = {};
-	let topGenres = {};
 
 	let shortStats = await getTopTracksStats('short_term');
 	let mediumStats = await getTopTracksStats('medium_term');
@@ -166,15 +168,41 @@ export const calcUserValues = async (authToken) => {
 		div += 4;
 	}
 
-	for (var key in userValues) userValues[key] = userValues[key] / div;
+	for (var key in userValues) userValues[key] = div === 0 ? 0 : userValues[key] / div;
 
-	topGenres = await getTopGenres('short_term', topGenres);
-	topGenres = await getTopGenres('medium_term', topGenres);
-	topGenres = await getTopGenres('long_term', topGenres);
+	userValues.topGenres = {};
 
-	for (var genre in topGenres) if (topGenres[genre] < 3) delete topGenres[genre];
+	let avgShortPop = await getTopGenres('short_term', userValues);
+	let avgMediumPop = await getTopGenres('medium_term', userValues);
+	let avgLongPop = await getTopGenres('long_term', userValues);
+	let avgPopularity = 0;
+	div = 0;
 
-	userValues['topGenres'] = topGenres;
+	console.log(avgShortPop);
+	console.log(avgMediumPop);
+	console.log(avgLongPop);
+
+	if (avgShortPop >= 0) {
+		avgPopularity = 4 * avgShortPop;
+
+		div = 4;
+	}
+
+	if (avgMediumPop >= 0) {
+		avgPopularity += 4 * avgMediumPop;
+
+		div += 2;
+	}
+
+	if (avgLongPop >= 0) {
+		avgPopularity += 4 * avgLongPop;
+
+		div++;
+	}
+
+	userValues.popularity = div === 0 ? 0 : avgPopularity / div;
+
+	for (var genre in userValues.topGenres) if (userValues.topGenres[genre] < 3) delete userValues.topGenres[genre];
 
 	localStorage.setItem('compatibilityValues', JSON.stringify(userValues));
 };

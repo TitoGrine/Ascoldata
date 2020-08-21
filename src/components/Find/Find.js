@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { useHistory, Redirect } from 'react-router-dom';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
-
+import { IoIosStats } from 'react-icons/io';
 import { keyBinds, trimLimit, getExplanation } from '../Util/HelperFunc';
 
 import Redirects from '../Common/Redirects';
@@ -47,6 +47,22 @@ function Find() {
 		if (valence !== -1) link += `&valence=${valence}`;
 
 		history.push(link);
+	};
+
+	const setUserStats = () => {
+		let userStats = JSON.parse(localStorage.getItem('compatibilityValues'));
+
+		if (userStats) {
+			setAcousticness(userStats.acousticness.toFixed(3));
+			setDanceability(userStats.danceability.toFixed(3));
+			setEnergy(userStats.energy.toFixed(3));
+			setInstrumentalness(userStats.instrumentalness.toFixed(3));
+			setLiveness(userStats.liveness.toFixed(3));
+			setSpeechiness(userStats.speechiness.toFixed(3));
+			setPopularity(parseInt(userStats.popularity));
+			setTempo(parseInt(userStats.tempo));
+			setValence(userStats.valence.toFixed(3));
+		}
 	};
 
 	const keyChange = (ev) => {
@@ -99,6 +115,19 @@ function Find() {
 			<HeaderBar />
 			<div id="corporum" className="find-content">
 				<section className="content-section">
+					<OverlayTrigger
+						key="top"
+						placement="top"
+						overlay={
+							<Tooltip>
+								Set the attributes to the weighted average values of your top and liked tracks
+							</Tooltip>
+						}
+					>
+						<button className="icon-link default-stats-icon-link heartbeat" onClick={() => setUserStats()}>
+							<IoIosStats />
+						</button>
+					</OverlayTrigger>
 					<div id="attribute-inputs">
 						<div className="dropdown-value-input" onChange={keyChange}>
 							<OverlayTrigger

@@ -1,15 +1,25 @@
 .playlist-creator {
 	display: flex;
 	flex-direction: column;
-	gap: 0.5em;
-	margin-top: 1em;
+	gap: 0.6em;
+	margin-top: 0.5em;
+	justify-content: center;
 	align-items: center;
-	font-size: min(6vw, 1.3em);
+	font-size: min(5vw, 1.4em);
+	height: 95%;
+	border-radius: 5px;
+	color: var(--color-secondary);
+	background-color: var(--color-neutral);
+}
+
+.creator-name {
+	width: 100%;
+	text-align: center;
 }
 
 .playlist-creator > img {
-	width: min(40vw, 180px);
-	height: min(40vw, 180px);
+	width: min(38vw, 180px);
+	height: min(38vw, 180px);
 	object-fit: cover;
-	background-color: var(--color-primary);
+	background-color: var(--color-secondary);
 }

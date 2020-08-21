@@ -18,7 +18,7 @@ export class PlaylistCard extends Component {
 			<div className="card" ref={this.scrollStart}>
 				<div>
 					<strong>Playlist: </strong>
-					<Link to={'/playlist?id=' + this.props.info.id} className="inner-link">
+					<Link to={`/playlist?id=${this.props.info.id}`} className="inner-link">
 						{this.props.info.name}
 					</Link>
 				</div>
@@ -29,10 +29,6 @@ export class PlaylistCard extends Component {
 				<div>
 					<strong>Public: </strong>
 					{this.props.info.public ? <MdDone style={checkStyle} /> : <MdBlock style={blockStyle} />}
-				</div>
-				<div>
-					<strong>Collaborative: </strong>
-					{this.props.info.collaborative ? <MdDone style={checkStyle} /> : <MdBlock style={blockStyle} />}
 				</div>
 				<div>
 					<strong>Nr. Songs: </strong>

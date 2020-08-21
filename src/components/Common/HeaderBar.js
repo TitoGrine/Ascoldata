@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Navbar, Nav, Modal, Button } from 'react-bootstrap';
+import logo from '../../assets/images/logo.svg';
 
 import { clearStorage } from '../Auth/Auth';
 import { useHistory } from 'react-router-dom';
@@ -22,7 +23,10 @@ function HeaderBar(props) {
 	return (
 		<React.Fragment>
 			<Navbar id="navbar" expand="sm">
-				<Navbar.Brand href="/">Ascoldata</Navbar.Brand>
+				<Navbar.Brand href="/">
+					<img src={logo} id="header-logo" alt="Ascoldata's logo." />
+					Ascoldata
+				</Navbar.Brand>
 				<Navbar.Toggle aria-controls="basic-navbar-nav" />
 				<Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
 					<Nav>

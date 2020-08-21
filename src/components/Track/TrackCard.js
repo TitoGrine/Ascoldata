@@ -18,13 +18,13 @@ export class TrackCard extends Component {
 			<div className="card" ref={this.scrollStart}>
 				<div>
 					<strong>Title: </strong>
-					<Link to={'/track?id=' + this.props.info.id} className="inner-link">
+					<Link to={`/track?id=${this.props.info.id}`} className="inner-link">
 						{this.props.info.name}
 					</Link>
 				</div>
 				<div>
 					<strong>Album: </strong>
-					<Link to={'/album?id=' + this.props.info.album.id} className="inner-link">
+					<Link to={`/album?id=${this.props.info.album.id}`} className="inner-link">
 						{this.props.info.album.name}
 					</Link>
 				</div>
@@ -36,7 +36,7 @@ export class TrackCard extends Component {
 						this.props.info.artists
 							.map((artist) => {
 								return (
-									<Link key={artist.id} to={'/artist?id=' + artist.id} className="inner-link">
+									<Link key={artist.id} to={`/artist?id=${artist.id}`} className="inner-link">
 										{artist.name}
 									</Link>
 								);

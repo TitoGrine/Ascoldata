@@ -9,8 +9,8 @@
 		grid-column: 1 / span 10;
 		grid-row: 1 / span 24;
 
-		-webkit-animation: slide-in-down 1s cubic-bezier(0.455, 0.030, 0.515, 0.955) forwards;
-		animation: slide-in-down 1s cubic-bezier(0.455, 0.030, 0.515, 0.955) forwards;
+		-webkit-animation: slide-in-down 0.8s cubic-bezier(0.455, 0.030, 0.515, 0.955) both;
+		animation: slide-in-down 0.8s cubic-bezier(0.455, 0.030, 0.515, 0.955) both;
 	}
 
 	section.sidebar-section,
@@ -51,6 +51,17 @@
 		margin: auto;
 		grid-column: 1 / span 2;
 	}
+
+	#stats {
+		grid-template-columns: repeat(2, 1fr);
+		grid-template-rows: repeat(3, 1fr);
+		margin: 2em 0;
+		gap: 2em;
+	}
+
+	#stats > div.stat-card {
+		align-self: flex-start;
+	}
 }
 
 @media screen and (max-width: 700px) {
@@ -62,6 +73,10 @@
 	section.table-content {
 		display: flex;
 		gap: 2em;
+	}
+
+	.no-content-warning {
+		max-width: 80%;
 	}
 
 	/* Pagination */
@@ -81,7 +96,6 @@
 	/* GeneralInfo */
 
 	#info {
-		/* flex-direction: column; */
 		align-items: center;
 		flex-wrap: wrap;
 	}
@@ -111,8 +125,9 @@
 	#track-info > div,
 	#album-info,
 	#artist-info,
+	#playlist-info,
 	#album-info #misc-data,
-	#playlist-info {
+	#playlist-info #misc-data {
 		align-items: flex-start;
 		width: 100%;
 		padding: 0 0.5em;
@@ -126,17 +141,6 @@
 
 	#track-info > div > .stat-card {
 		flex: 1 1 40%;
-	}
-
-	#stats {
-		grid-template-columns: repeat(2, 1fr);
-		grid-template-rows: repeat(3, 1fr);
-		margin-bottom: 3em;
-		gap: 2em;
-	}
-
-	#stats > div.stat-card {
-		align-self: flex-start;
 	}
 }
 
@@ -153,7 +157,7 @@
 	/* Find */
 
 	#attribute-inputs {
-		flex-wrap: wrap;
+		flex-direction: column;
 	}
 
 	#attribute-sliders {
@@ -177,6 +181,10 @@
 }
 
 @media screen and (max-width: 450px) {
+	section.table-content {
+		gap: 0;
+	}
+
 	/* Pagination */
 
 	ul.pagination {

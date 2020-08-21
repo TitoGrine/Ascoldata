@@ -8,6 +8,7 @@ import { trackPromise, usePromiseTracker } from 'react-promise-tracker';
 
 import { refreshToken } from '../Auth/Auth';
 import { formatDuration } from '../Util/HelperFunc';
+import default_art from '../../assets/images/default_art.png';
 
 import Redirects from '../Common/Redirects';
 import StatCard from '../Stats/StatCard';
@@ -31,7 +32,7 @@ function Track() {
 	const [ albumName, setAlbumName ] = useState('');
 	const [ albumLink, setAlbumLink ] = useState('');
 	const [ albumUri, setAlbumUri ] = useState('');
-	const [ albumImage, setAlbumImage ] = useState('');
+	const [ albumImage, setAlbumImage ] = useState(default_art);
 	const [ albumLabel, setAlbumLabel ] = useState('');
 	const [ albumArtists, setAlbumArtists ] = useState('');
 	const [ albumNrSongs, setAlbumNrSongs ] = useState('');
@@ -50,10 +51,11 @@ function Track() {
 				function(data) {
 					//console.log(data);
 
+					if (data.images.length > 0) setAlbumImage(data.images[0].url);
+
 					setAlbumName(data.name);
 					setAlbumLink(data.external_urls.spotify);
 					setAlbumUri(data.uri);
-					setAlbumImage(data.images.length === 0 ? '' : data.images[0].url);
 					setAlbumLabel(data.label);
 					setAlbumArtists(data.artists);
 					setAlbumNrSongs(data.tracks.items.length);
@@ -230,8 +232,8 @@ function Track() {
 							<Textfit className="album-title" mode="single" max={36}>
 								· {albumName} ·
 							</Textfit>
-							<a href={albumLink} target="_blank">
-								<FaSpotify className="spotify-icon-link heartbeat" />
+							<a href={albumLink} target="_blank" className="icon-link spotify-icon-link heartbeat">
+								<FaSpotify />
 							</a>
 							<div id="album-info">
 								<div id="image">

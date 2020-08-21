@@ -3,6 +3,7 @@ import { Image } from 'react-bootstrap';
 import { Textfit } from 'react-textfit';
 import Spotify from 'spotify-web-api-js';
 import { Link } from 'react-router-dom';
+import default_image from '../../assets/images/default_pic.png';
 
 const spotifyWebApi = new Spotify();
 
@@ -37,7 +38,7 @@ function Creator(props) {
 
 	return (
 		<div className="playlist-creator">
-			<Image src={props.info.images.length > 0 ? props.info.images[0].url : ''} thumbnail />
+			<Image src={props.info.images.length > 0 ? props.info.images[0].url : default_image} thumbnail />
 			<iframe
 				src={`https://open.spotify.com/follow/1/?uri=${props.info.uri}&size=basic&theme=light&show-count=0`}
 				width="95"
@@ -47,7 +48,7 @@ function Creator(props) {
 				style={{ border: 'none', overflow: 'hidden' }}
 				allowtransparency="true"
 			/>
-			<Textfit mode="single" min={25} max={30}>
+			<Textfit mode="single" min={10} max={28} className="creator-name">
 				<strong>· {props.info.display_name} ·</strong>
 			</Textfit>
 			<div>

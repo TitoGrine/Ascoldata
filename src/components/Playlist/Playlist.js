@@ -7,6 +7,7 @@ import { trackPromise, usePromiseTracker } from 'react-promise-tracker';
 
 import { refreshToken } from '../Auth/Auth';
 import { formatDuration, decodeString } from '../Util/HelperFunc';
+import default_art from '../../assets/images/default_art.png';
 
 import Redirects from '../Common/Redirects';
 import StatCard from '../Stats/StatCard';
@@ -32,7 +33,7 @@ function Playlist() {
 	const [ playlistName, setPlaylistName ] = useState('');
 	const [ playlistLink, setPlaylistLink ] = useState('');
 	const [ playlistUri, setPlaylistUri ] = useState('');
-	const [ playlistImage, setPlaylistImage ] = useState('');
+	const [ playlistImage, setPlaylistImage ] = useState(default_art);
 	const [ playlistDescription, setPlaylistDescription ] = useState('');
 	const [ playlistFollowers, setPlaylistFollowers ] = useState('');
 	const [ playlistOwner, setPlaylistOwner ] = useState('');
@@ -51,7 +52,7 @@ function Playlist() {
 					setPlaylistName(data.name);
 					setPlaylistLink(data.external_urls.spotify);
 					setPlaylistUri(data.uri);
-					setPlaylistImage(data.images.length === 0 ? '' : data.images[0].url);
+					if (data.images.length > 0) setPlaylistImage(data.images[0].url);
 					setPlaylistDescription(decodeString(data.description));
 					setPlaylistFollowers(data.followers.total);
 					setPlaylistOwner(data.owner);
@@ -222,8 +223,8 @@ function Playlist() {
 							<Textfit className="playlist-title" mode="single" max={36}>
 								· {playlistName} ·
 							</Textfit>
-							<a href={playlistLink} target="_blank">
-								<FaSpotify className="spotify-icon-link heartbeat" />
+							<a href={playlistLink} target="_blank" className="icon-link spotify-icon-link heartbeat">
+								<FaSpotify />
 							</a>
 
 							<div id="playlist-info">

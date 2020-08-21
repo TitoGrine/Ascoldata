@@ -37,6 +37,17 @@ function PlaylistTracks() {
 	const colapseTable = useMediaQuery({ maxWidth: 700 });
 	const decreasePagination = useMediaQuery({ maxWidth: 500 });
 
+	const getPlaylistName = () => {
+		spotifyWebApi.getPlaylist(playlistId).then(
+			function(data) {
+				setPlaylistName(data.name);
+			},
+			function(err) {
+				console.log(err);
+			}
+		);
+	};
+
 	const getPlaylistTracks = (tracks) => {
 		trackPromise(
 			spotifyWebApi.getTracks(tracks).then(
@@ -92,6 +103,9 @@ function PlaylistTracks() {
 		() => {
 			if (authToken) {
 				getData();
+
+				if (playlistName.length === 0) getPlaylistName();
+
 				setPage(1 + offset / limit);
 			}
 		},

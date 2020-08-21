@@ -91,7 +91,7 @@ function Track() {
 					};
 
 					setTrackStats(avgStats);
-					evalCompatibility(avgStats, artists);
+					//evalCompatibility(avgStats, artists);
 				},
 				function(err) {
 					console.log(err);
@@ -150,8 +150,8 @@ function Track() {
 							<Textfit className="track-title" mode="single" max={36}>
 								· {trackName} ·
 							</Textfit>
-							<a href={trackLink} target="_blank">
-								<FaSpotify className="spotify-icon-link heartbeat" />
+							<a href={trackLink} target="_blank" className="icon-link spotify-icon-link heartbeat">
+								<FaSpotify />
 							</a>
 
 							<div id="track-info">
