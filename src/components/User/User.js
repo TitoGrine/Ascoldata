@@ -93,6 +93,7 @@ function User() {
 					setLink(data.external_urls.spotify);
 					setURI(data.uri);
 
+					localStorage.setItem('userId', data.id);
 					localStorage.setItem('country', data.country);
 
 					getUserSeeds();

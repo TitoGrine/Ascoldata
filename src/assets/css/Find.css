@@ -36,7 +36,8 @@
 	grid-template-columns: repeat(3, 1fr);
 	grid-template-rows: repeat(3, 1fr);
 	padding-right: 2.5em;
-	gap: 2em;
+	row-gap: 4em;
+	column-gap: 0.5em;
 }
 
 button.find-button {
@@ -72,7 +73,5 @@ button.refresh-button {
 .react-tabs__tab-panel--selected.instructions-tab {
 	font-size: 1.2rem;
 	font-weight: 500;
-	overflow-y: auto;
-	max-height: 65vh;
 	line-height: 2rem;
 }

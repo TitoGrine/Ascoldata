@@ -3,10 +3,12 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { useLocation, Redirect } from 'react-router-dom';
 import Spotify from 'spotify-web-api-js';
 import { trackPromise } from 'react-promise-tracker';
+import { useMediaQuery } from 'react-responsive';
+import { Alert } from 'react-bootstrap';
+import { Helmet } from 'react-helmet';
 
 import { refreshToken } from '../Auth/Auth';
 import { trimLimit } from '../Util/HelperFunc';
-import { useMediaQuery } from 'react-responsive';
 
 import Redirects from '../Common/Redirects';
 import TrackTable from '../Track/TrackTable';
@@ -15,21 +17,69 @@ import SideToggle from '../Common/SideToggle';
 import TrackCards from '../Track/TrackCards';
 import HeaderBar from '../Common/HeaderBar';
 import LoadingSpinner from '../Common/LoadingSpinner';
-import { Helmet } from 'react-helmet';
 import NoContent from '../Common/NoContent';
 
 const spotifyWebApi = new Spotify();
 
 function Recommendations() {
 	const query = new URLSearchParams(useLocation().search);
-	const limit = 12;
+	const limit = 15;
 
 	const [ toggled, setToggled ] = useState('nothing');
 	const [ authToken, setAuthToken ] = useState(localStorage.getItem('authToken'));
+	const [ showSuccessAlert, setShowSuccessAlert ] = useState(false);
+	const [ showFailAlert, setShowFailAlert ] = useState(false);
 	const [ seeds ] = useState(localStorage.getItem('track_seeds'));
 	const [ recommendations, setRecommendations ] = useState([]);
 
 	const colapseTable = useMediaQuery({ maxWidth: 700 });
+
+	const autoDismiss = async () => {
+		window.setTimeout(() => {
+			setShowSuccessAlert(false);
+			setShowFailAlert(false);
+		}, 5000);
+	};
+
+	const createPlaylist = async () => {
+		let userId = localStorage.getItem('userId');
+		let currDate = new Date();
+
+		if (!userId || recommendations.length === 0) return;
+
+		spotifyWebApi
+			.createPlaylist(userId, {
+				name: 'Ascoldata Recommendations',
+				public: false,
+				description: `Playlist create through Ascoldata on ${currDate.getDate()}/${currDate.getMonth() +
+					1}/${currDate.getFullYear()} at ${currDate.getHours()}:${currDate.getMinutes()}.`
+			})
+			.then(
+				function(response) {
+					let tracks = recommendations.map((track) => track.uri);
+
+					spotifyWebApi
+						.addTracksToPlaylist(response.id, '', {
+							uris: tracks
+						})
+						.then(
+							function(response) {
+								console.log(response);
+								setShowSuccessAlert(true);
+								autoDismiss();
+							},
+							function(err) {
+								setShowFailAlert(true);
+								autoDismiss();
+							}
+						);
+				},
+				function(err) {
+					setShowFailAlert(true);
+					autoDismiss();
+				}
+			);
+	};
 
 	const getParameters = () => {
 		let defaultParameters = {
@@ -103,6 +153,28 @@ function Recommendations() {
 			<Helmet>
 				<title>{`Song Recommendations - Ascoldata`}</title>
 			</Helmet>
+			<Alert
+				variant="warning"
+				show={showFailAlert}
+				onClose={() => {
+					setShowFailAlert(false);
+				}}
+				dismissible
+			>
+				<Alert.Heading>Ups!</Alert.Heading>
+				<p>There was a problem creating your playlist. Sorry about that...</p>
+			</Alert>
+			<Alert
+				variant="success"
+				show={showSuccessAlert}
+				onClose={() => {
+					setShowSuccessAlert(false);
+				}}
+				dismissible
+			>
+				<Alert.Heading>Yay!</Alert.Heading>
+				<p>Your playlist has been created. Hope you enjoy!</p>
+			</Alert>
 			<HeaderBar />
 			<div id="corporum">
 				<section className="content-section table-content">
@@ -117,9 +189,14 @@ function Recommendations() {
 									maxHeight={recommendations.length / limit * 100}
 								/>
 							)}
-							<button className="refresh-button" onClick={getData}>
+							<button className="refresh-button" onClick={() => getData()}>
 								Refresh
 							</button>
+							{authToken && (
+								<button className="create-playlist-button" onClick={() => createPlaylist()}>
+									Create Playlist
+								</button>
+							)}
 						</React.Fragment>
 					)}
 					{recommendations.length === 0 && (

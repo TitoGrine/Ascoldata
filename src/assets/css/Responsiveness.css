@@ -1,6 +1,6 @@
 /* Responsiveness */
 
-@media screen and (max-width: 980px) {
+@media screen and (max-width: 1140px) {
 	.side-toggle {
 		display: block;
 	}
