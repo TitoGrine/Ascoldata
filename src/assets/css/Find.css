@@ -36,33 +36,35 @@
 	grid-template-columns: repeat(3, 1fr);
 	grid-template-rows: repeat(3, 1fr);
 	padding-right: 2.5em;
-	row-gap: 4em;
+	row-gap: 3.5em;
 	column-gap: 0.5em;
 }
 
-button.find-button {
+.recommendations-buttons {
+	display: flex;
+	gap: 1em;
+	margin: 1em auto;
+}
+
+button.find-button,
+button.refresh-button,
+button.create-playlist-button {
 	text-decoration: none;
 	font-size: 1.2rem;
 	font-weight: 600;
-	padding: 0.8em 1em;
+	padding: 0.6em 0.8em;
 	color: var(--color-neutral);
 	background-color: var(--color-primary);
 	border-width: 0;
 	border-radius: 5px;
 	width: 10em;
+}
+
+button.find-button {
 	margin-right: 2.5em;
 }
 
 button.refresh-button {
-	text-decoration: none;
-	font-size: 1.2rem;
-	font-weight: 600;
-	padding: 0.6em 1em;
-	color: var(--color-neutral);
-	background-color: var(--color-primary);
-	border-width: 0;
-	border-radius: 5px;
-	width: 10em;
 	align-self: center;
 }
 

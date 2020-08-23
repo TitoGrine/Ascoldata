@@ -9,6 +9,7 @@ import { Helmet } from 'react-helmet';
 
 import { refreshToken } from '../Auth/Auth';
 import { trimLimit } from '../Util/HelperFunc';
+import { ascoldata_cover_art } from '../Util/DefCoverArt';
 
 import Redirects from '../Common/Redirects';
 import TrackTable from '../Track/TrackTable';
@@ -47,6 +48,8 @@ function Recommendations() {
 
 		if (!userId || recommendations.length === 0) return;
 
+		spotifyWebApi.setAccessToken(authToken);
+
 		spotifyWebApi
 			.createPlaylist(userId, {
 				name: 'Ascoldata Recommendations',
@@ -64,19 +67,32 @@ function Recommendations() {
 						})
 						.then(
 							function(response) {
-								console.log(response);
+								// console.log(response);
 								setShowSuccessAlert(true);
 								autoDismiss();
 							},
 							function(err) {
+								console.log(err);
 								setShowFailAlert(true);
 								autoDismiss();
 							}
 						);
+
+					spotifyWebApi.uploadCustomPlaylistCoverImage(response.id, ascoldata_cover_art).then(
+						function(response) {
+							// console.log(response);
+						},
+						function(err) {
+							console.log(err);
+						}
+					);
 				},
 				function(err) {
+					console.log(err);
 					setShowFailAlert(true);
 					autoDismiss();
+
+					if (err.status === 401) refreshToken((new_token) => setAuthToken(new_token));
 				}
 			);
 	};
@@ -189,14 +205,16 @@ function Recommendations() {
 									maxHeight={recommendations.length / limit * 100}
 								/>
 							)}
-							<button className="refresh-button" onClick={() => getData()}>
-								Refresh
-							</button>
-							{authToken && (
-								<button className="create-playlist-button" onClick={() => createPlaylist()}>
-									Create Playlist
+							<div className="recommendations-buttons">
+								<button className="refresh-button" onClick={() => getData()}>
+									Refresh
 								</button>
-							)}
+								{authToken && (
+									<button className="create-playlist-button" onClick={() => createPlaylist()}>
+										Create Playlist
+									</button>
+								)}
+							</div>
 						</React.Fragment>
 					)}
 					{recommendations.length === 0 && (
