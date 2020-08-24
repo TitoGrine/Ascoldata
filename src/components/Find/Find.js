@@ -3,7 +3,8 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { useHistory, Redirect } from 'react-router-dom';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { IoIosStats } from 'react-icons/io';
-import { keyBinds, trimLimit, getExplanation } from '../Util/HelperFunc';
+import { GiRollingDices } from 'react-icons/gi';
+import { keyBinds, trimLimit, getExplanation, randomInt } from '../Util/HelperFunc';
 
 import Redirects from '../Common/Redirects';
 import Search from '../Search/Search';
@@ -65,6 +66,21 @@ function Find() {
 		}
 	};
 
+	const setRandomStats = () => {
+		setKey(randomInt(1, 12));
+		setMode(Math.round(Math.random()));
+
+		setAcousticness(Math.random().toFixed(3));
+		setDanceability(Math.random().toFixed(3));
+		setEnergy(Math.random().toFixed(3));
+		setInstrumentalness(Math.random().toFixed(3));
+		setLiveness(Math.random().toFixed(3));
+		setSpeechiness(Math.random().toFixed(3));
+		setPopularity(randomInt(0, 100));
+		setTempo(randomInt(0, 250));
+		setValence(Math.random().toFixed(3));
+	};
+
 	const keyChange = (ev) => {
 		setKey(parseInt(ev.target.value));
 	};
@@ -115,8 +131,13 @@ function Find() {
 			<HeaderBar />
 			<div id="corporum" className="find-content">
 				<section className="content-section">
+					<OverlayTrigger placement="top" overlay={<Tooltip>Randomize all attributes!</Tooltip>}>
+						<button className="icon-link random-stats-icon-link heartbeat" onClick={() => setRandomStats()}>
+							<GiRollingDices />
+						</button>
+					</OverlayTrigger>
+
 					<OverlayTrigger
-						key="top"
 						placement="top"
 						overlay={
 							<Tooltip>
@@ -138,10 +159,10 @@ function Find() {
 								<label htmlFor="key">Key:</label>
 							</OverlayTrigger>
 							<select name="key">
-								{keyBinds.map((key, index) => {
+								{keyBinds.map((keyBind, index) => {
 									return (
-										<option key={key} value={index}>
-											{index === 0 ? 'Any' : key}
+										<option key={keyBind} value={index} selected={index === key}>
+											{index === 0 ? 'Any' : keyBind}
 										</option>
 									);
 								})}
@@ -157,9 +178,15 @@ function Find() {
 								<label htmlFor="mode">Mode:</label>
 							</OverlayTrigger>
 							<select name="mode">
-								<option value={-1}>Any</option>
-								<option value={0}>Minor</option>
-								<option value={1}>Major</option>
+								<option value={-1} selected={mode === -1}>
+									Any
+								</option>
+								<option value={0} selected={mode === 0}>
+									Minor
+								</option>
+								<option value={1} selected={mode === 1}>
+									Major
+								</option>
 							</select>
 						</div>
 					</div>

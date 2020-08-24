@@ -6,6 +6,10 @@ export const trimLimit = (number, min = 0, max = 1) => {
 	return Math.max(min, Math.min(parseFloat(number), max));
 };
 
+export const randomInt = (min, max) => {
+	return Math.floor(Math.random() * (max - min) + min);
+};
+
 export const addToDate = (date, hours, minutes = 0) => {
 	return new Date(date.getTime() + (hours * 60 + minutes) * 60000);
 };

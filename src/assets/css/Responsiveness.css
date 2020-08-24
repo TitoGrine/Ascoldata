@@ -212,8 +212,13 @@
 	}
 
 	.wikipedia-icon-link {
-		right: 18px;
+		right: 20px;
 		top: 25vh;
+	}
+
+	.random-stats-icon-link {
+		right: 20px;
+		top: 80px;
 	}
 
 	/* Find */

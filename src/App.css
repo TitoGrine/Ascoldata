@@ -276,15 +276,15 @@ a.inner-link {
 
 .spotify-icon-link {
 	position: absolute;
-	right: 18px;
-	top: 18px;
+	right: 20px;
+	top: 20px;
 	color: var(--color-spotify);
 }
 
 .wikipedia-icon-link {
 	position: absolute;
-	top: 18px;
-	right: 66px;
+	top: 20px;
+	right: 80px;
 	color: black;
 	background-color: var(--color-wikipedia);
 	border-radius: 2px;
@@ -303,11 +303,25 @@ a.inner-link {
 	border-radius: 20em;
 }
 
+.random-stats-icon-link {
+	position: absolute;
+	right: 80px;
+	top: 20px;
+	border: 0;
+	padding-top: 6px;
+	padding-bottom: 6px;
+
+	background-color: var(--color-primary);
+	color: var(--color-neutral);
+	border-radius: 20em;
+}
+
 .wikipedia-icon-link > svg {
 	padding: 4px 6px;
 }
 
-.default-stats-icon-link > svg {
+.default-stats-icon-link > svg,
+.random-stats-icon-link > svg {
 	padding: 3px;
 }
 

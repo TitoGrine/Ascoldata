@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { useLocation, Redirect } from 'react-router-dom';
 import Spotify from 'spotify-web-api-js';
-import { trackPromise } from 'react-promise-tracker';
+import { trackPromise, usePromiseTracker } from 'react-promise-tracker';
 import { useMediaQuery } from 'react-responsive';
 import { Alert } from 'react-bootstrap';
 import { Helmet } from 'react-helmet';
@@ -32,6 +32,8 @@ function Recommendations() {
 	const [ showFailAlert, setShowFailAlert ] = useState(false);
 	const [ seeds ] = useState(localStorage.getItem('track_seeds'));
 	const [ recommendations, setRecommendations ] = useState([]);
+
+	const { promiseInProgress } = usePromiseTracker();
 
 	const colapseTable = useMediaQuery({ maxWidth: 700 });
 
@@ -195,7 +197,8 @@ function Recommendations() {
 			<div id="corporum">
 				<section className="content-section table-content">
 					<LoadingSpinner />
-					{recommendations.length > 0 && (
+					{!promiseInProgress &&
+					recommendations.length > 0 && (
 						<React.Fragment>
 							{colapseTable ? (
 								<TrackCards results={recommendations} />
@@ -217,7 +220,8 @@ function Recommendations() {
 							</div>
 						</React.Fragment>
 					)}
-					{recommendations.length === 0 && (
+					{!promiseInProgress &&
+					recommendations.length === 0 && (
 						<NoContent
 							mainText="Nothing was found for what you were looking for..."
 							secondaryText="Try a different combination of attributes 😊"
