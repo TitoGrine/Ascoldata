@@ -38,6 +38,7 @@ import Followed from './components/Followed/Followed';
 import ErrorPage from './components/Error/ErrorPage';
 import RelatedArtists from './components/Artist/RelatedArtists';
 import About from './components/About/About';
+import PrivacyPolicy from './components/Privacy/PrivacyPolicy';
 
 function App() {
 	return (
@@ -47,6 +48,7 @@ function App() {
 					<Switch>
 						<Route exact={true} path="/" component={Home} />
 						<Route exact={true} path="/about" component={About} />
+						<Route exact={true} path="/privacy_policy" component={PrivacyPolicy} />
 						<Route exact={true} path="/top" component={Top} />
 						<Route exact={true} path="/stats" component={Stats} />
 						<Route exact={true} path="/artist" component={Artist} />
