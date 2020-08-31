@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { Redirect } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 
 import { addToDate } from '../Util/HelperFunc';
 
 import HeaderBar from '../Common/HeaderBar';
+import { Helmet } from 'react-helmet';
 
 class Login extends Component {
 	constructor() {
@@ -41,9 +42,12 @@ class Login extends Component {
 		if (!localStorage.getItem('refreshToken')) {
 			return (
 				<React.Fragment>
+					<Helmet>
+						<title>Ascoldata</title>
+					</Helmet>
 					<HeaderBar />
 					<div id="corporum">
-						<section className="content-section">
+						<section className="content-section login-section">
 							<div
 								className="col d-flex flex-column align-items-center justify-content-center"
 								style={{ height: '100%' }}
@@ -59,20 +63,21 @@ class Login extends Component {
 												ev.target.submit();
 											}}
 										>
-											<Button type="submit" size="lg" style={buttonStyle}>
+											<Button type="submit" size="lg">
 												<strong>Log in with Spotify</strong>
 											</Button>
 										</form>
-										<p style={textStyle}>
-											<strong>Please log in with your Spotify account.</strong>
-											<br />
-											No data from your Spotify account or activity is collected.
+										<p>
+											By signing in you agree to our{' '}
+											<Link to="/privacy_policy" className="inner-link">
+												Privacy Policy
+											</Link>
 										</p>
 									</React.Fragment>
 								)}
 								{this.state.loginRequested && (
 									<React.Fragment>
-										<p style={textStyle}>Waiting for Spotify...</p>
+										<p>Waiting for Spotify...</p>
 									</React.Fragment>
 								)}
 							</div>
@@ -86,21 +91,5 @@ class Login extends Component {
 		}
 	}
 }
-
-const textStyle = {
-	padding: '1.2em 0.5em',
-	fontWeight: '400',
-	fontSize: '1.3em',
-	textAlign: 'center'
-};
-
-const buttonStyle = {
-	padding: '0.6em 1.4em',
-	fontSize: '1.3rem',
-	fontWeight: '400',
-	backgroundColor: 'var(--color-primary)',
-	color: 'var(--color-neutral)',
-	borderWidth: '0'
-};
 
 export default Login;

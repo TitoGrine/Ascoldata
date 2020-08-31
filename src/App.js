@@ -7,6 +7,7 @@ import './assets/css/Album.css';
 import './assets/css/Artist.css';
 import './assets/css/AttributeSlider.css';
 import './assets/css/Find.css';
+import './assets/css/Login.css';
 import './assets/css/Playlist.css';
 import './assets/css/Creator.css';
 import './assets/css/Search.css';

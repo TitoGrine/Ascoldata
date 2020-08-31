@@ -6,7 +6,7 @@
 	transform: translate(-50%, -50%);
 
 	color: var(--color-neutral);
-	font-size: min(6vw, 1.5rem);
+	font-size: min(6vw, 1.3rem);
 	font-weight: 500;
 	display: flex;
 	flex-direction: column;
@@ -16,14 +16,14 @@
 }
 
 #page-error-content > strong {
-	font-size: min(8vw, 2.4rem);
+	font-size: min(8vw, 2.2rem);
 	padding: 0;
 }
 
 .return-home-button {
-	padding: 0.6em 1.2em;
-	font-size: min(6vw, 1.3rem);
-	font-weight: 400;
+	padding: 0.6em 1.3em;
+	font-size: min(6vw, 1.2rem);
+	font-weight: 300;
 	background-color: var(--color-neutral);
 	color: var(--color-secondary);
 	border-width: 0;
@@ -36,11 +36,11 @@
 
 #error-logo {
 	width: min(20vw, 220px);
-	-webkit-animation: caotic-rotation 3.5s linear infinite both;
-	animation: caotic-rotation 3.5s linear infinite both;
+	-webkit-animation: rotation 3.5s linear infinite both;
+	animation: rotation 3.5s linear infinite both;
 }
 
-@-webkit-keyframes caotic-rotation {
+@-webkit-keyframes rotation {
 	0% {
 		-webkit-transform: rotate(0);
 		transform: rotate(0);
@@ -50,7 +50,7 @@
 		transform: rotate(360deg);
 	}
 }
-@keyframes caotic-rotation {
+@keyframes rotation {
 	0% {
 		-webkit-transform: rotate(0);
 		transform: rotate(0);

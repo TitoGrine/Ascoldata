@@ -240,7 +240,8 @@ div.side-content ul.redirects li a:hover {
 
 /* MISC */
 
-a.inner-link {
+a.inner-link,
+section.privacy-policy a {
 	color: var(--color-primary);
 }
 
@@ -358,6 +359,13 @@ a.inner-link {
 	-moz-box-shadow: 8px 8px 20px -5px rgba(25, 20, 20, 0.8);
 	box-shadow: 8px 8px 20px -5px rgba(25, 20, 20, 0.8);
 }
+
+section.privacy-policy {
+	padding: 1.5em;
+	font-size: 1.1em;
+}
+
+/* Modal */
 
 .confirmation-modal .modal-content {
 	background-color: var(--color-neutral);

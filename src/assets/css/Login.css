@@ -1,0 +1,15 @@
+section.login-section p {
+	padding: 1.2em 0.5em;
+	font-weight: 400;
+	font-size: 1.2em;
+	text-align: center;
+}
+
+section.login-section button {
+	padding: 0.6em 1.4em;
+	font-size: 1.3rem;
+	font-weight: 400;
+	background-color: var(--color-primary);
+	color: var(--color-neutral);
+	border-width: 0;
+}

@@ -121,7 +121,7 @@ function User() {
 	return (
 		<React.Fragment>
 			<Helmet>
-				<title>Ascoldata</title>
+				<title>{`${user} - Ascoldata`}</title>
 			</Helmet>
 			<HeaderBar />
 			<div id="corporum">
