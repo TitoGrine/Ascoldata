@@ -275,6 +275,10 @@ section.privacy-policy a {
 	align-items: center;
 }
 
+.spotify-icon-link:hover {
+	color: var(--color-spotify);
+}
+
 .spotify-icon-link {
 	position: absolute;
 	right: 20px;

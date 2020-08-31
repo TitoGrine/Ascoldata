@@ -10,14 +10,14 @@ function Redirects(props) {
 						<Link to="/">Home</Link>
 					</li>
 				)}
-				{props.exclude !== 'top' && (
-					<li>
-						<Link to={`/top?type=track&time_range=short_term&page=${1}`}>Top Listened</Link>
-					</li>
-				)}
 				{props.exclude !== 'statistics' && (
 					<li>
 						<Link to={`/stats?time_range=short_term`}>Your Statistics</Link>
+					</li>
+				)}
+				{props.exclude !== 'top' && (
+					<li>
+						<Link to={`/top?type=track&time_range=short_term&page=${1}`}>Top Listened</Link>
 					</li>
 				)}
 				{props.exclude !== 'liked' && (
