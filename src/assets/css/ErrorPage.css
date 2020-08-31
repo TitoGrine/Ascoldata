@@ -39,24 +39,3 @@
 	-webkit-animation: rotation 3.5s linear infinite both;
 	animation: rotation 3.5s linear infinite both;
 }
-
-@-webkit-keyframes rotation {
-	0% {
-		-webkit-transform: rotate(0);
-		transform: rotate(0);
-	}
-	100% {
-		-webkit-transform: rotate(360deg);
-		transform: rotate(360deg);
-	}
-}
-@keyframes rotation {
-	0% {
-		-webkit-transform: rotate(0);
-		transform: rotate(0);
-	}
-	100% {
-		-webkit-transform: rotate(360deg);
-		transform: rotate(360deg);
-	}
-}

@@ -15,6 +15,7 @@ import './assets/css/StatCard.css';
 import './assets/css/Stats.css';
 import './assets/css/Top.css';
 import './assets/css/Track.css';
+import './assets/css/About.css';
 import './assets/css/ErrorPage.css';
 import './assets/css/Responsiveness.css';
 

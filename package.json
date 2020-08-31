@@ -12,6 +12,7 @@
 		"react": "^16.13.1",
 		"react-bootstrap": "^1.2.2",
 		"react-dom": "^16.13.1",
+		"react-github-btn": "^1.2.0",
 		"react-helmet": "^6.1.0",
 		"react-icons": "^3.10.0",
 		"react-js-pagination": "^3.0.3",
@@ -35,7 +36,15 @@
 		"extends": "react-app"
 	},
 	"browserslist": {
-		"production": [ ">0.2%", "not dead", "not op_mini all" ],
-		"development": [ "last 1 chrome version", "last 1 firefox version", "last 1 safari version" ]
+		"production": [
+			">0.2%",
+			"not dead",
+			"not op_mini all"
+		],
+		"development": [
+			"last 1 chrome version",
+			"last 1 firefox version",
+			"last 1 safari version"
+		]
 	}
 }

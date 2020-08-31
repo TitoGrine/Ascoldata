@@ -449,6 +449,27 @@ section.privacy-policy {
 	animation: heartbeat 2s cubic-bezier(0.550, 0.085, 0.680, 0.530) infinite both;
 }
 
+@-webkit-keyframes rotation {
+	0% {
+		-webkit-transform: rotate(0);
+		transform: rotate(0);
+	}
+	100% {
+		-webkit-transform: rotate(360deg);
+		transform: rotate(360deg);
+	}
+}
+@keyframes rotation {
+	0% {
+		-webkit-transform: rotate(0);
+		transform: rotate(0);
+	}
+	100% {
+		-webkit-transform: rotate(360deg);
+		transform: rotate(360deg);
+	}
+}
+
 @-webkit-keyframes fadeIn {
 	0% {
 		filter: brightness(1);

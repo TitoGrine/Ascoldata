@@ -1,0 +1,54 @@
+section.about-website {
+	padding: 1.5em;
+	font-size: 1.2em;
+	line-height: 2em;
+}
+
+section.about-website p,
+div.about-sidebar p {
+	margin-bottom: 0;
+}
+
+section.about-website a {
+	color: var(--color-primary);
+}
+
+.go-back-button {
+	padding: 0.6em 1.3em;
+	font-size: min(6vw, 1.2rem);
+	font-weight: 400;
+	background-color: var(--color-primary);
+	color: var(--color-neutral);
+	border-width: 0;
+	align-self: center;
+	width: 10em;
+}
+
+.go-back-button:hover {
+	background-color: var(--color-primary);
+	color: var(--color-neutral);
+}
+
+div.about-sidebar {
+	display: flex;
+	flex-direction: column;
+	flex-wrap: nowrap;
+	padding: 2em;
+	font-size: 1.1em;
+	font-weight: 500;
+	gap: 1.5em;
+	overflow: auto;
+}
+
+div.about-sidebar .logo {
+	width: min(30%, 150px);
+	-webkit-animation: rotation 3.5s linear infinite both;
+	animation: rotation 3.5s linear infinite both;
+	align-self: center;
+}
+
+.github-buttons {
+	display: flex;
+	justify-content: center;
+	gap: 1em;
+}
