@@ -45,6 +45,34 @@ function Track() {
 
 	const { promiseInProgress } = usePromiseTracker();
 
+	const getAlbumTracksInfo = async (total_tracks, tracks) => {
+		if (total_tracks === tracks.length) {
+			getAlbumFeatures(
+				total_tracks,
+				tracks.map((track) => {
+					return track.id;
+				}),
+				[]
+			);
+
+			return;
+		}
+
+		spotifyWebApi
+			.getAlbumTracks(album, {
+				limit: 50,
+				offset: tracks.length
+			})
+			.then(
+				function(data) {
+					getAlbumTracksInfo(total_tracks, [ ...tracks, ...data.items ]);
+				},
+				function(err) {
+					console.log(err);
+				}
+			);
+	};
+
 	const getAlbumMetaData = async () => {
 		trackPromise(
 			spotifyWebApi.getAlbum(album).then(
@@ -58,17 +86,13 @@ function Track() {
 					setAlbumUri(data.uri);
 					setAlbumLabel(data.label);
 					setAlbumArtists(data.artists);
-					setAlbumNrSongs(data.tracks.items.length);
+					setAlbumNrSongs(data.tracks.total);
 					setAlbumGenres(data.genres);
 					setAlbumRelDate(data.release_date);
 					setAlbumPopularity(data.popularity);
 
 					if (data.tracks.items.length > 0) {
-						getAlbumFeatures(
-							data.tracks.items.map((track) => {
-								return track.id;
-							})
-						);
+						getAlbumTracksInfo(data.tracks.total, data.tracks.items);
 						setExistsData(true);
 					}
 				},
@@ -81,47 +105,55 @@ function Track() {
 		);
 	};
 
-	const getAlbumFeatures = async (tracks) => {
+	const getAlbumFeatures = async (total_tracks, tracks, audio_features) => {
+		if (total_tracks === audio_features.length) {
+			const avgStats = {
+				acousticness: 0,
+				danceability: 0,
+				duration_ms: 0,
+				energy: 0,
+				instrumentalness: 0,
+				liveness: 0,
+				loudness: 0,
+				mode: 0,
+				speechiness: 0,
+				tempo: 0,
+				valence: 0
+			};
+
+			audio_features.forEach((track_info) => {
+				avgStats.acousticness += 100 * track_info.acousticness / total_tracks;
+				avgStats.danceability += 100 * track_info.danceability / total_tracks;
+				avgStats.duration_ms += track_info.duration_ms;
+				avgStats.energy += 100 * track_info.energy / total_tracks;
+				avgStats.instrumentalness += 100 * track_info.instrumentalness / total_tracks;
+				avgStats.liveness += 100 * track_info.liveness / total_tracks;
+				avgStats.loudness += track_info.loudness / total_tracks;
+				avgStats.mode += track_info.mode;
+				avgStats.speechiness += 100 * track_info.speechiness / total_tracks;
+				avgStats.tempo += track_info.tempo / total_tracks;
+				avgStats.valence += 100 * track_info.valence / total_tracks;
+			});
+
+			setAlbumDuration(avgStats.duration_ms);
+			setAlbumStats(avgStats);
+
+			return;
+		}
+
 		trackPromise(
-			spotifyWebApi.getAudioFeaturesForTracks(tracks).then(
-				function(data) {
-					const avgStats = {
-						acousticness: 0,
-						danceability: 0,
-						duration_ms: 0,
-						energy: 0,
-						instrumentalness: 0,
-						liveness: 0,
-						loudness: 0,
-						mode: 0,
-						speechiness: 0,
-						tempo: 0,
-						valence: 0
-					};
+			spotifyWebApi
+				.getAudioFeaturesForTracks(tracks.slice(audio_features.length, audio_features.length + 100))
+				.then(
+					function(data) {
+						getAlbumFeatures(total_tracks, tracks, [ ...audio_features, ...data.audio_features ]);
+					},
+					function(err) {
+						console.log(err);
 
-					data.audio_features.forEach((track_info) => {
-						avgStats.acousticness += 100 * track_info.acousticness / data.audio_features.length;
-						avgStats.danceability += 100 * track_info.danceability / data.audio_features.length;
-						avgStats.duration_ms += track_info.duration_ms;
-						avgStats.energy += 100 * track_info.energy / data.audio_features.length;
-						avgStats.instrumentalness += 100 * track_info.instrumentalness / data.audio_features.length;
-						avgStats.liveness += 100 * track_info.liveness / data.audio_features.length;
-						avgStats.loudness += track_info.loudness / data.audio_features.length;
-						avgStats.mode += track_info.mode;
-						avgStats.speechiness += 100 * track_info.speechiness / data.audio_features.length;
-						avgStats.tempo += track_info.tempo / data.audio_features.length;
-						avgStats.valence += 100 * track_info.valence / data.audio_features.length;
-					});
-
-					setAlbumDuration(avgStats.duration_ms);
-					setAlbumStats(avgStats);
-				},
-				function(err) {
-					console.log(err);
-
-					if (err.status === 401) refreshToken((new_token) => setAuthToken(new_token));
-				}
-			)
+						if (err.status === 401) refreshToken((new_token) => setAuthToken(new_token));
+					}
+				)
 		);
 	};
 
