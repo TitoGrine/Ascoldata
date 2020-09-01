@@ -3,7 +3,7 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { useLocation, useHistory } from 'react-router-dom';
 import Pagination from 'react-js-pagination';
 import Spotify from 'spotify-web-api-js';
-import { trackPromise } from 'react-promise-tracker';
+import { trackPromise, usePromiseTracker } from 'react-promise-tracker';
 
 import { refreshToken } from '../Auth/Auth';
 import { useMediaQuery } from 'react-responsive';
@@ -36,6 +36,8 @@ function PlaylistTracks() {
 
 	const colapseTable = useMediaQuery({ maxWidth: 700 });
 	const decreasePagination = useMediaQuery({ maxWidth: 500 });
+
+	const { promiseInProgress } = usePromiseTracker();
 
 	const getPlaylistName = () => {
 		spotifyWebApi.getPlaylist(playlistId).then(
@@ -128,7 +130,8 @@ function PlaylistTracks() {
 			<div id="corporum">
 				<section className="content-section table-content">
 					<LoadingSpinner />
-					{playlistTracks.length > 0 && (
+					{!promiseInProgress &&
+					playlistTracks.length > 0 && (
 						<React.Fragment>
 							{colapseTable ? (
 								<TrackCards results={playlistTracks} />
@@ -144,7 +147,8 @@ function PlaylistTracks() {
 							/>
 						</React.Fragment>
 					)}
-					{playlistTracks.length === 0 && <NoContent mainText="This playlist doesn't have any songs..." />}
+					{!promiseInProgress &&
+					playlistTracks.length === 0 && <NoContent mainText="This playlist doesn't have any songs..." />}
 				</section>
 				<section className={`sidebar-section slide-in-right sidebar-${toggled}`} />
 				<div className={`side-content slide-in-right sidebar-${toggled}`}>

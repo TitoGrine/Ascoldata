@@ -1,11 +1,11 @@
 .playlist-creator {
 	display: flex;
 	flex-direction: column;
-	gap: 0.6em;
+	gap: 0.5em;
 	margin-top: 0.5em;
 	justify-content: center;
 	align-items: center;
-	font-size: min(5vw, 1.4em);
+	font-size: min(5vw, 1.3em);
 	height: 95%;
 	border-radius: 5px;
 	color: var(--color-secondary);
@@ -18,8 +18,8 @@
 }
 
 .playlist-creator > img {
-	width: min(38vw, 180px);
-	height: min(38vw, 180px);
+	width: min(38vw, 160px);
+	height: min(38vw, 160px);
 	object-fit: cover;
 	background-color: var(--color-secondary);
 }
