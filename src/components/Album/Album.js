@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import ReactGA from 'react-ga';
 import Spotify from 'spotify-web-api-js';
 import { useLocation, Link, Redirect } from 'react-router-dom';
 import { Textfit } from 'react-textfit';
@@ -193,6 +194,10 @@ function Track() {
 		},
 		[ authToken ]
 	);
+
+	useEffect(() => {
+		ReactGA.pageview('/album');
+	});
 
 	const renderStats = () => {
 		if (existsData) {

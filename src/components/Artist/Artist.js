@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import ReactGA from 'react-ga';
 import Spotify from 'spotify-web-api-js';
 import wiki from 'wikijs';
 import { useLocation, Redirect, Link } from 'react-router-dom';
@@ -176,6 +177,10 @@ function Artist() {
 		},
 		[ authToken ]
 	);
+
+	useEffect(() => {
+		ReactGA.pageview('/artist');
+	});
 
 	const renderStats = () => {
 		if (existsData) {

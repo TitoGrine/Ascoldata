@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import ReactGA from 'react-ga';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { useLocation, useHistory, Redirect } from 'react-router-dom';
 import Spotify from 'spotify-web-api-js';
@@ -105,6 +106,10 @@ function SearchResults() {
 		},
 		[ page ]
 	);
+
+	useEffect(() => {
+		ReactGA.pageview('/search');
+	});
 
 	const renderTable = () => {
 		if (results.length === 0) return <NoContent mainText={`Couldn't find any ${type}s with that name 😞`} />;

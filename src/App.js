@@ -1,4 +1,7 @@
 import React from 'react';
+import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom';
+import ReactGA from 'react-ga';
+
 import './App.css';
 import './assets/css/SelectInputs.css';
 import './assets/css/Pagination.css';
@@ -19,11 +22,9 @@ import './assets/css/About.css';
 import './assets/css/ErrorPage.css';
 import './assets/css/Responsiveness.css';
 
-import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom';
-
 import Home from './components/Home';
 import Top from './components/Top/Top';
-import Stats from './components/Stats/Stats';
+import UserStats from './components/User/UserStats';
 import Artist from './components/Artist/Artist';
 import Track from './components/Track/Track';
 import Album from './components/Album/Album';
@@ -43,6 +44,8 @@ import About from './components/About/About';
 import PrivacyPolicy from './components/Privacy/PrivacyPolicy';
 
 function App() {
+	ReactGA.initialize(process.env.REACT_APP_GOOGLE_TRACK_ID);
+
 	return (
 		<React.Fragment>
 			<div className="App">
@@ -52,14 +55,14 @@ function App() {
 						<Route exact={true} path="/about" component={About} />
 						<Route exact={true} path="/privacy_policy" component={PrivacyPolicy} />
 						<Route exact={true} path="/top" component={Top} />
-						<Route exact={true} path="/stats" component={Stats} />
+						<Route exact={true} path="/user_stats" component={UserStats} />
 						<Route exact={true} path="/artist" component={Artist} />
 						<Route exact={true} path="/related_artists" component={RelatedArtists} />
 						<Route exact={true} path="/track" component={Track} />
 						<Route exact={true} path="/album" component={Album} />
 						<Route exact={true} path="/album_tracks" component={AlbumTracks} />
 						<Route exact={true} path="/playlist" component={Playlist} />
-						<Route exact={true} path="/playlists" component={UserPlaylists} />
+						<Route exact={true} path="/user_playlists" component={UserPlaylists} />
 						<Route exact={true} path="/playlist_tracks" component={PlaylistTracks} />
 						<Route exact={true} path="/creator_playlists" component={CreatorPlaylists} />
 						<Route exact={true} path="/liked" component={Liked} />

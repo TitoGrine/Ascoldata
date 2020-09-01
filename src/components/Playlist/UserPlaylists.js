@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import ReactGA from 'react-ga';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { useLocation, useHistory, Redirect } from 'react-router-dom';
 import Spotify from 'spotify-web-api-js';
@@ -76,10 +77,14 @@ function UserPlaylists() {
 
 	useEffect(
 		() => {
-			if (authToken) history.push(`/playlists?page=${page}`);
+			if (authToken) history.push(`/user_playlists?page=${page}`);
 		},
 		[ page ]
 	);
+
+	useEffect(() => {
+		ReactGA.pageview('/user_playlists');
+	});
 
 	if (!authToken) return <Redirect to="/" />;
 

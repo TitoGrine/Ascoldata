@@ -12,7 +12,7 @@ function Redirects(props) {
 				)}
 				{props.exclude !== 'statistics' && (
 					<li>
-						<Link to={`/stats?time_range=short_term`}>Your Statistics</Link>
+						<Link to={`/user_stats?time_range=short_term`}>Your Statistics</Link>
 					</li>
 				)}
 				{props.exclude !== 'top' && (
@@ -32,7 +32,7 @@ function Redirects(props) {
 				)}
 				{props.exclude !== 'playlists' && (
 					<li>
-						<Link to={`/playlists?page=${1}`}>Your Playlists</Link>
+						<Link to={`/user_playlists?page=${1}`}>Your Playlists</Link>
 					</li>
 				)}
 				{props.exclude !== 'find' && (

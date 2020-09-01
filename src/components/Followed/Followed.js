@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import ReactGA from 'react-ga';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import Spotify from 'spotify-web-api-js';
 import { useMediaQuery } from 'react-responsive';
@@ -73,6 +74,10 @@ function Followed() {
 		},
 		[ authToken, currPage ]
 	);
+
+	useEffect(() => {
+		ReactGA.pageview('/followed');
+	});
 
 	if (!authToken) return <Redirect to="/" />;
 

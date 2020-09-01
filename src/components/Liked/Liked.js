@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import ReactGA from 'react-ga';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { useLocation, useHistory, Redirect } from 'react-router-dom';
 import Spotify from 'spotify-web-api-js';
@@ -83,6 +84,10 @@ function Liked() {
 		},
 		[ page ]
 	);
+
+	useEffect(() => {
+		ReactGA.pageview('/liked');
+	});
 
 	if (!authToken) return <Redirect to="/" />;
 

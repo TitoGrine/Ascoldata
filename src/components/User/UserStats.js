@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import ReactGA from 'react-ga';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { trackPromise, usePromiseTracker } from 'react-promise-tracker';
 import { useLocation, useHistory, Redirect } from 'react-router-dom';
@@ -8,7 +9,7 @@ import { formatDuration } from '../Util/HelperFunc';
 import { refreshToken } from '../Auth/Auth';
 
 import Redirects from '../Common/Redirects';
-import StatCard from './StatCard';
+import StatCard from '../Stats/StatCard';
 import { Textfit } from 'react-textfit';
 import Search from '../Search/Search';
 import SideToggle from '../Common/SideToggle';
@@ -20,7 +21,7 @@ import NoContent from '../Common/NoContent';
 
 const spotifyWebApi = new Spotify();
 
-function Stats() {
+function UserStats() {
 	const query = new URLSearchParams(useLocation().search);
 	const history = useHistory();
 
@@ -152,7 +153,7 @@ function Stats() {
 
 	const updateTimeRange = (ev) => {
 		setStats([]);
-		history.push(`/stats?time_range=${ev.target.value}`);
+		history.push(`/user_stats?time_range=${ev.target.value}`);
 		setTimeRange(ev.target.value);
 	};
 
@@ -165,6 +166,10 @@ function Stats() {
 		},
 		[ authToken, timeRange ]
 	);
+
+	useEffect(() => {
+		ReactGA.pageview('/user_stats');
+	});
 
 	const renderStats = () => {
 		if (existsData) {
@@ -345,4 +350,4 @@ function Stats() {
 	);
 }
 
-export default Stats;
+export default UserStats;

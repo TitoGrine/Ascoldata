@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import ReactGA from 'react-ga';
 import HeaderBar from '../Common/HeaderBar';
 import GitHubButton from 'react-github-btn';
 import { Link, useHistory } from 'react-router-dom';
@@ -15,6 +16,10 @@ function About() {
 	const redirectBack = () => {
 		history.push('/');
 	};
+
+	useEffect(() => {
+		ReactGA.pageview('/about');
+	});
 
 	return (
 		<React.Fragment>

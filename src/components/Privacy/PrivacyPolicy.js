@@ -1,8 +1,13 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import ReactGA from 'react-ga';
 import HeaderBar from '../Common/HeaderBar';
 import { Helmet } from 'react-helmet';
 
 function PrivacyPolicy() {
+	useEffect(() => {
+		ReactGA.pageview('/privacy_policy');
+	});
+
 	return (
 		<React.Fragment>
 			<Helmet>

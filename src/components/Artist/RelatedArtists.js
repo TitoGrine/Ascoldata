@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import ReactGA from 'react-ga';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
-import { useLocation } from 'react-router-dom';
+import { useLocation, Redirect } from 'react-router-dom';
 import { trackPromise } from 'react-promise-tracker';
 import { Helmet } from 'react-helmet';
 import Spotify from 'spotify-web-api-js';
@@ -68,6 +69,12 @@ function RelatedArtists() {
 		},
 		[ authToken ]
 	);
+
+	useEffect(() => {
+		ReactGA.pageview('/related_artists');
+	});
+
+	if (!authToken) return <Redirect to="/" />;
 
 	return (
 		<React.Fragment>

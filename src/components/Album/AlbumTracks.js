@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import ReactGA from 'react-ga';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
-import { useLocation, useHistory } from 'react-router-dom';
+import { useLocation, useHistory, Redirect } from 'react-router-dom';
 import Pagination from 'react-js-pagination';
 import Spotify from 'spotify-web-api-js';
 import { trackPromise } from 'react-promise-tracker';
@@ -103,6 +104,12 @@ function AlbumTracks() {
 		},
 		[ page ]
 	);
+
+	useEffect(() => {
+		ReactGA.pageview('/album_tracks');
+	});
+
+	if (!authToken) return <Redirect to="/" />;
 
 	return (
 		<React.Fragment>

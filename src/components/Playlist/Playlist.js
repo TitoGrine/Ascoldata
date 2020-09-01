@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import ReactGA from 'react-ga';
 import Spotify from 'spotify-web-api-js';
 import { useLocation, Link, Redirect } from 'react-router-dom';
 import { Image } from 'react-bootstrap';
@@ -181,6 +182,10 @@ function Playlist() {
 		},
 		[ authToken ]
 	);
+
+	useEffect(() => {
+		ReactGA.pageview('/playlist');
+	});
 
 	const renderStats = () => {
 		if (existsData) {

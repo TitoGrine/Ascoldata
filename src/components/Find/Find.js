@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import ReactGA from 'react-ga';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { useHistory, Redirect } from 'react-router-dom';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
@@ -46,6 +47,12 @@ function Find() {
 		if (popularity !== -1) link += `&popularity=${popularity}`;
 		if (speechiness !== -1) link += `&speechiness=${speechiness}`;
 		if (valence !== -1) link += `&valence=${valence}`;
+
+		ReactGA.event({
+			category: 'Interaction',
+			action: 'Clicked button to find songs.',
+			label: 'Button event'
+		});
 
 		history.push(link);
 	};
@@ -120,6 +127,10 @@ function Find() {
 				break;
 		}
 	};
+
+	useEffect(() => {
+		ReactGA.pageview('/find');
+	});
 
 	if (!localStorage.getItem('refreshToken')) return <Redirect to="/" />;
 
