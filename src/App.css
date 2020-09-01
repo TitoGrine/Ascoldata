@@ -275,14 +275,14 @@ section.privacy-policy a {
 	align-items: center;
 }
 
-.spotify-icon-link:hover {
-	color: var(--color-spotify);
-}
-
 .spotify-icon-link {
 	position: absolute;
 	right: 20px;
 	top: 20px;
+	color: var(--color-spotify);
+}
+
+.spotify-icon-link:hover {
 	color: var(--color-spotify);
 }
 
@@ -293,6 +293,10 @@ section.privacy-policy a {
 	color: black;
 	background-color: var(--color-wikipedia);
 	border-radius: 2px;
+}
+
+.wikipedia-icon-link:hover {
+	color: black;
 }
 
 .default-stats-icon-link {
