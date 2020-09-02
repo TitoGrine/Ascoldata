@@ -1,11 +1,18 @@
-section.login-section p {
-	padding: 1.2em 0.5em;
+section.login-section {
+	padding: 2em;
+	align-items: center;
+	justify-content: center;
+}
+
+section.login-sidebar .request-login p {
+	padding-top: 0.5em;
+	margin: 0;
 	font-weight: 400;
 	font-size: 1.2em;
 	text-align: center;
 }
 
-section.login-section button {
+section.login-sidebar button {
 	padding: 0.6em 1.4em;
 	font-size: 1.3rem;
 	font-weight: 400;
@@ -14,8 +21,46 @@ section.login-section button {
 	border-width: 0;
 }
 
-section.login-section button:hover {
+section.login-sidebar button:hover {
 	background-color: var(--color-primary);
 	color: var(--color-neutral);
 	animation: fadeIn 0.2s linear forwards;
+}
+
+.carousel-inner {
+	width: auto;
+	padding-bottom: 2em;
+}
+
+.carousel-caption {
+	padding: 0;
+}
+
+.carousel-caption p {
+	position: relative;
+	bottom: 0;
+	margin-bottom: 0;
+	padding: 0.3em 0.5em;
+	font-size: min(1.7em, 3vw);
+	font-weight: 500;
+	width: 100%;
+	color: var(--color-secondary);
+	background-color: var(--color-neutral);
+	filter: drop-shadow(0 0 2px rgba(77, 253, 165, 0.9));
+	border-radius: 4px;
+}
+
+.carousel-indicators {
+	margin-bottom: 0;
+}
+
+.carousel-indicators li {
+	background-color: var(--color-primary);
+}
+
+.carousel img {
+	width: min(800px, 100%);
+	margin: auto;
+	border: 1px inset var(--color-primary);
+	border-radius: 4px;
 }

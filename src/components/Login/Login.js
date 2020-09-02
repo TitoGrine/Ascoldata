@@ -1,7 +1,13 @@
 import React, { Component } from 'react';
 import ReactGA from 'react-ga';
 import { Redirect, Link } from 'react-router-dom';
-import { Button } from 'react-bootstrap';
+import { Button, Carousel } from 'react-bootstrap';
+import your_stats from '../../assets/images/preview_images/your_stats.png';
+import find_songs from '../../assets/images/preview_images/find_songs.png';
+import album_page from '../../assets/images/preview_images/album_page.png';
+import artist_page from '../../assets/images/preview_images/artist_page.png';
+import playlist_page from '../../assets/images/preview_images/playlist_page.png';
+import track_page from '../../assets/images/preview_images/track_page.png';
 
 import { addToDate } from '../Util/HelperFunc';
 
@@ -49,10 +55,63 @@ class Login extends Component {
 					<HeaderBar />
 					<div id="corporum">
 						<section className="content-section login-section">
-							<div
-								className="col d-flex flex-column align-items-center justify-content-center"
-								style={{ height: '100%' }}
-							>
+							<Carousel interval={4000} controls={false}>
+								<Carousel.Item>
+									<img className="d-block" src={your_stats} alt="User stats preview." />
+									<Carousel.Caption>
+										<p>Gain insights on your music taste!</p>
+									</Carousel.Caption>
+								</Carousel.Item>
+								<Carousel.Item>
+									<img className="d-block" src={find_songs} alt="Find songs preview." />
+									<Carousel.Caption>
+										<p>Search for songs using various attributes and save them to a playlist!</p>
+									</Carousel.Caption>
+								</Carousel.Item>
+								<Carousel.Item>
+									<img
+										className="d-block"
+										src={artist_page}
+										alt="Artist page preview (Selena Gomez)."
+									/>
+									<Carousel.Caption>
+										<p>Get information about artists...</p>
+									</Carousel.Caption>
+								</Carousel.Item>
+								<Carousel.Item>
+									<img
+										className="d-block"
+										src={album_page}
+										alt="Album page preview (Thriller by Michael Jackson)."
+									/>
+									<Carousel.Caption>
+										<p>... albums ...</p>
+									</Carousel.Caption>
+								</Carousel.Item>
+								<Carousel.Item>
+									<img
+										className="d-block"
+										src={track_page}
+										alt="Song page preview (Perfect by Ed Sheeran)."
+									/>
+									<Carousel.Caption>
+										<p>... songs ...</p>
+									</Carousel.Caption>
+								</Carousel.Item>
+								<Carousel.Item>
+									<img
+										className="d-block"
+										src={playlist_page}
+										alt="Playlist page preview (Today's Top Hits)."
+									/>
+									<Carousel.Caption>
+										<p>... and even playlists!</p>
+									</Carousel.Caption>
+								</Carousel.Item>
+							</Carousel>
+						</section>
+						<section className="sidebar-section slide-in-right sidebar-nothing login-sidebar">
+							<div className="col d-flex flex-column align-items-center justify-content-center side-content slide-in-right request-login">
 								{!this.state.loginRequested && (
 									<React.Fragment>
 										<form
@@ -88,7 +147,6 @@ class Login extends Component {
 								)}
 							</div>
 						</section>
-						<section className="sidebar-section slide-in-right sidebar-nothing" />
 					</div>
 				</React.Fragment>
 			);

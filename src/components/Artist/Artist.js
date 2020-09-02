@@ -250,7 +250,7 @@ function Artist() {
 					{!promiseInProgress && (
 						<React.Fragment>
 							<Textfit className="artist-title" mode="single" max={36}>
-								· {artistName} ·
+								· {artistName.length > 25 ? `${artistName.slice(0, 25)}...` : artistName} ·
 							</Textfit>
 							{artistWikiLink.length > 0 && (
 								<a
@@ -334,7 +334,7 @@ function Artist() {
 				</section>
 				<section className={`sidebar-section slide-in-right sidebar-${toggled}`} />
 				<div className={`side-content slide-in-right sidebar-${toggled}`}>
-					<Tabs>
+					<Tabs defaultIndex={1}>
 						<TabList>
 							<Tab>Search</Tab>
 							<Tab>Go to</Tab>

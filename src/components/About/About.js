@@ -14,7 +14,7 @@ function About() {
 	const [ toggled, setToggled ] = useState('nothing');
 
 	const redirectBack = () => {
-		history.push('/');
+		history.goBack();
 	};
 
 	useEffect(() => {

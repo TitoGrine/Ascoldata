@@ -267,7 +267,7 @@ function Track() {
 					{!promiseInProgress && (
 						<React.Fragment>
 							<Textfit className="album-title" mode="single" max={36}>
-								· {albumName} ·
+								· {albumName.length > 25 ? `${albumName.slice(0, 25)}...` : albumName} ·
 							</Textfit>
 							<a
 								href={albumLink}

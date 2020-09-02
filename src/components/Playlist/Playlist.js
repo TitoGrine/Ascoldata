@@ -255,7 +255,7 @@ function Playlist() {
 					{!promiseInProgress && (
 						<React.Fragment>
 							<Textfit className="playlist-title" mode="single" max={36}>
-								· {playlistName} ·
+								· {playlistName.length > 25 ? `${playlistName.slice(0, 25)}...` : playlistName} ·
 							</Textfit>
 							<a
 								href={playlistLink}

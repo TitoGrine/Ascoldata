@@ -17,7 +17,11 @@ export class ArtistCard extends Component {
 				<div>
 					<strong>Artist: </strong>
 					<Link to={`/artist?id=${this.props.info.id}`} className="inner-link">
-						{this.props.info.name}
+						{this.props.info.name.length > 60 ? (
+							`${this.props.info.name.slice(0, 60)}...`
+						) : (
+							this.props.info.name
+						)}
 					</Link>
 				</div>
 				<div>

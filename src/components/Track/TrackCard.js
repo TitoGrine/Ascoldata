@@ -19,13 +19,21 @@ export class TrackCard extends Component {
 				<div>
 					<strong>Title: </strong>
 					<Link to={`/track?id=${this.props.info.id}`} className="inner-link">
-						{this.props.info.name}
+						{this.props.info.name.length > 60 ? (
+							`${this.props.info.name.slice(0, 60)}...`
+						) : (
+							this.props.info.name
+						)}
 					</Link>
 				</div>
 				<div>
 					<strong>Album: </strong>
 					<Link to={`/album?id=${this.props.info.album.id}`} className="inner-link">
-						{this.props.info.album.name}
+						{this.props.info.album.name.length > 60 ? (
+							`${this.props.info.album.name.slice(0, 60)}...`
+						) : (
+							this.props.info.album.name
+						)}
 					</Link>
 				</div>
 				<div className="enum-artists">
@@ -37,7 +45,7 @@ export class TrackCard extends Component {
 							.map((artist) => {
 								return (
 									<Link key={artist.id} to={`/artist?id=${artist.id}`} className="inner-link">
-										{artist.name}
+										{artist.name.length > 40 ? `${artist.name.slice(0, 40)}...` : artist.name}
 									</Link>
 								);
 							})

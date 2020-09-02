@@ -6,7 +6,7 @@ function ArtistTableRow(props) {
 		<tr>
 			<td>
 				<Link to={`/artist?id=${props.info.id}`} className="inner-link">
-					{props.info.name}
+					{props.info.name.length > 60 ? `${props.info.name.slice(0, 60)}...` : props.info.name}
 				</Link>
 			</td>
 			<td>{props.info.followers.total}</td>

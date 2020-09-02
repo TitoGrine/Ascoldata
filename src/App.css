@@ -302,10 +302,14 @@ section.privacy-policy a {
 .genius-icon-link {
 	position: absolute;
 	top: 20px;
-	right: 80px;
+	right: 70px;
 	color: black;
-	background-color: var(--color-genius);
 	border-radius: 50px;
+}
+
+.genius-icon-link > img {
+	width: 36px;
+	transform: rotateZ(-45deg);
 }
 
 .genius-icon-link:hover {

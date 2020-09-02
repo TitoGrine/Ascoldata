@@ -2,11 +2,19 @@ import React, { useEffect } from 'react';
 import ReactGA from 'react-ga';
 import HeaderBar from '../Common/HeaderBar';
 import { Helmet } from 'react-helmet';
+import { Button } from 'react-bootstrap';
+import { useHistory } from 'react-router-dom';
 
 function PrivacyPolicy() {
+	const history = useHistory();
+
 	useEffect(() => {
 		ReactGA.pageview('/privacy_policy');
 	});
+
+	const redirectBack = () => {
+		history.goBack();
+	};
 
 	return (
 		<React.Fragment>
@@ -159,9 +167,16 @@ function PrivacyPolicy() {
 						We may update our Privacy Policy from time to time. Thus, you are advised to review this page
 						periodically for any changes. We will notify you of any changes by posting the new Privacy
 						Policy on this page. This policy is effective as of 2020-09-01.
-						<br />
-						<br />
 					</p>
+					<Button
+						className="go-back-button"
+						size="lg"
+						onClick={() => {
+							redirectBack();
+						}}
+					>
+						<strong>Go Back</strong>
+					</Button>
 				</section>
 				<section className="sidebar-section slide-in-right sidebar-nothing" />
 			</div>

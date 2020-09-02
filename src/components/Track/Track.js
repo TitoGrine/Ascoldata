@@ -5,6 +5,7 @@ import { useLocation, Link, Redirect } from 'react-router-dom';
 import { Textfit } from 'react-textfit';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { FaSpotify } from 'react-icons/fa';
+import genius_logo from '../../assets/images/genius-logo2.svg';
 import { trackPromise, usePromiseTracker } from 'react-promise-tracker';
 import { getSong } from 'genius-lyrics-api';
 
@@ -154,7 +155,7 @@ function Track() {
 							<Textfit className="track-title" mode="single" max={36}>
 								· {trackName.length > 25 ? `${trackName.slice(0, 25)}...` : trackName} ·
 							</Textfit>
-							{geniusLink.length === 0 && (
+							{geniusLink.length > 0 && (
 								<a
 									href={geniusLink}
 									target="_blank"
@@ -168,7 +169,7 @@ function Track() {
 										});
 									}}
 								>
-									<FaSpotify />
+									<img src={genius_logo} alt="Genius's logo." />
 								</a>
 							)}
 							<a

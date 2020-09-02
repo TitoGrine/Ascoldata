@@ -19,12 +19,20 @@ export class PlaylistCard extends Component {
 				<div>
 					<strong>Playlist: </strong>
 					<Link to={`/playlist?id=${this.props.info.id}`} className="inner-link">
-						{this.props.info.name}
+						{this.props.info.name.length > 60 ? (
+							`${this.props.info.name.slice(0, 60)}...`
+						) : (
+							this.props.info.name
+						)}
 					</Link>
 				</div>
 				<div>
 					<strong>Owner: </strong>
-					{this.props.info.owner.display_name}
+					{this.props.info.owner.display_name.length > 60 ? (
+						`${this.props.info.owner.display_name.slice(0, 60)}...`
+					) : (
+						this.props.info.owner.display_name
+					)}
 				</div>
 				<div>
 					<strong>Public: </strong>

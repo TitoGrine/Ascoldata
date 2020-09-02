@@ -164,7 +164,7 @@ function Find() {
 						placement="top"
 						overlay={
 							<Tooltip>
-								Set the attributes to the weighted average values of your top and liked tracks
+								Set attributes to their weighted average values of your top and liked tracks.
 							</Tooltip>
 						}
 					>

@@ -6,7 +6,7 @@ function AlbumTableRow(props) {
 		<tr>
 			<td>
 				<Link to={`/album?id=${props.info.id}`} className="inner-link">
-					{props.info.name}
+					{props.info.name.length > 60 ? `${props.info.name.slice(0, 60)}...` : props.info.name}
 				</Link>
 			</td>
 			<td className="enum-artists">
@@ -17,7 +17,7 @@ function AlbumTableRow(props) {
 						.map((artist) => {
 							return (
 								<Link key={artist.id} to={`/artist?id=${artist.id}`} className="inner-link">
-									{artist.name}
+									{artist.name.length > 40 ? `${artist.name.slice(0, 40)}...` : artist.name}
 								</Link>
 							);
 						})
