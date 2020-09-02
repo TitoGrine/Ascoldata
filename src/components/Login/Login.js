@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ReactGA from 'react-ga';
 import { Redirect, Link } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 
@@ -59,6 +60,11 @@ class Login extends Component {
 											onSubmit={(ev) => {
 												this.setState({
 													loginRequested: true
+												});
+												ReactGA.event({
+													category: 'Interaction',
+													action: 'Clicked to login using Spotify.',
+													label: 'Button Event'
 												});
 												ev.target.submit();
 											}}
