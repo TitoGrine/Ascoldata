@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import ReactGA from 'react-ga';
 import { Image } from 'react-bootstrap';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import Spotify from 'spotify-web-api-js';
@@ -121,7 +122,7 @@ function User() {
 	return (
 		<React.Fragment>
 			<Helmet>
-				<title>{`${user} - Ascoldata`}</title>
+				<title>{`${user.length === 0 ? 'User' : user} - Ascoldata`}</title>
 			</Helmet>
 			<HeaderBar />
 			<div id="corporum">
@@ -132,7 +133,19 @@ function User() {
 							<Textfit className="username" mode="single" max={36}>
 								· Hello<strong> {user} </strong> ·
 							</Textfit>
-							<a href={link} target="_blank" className="icon-link spotify-icon-link heartbeat">
+							<a
+								href={link}
+								target="_blank"
+								rel="noopener noreferrer"
+								className="icon-link spotify-icon-link heartbeat"
+								onClick={() => {
+									ReactGA.event({
+										category: 'Interaction',
+										action: 'Clicked on Spotify link for user.',
+										label: 'Link Event'
+									});
+								}}
+							>
 								<FaSpotify />
 							</a>
 							<div id="info">

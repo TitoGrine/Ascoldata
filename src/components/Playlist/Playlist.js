@@ -257,7 +257,19 @@ function Playlist() {
 							<Textfit className="playlist-title" mode="single" max={36}>
 								· {playlistName} ·
 							</Textfit>
-							<a href={playlistLink} target="_blank" className="icon-link spotify-icon-link heartbeat">
+							<a
+								href={playlistLink}
+								target="_blank"
+								rel="noopener noreferrer"
+								className="icon-link spotify-icon-link heartbeat"
+								onClick={() => {
+									ReactGA.event({
+										category: 'Interaction',
+										action: 'Clicked on Spotify link for playlist.',
+										label: 'Link Event'
+									});
+								}}
+							>
 								<FaSpotify />
 							</a>
 

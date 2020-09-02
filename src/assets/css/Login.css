@@ -13,3 +13,9 @@ section.login-section button {
 	color: var(--color-neutral);
 	border-width: 0;
 }
+
+section.login-section button:hover {
+	background-color: var(--color-primary);
+	color: var(--color-neutral);
+	animation: fadeIn 0.2s linear forwards;
+}

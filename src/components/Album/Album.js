@@ -269,7 +269,19 @@ function Track() {
 							<Textfit className="album-title" mode="single" max={36}>
 								· {albumName} ·
 							</Textfit>
-							<a href={albumLink} target="_blank" className="icon-link spotify-icon-link heartbeat">
+							<a
+								href={albumLink}
+								target="_blank"
+								rel="noopener noreferrer"
+								className="icon-link spotify-icon-link heartbeat"
+								onClick={() => {
+									ReactGA.event({
+										category: 'Interaction',
+										action: 'Clicked on Spotify link for album.',
+										label: 'Link Event'
+									});
+								}}
+							>
 								<FaSpotify />
 							</a>
 							<div id="album-info">

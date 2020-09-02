@@ -71,6 +71,12 @@ function Find() {
 			setTempo(parseInt(userStats.tempo));
 			setValence(userStats.valence.toFixed(3));
 		}
+
+		ReactGA.event({
+			category: 'Interaction',
+			action: 'Clicked button to use avg stats for fin recommendations.',
+			label: 'Button event'
+		});
 	};
 
 	const setRandomStats = () => {
@@ -86,6 +92,12 @@ function Find() {
 		setPopularity(randomInt(0, 100));
 		setTempo(randomInt(0, 250));
 		setValence(Math.random().toFixed(3));
+
+		ReactGA.event({
+			category: 'Interaction',
+			action: 'Clicked button to randomize attributes in find recommendations.',
+			label: 'Button event'
+		});
 	};
 
 	const keyChange = (ev) => {

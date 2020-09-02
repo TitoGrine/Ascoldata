@@ -39,6 +39,17 @@
 		animation: short-slide-in-right 0.8s cubic-bezier(0.455, 0.030, 0.515, 0.955) forwards;
 	}
 
+	#track-info > div,
+	#album-info,
+	#artist-info,
+	#playlist-info,
+	#album-info #misc-data,
+	#playlist-info #misc-data {
+		align-items: flex-start;
+		width: 100%;
+		padding: 0 0.5em;
+	}
+
 	/* Find */
 
 	#attribute-sliders {
@@ -122,25 +133,10 @@
 		flex-wrap: wrap;
 	}
 
-	#track-info > div,
-	#album-info,
-	#artist-info,
-	#playlist-info,
-	#album-info #misc-data,
-	#playlist-info #misc-data {
-		align-items: flex-start;
-		width: 100%;
-		padding: 0 0.5em;
-	}
-
 	#artist-info #image,
 	#playlist-info #image {
 		flex-basis: 100%;
 		text-align: center;
-	}
-
-	#track-info > div > .stat-card {
-		flex: 1 1 40%;
 	}
 }
 
@@ -211,7 +207,8 @@
 		top: 16vh;
 	}
 
-	.wikipedia-icon-link {
+	.wikipedia-icon-link,
+	.genius-icon-link {
 		right: 20px;
 		top: 25vh;
 	}

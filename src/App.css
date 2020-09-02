@@ -299,6 +299,19 @@ section.privacy-policy a {
 	color: black;
 }
 
+.genius-icon-link {
+	position: absolute;
+	top: 20px;
+	right: 80px;
+	color: black;
+	background-color: var(--color-genius);
+	border-radius: 50px;
+}
+
+.genius-icon-link:hover {
+	color: black;
+}
+
 .default-stats-icon-link {
 	position: absolute;
 	right: 20px;

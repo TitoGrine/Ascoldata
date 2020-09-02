@@ -18,7 +18,6 @@ import Search from '../Search/Search';
 import SideToggle from '../Common/SideToggle';
 import LoadingSpinner from '../Common/LoadingSpinner';
 import { Helmet } from 'react-helmet';
-import { evalCompatibility } from '../Util/Compatibility';
 
 const spotifyWebApi = new Spotify();
 
@@ -61,7 +60,7 @@ function Track() {
 					setTrackDuration(data.duration_ms);
 					setTrackPopularity(data.popularity);
 
-					// if (geniusLink.length === 0) getGeniusLink();
+					if (geniusLink.length === 0) getGeniusLink(data.name, data.artists);
 					getTrackFeatures(data.artists.map((artist) => artist.id));
 				},
 				function(err) {
@@ -92,7 +91,6 @@ function Track() {
 					};
 
 					setTrackStats(avgStats);
-					//evalCompatibility(avgStats, artists);
 				},
 				function(err) {
 					console.log(err);
@@ -103,23 +101,24 @@ function Track() {
 		);
 	};
 
-	// const getGeniusLink = async () => {
-	// 	const options = {
-	// 		apiKey: process.env.REACT_APP_GENIUS_TOKEN,
-	// 		title: trackName,
-	// 		artist: '',
-	// 		optimizeQuery: true
-	// 	};
+	const getGeniusLink = async (track, artists) => {
+		const options = {
+			apiKey: process.env.REACT_APP_GENIUS_TOKEN,
+			title: track,
+			artist: artists.length === 0 ? '' : artists[0].name,
+			optimizeQuery: true
+		};
 
-	// 	getSong(options).then(
-	// 		function(song) {
-	// 			console.log(song);
-	// 		},
-	// 		function(err) {
-	// 			console.log(err);
-	// 		}
-	// 	);
-	// };
+		getSong(options).then(
+			function(song) {
+				// console.log(song);
+				setGeniusLink(song.url);
+			},
+			function(err) {
+				console.log(err);
+			}
+		);
+	};
 
 	const getData = async () => {
 		getTrackMetaData();
@@ -153,9 +152,38 @@ function Track() {
 					{!promiseInProgress && (
 						<React.Fragment>
 							<Textfit className="track-title" mode="single" max={36}>
-								· {trackName} ·
+								· {trackName.length > 25 ? `${trackName.slice(0, 25)}...` : trackName} ·
 							</Textfit>
-							<a href={trackLink} target="_blank" className="icon-link spotify-icon-link heartbeat">
+							{geniusLink.length === 0 && (
+								<a
+									href={geniusLink}
+									target="_blank"
+									rel="noopener noreferrer"
+									className="icon-link genius-icon-link heartbeat"
+									onClick={() => {
+										ReactGA.event({
+											category: 'Interaction',
+											action: 'Clicked on Genius link for track.',
+											label: 'Link Event'
+										});
+									}}
+								>
+									<FaSpotify />
+								</a>
+							)}
+							<a
+								href={trackLink}
+								target="_blank"
+								rel="noopener noreferrer"
+								className="icon-link spotify-icon-link heartbeat"
+								onClick={() => {
+									ReactGA.event({
+										category: 'Interaction',
+										action: 'Clicked on Spotify link for track.',
+										label: 'Link Event'
+									});
+								}}
+							>
 								<FaSpotify />
 							</a>
 

@@ -256,12 +256,32 @@ function Artist() {
 								<a
 									href={artistWikiLink}
 									target="_blank"
+									rel="noopener noreferrer"
 									className="icon-link wikipedia-icon-link heartbeat"
+									onClick={() => {
+										ReactGA.event({
+											category: 'Interaction',
+											action: 'Clicked on Wikipedia link for artist.',
+											label: 'Link Event'
+										});
+									}}
 								>
 									<FaWikipediaW />
 								</a>
 							)}
-							<a href={artistLink} target="_blank" className="icon-link spotify-icon-link heartbeat">
+							<a
+								href={artistLink}
+								target="_blank"
+								rel="noopener noreferrer"
+								className="icon-link spotify-icon-link heartbeat"
+								onClick={() => {
+									ReactGA.event({
+										category: 'Interaction',
+										action: 'Clicked on Spotify link for artist.',
+										label: 'Link Event'
+									});
+								}}
+							>
 								<FaSpotify />
 							</a>
 							<div id="artist-info">

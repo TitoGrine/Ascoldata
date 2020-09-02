@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import ReactGA from 'react-ga';
 import { Image } from 'react-bootstrap';
 import { Textfit } from 'react-textfit';
 import Spotify from 'spotify-web-api-js';
@@ -60,7 +61,19 @@ function Creator(props) {
 					{creatorPlaylists}
 				</Link>
 			</div>
-			<a href={props.info.external_urls.spotify} target="_blank" className="inner-link">
+			<a
+				href={props.info.external_urls.spotify}
+				target="_blank"
+				rel="noopener noreferrer"
+				className="inner-link"
+				onClick={() => {
+					ReactGA.event({
+						category: 'Interaction',
+						action: 'Clicked on Spotify link for creator.',
+						label: 'Link Event'
+					});
+				}}
+			>
 				Go to Spotify page.
 			</a>
 		</div>

@@ -73,11 +73,25 @@ function Recommendations() {
 								// console.log(response);
 								setShowSuccessAlert(true);
 								autoDismiss();
+
+								ReactGA.event({
+									category: 'Creation',
+									action: 'Recommendations playlist was successfully created.',
+									label: 'Created playlist'
+								});
 							},
 							function(err) {
 								console.log(err);
 								setShowFailAlert(true);
 								autoDismiss();
+
+								ReactGA.event({
+									category: 'Fail',
+									action: 'Recommendations playlist creation failed. Error adding tracks.',
+									label: 'Failed creating playlist'
+								});
+
+								if (err.status === 401) refreshToken((new_token) => setAuthToken(new_token));
 							}
 						);
 
@@ -94,6 +108,12 @@ function Recommendations() {
 					console.log(err);
 					setShowFailAlert(true);
 					autoDismiss();
+
+					ReactGA.event({
+						category: 'Fail',
+						action: 'Recommendations playlist creation failed. Error creating playlist.',
+						label: 'Failed creating playlist'
+					});
 
 					if (err.status === 401) refreshToken((new_token) => setAuthToken(new_token));
 				}
@@ -214,11 +234,31 @@ function Recommendations() {
 								/>
 							)}
 							<div className="recommendations-buttons">
-								<button className="refresh-button" onClick={() => getData()}>
+								<button
+									className="refresh-button"
+									onClick={() => {
+										ReactGA.event({
+											category: 'Interaction',
+											action: 'Clicked button to refresh recommended songs.',
+											label: 'Button event'
+										});
+										getData();
+									}}
+								>
 									Refresh
 								</button>
 								{authToken && (
-									<button className="create-playlist-button" onClick={() => createPlaylist()}>
+									<button
+										className="create-playlist-button"
+										onClick={() => {
+											ReactGA.event({
+												category: 'Interaction',
+												action: 'Clicked button to create playlist.',
+												label: 'Button event'
+											});
+											createPlaylist();
+										}}
+									>
 										Create Playlist
 									</button>
 								)}
