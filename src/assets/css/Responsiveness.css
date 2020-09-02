@@ -13,11 +13,26 @@
 		animation: slide-in-down 0.8s cubic-bezier(0.455, 0.030, 0.515, 0.955) both;
 	}
 
-	section.sidebar-section,
-	div.side-content {
+	section.sidebar-section:not(request-login),
+	div.side-content:not(request-login) {
 		z-index: 30;
 		grid-column: 5 / span 10;
 		grid-row: 4 / span 24;
+	}
+
+	section.login-section {
+		grid-row: 1 / span 18;
+	}
+
+	section.login-section .carousel img {
+		width: 80%;
+	}
+
+	section.sidebar-section.login-sidebar,
+	div.side-content.request-login {
+		grid-column: 1 / span 10;
+		grid-row: 19 / span 24;
+		flex-wrap: nowrap;
 	}
 
 	section.sidebar-nothing,
@@ -79,6 +94,21 @@
 	section.sidebar-section,
 	div.side-content {
 		grid-column: 3 / span 10;
+	}
+
+	section.login-section {
+		grid-row: 1 / span 16;
+	}
+
+	section.login-section .carousel img {
+		width: 100%;
+	}
+
+	section.sidebar-section.login-sidebar,
+	div.side-content.request-login {
+		grid-column: 1 / span 10;
+		grid-row: 17 / span 24;
+		flex-wrap: nowrap;
 	}
 
 	section.table-content {

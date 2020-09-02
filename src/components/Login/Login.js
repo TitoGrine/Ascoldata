@@ -110,43 +110,42 @@ class Login extends Component {
 								</Carousel.Item>
 							</Carousel>
 						</section>
-						<section className="sidebar-section slide-in-right sidebar-nothing login-sidebar">
-							<div className="col d-flex flex-column align-items-center justify-content-center side-content slide-in-right request-login">
-								{!this.state.loginRequested && (
-									<React.Fragment>
-										<form
-											action={process.env.REACT_APP_FIREBASE_LOGIN_FUNC}
-											onSubmit={(ev) => {
-												this.setState({
-													loginRequested: true
-												});
-												ReactGA.event({
-													category: 'Interaction',
-													action: 'Clicked to login using Spotify.',
-													label: 'Button Event'
-												});
-												ev.target.submit();
-											}}
-										>
-											<Button type="submit" size="lg">
-												<strong>Log in with Spotify</strong>
-											</Button>
-										</form>
-										<p>
-											By signing in you agree to our{' '}
-											<Link to="/privacy_policy" className="inner-link">
-												Privacy Policy
-											</Link>
-										</p>
-									</React.Fragment>
-								)}
-								{this.state.loginRequested && (
-									<React.Fragment>
-										<p>Waiting for Spotify...</p>
-									</React.Fragment>
-								)}
-							</div>
-						</section>
+						<section className="sidebar-section slide-in-right login-sidebar" />
+						<div className="side-content slide-in-right request-login">
+							{!this.state.loginRequested && (
+								<React.Fragment>
+									<form
+										action={process.env.REACT_APP_FIREBASE_LOGIN_FUNC}
+										onSubmit={(ev) => {
+											this.setState({
+												loginRequested: true
+											});
+											ReactGA.event({
+												category: 'Interaction',
+												action: 'Clicked to login using Spotify.',
+												label: 'Button Event'
+											});
+											ev.target.submit();
+										}}
+									>
+										<Button type="submit" size="lg">
+											<strong>Log in with Spotify</strong>
+										</Button>
+									</form>
+									<p>
+										By signing in you agree to our{' '}
+										<Link to="/privacy_policy" className="inner-link">
+											Privacy Policy
+										</Link>
+									</p>
+								</React.Fragment>
+							)}
+							{this.state.loginRequested && (
+								<React.Fragment>
+									<p>Waiting for Spotify...</p>
+								</React.Fragment>
+							)}
+						</div>
 					</div>
 				</React.Fragment>
 			);

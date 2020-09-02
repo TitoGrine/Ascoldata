@@ -1,10 +1,16 @@
 section.login-section {
-	padding: 2em;
 	align-items: center;
 	justify-content: center;
 }
 
-section.login-sidebar .request-login p {
+div.side-content.request-login {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+div.side-content.request-login p {
 	padding-top: 0.5em;
 	margin: 0;
 	font-weight: 400;
@@ -12,7 +18,7 @@ section.login-sidebar .request-login p {
 	text-align: center;
 }
 
-section.login-sidebar button {
+div.side-content button {
 	padding: 0.6em 1.4em;
 	font-size: 1.3rem;
 	font-weight: 400;
@@ -21,10 +27,14 @@ section.login-sidebar button {
 	border-width: 0;
 }
 
-section.login-sidebar button:hover {
+div.side-content button:hover {
 	background-color: var(--color-primary);
 	color: var(--color-neutral);
 	animation: fadeIn 0.2s linear forwards;
+}
+
+.carousel {
+	max-height: 100%;
 }
 
 .carousel-inner {
@@ -59,7 +69,7 @@ section.login-sidebar button:hover {
 }
 
 .carousel img {
-	width: min(800px, 100%);
+	width: 95%;
 	margin: auto;
 	border: 1px inset var(--color-primary);
 	border-radius: 4px;
