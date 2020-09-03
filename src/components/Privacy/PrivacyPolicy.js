@@ -40,10 +40,9 @@ function PrivacyPolicy() {
 					<p>By using our website, you hereby consent to our Privacy Policy and agree to its terms.</p>
 					<h3>Information Collection and Use</h3>
 					<p>
-						The personal information that you are asked to provide, and the reasons why you are asked to
-						provide it, will be made clear to you at the point we ask you to provide your personal
-						information. In order to use our website you are asked to login using your Spotify account. This
-						grants Ascoldata permission to:
+						Ascoldata relies on the Spotify API but is in no way affiliated with Spotify. In order to use
+						our website you are asked to login using your Spotify account. This grants Ascoldata permission
+						to:
 						<ul>
 							<li>Read profile and subscription details.</li>
 							<li>Read your email address.</li>

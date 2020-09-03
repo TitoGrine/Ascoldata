@@ -30,19 +30,31 @@ function About() {
 					<p>
 						Ascoldata is a website that allows users to get access to information and statistics about their
 						Spotify's listening history. It also gives information about songs, albums, artists and
-						playlists on Spotify and even allows users to request song recommendations using Spotify's API.
-						Explore your favourite songs and artists and maybe discover some interesting patterns in your
-						listening habits.
+						playlists on Spotify and even allows users to request song recommendations using{' '}
+						<a
+							href="https://developer.spotify.com/documentation/web-api/"
+							target="_blank"
+							rel="noopener noreferrer"
+						>
+							Spotify's API
+						</a>. Explore your favourite songs and artists and maybe discover some interesting patterns in
+						your listening habits.
 					</p>
 					<p>
 						The idea for Ascoldata came when I wanted to explore APIs and build something as a summer
 						project and remembered seeing this awesome website{' '}
-						<a href="https://musictaste.space" target="_blank" rel="noopener noreferrer">
+						<a
+							href="https://musictaste.space"
+							target="_blank"
+							rel="noopener noreferrer"
+							style={{ color: '#A3F55F' }}
+						>
 							musictaste.space
 						</a>{' '}
 						(you should really check it out!), which inspired me to use Spotify's API and see what I could
 						do.
 					</p>
+					<strong>Ascoldata is in no way affiliated with Spotify.</strong>
 					<h4>Technology</h4>
 					<p>
 						This website is built using React, bootstrapped using{' '}
@@ -56,9 +68,9 @@ function About() {
 						>
 							Firebase Cloud Functions
 						</a>{' '}
-						for dealing with Spotify API OAuth2 authentication and token refreshing. It is currently hosted
-						using{' '}
-						<a href="" target="_blank" rel="noopener noreferrer">
+						for dealing with Spotify API authentication and token refreshing. It is currently being hosted
+						by{' '}
+						<a href="https://www.netlify.com" target="_blank" rel="noopener noreferrer">
 							Netlify
 						</a>.
 					</p>
