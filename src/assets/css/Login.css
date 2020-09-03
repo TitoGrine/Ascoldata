@@ -69,7 +69,8 @@ div.side-content button:hover {
 }
 
 .carousel img {
-	width: 95%;
+	object-fit: contain;
+	width: 100%;
 	margin: auto;
 	border: 1px inset var(--color-primary);
 	border-radius: 4px;

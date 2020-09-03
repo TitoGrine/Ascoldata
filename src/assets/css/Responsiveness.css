@@ -21,18 +21,17 @@
 	}
 
 	section.login-section {
-		grid-row: 1 / span 18;
-	}
-
-	section.login-section .carousel img {
-		width: 80%;
+		grid-row: 1 / span 17;
 	}
 
 	section.sidebar-section.login-sidebar,
 	div.side-content.request-login {
 		grid-column: 1 / span 10;
-		grid-row: 19 / span 24;
+		grid-row: 18 / span 24;
 		flex-wrap: nowrap;
+
+		-webkit-animation: slide-in-down 0.8s cubic-bezier(0.455, 0.030, 0.515, 0.955) both;
+		animation: slide-in-down 0.8s cubic-bezier(0.455, 0.030, 0.515, 0.955) both;
 	}
 
 	section.sidebar-nothing,
@@ -90,6 +89,12 @@
 	}
 }
 
+@media screen and (max-width: 1140px) and (min-width: 900px) {
+	section.login-section .carousel img {
+		width: 80%;
+	}
+}
+
 @media screen and (max-width: 700px) {
 	section.sidebar-section,
 	div.side-content {
@@ -97,17 +102,13 @@
 	}
 
 	section.login-section {
-		grid-row: 1 / span 16;
-	}
-
-	section.login-section .carousel img {
-		width: 100%;
+		grid-row: 1 / span 17;
 	}
 
 	section.sidebar-section.login-sidebar,
 	div.side-content.request-login {
 		grid-column: 1 / span 10;
-		grid-row: 17 / span 24;
+		grid-row: 18 / span 24;
 		flex-wrap: nowrap;
 	}
 
@@ -178,6 +179,10 @@
 
 	.react-tabs__tab-panel--selected {
 		padding: 0 0.5em;
+	}
+
+	section.login-section .carousel img {
+		max-height: 60vh;
 	}
 
 	/* Find */
