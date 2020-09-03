@@ -55,7 +55,7 @@ class Login extends Component {
 					<HeaderBar />
 					<div id="corporum">
 						<section className="content-section login-section">
-							<Carousel interval={4000} controls={false}>
+							<Carousel interval={4000} controls={false} pause={false}>
 								<Carousel.Item>
 									<img className="d-block" src={your_stats} alt="User stats preview." />
 									<Carousel.Caption>

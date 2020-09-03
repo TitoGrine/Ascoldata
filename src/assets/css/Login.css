@@ -56,7 +56,7 @@ div.side-content button:hover {
 	width: 100%;
 	color: var(--color-secondary);
 	background-color: var(--color-neutral);
-	filter: drop-shadow(0 0 2px rgba(77, 253, 165, 0.9));
+	filter: drop-shadow(0 0 3px rgba(77, 253, 165, 0.9));
 	border-radius: 4px;
 }
 
