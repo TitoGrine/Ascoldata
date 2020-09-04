@@ -37,7 +37,8 @@ class Login extends Component {
 		}
 
 		this.state = {
-			loginRequested: false
+			loginRequested: false,
+			inputRef: React.createRef()
 		};
 	}
 
@@ -168,21 +169,29 @@ class Login extends Component {
 						<div className="side-content slide-in-right request-login">
 							{!this.state.loginRequested && (
 								<React.Fragment>
-									<form
-										action={process.env.REACT_APP_FIREBASE_LOGIN_FUNC}
-										onSubmit={(ev) => {
-											this.setState({
-												loginRequested: true
-											});
-											ReactGA.event({
-												category: 'Interaction',
-												action: 'Clicked to login using Spotify.',
-												label: 'Button Event'
-											});
-											ev.target.submit();
-										}}
-									>
-										<Button type="submit" size="lg">
+									<form action={process.env.REACT_APP_FIREBASE_LOGIN_FUNC}>
+										<input
+											type="submit"
+											id="login_submit"
+											ref={this.state.inputRef}
+											style={{ display: 'none' }}
+										/>
+										<Button
+											type="submit"
+											size="lg"
+											onClick={(ev) => {
+												this.setState({
+													loginRequested: true,
+													inputRef: this.state.inputRef
+												});
+												ReactGA.event({
+													category: 'Interaction',
+													action: 'Clicked to login using Spotify.',
+													label: 'Button Event'
+												});
+												this.state.inputRef.current.click();
+											}}
+										>
 											<strong>Log in with Spotify</strong>
 										</Button>
 									</form>

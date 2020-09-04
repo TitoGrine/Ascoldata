@@ -8,7 +8,7 @@ const charities = [
 	'https://donate.givedirectly.org',
 	'https://www.unicef.org',
 	'https://act.nrdc.org/donate/monthly/',
-	'https://unfoundation.org/action-step/donation/give-to-protect-global-progress/step-one-select-gift-amount',
+	'https://unfoundation.org/',
 	'https://secure.directrelief.org/site/Donation2',
 	'https://support.savethechildren.org/site/Donation2',
 	'https://help.rescue.org/donate',

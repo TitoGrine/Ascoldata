@@ -106,7 +106,6 @@ function About() {
 				</section>
 				<section className={`sidebar-section slide-in-right sidebar-${toggled}`} />
 				<div className={`side-content slide-in-right sidebar-${toggled} about-sidebar`}>
-					{/* <img src={logo} className="logo" alt="Ascoldata's logo." /> */}
 					<p>Thankfully, for now, I can keep this website running without any sort of ads or donations.</p>
 					<p>
 						However, if you like the website, and want to make some contribution, make a donation to a

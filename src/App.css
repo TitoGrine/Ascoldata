@@ -45,7 +45,7 @@
 
 #corporum {
 	display: grid;
-	height: calc(100vh - 60px);
+	height: calc(100vh - 61px);
 	grid-template-columns: repeat(10, 1fr);
 	grid-template-rows: repeat(24, 1fr);
 	overflow: hidden;

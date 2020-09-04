@@ -4,6 +4,17 @@ section.about-website {
 	line-height: 2em;
 }
 
+@-moz-document url-prefix() {
+	section.about-website:after {
+		content: "";
+		height: 1em;
+		width: 100%;
+		opacity: 0;
+		display: block;
+		flex-shrink: 0;
+	}
+}
+
 section.about-website p,
 div.about-sidebar p {
 	margin-bottom: 0;
