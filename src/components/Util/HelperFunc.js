@@ -80,7 +80,7 @@ const explanations = {
 		'The overall estimated tempo of a track in beats per minute (BPM). Tempo is the speed or pace of a given piece and derives directly from the average beat duration.',
 	keyExplanation: 'The key or pitch class the track is in.',
 	modeExplanation:
-		'Mode indicates the modality (major or minor) of a strack, that is, the type of scale from which its melodic content is derived.'
+		'Mode indicates the modality (major or minor) of a track, that is, the type of scale from which its melodic content is derived.'
 };
 
 const ISOcodes = {

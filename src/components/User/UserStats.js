@@ -268,7 +268,7 @@ function UserStats() {
 									/>
 									<StatCard
 										barStat={false}
-										title="Popularity"
+										title="Average Popularity"
 										value={Math.round(stats.popularity)}
 										units=""
 									/>

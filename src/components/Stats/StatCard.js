@@ -27,7 +27,18 @@ function StatCard(props) {
 		} else {
 			return (
 				<div className="stat-card">
-					<p>{props.title}</p>
+					<p>
+						{props.title}
+						{props.explanation && (
+							<OverlayTrigger
+								key="top"
+								placement="top"
+								overlay={<Tooltip>{getExplanation(props.explanation)}</Tooltip>}
+							>
+								<MdInfo />
+							</OverlayTrigger>
+						)}
+					</p>
 					<strong className="stat-value">
 						{props.value}
 						<p>{props.units}</p>

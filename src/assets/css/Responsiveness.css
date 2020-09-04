@@ -53,13 +53,18 @@
 		animation: short-slide-in-right 0.8s cubic-bezier(0.455, 0.030, 0.515, 0.955) forwards;
 	}
 
+	#album-info,
+	#artist-info,
+	#playlist-info {
+		align-items: flex-start;
+	}
+
 	#track-info > div,
 	#album-info,
 	#artist-info,
 	#playlist-info,
 	#album-info #misc-data,
 	#playlist-info #misc-data {
-		align-items: flex-start;
 		width: 100%;
 		padding: 0 0.5em;
 	}
@@ -98,7 +103,7 @@
 @media screen and (max-width: 700px) {
 	section.sidebar-section,
 	div.side-content {
-		grid-column: 3 / span 10;
+		grid-column: 3 / span 10 !important;
 	}
 
 	section.login-section {
@@ -174,7 +179,7 @@
 @media screen and (max-width: 600px) {
 	section.sidebar-section,
 	div.side-content {
-		grid-column: 2 / span 10;
+		grid-column: 2 / span 10 !important;
 	}
 
 	.react-tabs__tab-panel--selected {
@@ -239,18 +244,18 @@
 	}
 
 	.spotify-icon-link {
-		top: 16vh;
+		top: 10vh;
 	}
 
 	.wikipedia-icon-link,
 	.genius-icon-link {
 		right: 20px;
-		top: 25vh;
+		top: 20vh;
 	}
 
 	.random-stats-icon-link {
 		right: 20px;
-		top: 80px;
+		top: 90px;
 	}
 
 	/* Find */

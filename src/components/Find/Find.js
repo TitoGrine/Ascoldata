@@ -137,6 +137,8 @@ function Find() {
 			case 'valence':
 				setValence(valence === -1 ? 0.5 : -1);
 				break;
+			default:
+				break;
 		}
 	};
 
