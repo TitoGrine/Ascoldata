@@ -8,6 +8,7 @@ import { Button } from 'react-bootstrap';
 import logo from '../../assets/images/logo.svg';
 
 import SideToggle from '../Common/SideToggle';
+import { getRandomCharity } from '../Util/Charities';
 
 function About() {
 	const history = useHistory();
@@ -105,13 +106,30 @@ function About() {
 				</section>
 				<section className={`sidebar-section slide-in-right sidebar-${toggled}`} />
 				<div className={`side-content slide-in-right sidebar-${toggled} about-sidebar`}>
-					<img src={logo} className="logo" alt="Ascoldata's logo." />
+					{/* <img src={logo} className="logo" alt="Ascoldata's logo." /> */}
 					<p>Thankfully, for now, I can keep this website running without any sort of ads or donations.</p>
 					<p>
-						If you like the website and want to show some support, consider leaving a star on the GitHub
-						project repo.
+						However, if you like the website, and want to make some contribution, make a donation to a
+						charity! <br />I'll randomly pick a good charity for you, here you go 😊
 					</p>
-					<p>If you want, feel free to follow me as well 😄!</p>
+					<form
+						action={getRandomCharity()}
+						onSubmit={(ev) => {
+							ReactGA.event({
+								category: 'Interaction',
+								action: 'Clicked to go to charity!',
+								label: 'Button Event'
+							});
+							ev.target.submit();
+						}}
+						target="_blank"
+						rel="noopener noreferrer"
+					>
+						<Button type="submit" size="lg" className="heartbeat">
+							<strong>Charity</strong>
+						</Button>
+					</form>
+					<p>If you want you can also leave a star on the GitHub project repo or follow me.</p>
 					<div className="github-buttons">
 						<GitHubButton
 							href="https://github.com/TitoGrine/Ascoldata"

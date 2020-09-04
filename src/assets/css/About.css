@@ -4,10 +4,6 @@ section.about-website {
 	line-height: 2em;
 }
 
-section.about-website p strong {
-	font-weight: 600;
-}
-
 section.about-website p,
 div.about-sidebar p {
 	margin-bottom: 0;
@@ -40,7 +36,7 @@ div.about-sidebar {
 	padding: 2em;
 	font-size: 1.1em;
 	font-weight: 500;
-	gap: 1.5em;
+	gap: 1em;
 	overflow: auto;
 }
 
@@ -49,6 +45,25 @@ div.about-sidebar .logo {
 	-webkit-animation: rotation 3.5s linear infinite both;
 	animation: rotation 3.5s linear infinite both;
 	align-self: center;
+}
+
+div.about-sidebar a {
+	width: 100%;
+	color: var(--color-neutral);
+	text-decoration: none;
+}
+
+div.about-sidebar button {
+	margin: 0 auto;
+	padding: 0.5em 1em;
+	width: 60%;
+	background-color: var(--color-primary);
+	color: var(--color-neutral);
+}
+
+div.about-sidebar button:hover {
+	background-color: var(--color-primary);
+	color: var(--color-neutral);
 }
 
 .github-buttons {

@@ -30,7 +30,6 @@ div.side-content button {
 div.side-content button:hover {
 	background-color: var(--color-primary);
 	color: var(--color-neutral);
-	animation: fadeIn 0.2s linear forwards;
 }
 
 .carousel {
