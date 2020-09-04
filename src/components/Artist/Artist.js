@@ -294,6 +294,7 @@ function Artist() {
 										scrolling="no"
 										frameBorder="0"
 										style={{ border: 'none', overflow: 'hidden' }}
+										title="follow_artist"
 										allowtransparency="true"
 									/>
 								</div>

@@ -145,25 +145,25 @@ export const calcUserValues = async (authToken) => {
 	let likedStats = await getLikedTracksStats();
 
 	if (shortStats) {
-		for (var key in shortStats) userValues[key] = 4 * shortStats[key];
+		for (var short_key in shortStats) userValues[short_key] = 4 * shortStats[short_key];
 
 		div = 4;
 	}
 
 	if (mediumStats) {
-		for (var key in mediumStats) userValues[key] += 2 * mediumStats[key];
+		for (var medium_key in mediumStats) userValues[medium_key] += 2 * mediumStats[medium_key];
 
 		div += 2;
 	}
 
 	if (longStats) {
-		for (var key in longStats) userValues[key] += longStats[key];
+		for (var long_key in longStats) userValues[long_key] += longStats[long_key];
 
 		div++;
 	}
 
 	if (likedStats) {
-		for (var key in likedStats) userValues[key] += 4 * likedStats[key];
+		for (var liked_key in likedStats) userValues[liked_key] += 4 * likedStats[liked_key];
 
 		div += 4;
 	}

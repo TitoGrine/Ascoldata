@@ -351,7 +351,12 @@ function Find() {
 								<br />If you don't select anything, then you will get recommendations based on your
 								latest top heard songs.
 								<br />
-								<strong>Have fun 😄!</strong>
+								<strong>
+									Have fun{' '}
+									<span role="img" aria-label="Happy emoji.">
+										😄
+									</span>!
+								</strong>
 								<br />
 							</p>
 						</TabPanel>

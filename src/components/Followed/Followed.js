@@ -99,10 +99,10 @@ function Followed() {
 							)}
 							<ul className="pagination">
 								<li className={`${currPage === 0 ? 'disabled' : ''}`}>
-									<a onClick={() => changePage(-1)}>⟨</a>
+									<button onClick={() => changePage(-1)}>⟨</button>
 								</li>
 								<li className={`${currPage === maxPage ? 'disabled' : ''}`}>
-									<a onClick={() => changePage(+1)}>⟩</a>
+									<button onClick={() => changePage(+1)}>⟩</button>
 								</li>
 							</ul>
 						</React.Fragment>

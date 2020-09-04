@@ -5,8 +5,6 @@ import GitHubButton from 'react-github-btn';
 import { Link, useHistory } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 
-import logo from '../../assets/images/logo.svg';
-
 import SideToggle from '../Common/SideToggle';
 import { getRandomCharity } from '../Util/Charities';
 

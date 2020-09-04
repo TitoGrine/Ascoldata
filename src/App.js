@@ -81,7 +81,7 @@ function App() {
 								/>
 							)}
 						/>
-						/* Default to 404 page when route not found */
+						{/* Default to 404 page when route not found */}
 						<Redirect to="/404" />
 					</Switch>
 				</Router>

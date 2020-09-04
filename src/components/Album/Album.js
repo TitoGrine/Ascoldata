@@ -37,7 +37,6 @@ function Track() {
 	const [ albumLabel, setAlbumLabel ] = useState('');
 	const [ albumArtists, setAlbumArtists ] = useState('');
 	const [ albumNrSongs, setAlbumNrSongs ] = useState('');
-	const [ albumGenres, setAlbumGenres ] = useState('');
 	const [ albumDuration, setAlbumDuration ] = useState('');
 	const [ albumRelDate, setAlbumRelDate ] = useState('');
 	const [ albumPopularity, setAlbumPopularity ] = useState('');
@@ -88,7 +87,6 @@ function Track() {
 					setAlbumLabel(data.label);
 					setAlbumArtists(data.artists);
 					setAlbumNrSongs(data.tracks.total);
-					setAlbumGenres(data.genres);
 					setAlbumRelDate(data.release_date);
 					setAlbumPopularity(data.popularity);
 
@@ -336,6 +334,7 @@ function Track() {
 									height="90%"
 									frameBorder="0"
 									allowtransparency="true"
+									title="album_preview"
 									allow="encrypted-media"
 								/>
 							)}

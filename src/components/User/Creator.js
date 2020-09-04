@@ -5,6 +5,7 @@ import { Textfit } from 'react-textfit';
 import Spotify from 'spotify-web-api-js';
 import { Link } from 'react-router-dom';
 import default_image from '../../assets/images/default_pic.png';
+import { refreshToken } from '../Auth/Auth';
 
 const spotifyWebApi = new Spotify();
 
@@ -23,6 +24,8 @@ function Creator(props) {
 				},
 				function(err) {
 					console.log(err);
+
+					if (err.status === 401) refreshToken((new_token) => setAuthToken(new_token));
 				}
 			);
 	};
@@ -46,6 +49,7 @@ function Creator(props) {
 				height="25"
 				scrolling="no"
 				frameBorder="0"
+				title="follow_user"
 				style={{ border: 'none', overflow: 'hidden' }}
 				allowtransparency="true"
 			/>

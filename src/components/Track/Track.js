@@ -329,6 +329,7 @@ function Track() {
 									height="80%"
 									frameBorder="0"
 									allowtransparency="true"
+									title="track_preview"
 									allow="encrypted-media"
 								/>
 							)}

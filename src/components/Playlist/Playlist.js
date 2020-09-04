@@ -335,6 +335,7 @@ function Playlist() {
 									height="90%"
 									frameBorder="0"
 									allowtransparency="true"
+									title="playlist_preview"
 									allow="encrypted-media"
 								/>
 							)}

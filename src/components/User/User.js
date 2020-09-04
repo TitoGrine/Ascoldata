@@ -32,7 +32,6 @@ function User() {
 	const [ followers, setFollowers ] = useState('');
 	const [ product, setProduct ] = useState('');
 	const [ link, setLink ] = useState('');
-	const [ uri, setURI ] = useState('');
 	const [ displayTrack, setDisplayTrack ] = useState('');
 
 	const { promiseInProgress } = usePromiseTracker();
@@ -92,7 +91,6 @@ function User() {
 					setFollowers(data.followers.total);
 					setProduct(data.product);
 					setLink(data.external_urls.spotify);
-					setURI(data.uri);
 
 					localStorage.setItem('userId', data.id);
 					localStorage.setItem('country', data.country);

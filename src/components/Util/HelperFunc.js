@@ -1,5 +1,3 @@
-import { createElement } from 'react';
-
 export const trimLimit = (number, min = 0, max = 1) => {
 	if (isNaN(number)) return 0;
 

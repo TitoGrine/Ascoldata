@@ -20,7 +20,7 @@ function ErrorPage(props) {
 			</Helmet>
 			<HeaderBar />
 			<div id="page-error-content">
-				<img src={logo} id="error-logo" alt="Error image." />
+				<img src={logo} id="error-logo" alt="Ascoldata's logo." />
 				<strong>{`${props.errorCode} ${props.errorShort}`}</strong>
 				{props.errorDescription}
 				<Button
