@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import ReactGA from 'react-ga';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { useLocation, useHistory, Redirect } from 'react-router-dom';
@@ -35,29 +35,32 @@ function UserPlaylists() {
 	const colapseTable = useMediaQuery({ maxWidth: 700 });
 	const decreasePagination = useMediaQuery({ maxWidth: 500 });
 
-	const getData = () => {
-		spotifyWebApi.setAccessToken(authToken);
+	const getData = useCallback(
+		() => {
+			spotifyWebApi.setAccessToken(authToken);
 
-		trackPromise(
-			spotifyWebApi
-				.getUserPlaylists({
-					limit: limit,
-					offset: offset
-				})
-				.then(
-					function(data) {
-						//console.log(data);
-						setUserPlaylists(data.items);
-						setTotalItems(data.total);
-					},
-					function(err) {
-						console.log(err);
+			trackPromise(
+				spotifyWebApi
+					.getUserPlaylists({
+						limit: limit,
+						offset: offset
+					})
+					.then(
+						function(data) {
+							//console.log(data);
+							setUserPlaylists(data.items);
+							setTotalItems(data.total);
+						},
+						function(err) {
+							console.log(err);
 
-						if (err.status === 401) refreshToken((new_token) => setAuthToken(new_token));
-					}
-				)
-		);
-	};
+							if (err.status === 401) refreshToken((new_token) => setAuthToken(new_token));
+						}
+					)
+			);
+		},
+		[ authToken, offset ]
+	);
 
 	const switchPage = (ev) => {
 		if (Number.isInteger(ev)) {
@@ -72,14 +75,14 @@ function UserPlaylists() {
 				setPage(1 + offset / limit);
 			}
 		},
-		[ offset ]
+		[ offset, getData, authToken ]
 	);
 
 	useEffect(
 		() => {
-			if (authToken) history.push(`/user_playlists?page=${page}`);
+			history.push(`/user_playlists?page=${page}`);
 		},
-		[ page ]
+		[ page, history ]
 	);
 
 	useEffect(() => {

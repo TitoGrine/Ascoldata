@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import ReactGA from 'react-ga';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { useLocation, useHistory, Redirect } from 'react-router-dom';
@@ -38,30 +38,33 @@ function CreatorPlaylists() {
 	const colapseTable = useMediaQuery({ maxWidth: 700 });
 	const decreasePagination = useMediaQuery({ maxWidth: 500 });
 
-	const getData = () => {
-		spotifyWebApi.setAccessToken(authToken);
+	const getData = useCallback(
+		() => {
+			spotifyWebApi.setAccessToken(authToken);
 
-		trackPromise(
-			spotifyWebApi
-				.getUserPlaylists(creatorId, {
-					limit: limit,
-					offset: offset
-				})
-				.then(
-					function(data) {
-						// console.log(data);
-						setTotalItems(data.total);
-						setCreatorPlaylists(data.items);
-						setcreatorName(data.items.length > 0 ? data.items[0].owner.display_name : '');
-					},
-					function(err) {
-						console.log(err);
+			trackPromise(
+				spotifyWebApi
+					.getUserPlaylists(creatorId, {
+						limit: limit,
+						offset: offset
+					})
+					.then(
+						function(data) {
+							// console.log(data);
+							setTotalItems(data.total);
+							setCreatorPlaylists(data.items);
+							setcreatorName(data.items.length > 0 ? data.items[0].owner.display_name : '');
+						},
+						function(err) {
+							console.log(err);
 
-						if (err.status === 401) refreshToken((new_token) => setAuthToken(new_token));
-					}
-				)
-		);
-	};
+							if (err.status === 401) refreshToken((new_token) => setAuthToken(new_token));
+						}
+					)
+			);
+		},
+		[ authToken, creatorId, offset ]
+	);
 
 	const switchPage = (ev) => {
 		if (Number.isInteger(ev)) {
@@ -76,14 +79,14 @@ function CreatorPlaylists() {
 				setPage(1 + offset / limit);
 			}
 		},
-		[ authToken, offset ]
+		[ authToken, offset, getData ]
 	);
 
 	useEffect(
 		() => {
-			if (authToken) history.push(`/creator_playlists?id=${creatorId}&page=${page}`);
+			history.push(`/creator_playlists?id=${creatorId}&page=${page}`);
 		},
-		[ page ]
+		[ history, creatorId, page ]
 	);
 
 	useEffect(() => {

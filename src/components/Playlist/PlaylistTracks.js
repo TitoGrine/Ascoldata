@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import ReactGA from 'react-ga';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { useLocation, useHistory, Redirect } from 'react-router-dom';
@@ -40,16 +40,21 @@ function PlaylistTracks() {
 
 	const { promiseInProgress } = usePromiseTracker();
 
-	const getPlaylistName = () => {
-		spotifyWebApi.getPlaylist(playlistId).then(
-			function(data) {
-				setPlaylistName(data.name);
-			},
-			function(err) {
-				console.log(err);
-			}
-		);
-	};
+	const getPlaylistName = useCallback(
+		() => {
+			if (playlistName.length !== 0) return;
+
+			spotifyWebApi.getPlaylist(playlistId).then(
+				function(data) {
+					setPlaylistName(data.name);
+				},
+				function(err) {
+					console.log(err);
+				}
+			);
+		},
+		[ playlistId, playlistName ]
+	);
 
 	const getPlaylistTracks = (tracks) => {
 		trackPromise(
@@ -68,33 +73,36 @@ function PlaylistTracks() {
 		);
 	};
 
-	const getData = () => {
-		spotifyWebApi.setAccessToken(authToken);
+	const getData = useCallback(
+		() => {
+			spotifyWebApi.setAccessToken(authToken);
 
-		trackPromise(
-			spotifyWebApi
-				.getPlaylistTracks(playlistId, {
-					limit: limit,
-					offset: offset
-				})
-				.then(
-					function(data) {
-						// console.log(data);
-						setTotalItems(data.total);
-						getPlaylistTracks(
-							data.items.map((item) => {
-								return item.track.id;
-							})
-						);
-					},
-					function(err) {
-						console.log(err);
+			trackPromise(
+				spotifyWebApi
+					.getPlaylistTracks(playlistId, {
+						limit: limit,
+						offset: offset
+					})
+					.then(
+						function(data) {
+							// console.log(data);
+							setTotalItems(data.total);
+							getPlaylistTracks(
+								data.items.map((item) => {
+									return item.track.id;
+								})
+							);
+						},
+						function(err) {
+							console.log(err);
 
-						if (err.status === 401) refreshToken((new_token) => setAuthToken(new_token));
-					}
-				)
-		);
-	};
+							if (err.status === 401) refreshToken((new_token) => setAuthToken(new_token));
+						}
+					)
+			);
+		},
+		[ authToken, offset, playlistId ]
+	);
 
 	const switchPage = (ev) => {
 		if (Number.isInteger(ev)) {
@@ -106,20 +114,19 @@ function PlaylistTracks() {
 		() => {
 			if (authToken) {
 				getData();
-
-				if (playlistName.length === 0) getPlaylistName();
+				getPlaylistName();
 
 				setPage(1 + offset / limit);
 			}
 		},
-		[ authToken, offset ]
+		[ authToken, offset, getData, getPlaylistName ]
 	);
 
 	useEffect(
 		() => {
 			history.push(`/playlist_tracks?id=${playlistId}&page=${page}`);
 		},
-		[ page ]
+		[ history, playlistId, page ]
 	);
 
 	useEffect(() => {

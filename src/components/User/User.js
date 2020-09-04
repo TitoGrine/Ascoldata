@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import ReactGA from 'react-ga';
 import { Image } from 'react-bootstrap';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
@@ -74,38 +74,41 @@ function User() {
 			);
 	};
 
-	const getData = async () => {
-		spotifyWebApi.setAccessToken(authToken);
+	const getData = useCallback(
+		() => {
+			spotifyWebApi.setAccessToken(authToken);
 
-		trackPromise(
-			spotifyWebApi.getMe().then(
-				function(data) {
-					//console.log(data);
+			trackPromise(
+				spotifyWebApi.getMe().then(
+					function(data) {
+						//console.log(data);
 
-					if (data.images.length > 0) setImage(data.images[0].url);
+						if (data.images.length > 0) setImage(data.images[0].url);
 
-					setUser(data.display_name);
-					setId(data.id);
-					setEmail(data.email);
-					setCountry(getCountryFromISOCode(data.country));
-					setFollowers(data.followers.total);
-					setProduct(data.product);
-					setLink(data.external_urls.spotify);
+						setUser(data.display_name);
+						setId(data.id);
+						setEmail(data.email);
+						setCountry(getCountryFromISOCode(data.country));
+						setFollowers(data.followers.total);
+						setProduct(data.product);
+						setLink(data.external_urls.spotify);
 
-					localStorage.setItem('userId', data.id);
-					localStorage.setItem('country', data.country);
+						localStorage.setItem('userId', data.id);
+						localStorage.setItem('country', data.country);
 
-					getUserSeeds();
-					getLastTrack();
-				},
-				function(err) {
-					console.log(err);
+						getUserSeeds();
+						getLastTrack();
+					},
+					function(err) {
+						console.log(err);
 
-					if (err.status === 401) refreshToken((new_token) => setAuthToken(new_token));
-				}
-			)
-		);
-	};
+						if (err.status === 401) refreshToken((new_token) => setAuthToken(new_token));
+					}
+				)
+			);
+		},
+		[ authToken ]
+	);
 
 	useEffect(
 		() => {
@@ -114,7 +117,7 @@ function User() {
 				calcUserValues(authToken);
 			}
 		},
-		[ authToken ]
+		[ authToken, getData ]
 	);
 
 	return (
@@ -175,6 +178,7 @@ function User() {
 												height="80"
 												frameBorder="0"
 												allowtransparency="true"
+												title="last_played_song_preview"
 												allow="encrypted-media"
 											/>
 										</li>

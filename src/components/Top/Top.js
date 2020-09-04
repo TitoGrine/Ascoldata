@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import ReactGA from 'react-ga';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { useLocation, useHistory, Redirect } from 'react-router-dom';
@@ -43,57 +43,60 @@ function Top() {
 	const colapseTable = useMediaQuery({ maxWidth: 700 });
 	const decreasePagination = useMediaQuery({ maxWidth: 500 });
 
-	const getData = async () => {
-		spotifyWebApi.setAccessToken(authToken);
+	const getData = useCallback(
+		() => {
+			spotifyWebApi.setAccessToken(authToken);
 
-		switch (topType) {
-			case 'artist':
-				trackPromise(
-					spotifyWebApi
-						.getMyTopArtists({
-							limit: limit,
-							offset: offset,
-							time_range: timeRange
-						})
-						.then(
-							function(data) {
-								setTotalItems(data.total);
-								setTopResults(data.items);
-							},
-							function(err) {
-								console.log(err);
+			switch (topType) {
+				case 'artist':
+					trackPromise(
+						spotifyWebApi
+							.getMyTopArtists({
+								limit: limit,
+								offset: offset,
+								time_range: timeRange
+							})
+							.then(
+								function(data) {
+									setTotalItems(data.total);
+									setTopResults(data.items);
+								},
+								function(err) {
+									console.log(err);
 
-								if (err.status === 401) refreshToken((new_token) => setAuthToken(new_token));
-							}
-						)
-				);
-				break;
+									if (err.status === 401) refreshToken((new_token) => setAuthToken(new_token));
+								}
+							)
+					);
+					break;
 
-			case 'track':
-				trackPromise(
-					spotifyWebApi
-						.getMyTopTracks({
-							limit: limit,
-							offset: offset,
-							time_range: timeRange
-						})
-						.then(
-							function(data) {
-								setTotalItems(data.total);
-								setTopResults(data.items);
-							},
-							function(err) {
-								console.log(err);
+				case 'track':
+					trackPromise(
+						spotifyWebApi
+							.getMyTopTracks({
+								limit: limit,
+								offset: offset,
+								time_range: timeRange
+							})
+							.then(
+								function(data) {
+									setTotalItems(data.total);
+									setTopResults(data.items);
+								},
+								function(err) {
+									console.log(err);
 
-								if (err.status === 401) refreshToken((new_token) => setAuthToken(new_token));
-							}
-						)
-				);
-				break;
-			default:
-				break;
-		}
-	};
+									if (err.status === 401) refreshToken((new_token) => setAuthToken(new_token));
+								}
+							)
+					);
+					break;
+				default:
+					break;
+			}
+		},
+		[ authToken, offset, timeRange, topType ]
+	);
 
 	const renderTable = () => {
 		if (topResults.length === 0)
@@ -149,14 +152,14 @@ function Top() {
 				setPage(1 + offset / limit);
 			}
 		},
-		[ authToken, timeRange, topType, offset ]
+		[ authToken, timeRange, topType, offset, getData ]
 	);
 
 	useEffect(
 		() => {
-			if (authToken) history.push(`/top?type=${topType}&time_range=${timeRange}&page=${page}`);
+			history.push(`/top?type=${topType}&time_range=${timeRange}&page=${page}`);
 		},
-		[ page ]
+		[ history, timeRange, topType, page ]
 	);
 
 	useEffect(() => {

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import ReactGA from 'react-ga';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { trackPromise, usePromiseTracker } from 'react-promise-tracker';
@@ -82,74 +82,77 @@ function UserStats() {
 		);
 	};
 
-	const getData = () => {
-		trackPromise(
-			spotifyWebApi
-				.getMyTopTracks({
-					limit: 50,
-					offset: 0,
-					time_range: timeRange
-				})
-				.then(
-					function(data) {
-						let tracks = data.items.map((track) => {
-							return track.id;
-						});
-
-						let avgPopularity =
-							data.items.reduce((total, track) => {
-								return total + track.popularity;
-							}, 0) / data.items.length;
-
-						if (tracks.length > 0) {
-							calcUserStats(tracks, avgPopularity);
-							setExistsData(true);
-						}
-					},
-					function(err) {
-						console.log(err);
-
-						if (err.status === 401) refreshToken((new_token) => setAuthToken(new_token));
-					}
-				)
-		);
-
-		trackPromise(
-			spotifyWebApi
-				.getMyTopArtists({
-					limit: 50,
-					offset: 0,
-					time_range: timeRange
-				})
-				.then(
-					function(data) {
-						let genres = {};
-
-						data.items.forEach((artist) => {
-							artist.genres.forEach((genre) => {
-								if (genres[genre]) genres[genre]++;
-								else genres[genre] = 1;
+	const getData = useCallback(
+		() => {
+			trackPromise(
+				spotifyWebApi
+					.getMyTopTracks({
+						limit: 50,
+						offset: 0,
+						time_range: timeRange
+					})
+					.then(
+						function(data) {
+							let tracks = data.items.map((track) => {
+								return track.id;
 							});
-						});
 
-						// Order genres with more than one occurence
-						setTopGenres(
-							Object.keys(genres)
-								.filter((genre) => {
-									return genres[genre] > 1;
-								})
-								.sort(function(a, b) {
-									return genres[b] - genres[a];
-								})
-								.slice(0, 4)
-						);
-					},
-					function(err) {
-						console.log(err);
-					}
-				)
-		);
-	};
+							let avgPopularity =
+								data.items.reduce((total, track) => {
+									return total + track.popularity;
+								}, 0) / data.items.length;
+
+							if (tracks.length > 0) {
+								calcUserStats(tracks, avgPopularity);
+								setExistsData(true);
+							}
+						},
+						function(err) {
+							console.log(err);
+
+							if (err.status === 401) refreshToken((new_token) => setAuthToken(new_token));
+						}
+					)
+			);
+
+			trackPromise(
+				spotifyWebApi
+					.getMyTopArtists({
+						limit: 50,
+						offset: 0,
+						time_range: timeRange
+					})
+					.then(
+						function(data) {
+							let genres = {};
+
+							data.items.forEach((artist) => {
+								artist.genres.forEach((genre) => {
+									if (genres[genre]) genres[genre]++;
+									else genres[genre] = 1;
+								});
+							});
+
+							// Order genres with more than one occurence
+							setTopGenres(
+								Object.keys(genres)
+									.filter((genre) => {
+										return genres[genre] > 1;
+									})
+									.sort(function(a, b) {
+										return genres[b] - genres[a];
+									})
+									.slice(0, 4)
+							);
+						},
+						function(err) {
+							console.log(err);
+						}
+					)
+			);
+		},
+		[ timeRange ]
+	);
 
 	const updateTimeRange = (ev) => {
 		setStats([]);
@@ -164,7 +167,7 @@ function UserStats() {
 				getData();
 			}
 		},
-		[ authToken, timeRange ]
+		[ authToken, timeRange, getData ]
 	);
 
 	useEffect(() => {

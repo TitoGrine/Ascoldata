@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import ReactGA from 'react-ga';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { useLocation, Redirect } from 'react-router-dom';
@@ -120,54 +120,61 @@ function Recommendations() {
 			);
 	};
 
-	const getParameters = () => {
-		let defaultParameters = {
-			limit: limit,
-			seed_tracks: seeds
-		};
+	const getParameters = useCallback(
+		() => {
+			let defaultParameters = {
+				limit: limit,
+				seed_tracks: seeds
+			};
 
-		if (query.get('key')) defaultParameters.target_key = trimLimit(query.get('key'), 0, 13);
-		if (query.get('mode')) defaultParameters.target_mode = Math.round(trimLimit(query.get('mode')));
+			if (query.get('key')) defaultParameters.target_key = trimLimit(query.get('key'), 0, 13);
+			if (query.get('mode')) defaultParameters.target_mode = Math.round(trimLimit(query.get('mode')));
 
-		if (query.get('acousticness')) defaultParameters.target_acousticness = trimLimit(query.get('acousticness'));
-		if (query.get('danceability')) defaultParameters.target_danceability = trimLimit(query.get('danceability'));
-		if (query.get('energy')) defaultParameters.target_energy = trimLimit(query.get('energy'));
-		if (query.get('instrumentalness'))
-			defaultParameters.target_instrumentalness = trimLimit(query.get('instrumentalness'));
-		if (query.get('liveness')) defaultParameters.target_liveness = trimLimit(query.get('liveness'));
-		if (query.get('tempo')) defaultParameters.target_tempo = trimLimit(query.get('tempo'), 0, 250);
-		if (query.get('popularity')) defaultParameters.target_popularity = trimLimit(query.get('popularity'), 0, 100);
-		if (query.get('speechiness')) defaultParameters.target_speechiness = trimLimit(query.get('speechiness'));
-		if (query.get('valence')) defaultParameters.target_valence = trimLimit(query.get('valence'));
+			if (query.get('acousticness')) defaultParameters.target_acousticness = trimLimit(query.get('acousticness'));
+			if (query.get('danceability')) defaultParameters.target_danceability = trimLimit(query.get('danceability'));
+			if (query.get('energy')) defaultParameters.target_energy = trimLimit(query.get('energy'));
+			if (query.get('instrumentalness'))
+				defaultParameters.target_instrumentalness = trimLimit(query.get('instrumentalness'));
+			if (query.get('liveness')) defaultParameters.target_liveness = trimLimit(query.get('liveness'));
+			if (query.get('tempo')) defaultParameters.target_tempo = trimLimit(query.get('tempo'), 0, 250);
+			if (query.get('popularity'))
+				defaultParameters.target_popularity = trimLimit(query.get('popularity'), 0, 100);
+			if (query.get('speechiness')) defaultParameters.target_speechiness = trimLimit(query.get('speechiness'));
+			if (query.get('valence')) defaultParameters.target_valence = trimLimit(query.get('valence'));
 
-		return defaultParameters;
-	};
+			return defaultParameters;
+		},
+		[ query, seeds ]
+	);
 
-	const getData = () => {
-		spotifyWebApi.setAccessToken(authToken);
+	const getData = useCallback(
+		() => {
+			spotifyWebApi.setAccessToken(authToken);
 
-		trackPromise(
-			spotifyWebApi.getRecommendations(getParameters()).then(
-				function(data) {
-					// console.log(data);
-					setRecommendations(data.tracks);
-					localStorage.setItem('track_seeds', data.seeds.map((seed) => seed.id));
+			trackPromise(
+				spotifyWebApi.getRecommendations(getParameters()).then(
+					function(data) {
+						// console.log(data);
+						setRecommendations(data.tracks);
+						localStorage.setItem('track_seeds', data.seeds.map((seed) => seed.id));
 
-					const recommendations = {
-						query: query.toString(),
-						results: data.tracks
-					};
+						const recommendations = {
+							query: query.toString(),
+							results: data.tracks
+						};
 
-					localStorage.setItem('recommendations', JSON.stringify(recommendations));
-				},
-				function(err) {
-					console.log(err);
+						localStorage.setItem('recommendations', JSON.stringify(recommendations));
+					},
+					function(err) {
+						console.log(err);
 
-					if (err.status === 401) refreshToken((new_token) => setAuthToken(new_token));
-				}
-			)
-		);
-	};
+						if (err.status === 401) refreshToken((new_token) => setAuthToken(new_token));
+					}
+				)
+			);
+		},
+		[ authToken, query, getParameters ]
+	);
 
 	useEffect(
 		() => {
@@ -182,7 +189,7 @@ function Recommendations() {
 				getData();
 			}
 		},
-		[ authToken ]
+		[ authToken, query, getData ]
 	);
 
 	useEffect(() => {

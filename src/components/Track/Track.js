@@ -1,16 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import ReactGA from 'react-ga';
 import Spotify from 'spotify-web-api-js';
 import { useLocation, Link, Redirect } from 'react-router-dom';
 import { Textfit } from 'react-textfit';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { FaSpotify } from 'react-icons/fa';
-import genius_logo from '../../assets/images/genius-logo2.svg';
 import { trackPromise, usePromiseTracker } from 'react-promise-tracker';
 import { getSong } from 'genius-lyrics-api';
+import { Helmet } from 'react-helmet';
+import genius_logo from '../../assets/images/genius-logo2.svg';
 
 import { refreshToken } from '../Auth/Auth';
-import { keyBinds } from '../Util/HelperFunc';
+import { keyBinds, formatDuration } from '../Util/HelperFunc';
 
 import HeaderBar from '../Common/HeaderBar';
 import Redirects from '../Common/Redirects';
@@ -18,7 +19,6 @@ import StatCard from '../Stats/StatCard';
 import Search from '../Search/Search';
 import SideToggle from '../Common/SideToggle';
 import LoadingSpinner from '../Common/LoadingSpinner';
-import { Helmet } from 'react-helmet';
 
 const spotifyWebApi = new Spotify();
 
@@ -42,67 +42,7 @@ function Track() {
 
 	const { promiseInProgress } = usePromiseTracker();
 
-	const formatDuration = (duration_ms) => {
-		let seconds = Math.round(duration_ms / 1000);
-		let minutes = Math.floor(seconds / 60);
-
-		return ('00' + minutes).slice(-2) + ':' + ('00' + seconds % 60).slice(-2);
-	};
-
-	const getTrackMetaData = async () => {
-		trackPromise(
-			spotifyWebApi.getTrack(track).then(
-				function(data) {
-					setTrackName(data.name);
-					setTrackLink(data.external_urls.spotify);
-					setTrackUri(data.uri);
-					setTrackAlbum(data.album);
-					setTrackArtists(data.artists);
-					setTrackDuration(data.duration_ms);
-					setTrackPopularity(data.popularity);
-
-					if (geniusLink.length === 0) getGeniusLink(data.name, data.artists);
-					getTrackFeatures(data.artists.map((artist) => artist.id));
-				},
-				function(err) {
-					console.log(err);
-
-					if (err.status === 401) refreshToken((new_token) => setAuthToken(new_token));
-				}
-			)
-		);
-	};
-
-	const getTrackFeatures = async (artists) => {
-		trackPromise(
-			spotifyWebApi.getAudioFeaturesForTrack(track).then(
-				function(data) {
-					const avgStats = {
-						acousticness: 100 * data.acousticness,
-						danceability: 100 * data.danceability,
-						energy: 100 * data.energy,
-						instrumentalness: 100 * data.instrumentalness,
-						liveness: 100 * data.liveness,
-						loudness: data.loudness,
-						mode: data.mode,
-						speechiness: 100 * data.speechiness,
-						tempo: data.tempo,
-						valence: 100 * data.valence,
-						pitchKey: data.key
-					};
-
-					setTrackStats(avgStats);
-				},
-				function(err) {
-					console.log(err);
-
-					if (err.status === 401) refreshToken((new_token) => setAuthToken(new_token));
-				}
-			)
-		);
-	};
-
-	const getGeniusLink = async (track, artists) => {
+	const getGeniusLink = useCallback((track, artists) => {
 		const options = {
 			apiKey: process.env.REACT_APP_GENIUS_TOKEN,
 			title: track,
@@ -119,11 +59,66 @@ function Track() {
 				console.log(err);
 			}
 		);
-	};
+	}, []);
 
-	const getData = async () => {
-		getTrackMetaData();
-	};
+	const getTrackFeatures = useCallback(
+		() => {
+			trackPromise(
+				spotifyWebApi.getAudioFeaturesForTrack(track).then(
+					function(data) {
+						const avgStats = {
+							acousticness: 100 * data.acousticness,
+							danceability: 100 * data.danceability,
+							energy: 100 * data.energy,
+							instrumentalness: 100 * data.instrumentalness,
+							liveness: 100 * data.liveness,
+							loudness: data.loudness,
+							mode: data.mode,
+							speechiness: 100 * data.speechiness,
+							tempo: data.tempo,
+							valence: 100 * data.valence,
+							pitchKey: data.key
+						};
+
+						setTrackStats(avgStats);
+					},
+					function(err) {
+						console.log(err);
+
+						if (err.status === 401) refreshToken((new_token) => setAuthToken(new_token));
+					}
+				)
+			);
+		},
+		[ track ]
+	);
+
+	const getData = useCallback(
+		() => {
+			trackPromise(
+				spotifyWebApi.getTrack(track).then(
+					function(data) {
+						setTrackName(data.name);
+						setTrackLink(data.external_urls.spotify);
+						setTrackUri(data.uri);
+						setTrackAlbum(data.album);
+						setTrackArtists(data.artists);
+						setTrackDuration(data.duration_ms);
+						setTrackPopularity(data.popularity);
+
+						if (geniusLink.length === 0) getGeniusLink(data.name, data.artists);
+						getTrackFeatures(data.artists.map((artist) => artist.id));
+					},
+					function(err) {
+						console.log(err);
+
+						if (err.status === 401) refreshToken((new_token) => setAuthToken(new_token));
+					}
+				)
+			);
+		},
+		[ track, geniusLink, getGeniusLink, getTrackFeatures ]
+	);
 
 	useEffect(
 		() => {
@@ -132,7 +127,7 @@ function Track() {
 				getData();
 			}
 		},
-		[ authToken ]
+		[ authToken, getData ]
 	);
 
 	useEffect(() => {

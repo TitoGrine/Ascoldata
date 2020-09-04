@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import ReactGA from 'react-ga';
 import { Image } from 'react-bootstrap';
 import { Textfit } from 'react-textfit';
@@ -13,22 +13,25 @@ function Creator(props) {
 	const [ creatorPlaylists, setCreatorPlaylists ] = useState(0);
 	const [ authToken, setAuthToken ] = useState(localStorage.getItem('authToken'));
 
-	const getPlaylists = () => {
-		spotifyWebApi
-			.getUserPlaylists(props.info.id, {
-				limit: 1
-			})
-			.then(
-				function(data) {
-					setCreatorPlaylists(data.total);
-				},
-				function(err) {
-					console.log(err);
+	const getPlaylists = useCallback(
+		() => {
+			spotifyWebApi
+				.getUserPlaylists(props.info.id, {
+					limit: 1
+				})
+				.then(
+					function(data) {
+						setCreatorPlaylists(data.total);
+					},
+					function(err) {
+						console.log(err);
 
-					if (err.status === 401) refreshToken((new_token) => setAuthToken(new_token));
-				}
-			);
-	};
+						if (err.status === 401) refreshToken((new_token) => setAuthToken(new_token));
+					}
+				);
+		},
+		[ props ]
+	);
 
 	useEffect(
 		() => {
@@ -37,7 +40,7 @@ function Creator(props) {
 				getPlaylists();
 			}
 		},
-		[ authToken ]
+		[ authToken, getPlaylists ]
 	);
 
 	return (

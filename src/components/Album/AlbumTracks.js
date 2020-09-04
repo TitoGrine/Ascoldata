@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import ReactGA from 'react-ga';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { useLocation, useHistory, Redirect } from 'react-router-dom';
@@ -54,33 +54,36 @@ function AlbumTracks() {
 		);
 	};
 
-	const getData = () => {
-		spotifyWebApi.setAccessToken(authToken);
+	const getData = useCallback(
+		() => {
+			spotifyWebApi.setAccessToken(authToken);
 
-		trackPromise(
-			spotifyWebApi
-				.getAlbumTracks(albumId, {
-					limit: limit,
-					offset: offset
-				})
-				.then(
-					function(data) {
-						// console.log(data);
-						setTotalItems(data.total);
-						getAlbumTracks(
-							data.items.map((item) => {
-								return item.id;
-							})
-						);
-					},
-					function(err) {
-						console.log(err);
+			trackPromise(
+				spotifyWebApi
+					.getAlbumTracks(albumId, {
+						limit: limit,
+						offset: offset
+					})
+					.then(
+						function(data) {
+							// console.log(data);
+							setTotalItems(data.total);
+							getAlbumTracks(
+								data.items.map((item) => {
+									return item.id;
+								})
+							);
+						},
+						function(err) {
+							console.log(err);
 
-						if (err.status === 401) refreshToken((new_token) => setAuthToken(new_token));
-					}
-				)
-		);
-	};
+							if (err.status === 401) refreshToken((new_token) => setAuthToken(new_token));
+						}
+					)
+			);
+		},
+		[ albumId, authToken, offset ]
+	);
 
 	const switchPage = (ev) => {
 		if (Number.isInteger(ev)) {
@@ -95,14 +98,14 @@ function AlbumTracks() {
 				setPage(1 + offset / limit);
 			}
 		},
-		[ authToken, offset ]
+		[ authToken, offset, getData ]
 	);
 
 	useEffect(
 		() => {
 			history.push(`/album_tracks?id=${albumId}&page=${page}`);
 		},
-		[ page ]
+		[ history, albumId, page ]
 	);
 
 	useEffect(() => {

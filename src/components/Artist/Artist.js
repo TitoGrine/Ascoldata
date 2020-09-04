@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import ReactGA from 'react-ga';
 import Spotify from 'spotify-web-api-js';
 import wiki from 'wikijs';
@@ -43,51 +43,34 @@ function Artist() {
 
 	const { promiseInProgress } = usePromiseTracker();
 
-	const getArtistMetaData = async () => {
-		trackPromise(
-			spotifyWebApi.getArtist(artist).then(
-				function(data) {
-					setArtistName(data.name);
-					setArtistLink(data.external_urls.spotify);
-					setArtistUri(data.uri);
-					if (data.images.length > 0) setArtistImage(data.images[0].url);
+	const getArtistMetaData = useCallback(
+		() => {
+			trackPromise(
+				spotifyWebApi.getArtist(artist).then(
+					function(data) {
+						setArtistName(data.name);
+						setArtistLink(data.external_urls.spotify);
+						setArtistUri(data.uri);
+						if (data.images.length > 0) setArtistImage(data.images[0].url);
 
-					setArtistFollowers(data.followers.total);
-					setArtistGenres(data.genres);
-					setArtistPopularity(data.popularity);
+						setArtistFollowers(data.followers.total);
+						setArtistGenres(data.genres);
+						setArtistPopularity(data.popularity);
 
-					getWikiPage(data.name);
-				},
-				function(err) {
-					console.log(err);
+						getWikiPage(data.name);
+					},
+					function(err) {
+						console.log(err);
 
-					if (err.status === 401) refreshToken((new_token) => setAuthToken(new_token));
-				}
-			)
-		);
-	};
-
-	const getArtistTopTracks = async () => {
-		trackPromise(
-			spotifyWebApi.getArtistTopTracks(artist, localStorage.getItem('country')).then(
-				function(data) {
-					if (data.tracks.length > 0) {
-						getArtistStats(
-							data.tracks.map((track) => {
-								return track.id;
-							})
-						);
-						setExistsData(true);
+						if (err.status === 401) refreshToken((new_token) => setAuthToken(new_token));
 					}
-				},
-				function(err) {
-					console.log(err);
-				}
-			)
-		);
-	};
+				)
+			);
+		},
+		[ artist ]
+	);
 
-	const getArtistStats = async (tracks) => {
+	const getArtistStats = useCallback((tracks) => {
 		trackPromise(
 			spotifyWebApi.getAudioFeaturesForTracks(tracks).then(
 				function(data) {
@@ -128,10 +111,33 @@ function Artist() {
 				}
 			)
 		);
-	};
+	}, []);
+
+	const getArtistTopTracks = useCallback(
+		() => {
+			trackPromise(
+				spotifyWebApi.getArtistTopTracks(artist, localStorage.getItem('country')).then(
+					function(data) {
+						if (data.tracks.length > 0) {
+							getArtistStats(
+								data.tracks.map((track) => {
+									return track.id;
+								})
+							);
+							setExistsData(true);
+						}
+					},
+					function(err) {
+						console.log(err);
+					}
+				)
+			);
+		},
+		[ artist, getArtistStats ]
+	);
 
 	const getWikiPage = async (query) => {
-		query = query.replace(/[\%\|\+\-\*\\\[\]\&\<\>\.]/g, '');
+		query = query.replace(/[%|+\-*\\[\]&<>.]/g, '');
 
 		if (query)
 			wiki()
@@ -163,10 +169,13 @@ function Artist() {
 				});
 	};
 
-	const getData = async () => {
-		getArtistMetaData();
-		getArtistTopTracks();
-	};
+	const getData = useCallback(
+		() => {
+			getArtistMetaData();
+			getArtistTopTracks();
+		},
+		[ getArtistMetaData, getArtistTopTracks ]
+	);
 
 	useEffect(
 		() => {
@@ -175,7 +184,7 @@ function Artist() {
 				getData();
 			}
 		},
-		[ authToken ]
+		[ authToken, getData ]
 	);
 
 	useEffect(() => {

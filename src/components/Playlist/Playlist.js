@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import ReactGA from 'react-ga';
 import Spotify from 'spotify-web-api-js';
 import { useLocation, Link, Redirect } from 'react-router-dom';
@@ -46,78 +46,7 @@ function Playlist() {
 
 	const { promiseInProgress } = usePromiseTracker();
 
-	const getPlaylistTracksInfo = async (total_tracks, tracks) => {
-		if (total_tracks === tracks.length) {
-			getPlaylistStats(
-				total_tracks,
-				tracks.map((track) => {
-					return track.track.id;
-				}),
-				[]
-			);
-
-			return;
-		}
-
-		spotifyWebApi
-			.getPlaylistTracks(playlist, {
-				limit: 100,
-				offset: tracks.length
-			})
-			.then(
-				function(data) {
-					getPlaylistTracksInfo(total_tracks, [ ...tracks, ...data.items ]);
-				},
-				function(err) {
-					console.log(err);
-				}
-			);
-	};
-
-	const getPlaylistMetaData = async () => {
-		trackPromise(
-			spotifyWebApi.getPlaylist(playlist).then(
-				function(data) {
-					setPlaylistName(data.name);
-					setPlaylistLink(data.external_urls.spotify);
-					setPlaylistUri(data.uri);
-					if (data.images.length > 0) setPlaylistImage(data.images[0].url);
-					setPlaylistDescription(decodeString(data.description));
-					setPlaylistFollowers(data.followers.total);
-					setPlaylistOwner(data.owner);
-					setPlaylistNoTracks(data.tracks.total);
-
-					if (data.tracks.items.length > 0) {
-						getPlaylistTracksInfo(data.tracks.total, data.tracks.items);
-						setExistsData(true);
-					}
-
-					if (data.owner.id) getOwnerInfo(data.owner.id);
-				},
-				function(err) {
-					console.log(err);
-
-					if (err.status === 401) refreshToken((new_token) => setAuthToken(new_token));
-				}
-			)
-		);
-	};
-
-	const getOwnerInfo = (owner) => {
-		spotifyWebApi.getUser(owner).then(
-			function(data) {
-				// console.log(data);
-				setPlaylistOwnerData(data);
-			},
-			function(err) {
-				console.log(err);
-
-				if (err.status === 401) refreshToken((new_token) => setAuthToken(new_token));
-			}
-		);
-	};
-
-	const getPlaylistStats = async (total_tracks, tracks, audio_features) => {
+	const getPlaylistStats = useCallback((total_tracks, tracks, audio_features) => {
 		if (total_tracks === audio_features.length) {
 			const avgStats = {
 				acousticness: 0,
@@ -167,10 +96,83 @@ function Playlist() {
 					}
 				)
 		);
-	};
+	}, []);
 
-	const getData = async () => {
-		getPlaylistMetaData();
+	const getPlaylistTracksInfo = useCallback(
+		(total_tracks, tracks) => {
+			if (total_tracks === tracks.length) {
+				getPlaylistStats(
+					total_tracks,
+					tracks.map((track) => {
+						return track.track.id;
+					}),
+					[]
+				);
+
+				return;
+			}
+
+			spotifyWebApi
+				.getPlaylistTracks(playlist, {
+					limit: 100,
+					offset: tracks.length
+				})
+				.then(
+					function(data) {
+						getPlaylistTracksInfo(total_tracks, [ ...tracks, ...data.items ]);
+					},
+					function(err) {
+						console.log(err);
+					}
+				);
+		},
+		[ playlist, getPlaylistStats ]
+	);
+
+	const getData = useCallback(
+		() => {
+			trackPromise(
+				spotifyWebApi.getPlaylist(playlist).then(
+					function(data) {
+						setPlaylistName(data.name);
+						setPlaylistLink(data.external_urls.spotify);
+						setPlaylistUri(data.uri);
+						if (data.images.length > 0) setPlaylistImage(data.images[0].url);
+						setPlaylistDescription(decodeString(data.description));
+						setPlaylistFollowers(data.followers.total);
+						setPlaylistOwner(data.owner);
+						setPlaylistNoTracks(data.tracks.total);
+
+						if (data.tracks.items.length > 0) {
+							getPlaylistTracksInfo(data.tracks.total, data.tracks.items);
+							setExistsData(true);
+						}
+
+						if (data.owner.id) getOwnerInfo(data.owner.id);
+					},
+					function(err) {
+						console.log(err);
+
+						if (err.status === 401) refreshToken((new_token) => setAuthToken(new_token));
+					}
+				)
+			);
+		},
+		[ playlist, getPlaylistTracksInfo ]
+	);
+
+	const getOwnerInfo = (owner) => {
+		spotifyWebApi.getUser(owner).then(
+			function(data) {
+				// console.log(data);
+				setPlaylistOwnerData(data);
+			},
+			function(err) {
+				console.log(err);
+
+				if (err.status === 401) refreshToken((new_token) => setAuthToken(new_token));
+			}
+		);
 	};
 
 	useEffect(
@@ -180,7 +182,7 @@ function Playlist() {
 				getData();
 			}
 		},
-		[ authToken ]
+		[ authToken, getData ]
 	);
 
 	useEffect(() => {

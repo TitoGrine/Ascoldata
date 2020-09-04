@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import ReactGA from 'react-ga';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import Spotify from 'spotify-web-api-js';
@@ -34,30 +34,33 @@ function Followed() {
 
 	const colapseTable = useMediaQuery({ maxWidth: 700 });
 
-	const getData = () => {
-		let options = {
-			limit: limit
-		};
+	const getData = useCallback(
+		() => {
+			let options = {
+				limit: limit
+			};
 
-		if (pages[currPage].length > 0) options.after = pages[currPage];
+			if (pages[currPage].length > 0) options.after = pages[currPage];
 
-		trackPromise(
-			spotifyWebApi.getFollowedArtists(options).then(
-				function(data) {
-					// console.log(data.artists);
-					setUserFollowed(data.artists.items);
-					setMaxPage(Math.floor(data.artists.total / limit));
+			trackPromise(
+				spotifyWebApi.getFollowedArtists(options).then(
+					function(data) {
+						// console.log(data.artists);
+						setUserFollowed(data.artists.items);
+						setMaxPage(Math.floor(data.artists.total / limit));
 
-					if (data.artists.cursors.after) setPages([ ...pages, data.artists.cursors.after ]);
-				},
-				function(err) {
-					console.log(err);
+						if (data.artists.cursors.after) setPages([ ...pages, data.artists.cursors.after ]);
+					},
+					function(err) {
+						console.log(err);
 
-					if (err.status === 401) refreshToken((new_token) => setAuthToken(new_token));
-				}
-			)
-		);
-	};
+						if (err.status === 401) refreshToken((new_token) => setAuthToken(new_token));
+					}
+				)
+			);
+		},
+		[ currPage, pages ]
+	);
 
 	const changePage = (direction) => {
 		let newPage = currPage + direction;
@@ -72,7 +75,7 @@ function Followed() {
 				getData();
 			}
 		},
-		[ authToken, currPage ]
+		[ authToken, currPage, getData ]
 	);
 
 	useEffect(() => {

@@ -25,6 +25,7 @@ import LoadingSpinner from '../Common/LoadingSpinner';
 import { Helmet } from 'react-helmet';
 import NoContent from '../Common/NoContent';
 import { Alert } from 'react-bootstrap';
+import { useCallback } from 'react';
 
 const spotifyWebApi = new Spotify();
 
@@ -53,36 +54,39 @@ function SearchResults() {
 		}, 5000);
 	};
 
-	const getData = async () => {
-		spotifyWebApi.setAccessToken(authToken);
+	const getData = useCallback(
+		() => {
+			spotifyWebApi.setAccessToken(authToken);
 
-		trackPromise(
-			spotifyWebApi
-				.search(q, [ type ], {
-					limit: limit,
-					offset: offset
-				})
-				.then(
-					function(data) {
-						// console.log(data);
+			trackPromise(
+				spotifyWebApi
+					.search(q, [ type ], {
+						limit: limit,
+						offset: offset
+					})
+					.then(
+						function(data) {
+							// console.log(data);
 
-						if (data[`${type}s`].items.length === 0 && offset !== 0) {
-							setShowAlert(true);
-							autoDismiss();
-							switchPage(1);
-						} else {
-							setTotalItems(data[`${type}s`].total);
-							setResults(data[`${type}s`].items);
+							if (data[`${type}s`].items.length === 0 && offset !== 0) {
+								setShowAlert(true);
+								autoDismiss();
+								switchPage(1);
+							} else {
+								setTotalItems(data[`${type}s`].total);
+								setResults(data[`${type}s`].items);
+							}
+						},
+						function(err) {
+							console.log(err);
+
+							if (err.status === 401) refreshToken((new_token) => setAuthToken(new_token));
 						}
-					},
-					function(err) {
-						console.log(err);
-
-						if (err.status === 401) refreshToken((new_token) => setAuthToken(new_token));
-					}
-				)
-		);
-	};
+					)
+			);
+		},
+		[ authToken, offset, q, type ]
+	);
 
 	const switchPage = (ev) => {
 		if (Number.isInteger(ev)) {
@@ -97,14 +101,14 @@ function SearchResults() {
 				setPage(1 + offset / limit);
 			}
 		},
-		[ authToken, offset ]
+		[ authToken, offset, getData ]
 	);
 
 	useEffect(
 		() => {
-			if (authToken) history.push(`/search?q=${q}&type=${type}&page=${page}`);
+			history.push(`/search?q=${q}&type=${type}&page=${page}`);
 		},
-		[ page ]
+		[ page, q, type, history ]
 	);
 
 	useEffect(() => {

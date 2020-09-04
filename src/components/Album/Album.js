@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import ReactGA from 'react-ga';
 import Spotify from 'spotify-web-api-js';
 import { useLocation, Link, Redirect } from 'react-router-dom';
@@ -45,66 +45,7 @@ function Track() {
 
 	const { promiseInProgress } = usePromiseTracker();
 
-	const getAlbumTracksInfo = async (total_tracks, tracks) => {
-		if (total_tracks === tracks.length) {
-			getAlbumFeatures(
-				total_tracks,
-				tracks.map((track) => {
-					return track.id;
-				}),
-				[]
-			);
-
-			return;
-		}
-
-		spotifyWebApi
-			.getAlbumTracks(album, {
-				limit: 50,
-				offset: tracks.length
-			})
-			.then(
-				function(data) {
-					getAlbumTracksInfo(total_tracks, [ ...tracks, ...data.items ]);
-				},
-				function(err) {
-					console.log(err);
-				}
-			);
-	};
-
-	const getAlbumMetaData = async () => {
-		trackPromise(
-			spotifyWebApi.getAlbum(album).then(
-				function(data) {
-					//console.log(data);
-
-					if (data.images.length > 0) setAlbumImage(data.images[0].url);
-
-					setAlbumName(data.name);
-					setAlbumLink(data.external_urls.spotify);
-					setAlbumUri(data.uri);
-					setAlbumLabel(data.label);
-					setAlbumArtists(data.artists);
-					setAlbumNrSongs(data.tracks.total);
-					setAlbumRelDate(data.release_date);
-					setAlbumPopularity(data.popularity);
-
-					if (data.tracks.items.length > 0) {
-						getAlbumTracksInfo(data.tracks.total, data.tracks.items);
-						setExistsData(true);
-					}
-				},
-				function(err) {
-					console.log(err);
-
-					if (err.status === 401) refreshToken((new_token) => setAuthToken(new_token));
-				}
-			)
-		);
-	};
-
-	const getAlbumFeatures = async (total_tracks, tracks, audio_features) => {
+	const getAlbumFeatures = useCallback((total_tracks, tracks, audio_features) => {
 		if (total_tracks === audio_features.length) {
 			const avgStats = {
 				acousticness: 0,
@@ -154,11 +95,72 @@ function Track() {
 					}
 				)
 		);
-	};
+	}, []);
 
-	const getData = async () => {
-		getAlbumMetaData();
-	};
+	const getAlbumTracksInfo = useCallback(
+		(total_tracks, tracks) => {
+			if (total_tracks === tracks.length) {
+				getAlbumFeatures(
+					total_tracks,
+					tracks.map((track) => {
+						return track.id;
+					}),
+					[]
+				);
+
+				return;
+			}
+
+			spotifyWebApi
+				.getAlbumTracks(album, {
+					limit: 50,
+					offset: tracks.length
+				})
+				.then(
+					function(data) {
+						getAlbumTracksInfo(total_tracks, [ ...tracks, ...data.items ]);
+					},
+					function(err) {
+						console.log(err);
+					}
+				);
+		},
+		[ album, getAlbumFeatures ]
+	);
+
+	const getData = useCallback(
+		() => {
+			trackPromise(
+				spotifyWebApi.getAlbum(album).then(
+					function(data) {
+						//console.log(data);
+
+						if (data.images.length > 0) setAlbumImage(data.images[0].url);
+
+						setAlbumName(data.name);
+						setAlbumLink(data.external_urls.spotify);
+						setAlbumUri(data.uri);
+						setAlbumLabel(data.label);
+						setAlbumArtists(data.artists);
+						setAlbumNrSongs(data.tracks.total);
+						setAlbumRelDate(data.release_date);
+						setAlbumPopularity(data.popularity);
+
+						if (data.tracks.items.length > 0) {
+							getAlbumTracksInfo(data.tracks.total, data.tracks.items);
+							setExistsData(true);
+						}
+					},
+					function(err) {
+						console.log(err);
+
+						if (err.status === 401) refreshToken((new_token) => setAuthToken(new_token));
+					}
+				)
+			);
+		},
+		[ album, getAlbumTracksInfo ]
+	);
 
 	const getArtist = () => {
 		if (albumArtists !== '' && albumArtists.length > 0) {
@@ -190,7 +192,7 @@ function Track() {
 				getData();
 			}
 		},
-		[ authToken ]
+		[ authToken, getData ]
 	);
 
 	useEffect(() => {

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import ReactGA from 'react-ga';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { useLocation, Redirect } from 'react-router-dom';
@@ -30,34 +30,40 @@ function RelatedArtists() {
 
 	const colapseTable = useMediaQuery({ maxWidth: 700 });
 
-	const getArtistName = () => {
-		spotifyWebApi.getArtist(artistId).then(
-			function(data) {
-				setArtistName(data.name);
-			},
-			function(err) {
-				console.log(err);
-			}
-		);
-	};
-
-	const getData = () => {
-		spotifyWebApi.setAccessToken(authToken);
-
-		trackPromise(
-			spotifyWebApi.getArtistRelatedArtists(artistId).then(
+	const getArtistName = useCallback(
+		() => {
+			spotifyWebApi.getArtist(artistId).then(
 				function(data) {
-					// console.log(data);
-					setRelatedArtists(data.artists);
+					setArtistName(data.name);
 				},
 				function(err) {
 					console.log(err);
-
-					if (err.status === 401) refreshToken((new_token) => setAuthToken(new_token));
 				}
-			)
-		);
-	};
+			);
+		},
+		[ artistId ]
+	);
+
+	const getData = useCallback(
+		() => {
+			spotifyWebApi.setAccessToken(authToken);
+
+			trackPromise(
+				spotifyWebApi.getArtistRelatedArtists(artistId).then(
+					function(data) {
+						// console.log(data);
+						setRelatedArtists(data.artists);
+					},
+					function(err) {
+						console.log(err);
+
+						if (err.status === 401) refreshToken((new_token) => setAuthToken(new_token));
+					}
+				)
+			);
+		},
+		[ artistId, authToken ]
+	);
 
 	useEffect(
 		() => {
@@ -67,7 +73,7 @@ function RelatedArtists() {
 				if (artistName.length === 0) getArtistName();
 			}
 		},
-		[ authToken ]
+		[ authToken, getData, artistName, getArtistName ]
 	);
 
 	useEffect(() => {

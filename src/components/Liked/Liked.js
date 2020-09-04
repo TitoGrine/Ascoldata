@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import ReactGA from 'react-ga';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { useLocation, useHistory, Redirect } from 'react-router-dom';
@@ -38,29 +38,32 @@ function Liked() {
 	const colapseTable = useMediaQuery({ maxWidth: 700 });
 	const decreasePagination = useMediaQuery({ maxWidth: 500 });
 
-	const getData = () => {
-		spotifyWebApi.setAccessToken(authToken);
+	const getData = useCallback(
+		() => {
+			spotifyWebApi.setAccessToken(authToken);
 
-		trackPromise(
-			spotifyWebApi
-				.getMySavedTracks({
-					limit: limit,
-					offset: offset
-				})
-				.then(
-					function(data) {
-						//console.log(data);
-						setUserLiked(data.items);
-						setTotalItems(data.total);
-					},
-					function(err) {
-						console.log(err);
+			trackPromise(
+				spotifyWebApi
+					.getMySavedTracks({
+						limit: limit,
+						offset: offset
+					})
+					.then(
+						function(data) {
+							//console.log(data);
+							setUserLiked(data.items);
+							setTotalItems(data.total);
+						},
+						function(err) {
+							console.log(err);
 
-						if (err.status === 401) refreshToken((new_token) => setAuthToken(new_token));
-					}
-				)
-		);
-	};
+							if (err.status === 401) refreshToken((new_token) => setAuthToken(new_token));
+						}
+					)
+			);
+		},
+		[ authToken, offset ]
+	);
 
 	const switchPage = (ev) => {
 		if (Number.isInteger(ev)) {
@@ -75,14 +78,14 @@ function Liked() {
 				setPage(1 + offset / limit);
 			}
 		},
-		[ authToken, offset ]
+		[ authToken, offset, getData ]
 	);
 
 	useEffect(
 		() => {
-			if (authToken) history.push(`/liked?page=${page}`);
+			history.push(`/liked?page=${page}`);
 		},
-		[ page ]
+		[ page, history ]
 	);
 
 	useEffect(() => {
