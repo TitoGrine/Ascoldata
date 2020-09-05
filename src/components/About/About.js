@@ -107,7 +107,13 @@ function About() {
 					<p>Thankfully, for now, I can keep this website running without any sort of ads or donations.</p>
 					<p>
 						However, if you like the website, and want to make some contribution, make a donation to a
-						charity! <br />I'll randomly pick a good charity for you, here you go 😊
+						charity!
+					</p>
+					<p>
+						I'll randomly pick a good charity for you, here you go{' '}
+						<span role="img" aria-label="Friendly emoji.">
+							😊
+						</span>
 					</p>
 					<form
 						action={getRandomCharity()}

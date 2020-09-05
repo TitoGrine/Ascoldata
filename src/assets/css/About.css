@@ -45,10 +45,11 @@ div.about-sidebar {
 	flex-direction: column;
 	flex-wrap: nowrap;
 	padding: 2em;
-	font-size: 1.1em;
+	font-size: 1.2em;
 	font-weight: 500;
-	gap: 1em;
+	gap: 1.2em;
 	overflow: auto;
+	justify-content: center;
 }
 
 div.about-sidebar .logo {

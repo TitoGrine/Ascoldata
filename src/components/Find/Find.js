@@ -61,6 +61,9 @@ function Find() {
 		let userStats = JSON.parse(localStorage.getItem('compatibilityValues'));
 
 		if (userStats) {
+			setKey(0);
+			setMode(-1);
+
 			setAcousticness(userStats.acousticness.toFixed(3));
 			setDanceability(userStats.danceability.toFixed(3));
 			setEnergy(userStats.energy.toFixed(3));
