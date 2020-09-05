@@ -45,11 +45,12 @@ function Followed() {
 			trackPromise(
 				spotifyWebApi.getFollowedArtists(options).then(
 					function(data) {
-						// console.log(data.artists);
+						console.log(data.artists);
 						setUserFollowed(data.artists.items);
 						setMaxPage(Math.floor(data.artists.total / limit));
 
-						if (data.artists.cursors.after) setPages([ ...pages, data.artists.cursors.after ]);
+						if (data.artists.cursors.after && !pages.includes(data.artists.cursors.after))
+							setPages([ ...pages, data.artists.cursors.after ]);
 					},
 					function(err) {
 						console.log(err);
