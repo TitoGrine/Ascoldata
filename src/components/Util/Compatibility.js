@@ -178,10 +178,6 @@ export const calcUserValues = async (authToken) => {
 	let avgPopularity = 0;
 	div = 0;
 
-	console.log(avgShortPop);
-	console.log(avgMediumPop);
-	console.log(avgLongPop);
-
 	if (avgShortPop >= 0) {
 		avgPopularity = 4 * avgShortPop;
 

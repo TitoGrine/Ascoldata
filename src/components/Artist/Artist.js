@@ -140,25 +140,25 @@ function Artist() {
 		query = query.replace(/[%|+\-*\\[\]&<>.]/g, '');
 
 		if (query)
-			wiki()
+			wiki({ apiUrl: 'https://en.wikipedia.org/w/api.php' })
 				.page(`${query} (singer)`)
 				.then((page) => {
 					setArtistWikiLink(page.raw.fullurl);
 				})
 				.catch((err) => {
-					wiki()
+					wiki({ apiUrl: 'https://en.wikipedia.org/w/api.php' })
 						.page(`${query} (band)`)
 						.then((page) => {
 							setArtistWikiLink(page.raw.fullurl);
 						})
 						.catch((err) => {
-							wiki()
+							wiki({ apiUrl: 'https://en.wikipedia.org/w/api.php' })
 								.page(`${query} (musician)`)
 								.then((page) => {
 									setArtistWikiLink(page.raw.fullurl);
 								})
 								.catch((err) => {
-									wiki()
+									wiki({ apiUrl: 'https://en.wikipedia.org/w/api.php' })
 										.page(`${query}`)
 										.then((page) => {
 											setArtistWikiLink(page.raw.fullurl);

@@ -154,7 +154,7 @@ function Recommendations() {
 			trackPromise(
 				spotifyWebApi.getRecommendations(getParameters()).then(
 					function(data) {
-						console.log(data);
+						// console.log(data);
 						setRecommendations(data.tracks);
 						let new_seeds = data.seeds.map((seed) => seed.id);
 						localStorage.setItem('track_seeds', new_seeds);
