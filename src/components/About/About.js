@@ -59,7 +59,15 @@ function About() {
 						This website is built using React, bootstrapped using{' '}
 						<a href="https://create-react-app.dev" target="_blank" rel="noopener noreferrer">
 							create-react-app
-						</a>. It uses {' '}
+						</a>. For making calls to the Spotify API it utilizes the{' '}
+						<a
+							href="https://github.com/JMPerez/spotify-web-api-js"
+							target="_blank"
+							rel="noopener noreferrer"
+						>
+							spotify-web-api-js
+						</a>{' '}
+						package. It also uses {' '}
 						<a
 							href="https://firebase.google.com/products/functions/"
 							target="_blank"
@@ -68,13 +76,13 @@ function About() {
 							Firebase Cloud Functions
 						</a>{' '}
 						for dealing with Spotify API authentication and token refreshing. It is currently being hosted
-						by{' '}
+						on{' '}
 						<a href="https://www.netlify.com" target="_blank" rel="noopener noreferrer">
 							Netlify
 						</a>.
 					</p>
 					<p>
-						If you want more information on how your data is used please check out our{' '}
+						For more information on how your data is used please check out the{' '}
 						<Link to="/privacy_policy" className="inner-link">
 							Privacy Policy
 						</Link>{' '}
@@ -89,7 +97,7 @@ function About() {
 					</p>
 					<p>
 						{' '}
-						If you discover a bug or are interested in working on this project, contact me through email at
+						If you discover a bug or have some question regarding this project, contact me through email at
 						(insert)
 					</p>
 					<Button

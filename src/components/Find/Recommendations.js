@@ -24,14 +24,14 @@ import NoContent from '../Common/NoContent';
 const spotifyWebApi = new Spotify();
 
 function Recommendations() {
-	const query = new URLSearchParams(useLocation().search);
 	const limit = 15;
 
 	const [ toggled, setToggled ] = useState('nothing');
 	const [ authToken, setAuthToken ] = useState(localStorage.getItem('authToken'));
+	const [ query ] = useState(new URLSearchParams(useLocation().search));
 	const [ showSuccessAlert, setShowSuccessAlert ] = useState(false);
 	const [ showFailAlert, setShowFailAlert ] = useState(false);
-	const [ seeds ] = useState(localStorage.getItem('track_seeds'));
+	const [ seeds, setSeeds ] = useState(localStorage.getItem('track_seeds'));
 	const [ recommendations, setRecommendations ] = useState([]);
 
 	const { promiseInProgress } = usePromiseTracker();
@@ -154,9 +154,11 @@ function Recommendations() {
 			trackPromise(
 				spotifyWebApi.getRecommendations(getParameters()).then(
 					function(data) {
-						// console.log(data);
+						console.log(data);
 						setRecommendations(data.tracks);
-						localStorage.setItem('track_seeds', data.seeds.map((seed) => seed.id));
+						let new_seeds = data.seeds.map((seed) => seed.id);
+						localStorage.setItem('track_seeds', new_seeds);
+						setSeeds((seeds) => new_seeds);
 
 						const recommendations = {
 							query: query.toString(),

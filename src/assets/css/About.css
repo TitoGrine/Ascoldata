@@ -48,15 +48,12 @@ div.about-sidebar {
 	font-size: 1.2em;
 	font-weight: 500;
 	gap: 1.2em;
-	overflow: auto;
-	justify-content: center;
+	overflow-y: auto;
+	justify-content: flex-start;
 }
 
-div.about-sidebar .logo {
-	width: min(30%, 150px);
-	-webkit-animation: rotation 3.5s linear infinite both;
-	animation: rotation 3.5s linear infinite both;
-	align-self: center;
+div.about-sidebar p {
+	box-sizing: border-box;
 }
 
 div.about-sidebar a {

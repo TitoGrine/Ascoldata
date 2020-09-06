@@ -13,8 +13,8 @@
 		animation: slide-in-down 0.8s cubic-bezier(0.455, 0.030, 0.515, 0.955) both;
 	}
 
-	section.sidebar-section:not(request-login),
-	div.side-content:not(request-login) {
+	section.sidebar-section:not(.request-login):not(.login-sidebar),
+	div.side-content:not(.request-login):not(.login-sidebar) {
 		z-index: 30;
 		grid-column: 5 / span 10;
 		grid-row: 4 / span 24;
@@ -26,6 +26,7 @@
 
 	section.sidebar-section.login-sidebar,
 	div.side-content.request-login {
+		z-index: 30;
 		grid-column: 1 / span 10;
 		grid-row: 18 / span 24;
 		flex-wrap: nowrap;
@@ -101,8 +102,8 @@
 }
 
 @media screen and (max-width: 700px) {
-	section.sidebar-section,
-	div.side-content {
+	section.sidebar-section:not(.request-login):not(.login-sidebar),
+	div.side-content:not(.request-login):not(.login-sidebar) {
 		grid-column: 3 / span 10 !important;
 	}
 
@@ -177,8 +178,8 @@
 }
 
 @media screen and (max-width: 600px) {
-	section.sidebar-section,
-	div.side-content {
+	section.sidebar-section:not(.request-login):not(.login-sidebar),
+	div.side-content:not(.request-login):not(.login-sidebar) {
 		grid-column: 2 / span 10 !important;
 	}
 
@@ -217,6 +218,10 @@
 }
 
 @media screen and (max-width: 450px) {
+	section.table-content {
+		gap: 0em;
+	}
+
 	/* Pagination */
 
 	ul.pagination {
@@ -277,6 +282,11 @@
 
 	#info li iframe {
 		width: 95%;
+	}
+
+	.recommendations-buttons {
+		flex-direction: column;
+		margin-top: 0;
 	}
 }
 

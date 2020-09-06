@@ -19,6 +19,8 @@ label.slider-name {
 label.slider-value {
 	font-size: 1.3em;
 	font-weight: 400;
+	margin-bottom: 0;
+	padding: 1px 2px;
 }
 
 input.slider-value {
