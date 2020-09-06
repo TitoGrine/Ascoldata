@@ -16,6 +16,9 @@ export const getGeniusLink = (track, artist) => {
 
 		const headers = {
 			Authorization: `Bearer ${process.env.REACT_APP_GENIUS_TOKEN}`
+			// Access-Control-Allow-Origin = "*"
+			// Access-Control-Allow-Methods = "POST, GET, OPTIONS, DELETE, PUT"
+			// Access-Control-Allow-Headers = "*"
 		};
 
 		axios.get(requestURL, { headers }).then(
