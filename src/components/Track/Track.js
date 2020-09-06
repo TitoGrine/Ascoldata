@@ -12,6 +12,7 @@ import genius_logo from '../../assets/images/genius-logo2.svg';
 
 import { refreshToken } from '../Auth/Auth';
 import { keyBinds, formatDuration } from '../Util/HelperFunc';
+import { getGeniusLink } from '../Util/Genius';
 
 import HeaderBar from '../Common/HeaderBar';
 import Redirects from '../Common/Redirects';
@@ -42,24 +43,24 @@ function Track() {
 
 	const { promiseInProgress } = usePromiseTracker();
 
-	const getGeniusLink = useCallback((track, artists) => {
-		const options = {
-			apiKey: process.env.REACT_APP_GENIUS_TOKEN,
-			title: track,
-			artist: artists.length === 0 ? '' : artists[0].name,
-			optimizeQuery: true
-		};
+	// const getGeniusLink = useCallback((track, artists) => {
+	// 	const options = {
+	// 		apiKey: process.env.REACT_APP_GENIUS_TOKEN,
+	// 		title: track,
+	// 		artist: artists.length === 0 ? '' : artists[0].name,
+	// 		optimizeQuery: true
+	// 	};
 
-		getSong(options).then(
-			function(song) {
-				// console.log(song);
-				setGeniusLink(song.url);
-			},
-			function(err) {
-				console.log(err);
-			}
-		);
-	}, []);
+	// 	getSong(options).then(
+	// 		function(song) {
+	// 			// console.log(song);
+	// 			setGeniusLink(song.url);
+	// 		},
+	// 		function(err) {
+	// 			console.log(err);
+	// 		}
+	// 	);
+	// }, []);
 
 	const getTrackFeatures = useCallback(
 		() => {
@@ -106,7 +107,8 @@ function Track() {
 						setTrackDuration(data.duration_ms);
 						setTrackPopularity(data.popularity);
 
-						if (geniusLink.length === 0) getGeniusLink(data.name, data.artists);
+						if (geniusLink.length === 0)
+							getGeniusLink(data.name, data.artists.length > 0 ? data.artists[0] : '');
 						getTrackFeatures(data.artists.map((artist) => artist.id));
 					},
 					function(err) {
