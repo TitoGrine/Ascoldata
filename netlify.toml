@@ -4,3 +4,11 @@
   from = "/*"
   to = "/index.html"
   status = 200
+
+[[headers]]
+  # Define which paths this specific [[headers]] block will cover.
+  for = "/*"
+    [headers.values]
+    Access-Control-Allow-Origin = "*"
+    Access-Control-Allow-Methods = "POST, GET, OPTIONS, DELETE, PUT"
+    Access-Control-Allow-Headers = "append,delete,entries,foreach,get,has,keys,set,values,Authorization"
