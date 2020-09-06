@@ -6,7 +6,6 @@ import { Textfit } from 'react-textfit';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { FaSpotify } from 'react-icons/fa';
 import { trackPromise, usePromiseTracker } from 'react-promise-tracker';
-import { getSong } from 'genius-lyrics-api';
 import { Helmet } from 'react-helmet';
 import genius_logo from '../../assets/images/genius-logo2.svg';
 
@@ -37,7 +36,7 @@ function Track() {
 	const [ trackDuration, setTrackDuration ] = useState('');
 	const [ trackPopularity, setTrackPopularity ] = useState('');
 
-	const [ geniusLink, setGeniusLink ] = useState('');
+	const [ geniusLink ] = useState('');
 
 	const [ trackStats, setTrackStats ] = useState({});
 
@@ -119,7 +118,7 @@ function Track() {
 				)
 			);
 		},
-		[ track, geniusLink, getGeniusLink, getTrackFeatures ]
+		[ track, geniusLink, getTrackFeatures ]
 	);
 
 	useEffect(
