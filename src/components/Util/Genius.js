@@ -12,7 +12,7 @@ const cleanQuery = (track, artist) => {
 
 export const getGeniusLink = (track, artist) => {
 	return new Promise((resolve) => {
-		let requestURL = `https://api.genius.com/search?q=${cleanQuery(track, artist)}`;
+		let requestURL = `https://api.genius.com/search?q=${encodeURI(cleanQuery(track, artist))}`;
 
 		const headers = {
 			Authorization: `Bearer ${process.env.REACT_APP_GENIUS_TOKEN}`
