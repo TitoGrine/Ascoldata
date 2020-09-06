@@ -5,6 +5,10 @@ export const refreshToken = async (updateFunction) => {
 	let currDate = new Date().getTime();
 	let expirationDate = localStorage.getItem('expirationDate');
 	let bufferDate = localStorage.getItem('bufferDate');
+	let refreshLink =
+		process.env.REACT_APP_MODE.localeCompare('testing') === 0
+			? process.env.REACT_APP_TEST_FIREBASE_REFRESH_FUNC
+			: process.env.REACT_APP_FIREBASE_REFRESH_FUNC;
 
 	if (bufferDate && currDate < bufferDate) return;
 
@@ -18,7 +22,7 @@ export const refreshToken = async (updateFunction) => {
 	};
 
 	axios
-		.get(process.env.REACT_APP_FIREBASE_REFRESH_FUNC, { params: headers })
+		.get(refreshLink, { params: headers })
 		.then((response) => {
 			localStorage.setItem('authToken', response.data.access_token);
 			localStorage.setItem('bufferDate', addToDate(new Date(), 0, 2).getTime());

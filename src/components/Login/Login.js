@@ -38,7 +38,11 @@ class Login extends Component {
 
 		this.state = {
 			loginRequested: false,
-			inputRef: React.createRef()
+			inputRef: React.createRef(),
+			loginLink:
+				process.env.REACT_APP_MODE.localeCompare('testing') === 0
+					? process.env.REACT_APP_TEST_FIREBASE_LOGIN_FUNC
+					: process.env.REACT_APP_FIREBASE_LOGIN_FUNC
 		};
 	}
 
@@ -57,6 +61,7 @@ class Login extends Component {
 		if (!localStorage.getItem('refreshToken')) {
 			return (
 				<React.Fragment>
+					{console.log(this.state.loginLink)}
 					<Helmet>
 						<title>Ascoldata</title>
 					</Helmet>
@@ -169,7 +174,7 @@ class Login extends Component {
 						<div className="side-content slide-in-right request-login">
 							{!this.state.loginRequested && (
 								<React.Fragment>
-									<form action={process.env.REACT_APP_FIREBASE_LOGIN_FUNC}>
+									<form action={this.state.loginLink}>
 										<input
 											type="submit"
 											id="login_submit"
