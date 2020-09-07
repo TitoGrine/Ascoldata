@@ -11,44 +11,20 @@ const cleanQuery = (track, artist) => {
 };
 
 export const getGeniusLink = (track, artist) => {
-	return new Promise((resolve) => {
-		let requestURL = `https://api.genius.com/search?q=${encodeURI(cleanQuery(track, artist))}`;
+	return new Promise((resolve, reject) => {
+		let requestURL = `https://api.genius.com/search?q=${encodeURI(cleanQuery(track, artist))}&access_token=${process
+			.env.REACT_APP_GENIUS_TOKEN}`;
 
-		const headers = {
-			Authorization: `Bearer ${process.env.REACT_APP_GENIUS_TOKEN}`,
-			'Access-Control-Allow-Origin': 'https://feature-genius-lyrics--wonderful-lewin-0aab42.netlify.app',
-			'Access-Control-Allow-Methods': 'POST, GET, OPTIONS, DELETE, PUT',
-			'Access-Control-Allow-Headers': '*'
-			// 'Content-Type': 'application/x-www-form-urlencoded'
-		};
-
-		// axios.get(requestURL, { mode: 'no-cors', headers: headers }).then(
-		// 	function(data) {
-		// 		console.log(data);
-		// 	},
-		// 	function(err) {
-		// 		console.log(err);
-		// 	}
-		// );
-
-		// try {
-		// 	fetch(requestURL, {
-		// 		method: 'GET',
-		// 		// credentials: 'include',
-		// 		headers: headers
-		// 	})
-		// 		.then((response) => response.json())
-		// 		.then((json) => {
-		// 			console.log(JSON.stringify(json));
-		// 		});
-		// } catch (err) {
-		// 	console.log(err);
-		// }
-
-		fetch(requestURL, { headers }).then((response) => response.json()).then((json) => {
-			console.log(JSON.stringify(json));
-		});
-
-		resolve();
+		fetch(requestURL)
+			.then((response) => {
+				if (response.status === 200) return response.json();
+				else reject('Lyrics URL not found.');
+			})
+			.then((json) => {
+				if (json.response.hits.length > 0) {
+					resolve(json.response.hits[0].result.url);
+				}
+			})
+			.catch((err) => reject('Lyrics URL not found.'));
 	});
 };

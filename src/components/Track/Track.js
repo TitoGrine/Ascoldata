@@ -36,30 +36,11 @@ function Track() {
 	const [ trackDuration, setTrackDuration ] = useState('');
 	const [ trackPopularity, setTrackPopularity ] = useState('');
 
-	const [ geniusLink ] = useState('');
+	const [ geniusLink, setGeniusLink ] = useState('');
 
 	const [ trackStats, setTrackStats ] = useState({});
 
 	const { promiseInProgress } = usePromiseTracker();
-
-	// const getGeniusLink = useCallback((track, artists) => {
-	// 	const options = {
-	// 		apiKey: process.env.REACT_APP_GENIUS_TOKEN,
-	// 		title: track,
-	// 		artist: artists.length === 0 ? '' : artists[0].name,
-	// 		optimizeQuery: true
-	// 	};
-
-	// 	getSong(options).then(
-	// 		function(song) {
-	// 			// console.log(song);
-	// 			setGeniusLink(song.url);
-	// 		},
-	// 		function(err) {
-	// 			console.log(err);
-	// 		}
-	// 	);
-	// }, []);
 
 	const getTrackFeatures = useCallback(
 		() => {
@@ -107,7 +88,14 @@ function Track() {
 						setTrackPopularity(data.popularity);
 
 						if (geniusLink.length === 0)
-							getGeniusLink(data.name, data.artists.length > 0 ? data.artists[0] : '');
+							getGeniusLink(data.name, data.artists.length > 0 ? data.artists[0].name : '').then(
+								function(response) {
+									setGeniusLink(response);
+								},
+								function(reject) {
+									console.log(reject);
+								}
+							);
 						getTrackFeatures(data.artists.map((artist) => artist.id));
 					},
 					function(err) {
