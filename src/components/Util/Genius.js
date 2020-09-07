@@ -16,10 +16,10 @@ export const getGeniusLink = (track, artist) => {
 
 		const headers = {
 			Authorization: `Bearer ${process.env.REACT_APP_GENIUS_TOKEN}`,
-			'Access-Control-Allow-Origin': '*',
+			'Access-Control-Allow-Origin': 'https://feature-genius-lyrics--wonderful-lewin-0aab42.netlify.app',
 			'Access-Control-Allow-Methods': 'POST, GET, OPTIONS, DELETE, PUT',
-			'Access-Control-Allow-Headers': '*',
-			'Content-Type': 'application/x-www-form-urlencoded'
+			'Access-Control-Allow-Headers': '*'
+			// 'Content-Type': 'application/x-www-form-urlencoded'
 		};
 
 		// axios.get(requestURL, { mode: 'no-cors', headers: headers }).then(
@@ -31,19 +31,23 @@ export const getGeniusLink = (track, artist) => {
 		// 	}
 		// );
 
-		try {
-			fetch(requestURL, {
-				method: 'GET',
-				// credentials: 'include',
-				headers: headers
-			})
-				.then((response) => response.json())
-				.then((json) => {
-					console.log(JSON.stringify(json));
-				});
-		} catch (err) {
-			console.log(err);
-		}
+		// try {
+		// 	fetch(requestURL, {
+		// 		method: 'GET',
+		// 		// credentials: 'include',
+		// 		headers: headers
+		// 	})
+		// 		.then((response) => response.json())
+		// 		.then((json) => {
+		// 			console.log(JSON.stringify(json));
+		// 		});
+		// } catch (err) {
+		// 	console.log(err);
+		// }
+
+		fetch(requestURL, { headers }).then((response) => response.json()).then((json) => {
+			console.log(JSON.stringify(json));
+		});
 
 		resolve();
 	});
