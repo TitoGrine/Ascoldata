@@ -1,4 +1,4 @@
-import axios from 'axios';
+// import axios from 'axios';
 
 const cleanQuery = (track, artist) => {
 	return `${track} ${artist}`
@@ -15,19 +15,36 @@ export const getGeniusLink = (track, artist) => {
 		let requestURL = `https://api.genius.com/search?q=${encodeURI(cleanQuery(track, artist))}`;
 
 		const headers = {
-			Authorization: `Bearer ${process.env.REACT_APP_GENIUS_TOKEN}`
-			// Access-Control-Allow-Origin = "*"
-			// Access-Control-Allow-Methods = "POST, GET, OPTIONS, DELETE, PUT"
-			// Access-Control-Allow-Headers = "*"
+			Authorization: `Bearer ${process.env.REACT_APP_GENIUS_TOKEN}`,
+			'Access-Control-Allow-Origin': '*',
+			'Access-Control-Allow-Methods': 'POST, GET, OPTIONS, DELETE, PUT',
+			'Access-Control-Allow-Headers': '*',
+			'Content-Type': 'application/x-www-form-urlencoded'
 		};
 
-		axios.get(requestURL, { headers }).then(
-			function(data) {
-				console.log(data);
-			},
-			function(err) {
-				console.log(err);
-			}
-		);
+		// axios.get(requestURL, { mode: 'no-cors', headers: headers }).then(
+		// 	function(data) {
+		// 		console.log(data);
+		// 	},
+		// 	function(err) {
+		// 		console.log(err);
+		// 	}
+		// );
+
+		try {
+			fetch(requestURL, {
+				method: 'GET',
+				// credentials: 'include',
+				headers: headers
+			})
+				.then((response) => response.json())
+				.then((json) => {
+					console.log(JSON.stringify(json));
+				});
+		} catch (err) {
+			console.log(err);
+		}
+
+		resolve();
 	});
 };
