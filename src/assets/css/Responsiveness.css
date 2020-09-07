@@ -244,14 +244,18 @@
 		display: block;
 	}
 
-	.spotify-icon-link {
+	.spotify-icon-link,
+	.wikipedia-icon-link,
+	.genius-icon-link {
 		top: 10vh;
 	}
 
 	.wikipedia-icon-link,
 	.genius-icon-link {
-		right: 20px;
-		top: calc(10vh + 60px);
+		/* right: 20px;
+		top: calc(10vh + 60px); */
+		left: 20px;
+		right: unset;
 	}
 
 	.random-stats-icon-link {

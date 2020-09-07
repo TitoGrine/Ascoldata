@@ -87,15 +87,15 @@ function Track() {
 						setTrackDuration(data.duration_ms);
 						setTrackPopularity(data.popularity);
 
-						if (geniusLink.length === 0)
-							getGeniusLink(data.name, data.artists.length > 0 ? data.artists[0].name : '').then(
-								function(response) {
-									setGeniusLink(response);
-								},
-								function(reject) {
-									console.log(reject);
-								}
-							);
+						getGeniusLink(data.name, data.artists.length > 0 ? data.artists[0].name : '').then(
+							function(response) {
+								setGeniusLink((geniusLink) => response);
+							},
+							function(reject) {
+								console.log(reject);
+							}
+						);
+
 						getTrackFeatures(data.artists.map((artist) => artist.id));
 					},
 					function(err) {
@@ -106,7 +106,7 @@ function Track() {
 				)
 			);
 		},
-		[ track, geniusLink, getTrackFeatures ]
+		[ track, getTrackFeatures ]
 	);
 
 	useEffect(
@@ -139,6 +139,21 @@ function Track() {
 							<Textfit className="track-title" mode="single" max={36}>
 								· {trackName.length > 25 ? `${trackName.slice(0, 25)}...` : trackName} ·
 							</Textfit>
+							<a
+								href={trackLink}
+								target="_blank"
+								rel="noopener noreferrer"
+								className="icon-link spotify-icon-link heartbeat"
+								onClick={() => {
+									ReactGA.event({
+										category: 'Interaction',
+										action: 'Clicked on Spotify link for track.',
+										label: 'Link Event'
+									});
+								}}
+							>
+								<FaSpotify />
+							</a>
 							{geniusLink.length > 0 && (
 								<a
 									href={geniusLink}
@@ -156,21 +171,6 @@ function Track() {
 									<img src={genius_logo} alt="Genius's logo." />
 								</a>
 							)}
-							<a
-								href={trackLink}
-								target="_blank"
-								rel="noopener noreferrer"
-								className="icon-link spotify-icon-link heartbeat"
-								onClick={() => {
-									ReactGA.event({
-										category: 'Interaction',
-										action: 'Clicked on Spotify link for track.',
-										label: 'Link Event'
-									});
-								}}
-							>
-								<FaSpotify />
-							</a>
 
 							<div id="track-info">
 								<div>

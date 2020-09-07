@@ -301,9 +301,8 @@ section.privacy-policy a {
 .genius-icon-link {
 	position: absolute;
 	top: 20px;
-	right: 70px;
+	right: 80px;
 	color: black;
-	border-radius: 50px;
 }
 
 .genius-icon-link > img {

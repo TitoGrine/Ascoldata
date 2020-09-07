@@ -10,6 +10,13 @@ const cleanQuery = (track, artist) => {
 		.trim();
 };
 
+const likelyMatch = (original, retrieved) => {
+	let o = original.toLowerCase();
+	let r = retrieved.toLowerCase();
+
+	return o.includes(r) || r.includes(o);
+};
+
 export const getGeniusLink = (track, artist) => {
 	return new Promise((resolve, reject) => {
 		let requestURL = `https://api.genius.com/search?q=${encodeURI(cleanQuery(track, artist))}&access_token=${process
@@ -21,9 +28,17 @@ export const getGeniusLink = (track, artist) => {
 				else reject('Lyrics URL not found.');
 			})
 			.then((json) => {
-				if (json.response.hits.length > 0) {
-					resolve(json.response.hits[0].result.url);
-				}
+				// console.log(json);
+				// if (json.response.hits.length > 0) {
+				// 	resolve(json.response.hits[0].result.url);
+				// }
+
+				json.response.hits.forEach((hit) => {
+					if (likelyMatch(track, hit.result.title) || likelyMatch(artist, hit.result.primary_artist.name))
+						resolve(hit.result.url);
+				});
+
+				reject('No confident match found.');
 			})
 			.catch((err) => reject('Lyrics URL not found.'));
 	});
