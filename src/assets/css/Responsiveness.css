@@ -252,8 +252,6 @@
 
 	.wikipedia-icon-link,
 	.genius-icon-link {
-		/* right: 20px;
-		top: calc(10vh + 60px); */
 		left: 20px;
 		right: unset;
 	}
