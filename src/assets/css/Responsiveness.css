@@ -220,6 +220,12 @@
 }
 
 @media screen and (max-width: 450px) {
+	/* HeaderBar */
+
+	.navbar-brand {
+		letter-spacing: 3px;
+	}
+
 	/* Pagination */
 
 	ul.pagination {

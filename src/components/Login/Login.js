@@ -61,7 +61,6 @@ class Login extends Component {
 		if (!localStorage.getItem('refreshToken')) {
 			return (
 				<React.Fragment>
-					{console.log(this.state.loginLink)}
 					<Helmet>
 						<title>Ascoldata</title>
 					</Helmet>
