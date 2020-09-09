@@ -26,7 +26,7 @@ function PrivacyPolicy() {
 				<section className="content-section privacy-policy">
 					<h2>Privacy Policy for Ascoldata</h2>
 					<p>
-						At Ascoldata, accessible from <a href="https://www.ascoldata.xyz">https://www.ascoldata.xyz</a>,
+						At Ascoldata, accessible from <a href="https://www.ascoldata.fun">https://www.ascoldata.fun</a>,
 						one of our main priorities is the privacy of our visitors. This Privacy Policy document contains
 						types of information that is collected and recorded by Ascoldata and how we use it.
 					</p>
@@ -59,6 +59,10 @@ function PrivacyPolicy() {
 						albums, artists, playlists among other things. Although this is personally identifiable
 						information, Ascoldata doesn't store it or share it with third parties and is only retained on
 						your browser.
+					</p>
+					<p>
+						Ascoldata also utilizes the Wikipedia API and Genius API but is not affiliated with neither
+						Wikipedia nor Genius.
 					</p>
 					<p>
 						Ascoldata uses Firebase and Google analytics to monitor and gather information on website
@@ -166,6 +170,11 @@ function PrivacyPolicy() {
 						We may update our Privacy Policy from time to time. Thus, you are advised to review this page
 						periodically for any changes. We will notify you of any changes by posting the new Privacy
 						Policy on this page. This policy is effective as of 2020-09-01.
+					</p>
+					<h3>Contacts</h3>
+					<p>
+						For questions regarding the Privacy Policy you can send an email at{' '}
+						<a href="mailto:ascoldata@gmail.com">ascoldata@gmail.com</a>.
 					</p>
 					<Button
 						className="go-back-button"

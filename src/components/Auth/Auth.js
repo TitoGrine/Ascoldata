@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { addToDate } from '../Util/HelperFunc';
+import { clearStorage } from '../Util/Storage';
 
 export const refreshToken = async (updateFunction) => {
 	let currDate = new Date().getTime();
@@ -32,16 +33,4 @@ export const refreshToken = async (updateFunction) => {
 		.catch((err) => {
 			console.log(err);
 		});
-};
-
-export const clearStorage = () => {
-	localStorage.removeItem('authToken');
-	localStorage.removeItem('refreshToken');
-	localStorage.removeItem('userId');
-	localStorage.removeItem('country');
-	localStorage.removeItem('track_seeds');
-	localStorage.removeItem('recommendations');
-	localStorage.removeItem('compatibilityValues');
-	localStorage.removeItem('expirationDate');
-	localStorage.removeItem('bufferDate');
 };

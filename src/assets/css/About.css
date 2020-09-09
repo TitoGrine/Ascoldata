@@ -40,29 +40,29 @@ section.about-website a {
 	color: var(--color-neutral);
 }
 
-div.about-sidebar {
+div.extra-info {
 	display: flex;
 	flex-direction: column;
 	flex-wrap: nowrap;
-	padding: 2em;
 	font-size: 1.2em;
 	font-weight: 500;
 	gap: 5%;
 	overflow-y: auto;
 	justify-content: flex-start;
+	padding-bottom: 1em;
 }
 
-div.about-sidebar p {
+div.extra-info p {
 	box-sizing: border-box;
 }
 
-div.about-sidebar a {
+div.extra-info a {
 	width: 100%;
 	color: var(--color-neutral);
 	text-decoration: none;
 }
 
-div.about-sidebar button {
+div.extra-info button {
 	margin: 0 auto;
 	padding: 0.5em 1em;
 	width: 60%;
@@ -70,7 +70,7 @@ div.about-sidebar button {
 	color: var(--color-neutral);
 }
 
-div.about-sidebar button:hover {
+div.extra-info button:hover {
 	background-color: var(--color-primary);
 	color: var(--color-neutral);
 }

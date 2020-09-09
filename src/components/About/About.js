@@ -4,12 +4,15 @@ import HeaderBar from '../Common/HeaderBar';
 import GitHubButton from 'react-github-btn';
 import { Link, useHistory } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 
 import SideToggle from '../Common/SideToggle';
 import { getRandomCharity } from '../Util/Charities';
+import Redirects from '../Common/Redirects';
 
 function About() {
 	const history = useHistory();
+	const loggedIn = localStorage.getItem('refreshToken');
 	const [ toggled, setToggled ] = useState('nothing');
 	const toggleButton = useRef(null);
 
@@ -41,9 +44,16 @@ function About() {
 							target="_blank"
 							rel="noopener noreferrer"
 						>
-							Spotify's API
-						</a>. Explore your favourite songs and artists and maybe discover some interesting patterns in
-						your listening habits.
+							Spotify API
+						</a>.<br /> On an artist's page there is a link to it's Wikipedia page, if found, using the{' '}
+						<a href="https://en.wikipedia.org/w/api.php" target="_blank" rel="noopener noreferrer">
+							Wikipedia API
+						</a>.<br /> On a song page there is a link to the Genius lyrics page, if found, using the{' '}
+						<a href="https://genius.com/developers" target="_blank" rel="noopener noreferrer">
+							Genius API
+						</a>.<br />
+						Explore your favourite songs and artists and maybe discover some interesting patterns in your
+						listening habits.
 					</p>
 					<p>
 						The idea for Ascoldata came when I wanted to explore APIs and build something as a summer
@@ -54,7 +64,7 @@ function About() {
 						(you should really check it out!), which inspired me to use Spotify's API and see what I could
 						do.
 					</p>
-					<strong>Ascoldata is in no way affiliated with Spotify.</strong>
+					<strong>Ascoldata is in no way affiliated with neither Spotify, Wikipedia nor Genius.</strong>
 					<h4>Technology</h4>
 					<p>
 						This website is built using React, bootstrapped using{' '}
@@ -67,6 +77,10 @@ function About() {
 							rel="noopener noreferrer"
 						>
 							spotify-web-api-js
+						</a>{' '}
+						package and for the Wikipedia API the{' '}
+						<a href="https://github.com/dijs/wiki" target="_blank" rel="noopener noreferrer">
+							wikijs
 						</a>{' '}
 						package. It also uses {' '}
 						<a
@@ -113,55 +127,71 @@ function About() {
 				</section>
 				<section className={`sidebar-section slide-in-right sidebar-${toggled}`} />
 				<div className={`side-content slide-in-right sidebar-${toggled} about-sidebar`}>
-					<p>Thankfully, for now, I can keep this website running without any sort of ads or donations.</p>
-					<p>
-						However, if you like the website, and want to make some contribution, make a donation to a
-						charity!
-					</p>
-					<p>
-						I'll randomly pick a good charity for you, here you go{' '}
-						<span role="img" aria-label="Friendly emoji.">
-							😊
-						</span>
-					</p>
-					<form
-						action={getRandomCharity()}
-						onSubmit={(ev) => {
-							ReactGA.event({
-								category: 'Interaction',
-								action: 'Clicked to go to charity!',
-								label: 'Button Event'
-							});
-							ev.target.submit();
-						}}
-						target="_blank"
-						rel="noopener noreferrer"
-					>
-						<Button type="submit" size="lg" className="heartbeat">
-							<strong>Charity</strong>
-						</Button>
-					</form>
-					<p>If you want you can also leave a star on the GitHub project repo or follow me.</p>
-					<div className="github-buttons">
-						<GitHubButton
-							href="https://github.com/TitoGrine/Ascoldata"
-							data-color-scheme="no-preference: dark; light: dark; dark: dark;"
-							data-icon="octicon-star"
-							data-size="large"
-							data-show-count="true"
-							aria-label="Star TitoGrine/Ascoldata on GitHub"
-						>
-							Star
-						</GitHubButton>
-						<GitHubButton
-							href="https://github.com/TitoGrine"
-							data-color-scheme="no-preference: dark; light: dark; dark: dark;"
-							data-size="large"
-							aria-label="Follow @TitoGrine on GitHub"
-						>
-							Follow Me
-						</GitHubButton>
-					</div>
+					<Tabs>
+						<TabList>
+							<Tab>Extra Info</Tab>
+							{loggedIn && <Tab>Go to</Tab>}
+						</TabList>
+						<TabPanel className="extra-info">
+							<p>
+								Thankfully, for now, I can keep this website running without any sort of ads or
+								donations.
+							</p>
+							<p>
+								However, if you like the website, and want to make some contribution, make a donation to
+								a charity!
+							</p>
+							<p>
+								I'll randomly pick a good charity for you, here you go{' '}
+								<span role="img" aria-label="Friendly emoji.">
+									😊
+								</span>
+							</p>
+							<form
+								action={getRandomCharity()}
+								onSubmit={(ev) => {
+									ReactGA.event({
+										category: 'Interaction',
+										action: 'Clicked to go to charity!',
+										label: 'Button Event'
+									});
+									ev.target.submit();
+								}}
+								target="_blank"
+								rel="noopener noreferrer"
+							>
+								<Button type="submit" size="lg" className="heartbeat">
+									<strong>Charity</strong>
+								</Button>
+							</form>
+							<p>If you want you can also leave a star on the GitHub project repo or follow me.</p>
+							<div className="github-buttons">
+								<GitHubButton
+									href="https://github.com/TitoGrine/Ascoldata"
+									data-color-scheme="no-preference: dark; light: dark; dark: dark;"
+									data-icon="octicon-star"
+									data-size="large"
+									data-show-count="true"
+									aria-label="Star TitoGrine/Ascoldata on GitHub"
+								>
+									Star
+								</GitHubButton>
+								<GitHubButton
+									href="https://github.com/TitoGrine"
+									data-color-scheme="no-preference: dark; light: dark; dark: dark;"
+									data-size="large"
+									aria-label="Follow @TitoGrine on GitHub"
+								>
+									Follow Me
+								</GitHubButton>
+							</div>
+						</TabPanel>
+						{loggedIn && (
+							<TabPanel>
+								<Redirects exclude="" />
+							</TabPanel>
+						)}
+					</Tabs>
 				</div>
 				<SideToggle
 					ref={toggleButton}
