@@ -182,7 +182,7 @@ function About() {
 									data-size="large"
 									aria-label="Follow @TitoGrine on GitHub"
 								>
-									Follow Me
+									Follow
 								</GitHubButton>
 							</div>
 						</TabPanel>
