@@ -147,10 +147,6 @@ function Find() {
 		}
 	};
 
-	const redirectBack = () => {
-		history.goBack();
-	};
-
 	useEffect(() => {
 		ReactGA.pageview('/find');
 	});
