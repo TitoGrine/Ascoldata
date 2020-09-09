@@ -314,36 +314,63 @@ function Artist() {
 										allowtransparency="true"
 									/>
 								</div>
-								<StatCard barStat={false} title="Followers" value={artistFollowers} units="" />
-								<StatCard
-									barStat={false}
-									title={`Genre${artistGenres.length - 1 ? 's' : ''}`}
-									value={
-										artistGenres.length === 0 ? (
-											'undefined'
-										) : (
-											artistGenres.slice(0, 2).map((genre, index) => {
-												return (
-													genre.charAt(0).toUpperCase() +
-													genre.slice(1) +
-													(index === artistGenres.length - 1 || index ? '' : ', ')
-												);
-											})
-										)
-									}
-									units=""
-								/>
-								<StatCard barStat={false} title="Popularity" value={artistPopularity} units="" />
-								<StatCard
-									barStat={false}
-									title="Related Artists"
-									value={
-										<Link to={`/related_artists?id=${artist}`} className="inner-link">
-											<FaItunesNote />
-										</Link>
-									}
-									units=""
-								/>
+								<div id="artist-data">
+									<div>
+										<StatCard barStat={false} title="Followers" value={artistFollowers} units="" />
+										<StatCard
+											barStat={false}
+											title={`Genre${artistGenres.length - 1 ? 's' : ''}`}
+											value={
+												artistGenres.length === 0 ? (
+													'undefined'
+												) : (
+													artistGenres.slice(0, 2).map((genre, index) => {
+														return (
+															genre.charAt(0).toUpperCase() +
+															genre.slice(1) +
+															(index === artistGenres.length - 1 || index ? '' : ', ')
+														);
+													})
+												)
+											}
+											units=""
+										/>
+										<StatCard
+											barStat={false}
+											title="Popularity"
+											value={artistPopularity}
+											units=""
+										/>
+									</div>
+									<div>
+										<StatCard
+											barStat={false}
+											title="Related Artists"
+											value={
+												<Link
+													to={`/related_artists?id=${artist}&page=${1}`}
+													className="inner-link"
+												>
+													<FaItunesNote />
+												</Link>
+											}
+											units=""
+										/>
+										<StatCard
+											barStat={false}
+											title="Artist Albums"
+											value={
+												<Link
+													to={`/artist_albums?id=${artist}&page=${1}`}
+													className="inner-link"
+												>
+													<FaItunesNote />
+												</Link>
+											}
+											units=""
+										/>
+									</div>
+								</div>
 							</div>
 							{renderStats()}
 						</React.Fragment>

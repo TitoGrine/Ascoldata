@@ -17,10 +17,26 @@
 	justify-content: center;
 	align-items: center;
 	gap: 0.5em;
+	flex-basis: 25%;
 }
 
 #artist-info #image > img {
 	width: 150px;
 	height: 150px;
 	object-fit: cover;
+}
+
+#artist-info #artist-data {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 1.5em;
+}
+
+#artist-info #artist-data > div {
+	display: flex;
+	flex-wrap: nowrap;
+	justify-content: space-evenly;
+	align-items: center;
+	gap: 1.5em;
+	flex-basis: 100%;
 }

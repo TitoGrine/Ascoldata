@@ -35,16 +35,18 @@ function RelatedArtists() {
 
 	const getArtistName = useCallback(
 		() => {
+			if (artistName.length > 0) return;
+
 			spotifyWebApi.getArtist(artistId).then(
 				function(data) {
-					setArtistName(data.name);
+					setArtistName((artistName) => data.name);
 				},
 				function(err) {
 					console.log(err);
 				}
 			);
 		},
-		[ artistId ]
+		[ artistId, artistName ]
 	);
 
 	const getData = useCallback(
@@ -73,10 +75,10 @@ function RelatedArtists() {
 			if (authToken) {
 				getData();
 
-				if (artistName.length === 0) getArtistName();
+				getArtistName();
 			}
 		},
-		[ authToken, getData, artistName, getArtistName ]
+		[ authToken, getData, getArtistName ]
 	);
 
 	useEffect(() => {

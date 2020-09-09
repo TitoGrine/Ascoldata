@@ -56,6 +56,7 @@
 
 	#album-info,
 	#artist-info,
+	#artist-info #artist-data > div,
 	#playlist-info {
 		align-items: flex-start;
 	}
@@ -63,6 +64,7 @@
 	#track-info > div,
 	#album-info,
 	#artist-info,
+	#artist-info #artist-data > div,
 	#playlist-info,
 	#album-info #misc-data,
 	#playlist-info #misc-data {
@@ -165,6 +167,7 @@
 	/* Album, Artist, Playlist & Track */
 
 	#artist-info,
+	#artist-info #artist-data > div,
 	#playlist-info,
 	#track-info > div,
 	#album-info,
