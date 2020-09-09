@@ -46,7 +46,7 @@ div.extra-info {
 	flex-wrap: nowrap;
 	font-size: 1.2em;
 	font-weight: 500;
-	gap: 5%;
+	gap: max(1em, 5%);
 	overflow-y: auto;
 	justify-content: flex-start;
 	padding-bottom: 1em;
@@ -65,7 +65,7 @@ div.extra-info a {
 div.extra-info button {
 	margin: 0 auto;
 	padding: 0.5em 1em;
-	width: 60%;
+	width: min(80%, 10em);
 	background-color: var(--color-primary);
 	color: var(--color-neutral);
 }
