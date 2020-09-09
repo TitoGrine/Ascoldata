@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import ReactGA from 'react-ga';
 import HeaderBar from '../Common/HeaderBar';
 import GitHubButton from 'react-github-btn';
@@ -11,6 +11,7 @@ import { getRandomCharity } from '../Util/Charities';
 function About() {
 	const history = useHistory();
 	const [ toggled, setToggled ] = useState('nothing');
+	const toggleButton = useRef(null);
 
 	const redirectBack = () => {
 		history.goBack();
@@ -24,7 +25,12 @@ function About() {
 		<React.Fragment>
 			<HeaderBar />
 			<div id="corporum">
-				<section className="content-section about-website">
+				<section
+					className="content-section about-website"
+					onClick={() => {
+						if (toggled.localeCompare('toggled') === 0) toggleButton.current.click();
+					}}
+				>
 					<h4>About the Website</h4>
 					<p>
 						Ascoldata is a website that allows users to get access to information and statistics about their
@@ -42,12 +48,7 @@ function About() {
 					<p>
 						The idea for Ascoldata came when I wanted to explore APIs and build something as a summer
 						project and remembered seeing this awesome website{' '}
-						<a
-							href="https://musictaste.space"
-							target="_blank"
-							rel="noopener noreferrer"
-							style={{ color: '#A3F55F' }}
-						>
+						<a href="https://musictaste.space" target="_blank" rel="noopener noreferrer">
 							musictaste.space
 						</a>{' '}
 						(you should really check it out!), which inspired me to use Spotify's API and see what I could
@@ -97,8 +98,8 @@ function About() {
 					</p>
 					<p>
 						{' '}
-						If you discover a bug or have some question regarding this project, contact me through email at
-						(insert)
+						If you discover a bug or have some question regarding this project, contact me through email at{' '}
+						<a href="mailto:ascoldata@gmail.com">ascoldata@gmail.com</a>.
 					</p>
 					<Button
 						className="go-back-button"
@@ -163,6 +164,7 @@ function About() {
 					</div>
 				</div>
 				<SideToggle
+					ref={toggleButton}
 					toggleFunc={(state) => {
 						setToggled(state);
 					}}

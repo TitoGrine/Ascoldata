@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import ReactGA from 'react-ga';
 import Spotify from 'spotify-web-api-js';
 import { useLocation, Link, Redirect } from 'react-router-dom';
@@ -29,6 +29,8 @@ function Playlist() {
 	const playlist = query.get('id');
 
 	const [ toggled, setToggled ] = useState('nothing');
+	const toggleButton = useRef(null);
+
 	const [ existsData, setExistsData ] = useState(false);
 	const [ authToken, setAuthToken ] = useState(localStorage.getItem('authToken'));
 	const [ playlistName, setPlaylistName ] = useState('');
@@ -252,7 +254,12 @@ function Playlist() {
 			</Helmet>
 			<HeaderBar />
 			<div id="corporum">
-				<section className="content-section">
+				<section
+					className="content-section"
+					onClick={() => {
+						if (toggled.localeCompare('toggled') === 0) toggleButton.current.click();
+					}}
+				>
 					<LoadingSpinner />
 					{!promiseInProgress && (
 						<React.Fragment>
@@ -354,6 +361,7 @@ function Playlist() {
 					</Tabs>
 				</div>
 				<SideToggle
+					ref={toggleButton}
 					toggleFunc={(state) => {
 						setToggled(state);
 					}}

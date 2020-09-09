@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import ReactGA from 'react-ga';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { useLocation, useHistory, Redirect } from 'react-router-dom';
 import Pagination from 'react-js-pagination';
 import Spotify from 'spotify-web-api-js';
-import { trackPromise } from 'react-promise-tracker';
+import { trackPromise, usePromiseTracker } from 'react-promise-tracker';
 
 import { refreshToken } from '../Auth/Auth';
 import { useMediaQuery } from 'react-responsive';
@@ -17,6 +17,7 @@ import TrackTable from '../Track/TrackTable';
 import HeaderBar from '../Common/HeaderBar';
 import LoadingSpinner from '../Common/LoadingSpinner';
 import { Helmet } from 'react-helmet';
+import NoContent from '../Common/NoContent';
 
 const spotifyWebApi = new Spotify();
 
@@ -25,8 +26,13 @@ function AlbumTracks() {
 	const history = useHistory();
 	const limit = 12;
 
+	const { promiseInProgress } = usePromiseTracker();
+
 	const albumId = query.get('id');
 	const [ toggled, setToggled ] = useState('nothing');
+	const toggleButton = useRef(null);
+	const table = useRef(null);
+
 	const [ authToken, setAuthToken ] = useState(localStorage.getItem('authToken'));
 	const [ albumName, setAlbumName ] = useState('');
 	const [ albumTracks, setAlbumTracks ] = useState([]);
@@ -109,6 +115,10 @@ function AlbumTracks() {
 	);
 
 	useEffect(() => {
+		table.current.scrollTo(0, 0);
+	});
+
+	useEffect(() => {
 		ReactGA.pageview('/album_tracks');
 	});
 
@@ -121,7 +131,13 @@ function AlbumTracks() {
 			</Helmet>
 			<HeaderBar />
 			<div id="corporum">
-				<section className="content-section table-content">
+				<section
+					className="content-section table-content"
+					ref={table}
+					onClick={() => {
+						if (toggled.localeCompare('toggled') === 0) toggleButton.current.click();
+					}}
+				>
 					<LoadingSpinner />
 					{albumTracks.length > 0 && (
 						<React.Fragment>
@@ -139,6 +155,8 @@ function AlbumTracks() {
 							/>
 						</React.Fragment>
 					)}
+					{!promiseInProgress &&
+					albumTracks.length === 0 && <NoContent mainText="Album doesn't have any tracks..." />}
 				</section>
 				<section className={`sidebar-section slide-in-right sidebar-${toggled}`} />
 				<div className={`side-content slide-in-right sidebar-${toggled}`}>
@@ -157,6 +175,7 @@ function AlbumTracks() {
 					</Tabs>
 				</div>
 				<SideToggle
+					ref={toggleButton}
 					toggleFunc={(state) => {
 						setToggled(state);
 					}}

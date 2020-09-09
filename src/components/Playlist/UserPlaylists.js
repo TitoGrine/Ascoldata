@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import ReactGA from 'react-ga';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { useLocation, useHistory, Redirect } from 'react-router-dom';
@@ -26,6 +26,9 @@ function UserPlaylists() {
 	const limit = 12;
 
 	const [ toggled, setToggled ] = useState('nothing');
+	const toggleButton = useRef(null);
+	const table = useRef(null);
+
 	const [ authToken, setAuthToken ] = useState(localStorage.getItem('authToken'));
 	const [ page, setPage ] = useState(parseInt(query.get('page')));
 	const [ userPlaylists, setUserPlaylists ] = useState([]);
@@ -86,6 +89,10 @@ function UserPlaylists() {
 	);
 
 	useEffect(() => {
+		table.current.scrollTo(0, 0);
+	});
+
+	useEffect(() => {
 		ReactGA.pageview('/user_playlists');
 	});
 
@@ -98,7 +105,13 @@ function UserPlaylists() {
 			</Helmet>
 			<HeaderBar />
 			<div id="corporum">
-				<section className="content-section table-content">
+				<section
+					className="content-section table-content"
+					ref={table}
+					onClick={() => {
+						if (toggled.localeCompare('toggled') === 0) toggleButton.current.click();
+					}}
+				>
 					<LoadingSpinner />
 					{userPlaylists.length > 0 && (
 						<React.Fragment>
@@ -134,6 +147,7 @@ function UserPlaylists() {
 					</Tabs>
 				</div>
 				<SideToggle
+					ref={toggleButton}
 					toggleFunc={(state) => {
 						setToggled(state);
 					}}

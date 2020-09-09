@@ -3,7 +3,7 @@
 	top: 50%;
 	left: 50%;
 	-webkit-transform: translate(-50%, -50%);
-	transform: translate(-50%, -50%);
+	transform: translate(-50%, -45%);
 
 	color: var(--color-neutral);
 	font-size: min(6vw, 1.3rem);
@@ -35,7 +35,7 @@
 }
 
 #error-logo {
-	width: min(20vw, 220px);
+	width: min(40vw, 220px);
 	-webkit-animation: rotation 3.5s linear infinite both;
 	animation: rotation 3.5s linear infinite both;
 }

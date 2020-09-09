@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import ReactGA from 'react-ga';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { useLocation, useHistory, Redirect } from 'react-router-dom';
@@ -38,6 +38,9 @@ function SearchResults() {
 	const type = query.get('type');
 
 	const [ toggled, setToggled ] = useState('nothing');
+	const toggleButton = useRef(null);
+	const table = useRef(null);
+
 	const [ showAlert, setShowAlert ] = useState(false);
 	const [ authToken, setAuthToken ] = useState(localStorage.getItem('authToken'));
 	const [ page, setPage ] = useState(parseInt(query.get('page')));
@@ -112,6 +115,10 @@ function SearchResults() {
 	);
 
 	useEffect(() => {
+		table.current.scrollTo(0, 0);
+	});
+
+	useEffect(() => {
 		ReactGA.pageview('/search');
 	});
 
@@ -168,7 +175,13 @@ function SearchResults() {
 			</Alert>
 			<HeaderBar />
 			<div id="corporum">
-				<section className="content-section table-content">
+				<section
+					className="content-section table-content"
+					ref={table}
+					onClick={() => {
+						if (toggled.localeCompare('toggled') === 0) toggleButton.current.click();
+					}}
+				>
 					<LoadingSpinner />
 					{results.length > 0 && (
 						<React.Fragment>
@@ -200,6 +213,7 @@ function SearchResults() {
 					</Tabs>
 				</div>
 				<SideToggle
+					ref={toggleButton}
 					toggleFunc={(state) => {
 						setToggled(state);
 					}}

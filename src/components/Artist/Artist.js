@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import ReactGA from 'react-ga';
 import Spotify from 'spotify-web-api-js';
 import wiki from 'wikijs';
@@ -28,6 +28,8 @@ function Artist() {
 	const artist = query.get('id');
 
 	const [ toggled, setToggled ] = useState('nothing');
+	const toggleButton = useRef(null);
+
 	const [ existsData, setExistsData ] = useState(false);
 	const [ authToken, setAuthToken ] = useState(localStorage.getItem('authToken'));
 	const [ artistName, setArtistName ] = useState('');
@@ -254,7 +256,12 @@ function Artist() {
 			</Helmet>
 			<HeaderBar />
 			<div id="corporum">
-				<section className="content-section">
+				<section
+					className="content-section"
+					onClick={() => {
+						if (toggled.localeCompare('toggled') === 0) toggleButton.current.click();
+					}}
+				>
 					<LoadingSpinner />
 					{!promiseInProgress && (
 						<React.Fragment>
@@ -359,6 +366,7 @@ function Artist() {
 					</Tabs>
 				</div>
 				<SideToggle
+					ref={toggleButton}
 					toggleFunc={(state) => {
 						setToggled(state);
 					}}

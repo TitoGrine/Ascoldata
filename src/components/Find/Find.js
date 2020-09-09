@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import ReactGA from 'react-ga';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { useHistory, Redirect } from 'react-router-dom';
@@ -17,6 +17,8 @@ import { Helmet } from 'react-helmet';
 
 function Find() {
 	const [ toggled, setToggled ] = useState('nothing');
+	const toggleButton = useRef(null);
+
 	const [ acousticness, setAcousticness ] = useState(-1);
 	const [ danceability, setDanceability ] = useState(-1);
 	const [ energy, setEnergy ] = useState(-1);
@@ -145,6 +147,10 @@ function Find() {
 		}
 	};
 
+	const redirectBack = () => {
+		history.goBack();
+	};
+
 	useEffect(() => {
 		ReactGA.pageview('/find');
 	});
@@ -158,7 +164,12 @@ function Find() {
 			</Helmet>
 			<HeaderBar />
 			<div id="corporum" className="find-content">
-				<section className="content-section">
+				<section
+					className="content-section"
+					onClick={() => {
+						if (toggled.localeCompare('toggled') === 0) toggleButton.current.click();
+					}}
+				>
 					<OverlayTrigger placement="top" overlay={<Tooltip>Randomize all attributes!</Tooltip>}>
 						<button className="icon-link random-stats-icon-link heartbeat" onClick={() => setRandomStats()}>
 							<GiRollingDices />
@@ -372,6 +383,7 @@ function Find() {
 					</Tabs>
 				</div>
 				<SideToggle
+					ref={toggleButton}
 					toggleFunc={(state) => {
 						setToggled(state);
 					}}

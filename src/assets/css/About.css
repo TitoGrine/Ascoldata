@@ -47,7 +47,7 @@ div.about-sidebar {
 	padding: 2em;
 	font-size: 1.2em;
 	font-weight: 500;
-	gap: 1.2em;
+	gap: 5%;
 	overflow-y: auto;
 	justify-content: flex-start;
 }

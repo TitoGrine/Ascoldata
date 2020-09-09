@@ -119,8 +119,10 @@
 	}
 
 	section.table-content {
+		width: 100vw;
+		overflow-x: hidden;
 		display: flex;
-		gap: 2em;
+		animation: none;
 	}
 
 	.no-content-warning {
@@ -218,14 +220,10 @@
 }
 
 @media screen and (max-width: 450px) {
-	section.table-content {
-		gap: 0.5em;
-	}
-
 	/* Pagination */
 
 	ul.pagination {
-		margin-bottom: 5em;
+		margin-bottom: 1em;
 	}
 
 	/* Track & Album */

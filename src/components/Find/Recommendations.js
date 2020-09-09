@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import ReactGA from 'react-ga';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { useLocation, Redirect } from 'react-router-dom';
@@ -27,6 +27,9 @@ function Recommendations() {
 	const limit = 15;
 
 	const [ toggled, setToggled ] = useState('nothing');
+	const toggleButton = useRef(null);
+	const table = useRef(null);
+
 	const [ authToken, setAuthToken ] = useState(localStorage.getItem('authToken'));
 	const [ query ] = useState(new URLSearchParams(useLocation().search));
 	const [ showSuccessAlert, setShowSuccessAlert ] = useState(false);
@@ -195,6 +198,10 @@ function Recommendations() {
 	);
 
 	useEffect(() => {
+		table.current.scrollTo(0, 0);
+	});
+
+	useEffect(() => {
 		ReactGA.pageview('/recommendations');
 	});
 
@@ -229,7 +236,13 @@ function Recommendations() {
 			</Alert>
 			<HeaderBar />
 			<div id="corporum">
-				<section className="content-section table-content">
+				<section
+					className="content-section table-content"
+					ref={table}
+					onClick={() => {
+						if (toggled.localeCompare('toggled') === 0) toggleButton.current.click();
+					}}
+				>
 					<LoadingSpinner />
 					{!promiseInProgress &&
 					recommendations.length > 0 && (
@@ -299,6 +312,7 @@ function Recommendations() {
 					</Tabs>
 				</div>
 				<SideToggle
+					ref={toggleButton}
 					toggleFunc={(state) => {
 						setToggled(state);
 					}}

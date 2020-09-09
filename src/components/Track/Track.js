@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import ReactGA from 'react-ga';
 import Spotify from 'spotify-web-api-js';
 import { useLocation, Link, Redirect } from 'react-router-dom';
@@ -27,6 +27,8 @@ function Track() {
 	const track = query.get('id');
 
 	const [ toggled, setToggled ] = useState('nothing');
+	const toggleButton = useRef(null);
+
 	const [ authToken, setAuthToken ] = useState(localStorage.getItem('authToken'));
 	const [ trackLink, setTrackLink ] = useState('');
 	const [ trackUri, setTrackUri ] = useState('');
@@ -132,7 +134,12 @@ function Track() {
 			</Helmet>
 			<HeaderBar />
 			<div id="corporum">
-				<section className="content-section">
+				<section
+					className="content-section"
+					onClick={() => {
+						if (toggled.localeCompare('toggled') === 0) toggleButton.current.click();
+					}}
+				>
 					<LoadingSpinner />
 					{!promiseInProgress && (
 						<React.Fragment>
@@ -327,6 +334,7 @@ function Track() {
 					</Tabs>
 				</div>
 				<SideToggle
+					ref={toggleButton}
 					toggleFunc={(state) => {
 						setToggled(state);
 					}}

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import ReactGA from 'react-ga';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { trackPromise, usePromiseTracker } from 'react-promise-tracker';
@@ -26,6 +26,8 @@ function UserStats() {
 	const history = useHistory();
 
 	const [ toggled, setToggled ] = useState('nothing');
+	const toggleButton = useRef(null);
+
 	const [ existsData, setExistsData ] = useState(false);
 	const [ authToken, setAuthToken ] = useState(localStorage.getItem('authToken'));
 	const [ stats, setStats ] = useState('');
@@ -242,7 +244,12 @@ function UserStats() {
 			</Helmet>
 			<HeaderBar />
 			<div id="corporum">
-				<section className="content-section">
+				<section
+					className="content-section"
+					onClick={() => {
+						if (toggled.localeCompare('toggled') === 0) toggleButton.current.click();
+					}}
+				>
 					<LoadingSpinner />
 					{!promiseInProgress && (
 						<React.Fragment>
@@ -344,6 +351,7 @@ function UserStats() {
 					</Tabs>
 				</div>
 				<SideToggle
+					ref={toggleButton}
 					toggleFunc={(state) => {
 						setToggled(state);
 					}}

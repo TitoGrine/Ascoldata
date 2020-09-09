@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import ReactGA from 'react-ga';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { useLocation, useHistory, Redirect } from 'react-router-dom';
 import Pagination from 'react-js-pagination';
 import Spotify from 'spotify-web-api-js';
-import { trackPromise } from 'react-promise-tracker';
+import { trackPromise, usePromiseTracker } from 'react-promise-tracker';
 
 import { refreshToken } from '../Auth/Auth';
 import { useMediaQuery } from 'react-responsive';
@@ -26,8 +26,13 @@ function CreatorPlaylists() {
 	const history = useHistory();
 	const limit = 12;
 
+	const { promiseInProgress } = usePromiseTracker();
+
 	const creatorId = query.get('id');
 	const [ toggled, setToggled ] = useState('nothing');
+	const toggleButton = useRef(null);
+	const table = useRef(null);
+
 	const [ authToken, setAuthToken ] = useState(localStorage.getItem('authToken'));
 	const [ creatorName, setcreatorName ] = useState('');
 	const [ creatorPlaylists, setCreatorPlaylists ] = useState([]);
@@ -90,6 +95,10 @@ function CreatorPlaylists() {
 	);
 
 	useEffect(() => {
+		table.current.scrollTo(0, 0);
+	});
+
+	useEffect(() => {
 		ReactGA.pageview('/creator_playlists');
 	});
 
@@ -102,7 +111,13 @@ function CreatorPlaylists() {
 			</Helmet>
 			<HeaderBar />
 			<div id="corporum">
-				<section className="content-section table-content">
+				<section
+					className="content-section table-content"
+					ref={table}
+					onClick={() => {
+						if (toggled.localeCompare('toggled') === 0) toggleButton.current.click();
+					}}
+				>
 					<LoadingSpinner />
 					{creatorPlaylists.length > 0 && (
 						<React.Fragment>
@@ -123,7 +138,8 @@ function CreatorPlaylists() {
 							/>
 						</React.Fragment>
 					)}
-					{creatorPlaylists.length === 0 && (
+					{!promiseInProgress &&
+					creatorPlaylists.length === 0 && (
 						<NoContent mainText="This creator doesn't have any playlists..." />
 					)}
 				</section>
@@ -144,6 +160,7 @@ function CreatorPlaylists() {
 					</Tabs>
 				</div>
 				<SideToggle
+					ref={toggleButton}
 					toggleFunc={(state) => {
 						setToggled(state);
 					}}

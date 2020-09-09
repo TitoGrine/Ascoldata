@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { IoIosOptions, IoIosClose } from 'react-icons/io';
 
-function SideToggle(props) {
+const SideToggle = React.forwardRef((props, ref) => {
 	const [ toggle, setToggle ] = useState(false);
 
 	const toggleButton = () => {
@@ -14,11 +14,11 @@ function SideToggle(props) {
 	};
 
 	return (
-		<button className="side-toggle" onClick={() => toggleButton()}>
+		<button className="side-toggle" ref={ref} onClick={() => toggleButton()}>
 			{renderIcon()}
 		</button>
 	);
-}
+});
 
 const optionsStyle = {
 	fontSize: '50px',

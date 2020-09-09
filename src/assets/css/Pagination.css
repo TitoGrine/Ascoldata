@@ -1,9 +1,11 @@
 ul.pagination {
 	grid-row: -1;
-	align-self: center;
 	display: flex;
-	max-width: min(95vw, 350px);
-	justify-content: center;
+	max-width: 95vw;
+	justify-content: flex-end;
+	align-self: center;
+	margin: auto;
+	margin-bottom: 2em;
 }
 
 .pagination-divider {

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import ReactGA from 'react-ga';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { useLocation, useHistory, Redirect } from 'react-router-dom';
@@ -32,6 +32,9 @@ function Top() {
 	const { promiseInProgress } = usePromiseTracker();
 
 	const [ toggled, setToggled ] = useState('nothing');
+	const toggleButton = useRef(null);
+	const table = useRef(null);
+
 	const [ authToken, setAuthToken ] = useState(localStorage.getItem('authToken'));
 	const [ page, setPage ] = useState(parseInt(query.get('page')));
 	const [ topType, setTopType ] = useState(query.get('type'));
@@ -163,6 +166,10 @@ function Top() {
 	);
 
 	useEffect(() => {
+		table.current.scrollTo(0, 0);
+	});
+
+	useEffect(() => {
 		ReactGA.pageview('/top');
 	});
 
@@ -175,7 +182,13 @@ function Top() {
 			</Helmet>
 			<HeaderBar />
 			<div id="corporum" className="top-content">
-				<section className="content-section content-section-top table-content">
+				<section
+					className="content-section content-section-top table-content"
+					ref={table}
+					onClick={() => {
+						if (toggled.localeCompare('toggled') === 0) toggleButton.current.click();
+					}}
+				>
 					<LoadingSpinner />
 					{!promiseInProgress && renderTable()}
 					<Pagination
@@ -258,6 +271,7 @@ function Top() {
 					</Tabs>
 				</div>
 				<SideToggle
+					ref={toggleButton}
 					toggleFunc={(state) => {
 						setToggled(state);
 					}}
