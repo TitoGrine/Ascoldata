@@ -4,6 +4,7 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { useLocation, useHistory, Redirect } from 'react-router-dom';
 import Pagination from 'react-js-pagination';
 import Spotify from 'spotify-web-api-js';
+import { Helmet } from 'react-helmet';
 import { trackPromise, usePromiseTracker } from 'react-promise-tracker';
 
 import { refreshToken } from '../Auth/Auth';
@@ -14,7 +15,6 @@ import Search from '../Search/Search';
 import SideToggle from '../Common/SideToggle';
 import HeaderBar from '../Common/HeaderBar';
 import LoadingSpinner from '../Common/LoadingSpinner';
-import { Helmet } from 'react-helmet';
 import NoContent from '../Common/NoContent';
 import AlbumCards from '../Album/AlbumCards';
 import AlbumTable from '../Album/AlbumTable';

@@ -6,7 +6,7 @@ import { useLocation, Redirect, Link } from 'react-router-dom';
 import { Image } from 'react-bootstrap';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { trackPromise, usePromiseTracker } from 'react-promise-tracker';
-import { FaWikipediaW, FaSpotify, FaItunesNote } from 'react-icons/fa';
+import { FaWikipediaW, FaSpotify, FaMicrophoneAlt, FaCompactDisc } from 'react-icons/fa';
 
 import { refreshToken } from '../Auth/Auth';
 import default_art from '../../assets/images/default_art.png';
@@ -351,7 +351,7 @@ function Artist() {
 													to={`/related_artists?id=${artist}&page=${1}`}
 													className="inner-link"
 												>
-													<FaItunesNote />
+													<FaMicrophoneAlt />
 												</Link>
 											}
 											units=""
@@ -364,7 +364,7 @@ function Artist() {
 													to={`/artist_albums?id=${artist}&page=${1}`}
 													className="inner-link"
 												>
-													<FaItunesNote />
+													<FaCompactDisc />
 												</Link>
 											}
 											units=""
