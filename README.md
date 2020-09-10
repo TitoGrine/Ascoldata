@@ -11,7 +11,7 @@ Explore your favourite songs and artists and maybe discover some interesting pat
 
 ### Technology
 
-This project is built with React and bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project is built with React and bootstrapped with [Create React App](https://github.com/facebook/create-react-app).  
 For making calls to the Spotify API it uses the [spotify-web-api-js](https://github.com/JMPerez/spotify-web-api-js) package, and
 for the Wikipedia API the [wikijs](https://github.com/dijs/wiki) package.  
 For dealing with the Spotify's OAuth authentication cycle and token refreshing it uses [Firebase Functions](https://firebase.google.com/products/functions/),
