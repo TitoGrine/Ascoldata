@@ -1,11 +1,10 @@
 ## Ascoldata
 
-Ascoldata is a website that allows users to get access to information and statistics about their Spotify's listening history.  
-Using a set of attributes it's possible to request song recommendations and save them on to a playlist.  
-It also features relevant information about songs, albums, artists and playlists that exist on Spotify.  
-On an artist's page there is a link to it's Wikipedia page, if found, using the Wikipedia API.  
-On a song page there is a link to the Genius lyrics page, if found, using the Genius API.  
-Explore your favourite songs and artists and maybe discover some interesting patterns in your listening habits.  
+Ascoldata is a website that grants users access to information and statistics about their Spotify's listening history.  
+It also features relevant information about songs, albums, artists and playlists and even allows for requesting song recommendations,
+based on various attributes, using the [Spotify API](https://developer.spotify.com/documentation/web-api/).  
+On an artist's page there is a link to it's Wikipedia page, if found, using the [Wikipedia API](https://en.wikipedia.org/w/api.php).  
+On a song page there is a link to the Genius lyrics page, if found, using the [Genius API](https://genius.com/developers).  
 
 **Ascoldata is in no way affiliated with neither Spotify, Wikipedia nor Genius.**
 
