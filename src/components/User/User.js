@@ -8,7 +8,7 @@ import { Textfit } from 'react-textfit';
 import { FaSpotify } from 'react-icons/fa';
 
 import { refreshToken } from '../Auth/Auth';
-import { getCountryFromISOCode } from '../Util/HelperFunc';
+import { getCountryFromISOCode } from '../Util/Countries';
 import default_image from '../../assets/images/default_pic.png';
 
 import Redirects from '../Common/Redirects';

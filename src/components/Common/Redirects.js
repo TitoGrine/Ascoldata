@@ -40,6 +40,11 @@ function Redirects(props) {
 						<Link to={`/find`}>Find New Songs</Link>
 					</li>
 				)}
+				{props.exclude !== 'releases' && (
+					<li>
+						<Link to={`/new_releases?country=${'ALL'}&page=${1}`}>New Releases</Link>
+					</li>
+				)}
 			</React.Fragment>
 		);
 	};
