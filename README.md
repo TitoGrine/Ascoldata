@@ -1,68 +1,27 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Ascoldata
 
-## Available Scripts
+Ascoldata is a website that grants users access to information and statistics about their Spotify's listening history.  
+It also features relevant information about songs, albums, artists and playlists and even allows for requesting song recommendations,
+based on various attributes, using the [Spotify API](https://developer.spotify.com/documentation/web-api/).  
+On an artist's page there is a link to it's Wikipedia page, if found, using the [Wikipedia API](https://en.wikipedia.org/w/api.php).  
+On a song page there is a link to the Genius lyrics page, if found, using the [Genius API](https://genius.com/developers).  
 
-In the project directory, you can run:
+**Ascoldata is in no way affiliated with neither Spotify, Wikipedia nor Genius.**
 
-### `npm start`
+### Technology
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+This project is built with React and bootstrapped with [Create React App](https://github.com/facebook/create-react-app).  
+For making calls to the Spotify API it uses the [spotify-web-api-js](https://github.com/JMPerez/spotify-web-api-js) package, and
+for the Wikipedia API the [wikijs](https://github.com/dijs/wiki) package.  
+For dealing with the Spotify's OAuth authentication cycle and token refreshing it uses [Firebase Functions](https://firebase.google.com/products/functions/),
+however the code is contained in another repository for security reasons.  
+The website is currently being hosted on [Netlify](https://www.netlify.com).
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+### Contacts
 
-### `npm test`
+To report bugs or request features for the website you can open an issue on this repository.  
+Alternatively you can send an email to [ascoldata@gmail.com](mailto:ascoldata@gmail.com).
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+<p align="center">
+  <img width="150" height="150" src="https://github.com/TitoGrine/Ascoldata/blob/master/src/assets/images/logo.svg">
+</p>
