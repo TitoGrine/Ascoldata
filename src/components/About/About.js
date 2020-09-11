@@ -111,6 +111,7 @@ function About() {
 							here
 						</a>.
 					</p>
+					<h4>Contacts</h4>
 					<p>
 						{' '}
 						If you discover a bug or have some question regarding this project, contact me through email at{' '}

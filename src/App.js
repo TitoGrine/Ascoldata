@@ -45,6 +45,7 @@ import About from './components/About/About';
 import PrivacyPolicy from './components/Privacy/PrivacyPolicy';
 import ArtistAlbums from './components/Artist/ArtistAlbums';
 import NewReleases from './components/Album/NewReleases';
+import FeaturedPlaylists from './components/Playlist/FeaturedPlaylists';
 
 function App() {
 	ReactGA.initialize(process.env.REACT_APP_GOOGLE_TRACK_ID);
@@ -70,6 +71,7 @@ function App() {
 						<Route exact={true} path="/user_playlists" component={UserPlaylists} />
 						<Route exact={true} path="/playlist_tracks" component={PlaylistTracks} />
 						<Route exact={true} path="/creator_playlists" component={CreatorPlaylists} />
+						<Route exact={true} path="/featured_playlists" component={FeaturedPlaylists} />
 						<Route exact={true} path="/liked" component={Liked} />
 						<Route exact={true} path="/followed" component={Followed} />
 						<Route exact={true} path="/search" component={SearchResults} />

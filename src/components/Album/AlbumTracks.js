@@ -115,7 +115,7 @@ function AlbumTracks() {
 	);
 
 	useEffect(() => {
-		table.current.scrollTo(0, 0);
+		if (table.current) table.current.scrollTo(0, 0);
 	});
 
 	useEffect(() => {

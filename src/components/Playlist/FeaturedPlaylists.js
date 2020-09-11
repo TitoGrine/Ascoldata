@@ -8,6 +8,7 @@ import { Helmet } from 'react-helmet';
 import { trackPromise, usePromiseTracker } from 'react-promise-tracker';
 
 import { refreshToken } from '../Auth/Auth';
+import { ISOcodes_array, getCountryFromISOCode } from '../Util/Countries';
 import { useMediaQuery } from 'react-responsive';
 
 import Redirects from '../Common/Redirects';
@@ -16,26 +17,27 @@ import SideToggle from '../Common/SideToggle';
 import HeaderBar from '../Common/HeaderBar';
 import LoadingSpinner from '../Common/LoadingSpinner';
 import NoContent from '../Common/NoContent';
-import AlbumCards from '../Album/AlbumCards';
-import AlbumTable from '../Album/AlbumTable';
+import PlaylistCards from './PlaylistCards';
+import PlaylistTable from './PlaylistTable';
 
 const spotifyWebApi = new Spotify();
 
-function ArtistAlbums() {
+function FeaturedPlaylists() {
 	const query = new URLSearchParams(useLocation().search);
 	const history = useHistory();
 	const limit = 12;
 
 	const { promiseInProgress } = usePromiseTracker();
 
-	const artistId = query.get('id');
 	const [ toggled, setToggled ] = useState('nothing');
 	const toggleButton = useRef(null);
 	const table = useRef(null);
 
 	const [ authToken, setAuthToken ] = useState(localStorage.getItem('authToken'));
-	const [ artistName, setArtistName ] = useState('');
-	const [ artistAlbums, setArtistAlbums ] = useState([]);
+	const [ country, setCountry ] = useState(query.get('country'));
+	const [ date, setDate ] = useState(query.get('date'));
+	const [ featuredPlaylists, setFeaturedPlaylists ] = useState([]);
+	// const [ customMessage, setCustomMessage ] = useState('');
 	const [ page, setPage ] = useState(parseInt(query.get('page')));
 	const [ offset, setOffset ] = useState(limit * (page - 1));
 	const [ totalItems, setTotalItems ] = useState(0);
@@ -43,47 +45,36 @@ function ArtistAlbums() {
 	const colapseTable = useMediaQuery({ maxWidth: 700 });
 	const decreasePagination = useMediaQuery({ maxWidth: 500 });
 
-	const getArtistName = useCallback(
-		() => {
-			if (artistName.length > 0) return;
-
-			spotifyWebApi.getArtist(artistId).then(
-				function(data) {
-					setArtistName((artistName) => data.name);
-				},
-				function(err) {
-					console.log(err);
-				}
-			);
-		},
-		[ artistId, artistName ]
-	);
-
 	const getData = useCallback(
 		() => {
 			spotifyWebApi.setAccessToken(authToken);
 
-			trackPromise(
-				spotifyWebApi
-					.getArtistAlbums(artistId, {
-						limit: limit,
-						offset: offset
-					})
-					.then(
-						function(data) {
-							// console.log(data);
-							setTotalItems(data.total);
-							setArtistAlbums(data.items);
-						},
-						function(err) {
-							console.log(err);
+			let options = {
+				limit: limit,
+				offset: offset,
+				timestamp: `${date}${new Date().toISOString().replace(/\d\d\d\d-\d\d-\d\d/g, '').replace(/\..*/g, '')}`
+			};
 
-							if (err.status === 401) refreshToken((new_token) => setAuthToken(new_token));
-						}
-					)
+			if (country !== 'ALL') options.country = country;
+
+			trackPromise(
+				spotifyWebApi.getFeaturedPlaylists(options).then(
+					function(data) {
+						//console.log(data);
+						setTotalItems(data.playlists.total);
+						// setCustomMessage(data.message);
+						setFeaturedPlaylists(data.playlists.items);
+					},
+					function(err) {
+						console.log(err);
+
+						if (err.status === 400) setFeaturedPlaylists([]);
+						else if (err.status === 401) refreshToken((new_token) => setAuthToken(new_token));
+					}
+				)
 			);
 		},
-		[ artistId, authToken, offset ]
+		[ authToken, offset, country, date ]
 	);
 
 	const switchPage = (ev) => {
@@ -97,18 +88,16 @@ function ArtistAlbums() {
 			if (authToken) {
 				getData();
 				setPage(1 + offset / limit);
-
-				getArtistName();
 			}
 		},
-		[ authToken, offset, getData, getArtistName ]
+		[ authToken, offset, getData ]
 	);
 
 	useEffect(
 		() => {
-			history.push(`/artist_albums?id=${artistId}&page=${page}`);
+			history.push(`/featured_playlists?country=${country}&date=${date}&page=${page}`);
 		},
-		[ history, artistId, page ]
+		[ history, page, country, date ]
 	);
 
 	useEffect(() => {
@@ -116,7 +105,7 @@ function ArtistAlbums() {
 	});
 
 	useEffect(() => {
-		ReactGA.pageview('/artist_albums');
+		ReactGA.pageview('/featured_playlists');
 	});
 
 	if (!authToken) return <Redirect to="/" />;
@@ -124,7 +113,7 @@ function ArtistAlbums() {
 	return (
 		<React.Fragment>
 			<Helmet>
-				<title>{`${artistName.length > 0 ? artistName : 'Artist'} albums - Ascoldata`}</title>
+				<title>{`${getCountryFromISOCode(country)} featured playlists - Ascoldata`}</title>
 			</Helmet>
 			<HeaderBar />
 			<div id="corporum">
@@ -136,12 +125,15 @@ function ArtistAlbums() {
 					}}
 				>
 					<LoadingSpinner />
-					{artistAlbums.length > 0 && (
+					{featuredPlaylists.length > 0 && (
 						<React.Fragment>
 							{colapseTable ? (
-								<AlbumCards results={artistAlbums} />
+								<PlaylistCards results={featuredPlaylists} />
 							) : (
-								<AlbumTable results={artistAlbums} maxHeight={artistAlbums.length / limit * 100} />
+								<PlaylistTable
+									results={featuredPlaylists}
+									maxHeight={featuredPlaylists.length / limit * 100}
+								/>
 							)}
 							<Pagination
 								activePage={page}
@@ -153,21 +145,61 @@ function ArtistAlbums() {
 						</React.Fragment>
 					)}
 					{!promiseInProgress &&
-					artistAlbums.length === 0 && <NoContent mainText="Artist doesn't have any albums..." />}
+					featuredPlaylists.length === 0 && (
+						<NoContent mainText={`No featured playlists for ${getCountryFromISOCode(country)}...`} />
+					)}
 				</section>
 				<section className={`sidebar-section slide-in-right sidebar-${toggled}`} />
 				<div className={`side-content slide-in-right sidebar-${toggled}`}>
 					<Tabs>
 						<TabList>
+							<Tab>Settings</Tab>
 							<Tab>Search</Tab>
 							<Tab>Go to</Tab>
 						</TabList>
 
 						<TabPanel>
+							<div className="dropdown-country-input">
+								<label for="countries"> Select a country: </label>
+								<select
+									name="countries"
+									id="countries"
+									onChange={(ev) => {
+										setCountry(ev.target.value);
+									}}
+								>
+									<option key="ALL" value="ALL" selected={'ALL' === country}>
+										All
+									</option>
+									{ISOcodes_array.map((code) => {
+										return (
+											<option key={code} value={code} selected={code === country}>
+												{getCountryFromISOCode(code)}
+											</option>
+										);
+									})}
+								</select>
+							</div>
+							<div className="dropdown-timestamp-input">
+								<label for="date"> Select a date: </label>
+								<input
+									type="date"
+									id="date"
+									name="date"
+									value={date}
+									min="2006-04-23"
+									max={new Date().toISOString().replace(/T.*/g, '')}
+									onChange={(ev) => {
+										setDate(`${ev.target.value}`);
+									}}
+								/>
+							</div>
+						</TabPanel>
+						<TabPanel>
 							<Search />
 						</TabPanel>
 						<TabPanel>
-							<Redirects exclude="" />
+							<Redirects exclude="featured" />
 						</TabPanel>
 					</Tabs>
 				</div>
@@ -182,4 +214,4 @@ function ArtistAlbums() {
 	);
 }
 
-export default ArtistAlbums;
+export default FeaturedPlaylists;

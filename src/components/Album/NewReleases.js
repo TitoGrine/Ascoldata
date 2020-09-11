@@ -65,8 +65,7 @@ function NewReleases() {
 						console.log(err);
 
 						if (err.status === 400) setNewReleases([]);
-
-						if (err.status === 401) refreshToken((new_token) => setAuthToken(new_token));
+						else if (err.status === 401) refreshToken((new_token) => setAuthToken(new_token));
 					}
 				)
 			);
@@ -98,7 +97,7 @@ function NewReleases() {
 	);
 
 	useEffect(() => {
-		table.current.scrollTo(0, 0);
+		if (table.current) table.current.scrollTo(0, 0);
 	});
 
 	useEffect(() => {
@@ -110,7 +109,7 @@ function NewReleases() {
 	return (
 		<React.Fragment>
 			<Helmet>
-				<title>{`${getCountryFromISOCode(country)} new Releases - Ascoldata`}</title>
+				<title>{`${getCountryFromISOCode(country)} new releases - Ascoldata`}</title>
 			</Helmet>
 			<HeaderBar />
 			<div id="corporum">
@@ -159,8 +158,8 @@ function NewReleases() {
 									setCountry(ev.target.value);
 								}}
 							>
-								<p> Select a country: </p>
-								<select name="countries">
+								<label for="countries"> Select a country: </label>
+								<select name="countries" id="countries">
 									<option key="ALL" value="ALL" selected={'ALL' === country}>
 										All
 									</option>

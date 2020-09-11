@@ -22,7 +22,7 @@ function Redirects(props) {
 				)}
 				{props.exclude !== 'liked' && (
 					<li>
-						<Link to={`/liked?page=${1}`}>Your Liked Songs</Link>
+						<Link to={`/liked?page=${1}`}>Liked Songs</Link>
 					</li>
 				)}
 				{props.exclude !== 'followed' && (
@@ -43,6 +43,17 @@ function Redirects(props) {
 				{props.exclude !== 'releases' && (
 					<li>
 						<Link to={`/new_releases?country=${'ALL'}&page=${1}`}>New Releases</Link>
+					</li>
+				)}
+				{props.exclude !== 'featured' && (
+					<li>
+						<Link
+							to={`/featured_playlists?country=${'ALL'}&date=${new Date()
+								.toISOString()
+								.replace(/T.*/g, '')}&page=${1}`}
+						>
+							Featured Playlists
+						</Link>
 					</li>
 				)}
 			</React.Fragment>
