@@ -36,9 +36,10 @@ function About() {
 				>
 					<h4>About the Website</h4>
 					<p>
-						Ascoldata is a website that allows users to get access to information and statistics about their
-						Spotify's listening history. It also gives information about songs, albums, artists and
-						playlists on Spotify and even allows users to request song recommendations using{' '}
+						Ascoldata is a website that grants users access to information and statistics about their
+						Spotify's listening history. It also features relevant information about songs, albums, artists
+						and playlists on Spotify and even allows users to request song recommendations, based on various
+						attributes, using the{' '}
 						<a
 							href="https://developer.spotify.com/documentation/web-api/"
 							target="_blank"
@@ -52,8 +53,8 @@ function About() {
 						<a href="https://genius.com/developers" target="_blank" rel="noopener noreferrer">
 							Genius API
 						</a>.<br />
-						Explore your favourite songs and artists and maybe discover some interesting patterns in your
-						listening habits.
+						Check out your most listened songs and artists, or see new releases in various countries.<br />
+						Explore and have fun!
 					</p>
 					<p>
 						The idea for Ascoldata came when I wanted to explore APIs and build something as a summer
