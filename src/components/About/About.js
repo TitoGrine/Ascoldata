@@ -7,8 +7,8 @@ import { Button } from 'react-bootstrap';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 
 import SideToggle from '../Common/SideToggle';
-import { getRandomCharity } from '../Util/Charities';
 import Redirects from '../Common/Redirects';
+import { getRandomCharity } from '../Util/Charities';
 
 function About() {
 	const history = useHistory();

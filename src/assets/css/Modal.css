@@ -1,0 +1,35 @@
+.confirmation-modal .modal-content {
+	background-color: var(--color-neutral);
+	padding: 0.4em;
+	border: 2px groove var(--color-primary);
+}
+
+.confirmation-modal .modal-header,
+.confirmation-modal .modal-footer {
+	border: 0;
+}
+
+.confirmation-modal .modal-header button {
+	color: var(--color-primary);
+	text-shadow: none;
+	font-size: 1.8rem;
+}
+
+.confirmation-modal .modal-footer button {
+	text-decoration: none;
+	font-size: 1rem;
+	font-weight: 500;
+	border-width: 0;
+	border-radius: 5px;
+	width: 25%;
+}
+
+.confirmation-modal .modal-footer button.btn-primary {
+	color: var(--color-neutral);
+	background-color: var(--color-primary);
+}
+
+.confirmation-modal .modal-footer button.btn-secondary {
+	color: var(--color-primary);
+	background-color: rgb(250, 235, 215, 0.1);
+}

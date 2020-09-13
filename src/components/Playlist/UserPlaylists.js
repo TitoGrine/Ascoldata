@@ -132,7 +132,7 @@ function UserPlaylists() {
 				</section>
 				<section className={`sidebar-section slide-in-right sidebar-${toggled}`} />
 				<div className={`side-content slide-in-right sidebar-${toggled}`}>
-					<Tabs>
+					<Tabs defaultIndex={1}>
 						<TabList>
 							<Tab>Search</Tab>
 							<Tab>Go to</Tab>

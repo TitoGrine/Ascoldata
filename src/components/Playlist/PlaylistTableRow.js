@@ -16,7 +16,7 @@ function PlaylistTableRow(props) {
 					props.info.owner.display_name
 				)}
 			</td>
-			<td>{props.info.public ? 'Yes' : 'No'}</td>
+			<td>{props.info.public !== false ? 'Yes' : 'No'}</td>
 			<td>{props.info.tracks.total}</td>
 		</tr>
 	);

@@ -2,6 +2,16 @@ import axios from 'axios';
 import { addToDate } from '../Util/HelperFunc';
 import { clearStorage } from '../Util/Storage';
 
+export const setTokens = async (params) => {
+	let expirationDate = addToDate(new Date(), 48);
+	let bufferDate = addToDate(new Date(), 0, 2);
+
+	localStorage.setItem('expirationDate', expirationDate.getTime());
+	localStorage.setItem('bufferDate', bufferDate.getTime());
+	localStorage.setItem('authToken', params.access_token);
+	localStorage.setItem('refreshToken', params.refresh_token);
+};
+
 export const refreshToken = async (updateFunction) => {
 	let currDate = new Date().getTime();
 	let expirationDate = localStorage.getItem('expirationDate');

@@ -20,7 +20,8 @@
 		grid-row: 4 / span 24;
 	}
 
-	section.login-section {
+	section.showcase-section,
+	section.content-section-shrink {
 		grid-row: 1 / span 17;
 	}
 
@@ -98,7 +99,7 @@
 }
 
 @media screen and (max-width: 1140px) and (min-width: 900px) {
-	section.login-section .carousel img {
+	section.showcase-section .carousel img {
 		width: 80%;
 	}
 }
@@ -109,7 +110,8 @@
 		grid-column: 3 / span 10 !important;
 	}
 
-	section.login-section {
+	section.showcase-section,
+	section.content-section-shrink {
 		grid-row: 1 / span 17;
 	}
 
@@ -192,7 +194,7 @@
 		padding: 0 0.5em;
 	}
 
-	section.login-section .carousel img {
+	section.showcase-section .carousel img {
 		max-height: 60vh;
 	}
 

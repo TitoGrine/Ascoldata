@@ -37,7 +37,6 @@ function FeaturedPlaylists() {
 	const [ country, setCountry ] = useState(query.get('country'));
 	const [ date, setDate ] = useState(query.get('date'));
 	const [ featuredPlaylists, setFeaturedPlaylists ] = useState([]);
-	// const [ customMessage, setCustomMessage ] = useState('');
 	const [ page, setPage ] = useState(parseInt(query.get('page')));
 	const [ offset, setOffset ] = useState(limit * (page - 1));
 	const [ totalItems, setTotalItems ] = useState(0);
@@ -60,9 +59,8 @@ function FeaturedPlaylists() {
 			trackPromise(
 				spotifyWebApi.getFeaturedPlaylists(options).then(
 					function(data) {
-						//console.log(data);
+						console.log(data);
 						setTotalItems(data.playlists.total);
-						// setCustomMessage(data.message);
 						setFeaturedPlaylists(data.playlists.items);
 					},
 					function(err) {

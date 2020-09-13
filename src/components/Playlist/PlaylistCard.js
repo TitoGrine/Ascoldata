@@ -36,7 +36,7 @@ export class PlaylistCard extends Component {
 				</div>
 				<div>
 					<strong>Public: </strong>
-					{this.props.info.public ? <MdDone style={checkStyle} /> : <MdBlock style={blockStyle} />}
+					{this.props.info.public !== false ? <MdDone style={checkStyle} /> : <MdBlock style={blockStyle} />}
 				</div>
 				<div>
 					<strong>Nr. Songs: </strong>

@@ -1,0 +1,83 @@
+.icon-link {
+	font-size: 36px;
+	line-height: 0;
+	text-align: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.spotify-icon-link {
+	position: absolute;
+	right: 20px;
+	top: 20px;
+	color: var(--color-spotify);
+}
+
+.spotify-icon-link:hover {
+	color: var(--color-spotify);
+}
+
+.wikipedia-icon-link {
+	position: absolute;
+	top: 20px;
+	right: 80px;
+	color: black;
+	background-color: var(--color-wikipedia);
+	border-radius: 2px;
+}
+
+.wikipedia-icon-link:hover {
+	color: black;
+}
+
+.genius-icon-link {
+	position: absolute;
+	top: 20px;
+	right: 80px;
+	color: black;
+}
+
+.genius-icon-link > img {
+	width: 36px;
+	transform: rotateZ(-45deg);
+}
+
+.genius-icon-link:hover {
+	color: black;
+}
+
+.default-stats-icon-link {
+	position: absolute;
+	right: 20px;
+	top: 20px;
+	border: 0;
+	padding-top: 6px;
+	padding-bottom: 6px;
+
+	background-color: var(--color-primary);
+	color: var(--color-neutral);
+	border-radius: 20em;
+}
+
+.random-stats-icon-link {
+	position: absolute;
+	right: 80px;
+	top: 20px;
+	border: 0;
+	padding-top: 6px;
+	padding-bottom: 6px;
+
+	background-color: var(--color-primary);
+	color: var(--color-neutral);
+	border-radius: 20em;
+}
+
+.wikipedia-icon-link > svg {
+	padding: 4px 6px;
+}
+
+.default-stats-icon-link > svg,
+.random-stats-icon-link > svg {
+	padding: 3px;
+}

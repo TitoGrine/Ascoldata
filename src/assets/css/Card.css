@@ -1,0 +1,45 @@
+#cards {
+	display: flex;
+	flex-wrap: nowrap;
+	gap: 2em;
+	min-height: 520px;
+	height: min(80vh, 100%);
+	width: 95vw;
+	padding: 0.5em;
+
+	overflow-x: scroll;
+	-webkit-overflow-scrolling: touch;
+	overflow-y: hidden;
+	scroll-snap-type: x mandatory;
+
+	scroll-snap-destination: 0% 100%;
+	scroll-snap-points-x: repeat(100%);
+}
+
+.card {
+	flex: 0 0 auto;
+	width: clamp(200px, 85vw, 300px);
+	height: min(80vh, 100%);
+	padding: 2em 1em;
+	border: 2px groove var(--color-primary);
+
+	scroll-snap-align: center;
+
+	color: var(--color-secondary);
+	background-color: var(--color-neutral);
+	display: flex;
+	flex-direction: column;
+	gap: 1.2em;
+	font-size: clamp(1.0em, 1.1em, 1.1em);
+	align-items: center;
+	justify-content: center;
+	overflow-y: hidden;
+}
+
+.card > div {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	text-align: center;
+	gap: 0.4em;
+}

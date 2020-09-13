@@ -1,12 +1,20 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import ReactGA from 'react-ga';
 import HeaderBar from '../Common/HeaderBar';
 import { Helmet } from 'react-helmet';
 import { Button } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+
+import Login from '../Login/Login';
+import SideToggle from '../Common/SideToggle';
+import Redirects from '../Common/Redirects';
 
 function PrivacyPolicy() {
 	const history = useHistory();
+	const loggedIn = localStorage.getItem('refreshToken');
+	const [ toggled, setToggled ] = useState('nothing');
+	const toggleButton = useRef(null);
 
 	useEffect(() => {
 		ReactGA.pageview('/privacy_policy');
@@ -23,7 +31,7 @@ function PrivacyPolicy() {
 			</Helmet>
 			<HeaderBar />
 			<div id="corporum">
-				<section className="content-section privacy-policy">
+				<section className={`content-section privacy-policy ${loggedIn ? '' : 'content-section-shrink'}`}>
 					<h2>Privacy Policy for Ascoldata</h2>
 					<p>
 						At Ascoldata, accessible from <a href="https://www.ascoldata.fun">https://www.ascoldata.fun</a>,
@@ -186,7 +194,30 @@ function PrivacyPolicy() {
 						<strong>Go Back</strong>
 					</Button>
 				</section>
-				<section className="sidebar-section slide-in-right sidebar-nothing" />
+				<section
+					className={`sidebar-section slide-in-right ${loggedIn ? `sidebar-${toggled}` : 'login-sidebar'}`}
+				/>
+				{!loggedIn && <Login />}
+				{loggedIn && (
+					<React.Fragment>
+						<div className={`side-content slide-in-right sidebar-${toggled} about-sidebar`}>
+							<Tabs>
+								<TabList>
+									<Tab>Go to</Tab>
+								</TabList>
+								<TabPanel>
+									<Redirects exclude="" />
+								</TabPanel>
+							</Tabs>
+						</div>
+						<SideToggle
+							ref={toggleButton}
+							toggleFunc={(state) => {
+								setToggled(state);
+							}}
+						/>
+					</React.Fragment>
+				)}
 			</div>
 		</React.Fragment>
 	);
