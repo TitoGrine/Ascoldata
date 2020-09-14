@@ -36,6 +36,7 @@ function Track() {
 	const [ trackAlbum, setTrackAlbum ] = useState('');
 	const [ trackArtists, setTrackArtists ] = useState('');
 	const [ trackDuration, setTrackDuration ] = useState('');
+	const [ trackReleaseDate, setTrackReleaseDate ] = useState('');
 	const [ trackPopularity, setTrackPopularity ] = useState('');
 
 	const [ geniusLink, setGeniusLink ] = useState('');
@@ -81,12 +82,15 @@ function Track() {
 			trackPromise(
 				spotifyWebApi.getTrack(track).then(
 					function(data) {
+						// console.log(data);
+
 						setTrackName(data.name);
 						setTrackLink(data.external_urls.spotify);
 						setTrackUri(data.uri);
 						setTrackAlbum(data.album);
 						setTrackArtists(data.artists);
 						setTrackDuration(data.duration_ms);
+						setTrackReleaseDate(data.album.release_date);
 						setTrackPopularity(data.popularity);
 
 						getGeniusLink(data.name, data.artists.length > 0 ? data.artists[0].name : '').then(
@@ -225,6 +229,7 @@ function Track() {
 										value={formatDuration(trackDuration)}
 										units=""
 									/>
+									<StatCard barStat={false} title="Release Date" value={trackReleaseDate} units="" />
 								</div>
 								<div>
 									<StatCard

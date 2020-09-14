@@ -72,26 +72,24 @@ function CreatorPlaylists() {
 	);
 
 	const switchPage = (ev) => {
-		if (Number.isInteger(ev)) {
-			setOffset(limit * (ev - 1));
-		}
+		history.push(`/creator_playlists?id=${creatorId}&page=${Number.isInteger(ev) ? ev : 1}`);
 	};
+
+	useEffect(
+		() => {
+			setPage(parseInt(query.get('page')));
+		},
+		[ query ]
+	);
 
 	useEffect(
 		() => {
 			if (authToken) {
 				getData();
-				setPage(1 + offset / limit);
+				setOffset(limit * (page - 1));
 			}
 		},
-		[ authToken, offset, getData ]
-	);
-
-	useEffect(
-		() => {
-			history.push(`/creator_playlists?id=${creatorId}&page=${page}`);
-		},
-		[ history, creatorId, page ]
+		[ authToken, page, getData ]
 	);
 
 	useEffect(() => {
@@ -119,7 +117,8 @@ function CreatorPlaylists() {
 					}}
 				>
 					<LoadingSpinner />
-					{creatorPlaylists.length > 0 && (
+					{!promiseInProgress &&
+					creatorPlaylists.length > 0 && (
 						<React.Fragment>
 							{colapseTable ? (
 								<PlaylistCards results={creatorPlaylists} />

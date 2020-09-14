@@ -73,27 +73,30 @@ function NewReleases() {
 		[ authToken, offset, country ]
 	);
 
-	const switchPage = (ev) => {
-		if (Number.isInteger(ev)) {
-			setOffset(limit * (ev - 1));
-		}
+	const updateCountry = (ev) => {
+		history.push(`/new_releases?country=${ev.target.value}&page=${1}`);
 	};
+
+	const switchPage = (ev) => {
+		history.push(`/new_releases?country=${country}&page=${Number.isInteger(ev) ? ev : 1}`);
+	};
+
+	useEffect(
+		() => {
+			setCountry(query.get('country'));
+			setPage(parseInt(query.get('page')));
+		},
+		[ query ]
+	);
 
 	useEffect(
 		() => {
 			if (authToken) {
 				getData();
-				setPage(1 + offset / limit);
+				setOffset(limit * (page - 1));
 			}
 		},
-		[ authToken, offset, getData ]
-	);
-
-	useEffect(
-		() => {
-			history.push(`/new_releases?country=${country}&page=${page}`);
-		},
-		[ history, page, country ]
+		[ authToken, page, getData ]
 	);
 
 	useEffect(() => {
@@ -152,12 +155,7 @@ function NewReleases() {
 						</TabList>
 
 						<TabPanel>
-							<div
-								className="dropdown-country-input"
-								onChange={(ev) => {
-									setCountry(ev.target.value);
-								}}
-							>
+							<div className="dropdown-country-input" onChange={updateCountry}>
 								<label for="countries"> Select a country: </label>
 								<select name="countries" id="countries">
 									<option key="ALL" value="ALL" selected={'ALL' === country}>

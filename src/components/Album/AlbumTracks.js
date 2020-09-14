@@ -92,26 +92,24 @@ function AlbumTracks() {
 	);
 
 	const switchPage = (ev) => {
-		if (Number.isInteger(ev)) {
-			setOffset(limit * (ev - 1));
-		}
+		history.push(`/album_tracks?id=${albumId}&page=${Number.isInteger(ev) ? ev : 1}`);
 	};
+
+	useEffect(
+		() => {
+			setPage(parseInt(query.get('page')));
+		},
+		[ query ]
+	);
 
 	useEffect(
 		() => {
 			if (authToken) {
 				getData();
-				setPage(1 + offset / limit);
+				setOffset(limit * (page - 1));
 			}
 		},
-		[ authToken, offset, getData ]
-	);
-
-	useEffect(
-		() => {
-			history.push(`/album_tracks?id=${albumId}&page=${page}`);
-		},
-		[ history, albumId, page ]
+		[ authToken, page, getData ]
 	);
 
 	useEffect(() => {
@@ -139,7 +137,8 @@ function AlbumTracks() {
 					}}
 				>
 					<LoadingSpinner />
-					{albumTracks.length > 0 && (
+					{!promiseInProgress &&
+					albumTracks.length > 0 && (
 						<React.Fragment>
 							{colapseTable ? (
 								<TrackCards results={albumTracks} />

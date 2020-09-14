@@ -18,8 +18,8 @@ export const formatDuration = (duration_ms) => {
 	let hours = Math.floor(minutes / 60);
 
 	return hours === 0
-		? ('00' + minutes).slice(-2) + ':' + ('00' + seconds % 60).slice(-2)
-		: hours + 'h ' + ('00' + minutes % 60).slice(-2) + 'min';
+		? `${('00' + minutes).slice(-2)}:${('00' + seconds % 60).slice(-2)}`
+		: `${hours}h ${('00' + minutes % 60).slice(-2)}min`;
 };
 
 export const getExplanation = (explanation) => {

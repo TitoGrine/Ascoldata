@@ -105,10 +105,15 @@ function PlaylistTracks() {
 	);
 
 	const switchPage = (ev) => {
-		if (Number.isInteger(ev)) {
-			setOffset(limit * (ev - 1));
-		}
+		history.push(`/playlist_tracks?id=${playlistId}&page=${Number.isInteger(ev) ? ev : 1}`);
 	};
+
+	useEffect(
+		() => {
+			setPage(parseInt(query.get('page')));
+		},
+		[ query ]
+	);
 
 	useEffect(
 		() => {
@@ -116,17 +121,10 @@ function PlaylistTracks() {
 				getData();
 				getPlaylistName();
 
-				setPage(1 + offset / limit);
+				setOffset(limit * (page - 1));
 			}
 		},
-		[ authToken, offset, getData, getPlaylistName ]
-	);
-
-	useEffect(
-		() => {
-			history.push(`/playlist_tracks?id=${playlistId}&page=${page}`);
-		},
-		[ history, playlistId, page ]
+		[ authToken, page, getData, getPlaylistName ]
 	);
 
 	useEffect(() => {

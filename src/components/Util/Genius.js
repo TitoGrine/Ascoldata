@@ -5,7 +5,7 @@ const cleanQuery = (track, artist) => {
 		.toLowerCase()
 		.replace(/ *\([^)]*\) */g, '')
 		.replace(/ *\[[^\]]*]/, '')
-		.replace(/feat.|ft./g, '')
+		.replace(/feat\.|ft\./g, '')
 		.replace(/\s+/g, ' ')
 		.trim();
 };
@@ -22,6 +22,8 @@ export const getGeniusLink = (track, artist) => {
 		let requestURL = `https://api.genius.com/search?q=${encodeURI(cleanQuery(track, artist))}&access_token=${process
 			.env.REACT_APP_GENIUS_TOKEN}`;
 
+		// console.log(requestURL);
+
 		fetch(requestURL)
 			.then((response) => {
 				if (response.status === 200) return response.json();
@@ -29,9 +31,6 @@ export const getGeniusLink = (track, artist) => {
 			})
 			.then((json) => {
 				// console.log(json);
-				// if (json.response.hits.length > 0) {
-				// 	resolve(json.response.hits[0].result.url);
-				// }
 
 				json.response.hits.forEach((hit) => {
 					if (likelyMatch(track, hit.result.title) || likelyMatch(artist, hit.result.primary_artist.name))

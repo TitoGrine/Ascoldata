@@ -60,7 +60,7 @@ function UserStats() {
 					data.audio_features.forEach((track_info) => {
 						avgStats.acousticness += 100 * track_info.acousticness / data.audio_features.length;
 						avgStats.danceability += 100 * track_info.danceability / data.audio_features.length;
-						avgStats.duration_ms += track_info.duration_ms;
+						avgStats.duration_ms += track_info.duration_ms / data.audio_features.length;
 						avgStats.energy += 100 * track_info.energy / data.audio_features.length;
 						avgStats.instrumentalness += 100 * track_info.instrumentalness / data.audio_features.length;
 						avgStats.liveness += 100 * track_info.liveness / data.audio_features.length;

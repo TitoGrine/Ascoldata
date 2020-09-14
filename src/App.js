@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom';
+import { BrowserRouter, Route, Redirect, Switch } from 'react-router-dom';
 import ReactGA from 'react-ga';
 
 import './App.css';
@@ -59,7 +59,7 @@ function App() {
 	return (
 		<React.Fragment>
 			<div className="App">
-				<Router>
+				<BrowserRouter>
 					<Switch>
 						<Route exact={true} path="/" component={Home} />
 						<Route exact={true} path="/about" component={About} />
@@ -97,7 +97,7 @@ function App() {
 						{/* Default to 404 page when route not found */}
 						<Redirect to="/404" />
 					</Switch>
-				</Router>
+				</BrowserRouter>
 			</div>
 		</React.Fragment>
 	);

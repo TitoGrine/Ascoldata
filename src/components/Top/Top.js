@@ -130,39 +130,37 @@ function Top() {
 
 	const updateTopType = (ev) => {
 		setTopResults([]);
-		setOffset(0);
-		history.push(`/top?type=${ev.target.value}&time_range=${timeRange}&page=${page}`);
-		setTopType(ev.target.value);
+		history.push(`/top?type=${ev.target.value}&time_range=${timeRange}&page=${1}`);
 	};
 
 	const updateTimeRange = (ev) => {
 		setTopResults([]);
-		setOffset(0);
-		history.push(`/top?type=${topType}&time_range=${ev.target.value}&page=${page}`);
-		setTimeRange(ev.target.value);
+		history.push(`/top?type=${topType}&time_range=${ev.target.value}&page=${1}`);
 	};
 
 	const switchPage = (ev) => {
-		if (Number.isInteger(ev)) {
-			setOffset(limit * (ev - 1));
-		}
+		history.push(`/top?type=${topType}&time_range=${timeRange}&page=${Number.isInteger(ev) ? ev : 1}`);
 	};
+
+	useEffect(
+		() => {
+			if (query.get('type') !== topType) setTopResults([]);
+
+			setTopType(query.get('type'));
+			setTimeRange(query.get('time_range'));
+			setPage(parseInt(query.get('page')));
+		},
+		[ query, topType ]
+	);
 
 	useEffect(
 		() => {
 			if (authToken) {
 				getData();
-				setPage(1 + offset / limit);
+				setOffset(limit * (page - 1));
 			}
 		},
-		[ authToken, timeRange, topType, offset, getData ]
-	);
-
-	useEffect(
-		() => {
-			history.push(`/top?type=${topType}&time_range=${timeRange}&page=${page}`);
-		},
-		[ history, timeRange, topType, page ]
+		[ authToken, timeRange, topType, page, getData ]
 	);
 
 	useEffect(() => {

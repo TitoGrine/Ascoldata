@@ -4,7 +4,7 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { useLocation, useHistory, Redirect } from 'react-router-dom';
 import Spotify from 'spotify-web-api-js';
 import { useMediaQuery } from 'react-responsive';
-import { trackPromise } from 'react-promise-tracker';
+import { trackPromise, usePromiseTracker } from 'react-promise-tracker';
 import Pagination from 'react-js-pagination';
 import { Helmet } from 'react-helmet';
 
@@ -17,6 +17,7 @@ import SideToggle from '../Common/SideToggle';
 import PlaylistCards from './PlaylistCards';
 import HeaderBar from '../Common/HeaderBar';
 import LoadingSpinner from '../Common/LoadingSpinner';
+import NoContent from '../Common/NoContent';
 
 const spotifyWebApi = new Spotify();
 
@@ -24,6 +25,8 @@ function UserPlaylists() {
 	const query = new URLSearchParams(useLocation().search);
 	const history = useHistory();
 	const limit = 12;
+
+	const { promiseInProgress } = usePromiseTracker();
 
 	const [ toggled, setToggled ] = useState('nothing');
 	const toggleButton = useRef(null);
@@ -50,7 +53,7 @@ function UserPlaylists() {
 					})
 					.then(
 						function(data) {
-							//console.log(data);
+							// console.log(data);
 							setUserPlaylists(data.items);
 							setTotalItems(data.total);
 						},
@@ -64,28 +67,25 @@ function UserPlaylists() {
 		},
 		[ authToken, offset ]
 	);
-
 	const switchPage = (ev) => {
-		if (Number.isInteger(ev)) {
-			setOffset(limit * (ev - 1));
-		}
+		history.push(`/user_playlists?page=${Number.isInteger(ev) ? ev : 1}`);
 	};
+
+	useEffect(
+		() => {
+			setPage(parseInt(query.get('page')));
+		},
+		[ query ]
+	);
 
 	useEffect(
 		() => {
 			if (authToken) {
 				getData();
-				setPage(1 + offset / limit);
+				setOffset(limit * (page - 1));
 			}
 		},
-		[ offset, getData, authToken ]
-	);
-
-	useEffect(
-		() => {
-			history.push(`/user_playlists?page=${page}`);
-		},
-		[ page, history ]
+		[ page, getData, authToken ]
 	);
 
 	useEffect(() => {
@@ -113,7 +113,8 @@ function UserPlaylists() {
 					}}
 				>
 					<LoadingSpinner />
-					{userPlaylists.length > 0 && (
+					{!promiseInProgress &&
+					userPlaylists.length > 0 && (
 						<React.Fragment>
 							{colapseTable ? (
 								<PlaylistCards results={userPlaylists} />
@@ -128,6 +129,13 @@ function UserPlaylists() {
 								onChange={switchPage}
 							/>
 						</React.Fragment>
+					)}
+					{!promiseInProgress &&
+					userPlaylists.length === 0 && (
+						<NoContent
+							mainText="You don't have any playlists 😮"
+							secondaryText="Try the Find New Songs segment and we'll create a playlist for you."
+						/>
 					)}
 				</section>
 				<section className={`sidebar-section slide-in-right sidebar-${toggled}`} />

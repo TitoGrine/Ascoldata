@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback, useRef } from 'react';
 import ReactGA from 'react-ga';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { useLocation, Redirect } from 'react-router-dom';
-import { trackPromise } from 'react-promise-tracker';
+import { trackPromise, usePromiseTracker } from 'react-promise-tracker';
 import { Helmet } from 'react-helmet';
 import Spotify from 'spotify-web-api-js';
 
@@ -16,11 +16,14 @@ import HeaderBar from '../Common/HeaderBar';
 import LoadingSpinner from '../Common/LoadingSpinner';
 import ArtistCards from './ArtistCards';
 import ArtistTable from './ArtistTable';
+import NoContent from '../Common/NoContent';
 
 const spotifyWebApi = new Spotify();
 
 function RelatedArtists() {
 	const query = new URLSearchParams(useLocation().search);
+
+	const { promiseInProgress } = usePromiseTracker();
 
 	const artistId = query.get('id');
 	const [ toggled, setToggled ] = useState('nothing');
@@ -106,7 +109,8 @@ function RelatedArtists() {
 					}}
 				>
 					<LoadingSpinner />
-					{relatedArtists.length > 0 && (
+					{!promiseInProgress &&
+					relatedArtists.length > 0 && (
 						<React.Fragment>
 							{colapseTable ? (
 								<ArtistCards results={relatedArtists} />
@@ -115,6 +119,8 @@ function RelatedArtists() {
 							)}
 						</React.Fragment>
 					)}
+					{!promiseInProgress &&
+					relatedArtists.length === 0 && <NoContent mainText="No related artists..." />}
 				</section>
 				<section className={`sidebar-section slide-in-right sidebar-${toggled}`} />
 				<div className={`side-content slide-in-right sidebar-${toggled}`}>

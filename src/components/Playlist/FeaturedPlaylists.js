@@ -59,7 +59,7 @@ function FeaturedPlaylists() {
 			trackPromise(
 				spotifyWebApi.getFeaturedPlaylists(options).then(
 					function(data) {
-						console.log(data);
+						// console.log(data);
 						setTotalItems(data.playlists.total);
 						setFeaturedPlaylists(data.playlists.items);
 					},
@@ -75,27 +75,35 @@ function FeaturedPlaylists() {
 		[ authToken, offset, country, date ]
 	);
 
-	const switchPage = (ev) => {
-		if (Number.isInteger(ev)) {
-			setOffset(limit * (ev - 1));
-		}
+	const updateCountry = (ev) => {
+		history.push(`/featured_playlists?country=${ev.target.value}&date=${date}&page=${1}`);
 	};
+
+	const updateDate = (ev) => {
+		history.push(`/featured_playlists?country=${country}&date=${ev.target.value}&page=${1}`);
+	};
+
+	const switchPage = (ev) => {
+		history.push(`/featured_playlists?country=${country}&date=${date}&page=${Number.isInteger(ev) ? ev : 1}`);
+	};
+
+	useEffect(
+		() => {
+			setCountry(query.get('country'));
+			setDate(query.get('date'));
+			setPage(parseInt(query.get('page')));
+		},
+		[ query ]
+	);
 
 	useEffect(
 		() => {
 			if (authToken) {
 				getData();
-				setPage(1 + offset / limit);
+				setOffset(limit * (page - 1));
 			}
 		},
-		[ authToken, offset, getData ]
-	);
-
-	useEffect(
-		() => {
-			history.push(`/featured_playlists?country=${country}&date=${date}&page=${page}`);
-		},
-		[ history, page, country, date ]
+		[ authToken, page, getData ]
 	);
 
 	useEffect(() => {
@@ -123,7 +131,8 @@ function FeaturedPlaylists() {
 					}}
 				>
 					<LoadingSpinner />
-					{featuredPlaylists.length > 0 && (
+					{!promiseInProgress &&
+					featuredPlaylists.length > 0 && (
 						<React.Fragment>
 							{colapseTable ? (
 								<PlaylistCards results={featuredPlaylists} />
@@ -159,13 +168,7 @@ function FeaturedPlaylists() {
 						<TabPanel>
 							<div className="dropdown-country-input">
 								<label for="countries"> Select a country: </label>
-								<select
-									name="countries"
-									id="countries"
-									onChange={(ev) => {
-										setCountry(ev.target.value);
-									}}
-								>
+								<select name="countries" id="countries" onChange={updateCountry}>
 									<option key="ALL" value="ALL" selected={'ALL' === country}>
 										All
 									</option>
@@ -187,9 +190,7 @@ function FeaturedPlaylists() {
 									value={date}
 									min="2006-04-23"
 									max={new Date().toISOString().replace(/T.*/g, '')}
-									onChange={(ev) => {
-										setDate(`${ev.target.value}`);
-									}}
+									onChange={updateDate}
 								/>
 							</div>
 						</TabPanel>

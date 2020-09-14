@@ -87,28 +87,26 @@ function ArtistAlbums() {
 	);
 
 	const switchPage = (ev) => {
-		if (Number.isInteger(ev)) {
-			setOffset(limit * (ev - 1));
-		}
+		history.push(`/artist_albums?id=${artistId}&page=${Number.isInteger(ev) ? ev : 1}`);
 	};
+
+	useEffect(
+		() => {
+			setPage(parseInt(query.get('page')));
+		},
+		[ query ]
+	);
 
 	useEffect(
 		() => {
 			if (authToken) {
 				getData();
-				setPage(1 + offset / limit);
+				setOffset(limit * (page - 1));
 
 				getArtistName();
 			}
 		},
-		[ authToken, offset, getData, getArtistName ]
-	);
-
-	useEffect(
-		() => {
-			history.push(`/artist_albums?id=${artistId}&page=${page}`);
-		},
-		[ history, artistId, page ]
+		[ authToken, page, getData, getArtistName ]
 	);
 
 	useEffect(() => {

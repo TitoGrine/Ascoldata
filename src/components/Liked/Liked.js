@@ -53,7 +53,7 @@ function Liked() {
 					})
 					.then(
 						function(data) {
-							//console.log(data);
+							// console.log(data);
 							setUserLiked(data.items);
 							setTotalItems(data.total);
 						},
@@ -69,26 +69,24 @@ function Liked() {
 	);
 
 	const switchPage = (ev) => {
-		if (Number.isInteger(ev)) {
-			setOffset(limit * (ev - 1));
-		}
+		history.push(`/liked?page=${Number.isInteger(ev) ? ev : 1}`);
 	};
+
+	useEffect(
+		() => {
+			setPage(parseInt(query.get('page')));
+		},
+		[ query ]
+	);
 
 	useEffect(
 		() => {
 			if (authToken) {
 				getData();
-				setPage(1 + offset / limit);
+				setOffset(limit * (page - 1));
 			}
 		},
-		[ authToken, offset, getData ]
-	);
-
-	useEffect(
-		() => {
-			history.push(`/liked?page=${page}`);
-		},
-		[ page, history ]
+		[ authToken, page, getData ]
 	);
 
 	useEffect(() => {
@@ -116,7 +114,8 @@ function Liked() {
 					}}
 				>
 					<LoadingSpinner />
-					{userLiked.length > 0 && (
+					{!promiseInProgress &&
+					userLiked.length > 0 && (
 						<React.Fragment>
 							{colapseTable ? (
 								<TrackCards results={userLiked} />

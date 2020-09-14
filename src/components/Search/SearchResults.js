@@ -74,7 +74,7 @@ function SearchResults() {
 							if (data[`${type}s`].items.length === 0 && offset !== 0) {
 								setShowAlert(true);
 								autoDismiss();
-								switchPage(1);
+								history.push(`/search?q=${q}&type=${type}&page=${1}`);
 							} else {
 								setTotalItems(data[`${type}s`].total);
 								setResults(data[`${type}s`].items);
@@ -88,30 +88,28 @@ function SearchResults() {
 					)
 			);
 		},
-		[ authToken, offset, q, type ]
+		[ authToken, offset, q, type, history ]
 	);
 
 	const switchPage = (ev) => {
-		if (Number.isInteger(ev)) {
-			setOffset(limit * (ev - 1));
-		}
+		history.push(`/search?q=${q}&type=${type}&page=${Number.isInteger(ev) ? ev : 1}`);
 	};
+
+	useEffect(
+		() => {
+			setPage(parseInt(query.get('page')));
+		},
+		[ query ]
+	);
 
 	useEffect(
 		() => {
 			if (authToken) {
 				getData();
-				setPage(1 + offset / limit);
+				setOffset(limit * (page - 1));
 			}
 		},
-		[ authToken, offset, getData ]
-	);
-
-	useEffect(
-		() => {
-			history.push(`/search?q=${q}&type=${type}&page=${page}`);
-		},
-		[ page, q, type, history ]
+		[ authToken, page, getData ]
 	);
 
 	useEffect(() => {
