@@ -1,10 +1,10 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
+import { Button } from 'react-bootstrap';
+import { useHistory } from 'react-router-dom';
 
 import logo from '../../assets/images/logo.svg';
 import HeaderBar from '../Common/HeaderBar';
-import { Button } from 'react-bootstrap';
-import { useHistory } from 'react-router-dom';
 
 function ErrorPage(props) {
 	const history = useHistory();

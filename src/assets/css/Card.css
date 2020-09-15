@@ -1,7 +1,7 @@
 #cards {
 	display: flex;
 	flex-wrap: nowrap;
-	gap: 2em;
+	gap: 1em;
 	min-height: 520px;
 	height: min(80vh, 100%);
 	width: 95vw;

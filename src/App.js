@@ -1,5 +1,5 @@
-import React from 'react';
-import { BrowserRouter, Route, Redirect, Switch } from 'react-router-dom';
+import React, { Suspense, lazy } from 'react';
+import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom';
 import ReactGA from 'react-ga';
 
 import './App.css';
@@ -27,31 +27,34 @@ import './assets/css/Modal.css';
 import './assets/css/Icons.css';
 import './assets/css/About.css';
 import './assets/css/ErrorPage.css';
+import './assets/css/LoadingPage.css';
 import './assets/css/Responsiveness.css';
 
 import Home from './components/Home';
-import Top from './components/Top/Top';
-import UserStats from './components/User/UserStats';
-import Artist from './components/Artist/Artist';
-import Track from './components/Track/Track';
-import Album from './components/Album/Album';
-import UserPlaylists from './components/Playlist/UserPlaylists';
-import Playlist from './components/Playlist/Playlist';
-import Liked from './components/Liked/Liked';
-import SearchResults from './components/Search/SearchResults';
-import Find from './components/Find/Find';
-import Recommendations from './components/Find/Recommendations';
-import AlbumTracks from './components/Album/AlbumTracks';
-import PlaylistTracks from './components/Playlist/PlaylistTracks';
-import CreatorPlaylists from './components/Playlist/CreatorPlaylists';
-import Followed from './components/Followed/Followed';
-import ErrorPage from './components/Error/ErrorPage';
-import RelatedArtists from './components/Artist/RelatedArtists';
-import About from './components/About/About';
-import PrivacyPolicy from './components/Privacy/PrivacyPolicy';
-import ArtistAlbums from './components/Artist/ArtistAlbums';
-import NewReleases from './components/Album/NewReleases';
-import FeaturedPlaylists from './components/Playlist/FeaturedPlaylists';
+import LoadingPage from './components/Error/LoadingPage';
+
+const Top = lazy(() => import('./components/Top/Top'));
+const UserStats = lazy(() => import('./components/User/UserStats'));
+const Artist = lazy(() => import('./components/Artist/Artist'));
+const Track = lazy(() => import('./components/Track/Track'));
+const Album = lazy(() => import('./components/Album/Album'));
+const UserPlaylists = lazy(() => import('./components/Playlist/UserPlaylists'));
+const Playlist = lazy(() => import('./components/Playlist/Playlist'));
+const Liked = lazy(() => import('./components/Liked/Liked'));
+const SearchResults = lazy(() => import('./components/Search/SearchResults'));
+const Find = lazy(() => import('./components/Find/Find'));
+const Recommendations = lazy(() => import('./components/Find/Recommendations'));
+const AlbumTracks = lazy(() => import('./components/Album/AlbumTracks'));
+const PlaylistTracks = lazy(() => import('./components/Playlist/PlaylistTracks'));
+const CreatorPlaylists = lazy(() => import('./components/Playlist/CreatorPlaylists'));
+const Followed = lazy(() => import('./components/Followed/Followed'));
+const ErrorPage = lazy(() => import('./components/Error/ErrorPage'));
+const RelatedArtists = lazy(() => import('./components/Artist/RelatedArtists'));
+const About = lazy(() => import('./components/About/About'));
+const PrivacyPolicy = lazy(() => import('./components/Privacy/PrivacyPolicy'));
+const ArtistAlbums = lazy(() => import('./components/Artist/ArtistAlbums'));
+const NewReleases = lazy(() => import('./components/Album/NewReleases'));
+const FeaturedPlaylists = lazy(() => import('./components/Playlist/FeaturedPlaylists'));
 
 function App() {
 	ReactGA.initialize(process.env.REACT_APP_GOOGLE_TRACK_ID);
@@ -59,45 +62,47 @@ function App() {
 	return (
 		<React.Fragment>
 			<div className="App">
-				<BrowserRouter>
-					<Switch>
-						<Route exact={true} path="/" component={Home} />
-						<Route exact={true} path="/about" component={About} />
-						<Route exact={true} path="/privacy_policy" component={PrivacyPolicy} />
-						<Route exact={true} path="/top" component={Top} />
-						<Route exact={true} path="/user_stats" component={UserStats} />
-						<Route exact={true} path="/artist" component={Artist} />
-						<Route exact={true} path="/related_artists" component={RelatedArtists} />
-						<Route exact={true} path="/artist_albums" component={ArtistAlbums} />
-						<Route exact={true} path="/track" component={Track} />
-						<Route exact={true} path="/album" component={Album} />
-						<Route exact={true} path="/album_tracks" component={AlbumTracks} />
-						<Route exact={true} path="/new_releases" component={NewReleases} />
-						<Route exact={true} path="/playlist" component={Playlist} />
-						<Route exact={true} path="/user_playlists" component={UserPlaylists} />
-						<Route exact={true} path="/playlist_tracks" component={PlaylistTracks} />
-						<Route exact={true} path="/creator_playlists" component={CreatorPlaylists} />
-						<Route exact={true} path="/featured_playlists" component={FeaturedPlaylists} />
-						<Route exact={true} path="/liked" component={Liked} />
-						<Route exact={true} path="/followed" component={Followed} />
-						<Route exact={true} path="/search" component={SearchResults} />
-						<Route exact={true} path="/find" component={Find} />
-						<Route exact={true} path="/recommendations" component={Recommendations} />
-						<Route
-							exact={true}
-							path="/404"
-							render={() => (
-								<ErrorPage
-									errorCode={404}
-									errorShort="Page not found"
-									errorDescription="Sorry, the page you were looking for doesn't exist..."
-								/>
-							)}
-						/>
-						{/* Default to 404 page when route not found */}
-						<Redirect to="/404" />
-					</Switch>
-				</BrowserRouter>
+				<Router>
+					<Suspense fallback={LoadingPage}>
+						<Switch>
+							<Route exact={true} path="/" component={Home} />
+							<Route exact={true} path="/about" component={About} />
+							<Route exact={true} path="/privacy_policy" component={PrivacyPolicy} />
+							<Route exact={true} path="/top" component={Top} />
+							<Route exact={true} path="/user_stats" component={UserStats} />
+							<Route exact={true} path="/artist" component={Artist} />
+							<Route exact={true} path="/related_artists" component={RelatedArtists} />
+							<Route exact={true} path="/artist_albums" component={ArtistAlbums} />
+							<Route exact={true} path="/track" component={Track} />
+							<Route exact={true} path="/album" component={Album} />
+							<Route exact={true} path="/album_tracks" component={AlbumTracks} />
+							<Route exact={true} path="/new_releases" component={NewReleases} />
+							<Route exact={true} path="/playlist" component={Playlist} />
+							<Route exact={true} path="/user_playlists" component={UserPlaylists} />
+							<Route exact={true} path="/playlist_tracks" component={PlaylistTracks} />
+							<Route exact={true} path="/creator_playlists" component={CreatorPlaylists} />
+							<Route exact={true} path="/featured_playlists" component={FeaturedPlaylists} />
+							<Route exact={true} path="/liked" component={Liked} />
+							<Route exact={true} path="/followed" component={Followed} />
+							<Route exact={true} path="/search" component={SearchResults} />
+							<Route exact={true} path="/find" component={Find} />
+							<Route exact={true} path="/recommendations" component={Recommendations} />
+							<Route
+								exact={true}
+								path="/404"
+								render={() => (
+									<ErrorPage
+										errorCode={404}
+										errorShort="Page not found"
+										errorDescription="Sorry, the page you were looking for doesn't exist..."
+									/>
+								)}
+							/>
+							{/* Default to 404 page when route not found */}
+							<Redirect to="/404" />
+						</Switch>
+					</Suspense>
+				</Router>
 			</div>
 		</React.Fragment>
 	);

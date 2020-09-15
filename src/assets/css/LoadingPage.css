@@ -1,0 +1,19 @@
+#loading-page {
+	width: 100vw;
+	height: 100vh;
+	background-color: var(--color-neutral);
+}
+
+#logo-container {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	-webkit-transform: translate(-50%, -50%);
+	transform: translate(-50%, -50%);
+}
+
+#loading-logo {
+	width: min(40vw, 250px);
+	-webkit-animation: rotation 3.5s linear infinite both;
+	animation: rotation 3.5s linear infinite both;
+}
