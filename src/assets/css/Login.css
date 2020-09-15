@@ -71,6 +71,6 @@ div.side-content button:hover {
 	object-fit: contain;
 	width: 95%;
 	margin: auto;
-	border: 1px inset var(--color-primary);
+	border: 2px inset var(--color-primary);
 	border-radius: 4px;
 }
